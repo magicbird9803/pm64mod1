@@ -14,9 +14,9 @@ jobs:
       - name: Checkout Star Rod
         uses: actions/checkout@v2
         with:
-          repository: 'magicbird9803/star-rod-remake'
+          repository: 'magicbird9803/star-rod'
           path: star-rod
-          ref: 'v0.5.3'
+          ref: 'v0.3.2'
       
       - name: Download clean ROM
         run: curl -Lo $GITHUB_WORKSPACE/PaperMario.z64 $LEGAL_ROM_URL
@@ -27,7 +27,7 @@ jobs:
         run: |
           cp $GITHUB_WORKSPACE/mod.cfg.example $GITHUB_WORKSPACE/mod.cfg
           
-          cd $GITHUB_WORKSPACE/star-rod
+          cd $GITHUB_WORKSPACE/pm64mod1
           mkdir cfg
           echo "ModPath = $GITHUB_WORKSPACE" >> cfg/main.cfg
           echo "RomPath = $GITHUB_WORKSPACE/PaperMario.z64" >> cfg/main.cfg
@@ -65,12 +65,12 @@ jobs:
       - name: Dump assets
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
-          cd $GITHUB_WORKSPACE/star-rod
+          cd $magicbird9803/star-rod/
           java -jar StarRod.jar -DumpAssets
 
       - name: Compile mod
         run: |
-          cd $GITHUB_WORKSPACE/star-rod
+          cd $magicbird9803/star-rod/
           java -Xmx2G -jar StarRod.jar -CompileMod
 
       - name: Upload compile.log
@@ -81,7 +81,7 @@ jobs:
 
       - name: Package mod
         run: |
-          cd $GITHUB_WORKSPACE/star-rod
+          cd $GITHUB_WORKSPACE/star-rod/
           java -jar StarRod.jar -PackageMod
 
       - name: Upload mod file
