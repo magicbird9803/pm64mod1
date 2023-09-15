@@ -14,8 +14,8 @@ jobs:
       - name: Checkout Star Rod
         uses: actions/checkout@v2
         with:
-          repository: 'magicbird9803/star-rod-remake'
-          path: star-rod-remake
+          repository: 'magicbird9803/star-rod'
+          path: star-rod
           ref: 'v0.5.3'
       
       - name: Download clean ROM
@@ -65,12 +65,12 @@ jobs:
       - name: Dump assets
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
-          cd $magicbird9803/star-rod-remake/
+          cd $magicbird9803/star-rod/
           java -jar StarRod.jar -DumpAssets
 
       - name: Compile mod
         run: |
-          cd $magicbird9803/star-rod-remake/
+          cd $magicbird9803/star-rod/
           java -Xmx2G -jar StarRod.jar -CompileMod
 
       - name: Upload compile.log
@@ -81,7 +81,7 @@ jobs:
 
       - name: Package mod
         run: |
-          cd $GITHUB_WORKSPACE/star-rod-remake
+          cd $GITHUB_WORKSPACE/star-rod/
           java -jar StarRod.jar -PackageMod
 
       - name: Upload mod file
