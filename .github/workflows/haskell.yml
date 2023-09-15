@@ -1,0 +1,91 @@
+name: Build
+on: [push]
+
+jobs:
+  build:
+    name: Compile and package mod
+    runs-on: ubuntu-latest
+    env:
+      DISPLAY: :1
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Checkout Star Rod
+        uses: actions/checkout@v2
+        with:
+          repository: 'nanaian/star-rod'
+          path: star-rod
+          ref: 'v0.2.0'
+      
+      - name: Download clean ROM
+        run: curl -Lo $GITHUB_WORKSPACE/PaperMario.z64 $LEGAL_ROM_URL
+        env:
+          LEGAL_ROM_URL: ${{ secrets.LEGAL_ROM_URL }}
+        
+      - name: Configure Star Rod
+        run: |
+          cp $GITHUB_WORKSPACE/mod.cfg.example $GITHUB_WORKSPACE/mod.cfg
+          
+          cd $GITHUB_WORKSPACE/star-rod
+          mkdir cfg
+          echo "ModPath = $GITHUB_WORKSPACE" >> cfg/main.cfg
+          echo "RomPath = $GITHUB_WORKSPACE/PaperMario.z64" >> cfg/main.cfg
+          echo "LogDetails = false" >> cfg/main.cfg
+          echo "FullDump = false" >> cfg/main.cfg
+          echo "DumpReports = true" >> cfg/main.cfg
+          echo "DumpProfiling = false" >> cfg/main.cfg
+          echo "DumpStrings = true" >> cfg/main.cfg
+          echo "DumpTables = true" >> cfg/main.cfg
+          echo "DumpMaps = true" >> cfg/main.cfg
+          echo "DumpBattles = true" >> cfg/main.cfg
+          echo "DumpMoves = true" >> cfg/main.cfg
+          echo "DumpTextures = true" >> cfg/main.cfg
+          echo "DumpIcons = true" >> cfg/main.cfg
+          echo "DumpSprites = true" >> cfg/main.cfg
+          echo "DumpAudio = true" >> cfg/main.cfg
+          echo "DumpLibrary = false" >> cfg/main.cfg
+          echo "DumpVersion = 0.2.0" >> cfg/main.cfg
+          echo "PrintLineOffsets = false" >> cfg/main.cfg
+          echo "UseTabIndents = false" >> cfg/main.cfg
+          echo "UseTabSpacing = false" >> cfg/main.cfg
+          echo "PrintRequiredBy = false" >> cfg/main.cfg
+
+          Xvfb :1 &
+
+      - name: Cache asset dump
+        uses: actions/cache@v2
+        id: cache
+        env:
+          cache-name: dump
+        with:
+          path: ${{ github.workspace }}/dump
+          key: ${{ runner.os }}-rom-${{ hashFiles('$GITHUB_WORKSPACE/PaperMario.z64') }}
+
+      - name: Dump assets
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          cd $GITHUB_WORKSPACE/star-rod
+          java -jar StarRod.jar -DumpAssets
+
+      - name: Compile mod
+        run: |
+          cd $GITHUB_WORKSPACE/star-rod
+          java -Xmx2G -jar StarRod.jar -CompileMod
+
+      - name: Upload compile.log
+        uses: actions/upload-artifact@v2
+        with:
+          name: compile.log
+          path: ${{ github.workspace }}/logs/compile.log
+
+      - name: Package mod
+        run: |
+          cd $GITHUB_WORKSPACE/star-rod
+          java -jar StarRod.jar -PackageMod
+
+      - name: Upload mod file
+        uses: actions/upload-artifact@v2
+        with:
+          name: Mod
+          path: ${{ github.workspace }}/out/*.mod
