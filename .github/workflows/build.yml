@@ -19,9 +19,9 @@ jobs:
           ref: 'v0.5.3'
       
       - name: Download clean ROM
-        run: curl -Lo $GITHUB_WORKSPACE/Paper-Mario.z64 $LEGAL_ROM_URL/magicbird9803/Paper-Mario-64-Original/blob/main/Paper-Mario.z64
+        run: curl -Lo $GITHUB_WORKSPACE/Paper-Mario.z64 $LEGAL_ROM_URL
         env:
-          LEGAL_ROM_URL: ${{ secrets.LEGAL_ROM_URL }}
+          LEGAL_ROM_URL: ${{ https://github.com/magicbird9803/Paper-Mario-64-Original/blob/main/Paper-Mario.z64 }}
         
       - name: Configure Star Rod
         run: |
