@@ -65,12 +65,12 @@ jobs:
       - name: Dump assets
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
-          cd $GITHUB_WORKSPACE/pm64mod1/dumps
+          cd $GITHUB_WORKSPACE/pm64mod1/
           java -jar StarRod.jar -DumpAssets
 
       - name: Compile mod
         run: |
-          cd $GITHUB_WORKSPACE/pm64mod1/dumps
+          cd $GITHUB_WORKSPACE/pm64mod1/
           java -Xmx2G -jar StarRod.jar -CompileMod
 
       - name: Upload compile.log
