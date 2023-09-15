@@ -19,7 +19,7 @@ jobs:
           ref: 'v0.5.3'
       
       - name: Download clean ROM
-        run: curl -Lo $GITHUB_WORKSPACE/Paper-Mario.z64 $LEGAL_ROM_URL
+        run: curl -Lo $GITHUB_WORKSPACE/PaperMario.z64 $LEGAL_ROM_URL
         env:
           LEGAL_ROM_URL: ${{ secrets.LEGAL_ROM_URL }}
         
