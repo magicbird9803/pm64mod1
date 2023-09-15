@@ -14,7 +14,7 @@ jobs:
       - name: Checkout Star Rod
         uses: actions/checkout@v2
         with:
-          repository: 'magicbird9803/star-rod'
+          repository: 'magicbird9803/pm64mod1/star-rod'
           path: star-rod
           ref: 'v0.3.2'
       
