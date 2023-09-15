@@ -1,0 +1,1119 @@
+%Dark Aspirant
+%just like the boss its based on, I don't like the current name
+
+%she gets some charge every turn, but every hit you do will reduce the charge level
+
+%Charging rate
+%	80-100% hp = +2 charge per turn
+%	50-80% hp  = +4 charge per turn
+%	30-50% hp  = +6 charge per turn
+%	0-30% hp   = +8 charge per turn
+
+%	^	It's probably impossible to deal 9 hits in a single turn without hustle drinks (but the charging makes it not worth it)
+
+%Attacks based on charges
+
+%0 charge = electro dash (her weakest attack)
+%	7 damage
+%1-2 charge = weak lightning
+%	12 damage
+%3-4 charge = lightning
+%	16 damage
+%5-7 charge = shockwave
+%	20 / 3 damage
+%8+ charge = multi-lightning (+1 hit per charge!)
+%	12 damage per bolt (# bolts = charge - 5)
+%	Minimum of 3 bolts, so at 8 charge this does 36 damage
+
+
+#new:IdleAnimations $IdleAnimations_DarkAspirant
+{
+.Status:Normal    00F10701
+.Status:Stone     00F10700
+.Status:Sleep     00F1070A
+.Status:Poison    00F10701
+.Status:Stop      00F10700
+.Status:Static    00F10701
+.Status:Paralyze  00F10700
+.Status:Dizzy     00F1070F
+.Status:Fear      00F1070F
+.Status:End
+}
+
+#new:IdleAnimations $IdleAnimations_SmallBolts %not actually used
+{
+.Status:Normal    00F10712
+.Status:Stone     00F10712
+.Status:Sleep     00F10712
+.Status:Poison    00F10712
+.Status:Stop      00F10712
+.Status:Static    00F10712
+.Status:Paralyze  00F10712
+.Status:Dizzy     00F10712
+.Status:Fear      00F10712
+.Status:End
+}
+
+#new:DefenseTable $DefenseTable_DarkAspirant
+{
+.Element:Normal 00000001		%incentive to not use fan smack since otherwise that would be the obvious best move here
+.Element:Water FFFFFFFE
+.Element:Shock  00000063
+.Element:Throw FFFFFFFF
+.Element:End
+}
+
+#new:StatusTable $StatusTable_DarkAspirant %few statuses work
+{
+.Status:Normal      0`
+.Status:Default     0`
+.Status:Sleep       0`
+.Status:Poison      0`
+.Status:Frozen      0`
+.Status:Dizzy       0`
+.Status:Fear        0`
+.Status:Static      0`
+.Status:Paralyze    0` %ofc it's not gonna work
+.Status:Shrink      0`
+.Status:Stop        0` 
+.Status:DefaultTurnMod    0`
+.Status:SleepTurnMod     -1`
+.Status:PoisonTurnMod     0`
+.Status:FrozenTurnMod     0`
+.Status:DizzyTurnMod     -1`
+.Status:FearTurnMod       0`
+.Status:StaticTurnMod    -3`
+.Status:ParalyzeTurnMod  -3`
+.Status:ShrinkTurnMod    -1`
+.Status:StopTurnMod      -1`
+.Status:End
+}
+
+#new:PartsTable $PartsTable_DarkAspirant
+{
+00020000 01000000 FF1400FF $IdleAnimations_DarkAspirant $DefenseTable_DarkAspirant 00000080 00000000 00000000 00000000 
+00800001 02003200 FFE200FF 00000000 				  $DefenseTable_DarkAspirant 00000080 00000000 00000000 00000000 %???? (used to change where the target position is?)
+}
+
+#new:Actor $DarkAspirant
+{
+% stats
+[Index]        C6b 
+[Level]        70`b %miniboss, but in an endgame setting, she's not that strong
+[MaxHP]        80`b
+[Coins]         0`b 
+[Flags]       00000200 
+[StatusTable] $StatusTable_DarkAspirant
+% ai
+[PartsCount]   2`s 
+[PartsTable] $PartsTable_DarkAspirant
+[Script]      $Script_Init_DarkAspirant 
+% move effectiveness
+[Escape]       20`b %not like you can run from this battle though
+[Item]          0`b 
+[AirLift]       0`b 
+[Hurricane]     0`b % Bow's "Spook" as well
+[UpAndAway]     0`b 
+[PowerBounce]   3`b 
+[SpinSmash]     0`b % weight (0-4)
+% ui positions
+[Size]         34`b  28`b % width height
+[HealthBar]     0`b   0`b % dx dy
+[StatusTurn]  -10`b  20`b % dx dy
+[StatusIcon]   10`b  20`b % dx dy
+}
+
+#new:Script $Script_Init_DarkAspirant
+{
+    0:  Call     BindTakeTurn 	( .Actor:Self $Script_TakeTurn_DarkAspirant )
+   14:  Call     BindIdle    	( .Actor:Self $Script_Idle_DarkAspirant )
+   28:  Call     BindHandleEvent 	( .Actor:Self $Script_HandleEvent_DarkAspirant )
+		Call	 SetActorVar ( .Actor:Self 00000001 00000000 ) %AI state
+		Call	 SetActorVar ( .Actor:Self 00000002 00000000 ) %Charge level
+		Call	 $SetAuraToDark ( )
+		Call     AddActorDecoration 	( .Actor:Self 00000001 00000000 00000001 )	%dark fire now (was gold but I used special functions)
+		Call     ModifyActorDecoration 	( .Actor:Self 00000001 00000000 38` 38` 00000000 00000000 )	 
+   68:  Return
+   70:  End
+}
+
+
+#new:Function $Function_802182A4_DarkAspirant
+{
+    0:  ADDIU     SP, SP, FFA0
+    4:  SW        S1, 1C (SP)
+    8:  COPY      S1, A0
+    C:  SW        RA, 2C (SP)
+   10:  SW        S4, 28 (SP)
+   14:  SW        S3, 24 (SP)
+   18:  SW        S2, 20 (SP)
+   1C:  SW        S0, 18 (SP)
+   20:  SDC1      F30, 58 (SP)
+   24:  SDC1      F28, 50 (SP)
+   28:  SDC1      F26, 48 (SP)
+   2C:  SDC1      F24, 40 (SP)
+   30:  SDC1      F22, 38 (SP)
+   34:  SDC1      F20, 30 (SP)
+   38:  LW        S0, C (S1)
+   3C:  LW        S3, 0 (S0)
+   40:  ADDIU     S0, S0, 4
+   44:  JAL       ~Func:get_float_variable
+   48:  COPY      A1, S3
+   4C:  SWC1      F0, 10 (SP)
+   50:  LW        S4, 0 (S0)
+   54:  ADDIU     S0, S0, 4
+   58:  COPY      A0, S1
+   5C:  JAL       ~Func:get_float_variable
+   60:  COPY      A1, S4
+   64:  MOV.S     F30, F0
+   68:  LW        S2, 0 (S0)
+   6C:  ADDIU     S0, S0, 4
+   70:  COPY      A0, S1
+   74:  JAL       ~Func:get_float_variable
+   78:  COPY      A1, S2
+   7C:  MOV.S     F28, F0
+   80:  LW        A1, 0 (S0)
+   84:  ADDIU     S0, S0, 4
+   88:  JAL       ~Func:get_float_variable
+   8C:  COPY      A0, S1
+   90:  LW        A1, 0 (S0)
+   94:  ADDIU     S0, S0, 4
+   98:  COPY      A0, S1
+   9C:  JAL       ~Func:get_float_variable
+   A0:  MOV.S     F26, F0
+   A4:  MOV.S     F24, F0
+   A8:  LW        A1, 0 (S0)
+   AC:  JAL       ~Func:get_float_variable
+   B0:  COPY      A0, S1
+   B4:  MOV.S     F12, F26
+   B8:  LIF       F2, 15.0
+   C0:  MOV.S     F22, F0
+   C4:  JAL       ~Func:cos_deg
+   C8:  SUB.S     F24, F24, F2
+   CC:  MOV.S     F20, F0
+   D0:  JAL       ~Func:cos_deg
+   D4:  MOV.S     F12, F24
+   D8:  MUL.S     F20, F22, F20
+   DC:  NOP
+   E0:  MUL.S     F20, F20, F0
+   E4:  NOP
+   E8:  LWC1      F4, 10 (SP)
+   EC:  ADD.S     F4, F4, F20
+   F0:  MOV.S     F12, F26
+   F4:  JAL       ~Func:sin_deg
+   F8:  SWC1      F4, 10 (SP)
+   FC:  MUL.S     F0, F22, F0
+  100:  NOP
+  104:  MOV.S     F12, F26
+  108:  JAL       ~Func:cos_deg
+  10C:  ADD.S     F30, F30, F0
+  110:  MOV.S     F12, F24
+  114:  JAL       ~Func:sin_deg
+  118:  MOV.S     F20, F0
+  11C:  MUL.S     F22, F22, F20
+  120:  NOP
+  124:  MUL.S     F22, F22, F0
+  128:  NOP
+  12C:  COPY      A0, S1
+  130:  COPY      A1, S3
+  134:  LW        A2, 10 (SP)
+  138:  JAL       ~Func:set_float_variable
+  13C:  SUB.S     F28, F28, F22
+  140:  COPY      A0, S1
+  144:  MFC1      A2, F30
+  148:  JAL       ~Func:set_float_variable
+  14C:  COPY      A1, S4
+  150:  COPY      A0, S1
+  154:  MFC1      A2, F28
+  158:  JAL       ~Func:set_float_variable
+  15C:  COPY      A1, S2
+  160:  LW        RA, 2C (SP)
+  164:  LW        S4, 28 (SP)
+  168:  LW        S3, 24 (SP)
+  16C:  LW        S2, 20 (SP)
+  170:  LW        S1, 1C (SP)
+  174:  LW        S0, 18 (SP)
+  178:  LDC1      F30, 58 (SP)
+  17C:  LDC1      F28, 50 (SP)
+  180:  LDC1      F26, 48 (SP)
+  184:  LDC1      F24, 40 (SP)
+  188:  LDC1      F22, 38 (SP)
+  18C:  LDC1      F20, 30 (SP)
+  190:  LI        V0, 2
+  194:  JR        RA
+  198:  ADDIU     SP, SP, 60
+}
+
+%Display a number of lightning bolts equal to her charge level
+%	this is kinda not working perfectly right now
+#new:Script $Script_Idle_DarkAspirant
+{
+		Label 0
+		Call  GetActorVar ( .Actor:Self 00000002 *Var6 )
+		Wait  30`
+		If *Var6 == 0`
+			Goto 0
+		EndIf
+		Set *VarE 0
+		Set *VarD 360`		%x * 360 / total 
+		Div *VarD *Var6
+		Set *VarC *VarD
+		Loop *Var6
+			Set *VarC *VarD
+			Mul *VarC *VarE
+			Add *VarE 1
+			Call  GetActorPos   ( .Actor:Self *Var0 *Var1 *Var2 )
+			Call  GetActorPos   ( .Actor:Self *Var3 *Var4 *Var5 )
+			Add   *Var1 5`
+			Add   *Var4 5`
+			Call  $Function_802182A4_DarkAspirant    ( *Var3 *Var4 *Var5 *VarC *Fixed[0.0] *Fixed[45.0] )	%Find a point 45 away from the target with an angle in *Var2
+			%Outputs on var 3, 4, 5
+			Set		*VarB *Var6
+			Add 	*VarB 3
+			Call	PlayEffect		( 0000005E 00000000 *Var[0] *Var[1] *Var[2] *Var[3] *Var[4] *Var[5] *Fixed[0.5] *VarB 00000000 00000000 00000000 00000000 )
+				%subtype; startX; startY; startZ; endX; endY; endZ; scale; duration
+			Call	$Function_SetLightningPalette ( *VarF )			
+			%Wait 1`	makes it harder to count them
+		EndLoop
+		Goto 0
+   18:  Return
+   20:  End
+}
+
+#new:Script $Script_HandleEvent_DarkAspirant
+{
+    0:  Call     UseIdleAnimation 	( .Actor:Self .False )
+   44:  Call     GetLastEvent 	( .Actor:Self *Var[0] )
+   58:  Switch  *Var[0] 
+   64:  	CaseOR  ==  .Event:HitCombo % 9
+   70:  	CaseOR  ==  .Event:Hit % A
+				Call	GetActorVar ( .Actor:Self 00000002 *VarF )
+				Sub *VarF 1
+				If *VarF < 0
+					Set *VarF 0
+				EndIf
+				Call	SetActorVar ( .Actor:Self 00000002 *VarF )
+   7C:  		SetConst  *Var[0]  00000001 
+   8C:  		SetConst  *Var[1]  00F1070C 
+   9C:  		ExecWait DoNormalHit 
+   A8:  	EndCaseGroup
+   B0:  	Case  ==  .Event:BurnHit % E
+				Call	GetActorVar ( .Actor:Self 00000002 *VarF )
+				Sub *VarF 1
+				If *VarF < 0
+					Set *VarF 0
+				EndIf
+				Call	SetActorVar ( .Actor:Self 00000002 *VarF )
+   BC:  		SetConst  *Var[0]  00000001 
+   CC:  		SetConst  *Var[1]  00F1070D 
+   DC:  		SetConst  *Var[2]  00F1070E 
+   EC:  		ExecWait DoBurnHit 
+   F8:  	Case  ==  .Event:BurnDeath % 24
+  104:  		SetConst  *Var[0]  00000001 
+  114:  		SetConst  *Var[1]  00F1070D 
+  124:  		SetConst  *Var[2]  00F1070E 
+  134:  		ExecWait DoBurnHit 
+  %14C:  		ExecWait $Script_8021E0E0_DarkAspirant 
+  158:  		SetConst  *Var[0]  00000001 
+  168:  		SetConst  *Var[1]  00F1070E 
+  178:  		ExecWait DoDeath 
+  184:  		Return
+  18C:  	Case  ==  .Event:SpinSmashHit % B
+				Call	GetActorVar ( .Actor:Self 00000002 *VarF )
+				Sub *VarF 1
+				If *VarF < 0
+					Set *VarF 0
+				EndIf
+				Call	SetActorVar ( .Actor:Self 00000002 *VarF )
+  198:  		SetConst  *Var[0]  00000001 
+  1A8:  		SetConst  *Var[1]  00F1070C 
+  1B8:  		ExecWait DoSpinSmashHit 
+  1C4:  	Case  ==  .Event:SpinSmashDeath % 21
+  %1DC:  		ExecWait $Script_8021E0E0_DarkAspirant 
+  1E8:  		SetConst  *Var[0]  00000001 
+  1F8:  		SetConst  *Var[1]  00F1070C 
+  208:  		ExecWait DoSpinSmashHit 
+  214:  		SetConst  *Var[0]  00000001 
+  224:  		SetConst  *Var[1]  00F1070C 
+  234:  		ExecWait DoDeath 
+  240:  		Return
+			Case  ==  .Event:StarBeam 
+			  	Call     GetActorVar 	( .Actor:Self 00000002 *Var[0] )
+				If  *Var[0]  ==  00000001 
+					Call     EnableActorGlow 	( .Actor:Self .False )
+					Call     SetPartEventBits 	( .Actor:Self 00000001 00400000 .False )
+					Call     SetActorVar 	( .Actor:Self 00000002 00000000 )
+				EndIf
+				SetConst  *Var[0]  00000001 
+				SetConst  *Var[1]  00F10701 
+				ExecWait DoImmune 
+  248:  	CaseOR  ==  00000017 % 17
+  254:  	CaseOR  ==  .Event:Immune % 19
+  260:  	CaseOR  ==  .Event:AirLiftFailed % 1F
+				%you tried to attack, so still remove charge
+				Call	GetActorVar ( .Actor:Self 00000002 *VarF )
+				Sub *VarF 1
+				If *VarF < 0
+					Set *VarF 0
+				EndIf
+				Call	SetActorVar ( .Actor:Self 00000002 *VarF )
+  26C:  		SetConst  *Var[0]  00000001 
+  27C:  		SetConst  *Var[1]  00F10701 
+  28C:  		ExecWait DoImmune 
+  298:  	EndCaseGroup
+  2A0:  	Case  ==  .Event:Death % 20
+  %2B8:  		ExecWait $Script_8021E0E0_DarkAspirant 
+  2C4:  		SetConst  *Var[0]  00000001 
+  2D4:  		SetConst  *Var[1]  00F1070C 
+  2E4:  		ExecWait DoNormalHit 
+  2F0:  		Wait     0000000A 
+  2FC:  		SetConst  *Var[0]  00000001 
+  30C:  		SetConst  *Var[1]  00F1070C 
+  31C:  		ExecWait DoDeath 
+  328:  		Return
+  330:  	Case  ==  .Event:RecoverStatus % 31
+  33C:  		SetConst  *Var[0]  00000001 
+  34C:  		SetConst  *Var[1]  00F10701 
+  35C:  		ExecWait DoRecover 
+  368:  	Case  ==  .Event:ScareAway % 39
+  374:  		SetConst  *Var[0]  00000001 
+  384:  		SetConst  *Var[1]  00F10703 
+  394:  		SetConst  *Var[2]  00F1070C 
+  3A4:  		ExecWait DoScareAway 
+  3B0:  		Return
+  3B8:  	Case  ==  .Event:BeginAirLift % 3A
+  3C4:  		SetConst  *Var[0]  00000001 
+  3D4:  		SetConst  *Var[1]  00F10703 
+  3E4:  		ExecWait DoAirLift 
+  3F0:  	Case  ==  .Event:BlowAway % 16
+  3FC:  		SetConst  *Var[0]  00000001 
+  40C:  		SetConst  *Var[1]  00F1070C 
+  41C:  		ExecWait DoBlowAway 
+  428:  		Return
+  430:  	Default
+  438:  EndSwitch
+  450:  Call     UseIdleAnimation 	( .Actor:Self .True )
+  464:  Return
+  46C:  End
+}
+   
+%AI:
+%alternate electro dash, charge, then either charge wave or charge bolt
+%Below half health, can charge and attack on same turn
+%Will not use charge wave if you have watt out
+
+#new:Script $Script_TakeTurn_DarkAspirant
+{
+	Call	 GetActorVar ( .Actor:Self 00000002 *Var[2] ) %AI state	
+	Switch *Var[2]
+		Case == 00000000
+			ExecWait $Script_ElectroDash_DarkAspirant
+		CaseOR == 00000001
+		CaseOR == 00000002
+			ExecWait $Script_WeakLightning_DarkAspirant
+		EndCaseGroup
+		CaseOR == 00000003
+		CaseOR == 00000004
+			ExecWait $Script_ChargeBolt_DarkAspirant
+		EndCaseGroup
+		CaseOR == 00000005
+		CaseOR == 00000006
+		CaseOR == 00000007
+			ExecWait $Script_ChargeWave_DarkAspirant
+		EndCaseGroup
+		Default
+			ExecWait $Script_MultiBolt_DarkAspirant
+	EndSwitch
+	ExecWait $Script_ChargeAttack_DarkAspirant
+	Return 
+	End
+}
+
+#new:Script $Script_ElectroDash_DarkAspirant %6 piercing damage 
+{
+    0:  Call     UseIdleAnimation 	( .Actor:Self .False )
+   14:  Call     UseBattleCamPreset 	( 00000013 )
+   24:  Call     GetActorPos 	( .Actor:Player *Var[0] *Var[1] *Var[2] )
+   40:  Call     SetBattleCamTarget 	( *Var[0] *Var[1] *Var[2] )
+   58:  Call     SetBattleCamZoom  	( 0000015E )
+   68:  Call     SetBattleCamOffsetZ 	( 00000028 )
+   78:  Call     MoveBattleCamOver 	( 00000050 )
+   88:  Call     8024ECF8 ( FFFFFFFF 00000001 00000000 )
+   A0:  Call     SetTargetActor ( .Actor:Self .Actor:Player )
+   B4:  Call     SetGoalToTarget 	( .Actor:Self )
+   C4:  Call     SetAnimation 	( .Actor:Self 00000001 00F10703 )
+   EC:  Call     AddGoalPos 	( .Actor:Self 0000000F FFFFFFF6 00000005 )
+  108:  Call     FlyToGoal  	( .Actor:Self 0000001E 00000000 .Easing:CosInOut )
+  124:  Call     SetAnimation 	( .Actor:Self 00000001 00F10701 )
+  14C:  Wait     00000005 
+  168:  Call     AddGoalPos 	( .Actor:Self 00000019 00000014 00000000 )
+  184:  Call     FlyToGoal  	( .Actor:Self 0000000F FFFFFFEC .Easing:CosInOut )
+  1A0:  Call     SetAnimation 	( .Actor:Self 00000001 00F10705 )
+  1B8:  Call     SetGoalToTarget 	( .Actor:Self )
+  1C8:  Call     FlyToGoal  	( .Actor:Self 00000005 00000000 .Easing:CosInOut )
+  1E4:  Call     EnemyTestTarget ( .Actor:Self *Var[0] 00000000 00000000 00000001 00000010 )
+  208:  Switch  *Var[0] 
+  214:  	CaseOR  ==  00000006 
+  220:  	CaseOR  ==  00000005 
+  22C:  		Set  *Var[A]  *Var[0] 
+  23C:  		Thread
+  244:  			Wait     00000005 
+  250:  			Call     SetAnimation 	( .Actor:Self 00000001 00F10701 )
+  268:  		EndThread
+  270:  		Call     SetGoalToTarget 	( .Actor:Self )
+  280:  		Call     AddGoalPos 	( .Actor:Self FFFFFFD8 0000000A 00000000 )
+  29C:  		Call     FlyToGoal  	( .Actor:Self 0000000A FFFFFFEC .Easing:QuadraticOut )
+  2B8:  		If  *Var[A]  ==  00000005 
+  2C8:  			Call     EnemyTestTarget ( .Actor:Self *Var[0] 80000000 00000000 00000000 00000000 )
+  2EC:  		EndIf
+  314:  		Wait     00000014 
+  320:  		Call     UseBattleCamPreset 	( 00000002 )
+  330:  		Call     YieldTurn   	( )
+  33C:  		Call     SetGoalToHome 	( .Actor:Self )
+  34C:  		Call     SetAnimation 	( .Actor:Self 00000001 00F10703 )
+  364:  		Call     FlyToGoal  	( .Actor:Self 0000001E 00000000 .Easing:CosInOut )
+  380:  		Call     SetAnimation 	( .Actor:Self 00000001 00F10701 )
+  398:  		Call     UseIdleAnimation 	( .Actor:Self .True )
+  3AC:  		Return
+  3B4:  	EndCaseGroup
+  3BC:  EndSwitch
+  3D4:  Set  *Var[A]  00000028 
+  3E4:  Call     AddBattleCamZoom  	( FFFFFFB5 )
+  3F4:  Call     MoveBattleCamOver 	( *Var[A] )
+  404:  Call     8024ECF8 ( 00000000 00000000 00000001 )
+  41C:  Call     PlaySoundAtActor 	( .Actor:Self 00000289 )
+  430:  Call     GetStatusFlags ( .Actor:Self *Var[0] )
+  444:  If  *Var[0]  &  00080000 
+  454:  	Call     GetActorPos 	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+  470:  	Add  *Var[1]  00000004 
+  480:  	Call     PlayEffect  	( ~FX:RadialFlowIn:ElectricalWaves *Var[0] *Var[1] *Var[2] *Fixed[0.5205078] *Var[A] 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+			Call	 $Function_SetRadialPalette ( *VarF )
+  4C4:  Else
+  4CC:  	Call     GetActorPos 	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+  4E8:  	Add  *Var[1]  0000000C 
+  4F8:  	Call     PlayEffect  	( ~FX:RadialFlowIn:ElectricalWaves *Var[0] *Var[1] *Var[2] *Fixed[1.3007812] *Var[A] 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+			Call	 $Function_SetRadialPalette ( *VarF )
+  53C:  EndIf
+		Call     $Function_8021973C_DarkAspirant ( )
+  550:  Set  *Var[9]  00000000 
+  560:  	Call     SetAnimation 	( .Actor:Self 00000001 00F10706 )
+  578:  	Loop     *Var[A] 
+  584:  		Add  *Var[9]  00000003 
+  594:  		If  *Var[9]  >  000000C8 
+  5A4:  			Set  *Var[9]  000000C8 
+  5B4:  		EndIf
+  5BC:  		Call     $Function_80219780_DarkAspirant ( *Var[9] )
+  5CC:  		Wait     00000001 
+  5D8:  	EndLoop
+  5E0:  	Call     SetAnimation 	( .Actor:Self 00000001 00F10701 )
+  5F8:  	Call     8026EA7C ( FFFFFF81 00000001 00000009 )
+  610:  	Call     AddBattleCamZoom  	( 0000004B )
+  620:  	Call     MoveBattleCamOver 	( 00000005 )
+  630: 		Thread
+  638:  		Wait     00000002 
+  644:  		Call     $Function_80219780_DarkAspirant ( 00000000 )
+  654:  	EndThread
+  68C:  	Wait     00000002 
+  698: 		Call     EnemyDamageTarget 	( .Actor:Self *Var[0] 08000020 0000FFFF 00000000 00000007 00000020 ) %7 piercing damage
+  748:  	Switch  *Var[0] 
+  754:  		CaseOR  ==  00000000 
+  760:  		CaseOR  ==  00000002 
+  76C:  			Call     UseBattleCamPreset 	( 00000002 )
+  79C:  			Call     AddGoalPos 	( .Actor:Self 00000019 0000000A 00000000 )
+  7B8:  			Call     FlyToGoal  	( .Actor:Self 0000000F FFFFFFF6 .Easing:CosInOut )
+  7D4:  			Wait     0000000F 
+  7E0:  			Call     YieldTurn   	( )
+  7EC:  			Call     SetGoalToHome 	( .Actor:Self )
+  7FC:  			Call     SetAnimation 	( .Actor:Self 00000001 00F10703 )
+  814:  			Call     FlyToGoal  	( .Actor:Self 0000001E 00000000 .Easing:CosInOut )
+  830:  			Call     SetAnimation 	( .Actor:Self 00000001 00F10701 )
+  848:  		EndCaseGroup
+  850:  	EndSwitch
+  858:  Call     UseIdleAnimation 	( .Actor:Self .True )
+  86C:  Return
+  874:  End
+}
+
+#new:Script $Script_ChargeAttack_DarkAspirant
+{
+	Call     UseIdleAnimation 	( .Actor:Self .False ) 
+	Call     EnableIdleScript 	( .Actor:Self 00000000 )
+    Call     SetTargetActor ( .Actor:Self .Actor:Player )
+    Call     UseBattleCamPreset 	( 0000000E )
+    Call     BattleCamTargetActor ( .Actor:Self )
+    Call     MoveBattleCamOver 	( 0000000F )
+    Wait     0000000F 
+    Call     SetAnimation 	( .Actor:Self 00000001 00F1070A )
+    Wait     00000005 
+    Call     PlaySoundAtActor 	( .Actor:Self 000002F0 )
+    Call     GetActorPos 	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+    Call     GetStatusFlags ( .Actor:Self *Var[A] )
+    If  *Var[A]  &  00080000 
+		%Sub  *Var[0]  00000006 
+		%Add  *Var[1]  0000000C 
+		%Sub  *Var[2]  00000002 
+		%scale 0.7 -> 2.8
+		Call     PlayEffect  	( ~FX:SnakingStatic *Var[0] *Var[1] *Var[2] *Fixed[2.8] 0000001E 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+		Call	 $Function_SetStaticColors ( *VarF )
+    Else
+    	%Sub  *Var[0]  00000010 
+    	%Add  *Var[1]  0000001F 
+		%Sub  *Var[2]  00000002 
+		Call     PlayEffect  	( ~FX:SnakingStatic *Var[0] *Var[1] *Var[2] *Fixed[1.6] 0000001E 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+		Call	 $Function_SetStaticColors ( *VarF )
+	EndIf
+	Wait     0000001E 
+	Call     SetAnimation 	( .Actor:Self 00000001 00F10701 )
+	Call     UseBattleCamPreset 	( 00000002 )
+	Call     SetPartEventBits 	( .Actor:Self 00000001 00400000 .True )
+	Call	GetActorHP ( .Actor:Self *Var[1] )
+	Call	GetEnemyMaxHP ( .Actor:Self *Var[2] )
+	Mul *Var[1] 100`
+	Div *Var[1] *Var[2]
+	Switch *Var1
+		Case < 30`
+			Call	 AddActorVar 		( .Actor:Self 00000002 00000008 )
+		Case < 50`
+			Call	 AddActorVar 		( .Actor:Self 00000002 00000006 )
+		Case < 80`
+			Call	 AddActorVar 		( .Actor:Self 00000002 00000004 )
+		Default
+			Call	 AddActorVar 		( .Actor:Self 00000002 00000002 )
+	EndSwitch
+	Call     UseIdleAnimation 	( .Actor:Self .True ) 
+	Call     EnableIdleScript 	( .Actor:Self 00000001 )
+	Return
+	End
+}
+
+#new:Script $Script_WeakLightning_DarkAspirant
+{
+	Call     UseIdleAnimation 	( .Actor:Self .False ) 
+	Call     EnableIdleScript 	( .Actor:Self 00000000 )
+	Call     SetTargetActor ( .Actor:Self .Actor:Player )
+	Wait    15`
+	Call	SetAnimation	( .Actor:Self 00000001 00F1070A )
+	Call	PlaySound		( 00000365 )
+	Call	GetActorPos		( .Actor:Self *Var[0] *Var[1] *Var[2] )
+	Sub		*Var[2]  10`
+	Call	GetActorPos		( .Actor:Player *Var3 *Var4 *Var5 )
+	Call	PlayEffect		( 0000005E 00000000 *Var[0] *Var[1] *Var[2] *Var3 *Var4 *Var5 *Fixed[0.5] 00000006 00000000 00000000 00000000 00000000 )
+	Call	$Function_SetLightningPalette ( *VarF )		
+	Wait	12` 		%6 -> 12
+	Call	EnemyTestTarget ( .Actor:Self  *Var[0] 00000000 00000000 00000001 00000010 )
+	Switch   *Var[0] 
+		CaseOR   ==  00000006 % transparent
+		CaseOR   ==  00000005 % lucky
+			Goto	1
+		EndCaseGroup
+	EndSwitch
+	Call	SetGoalToTarget	( .Actor:Self )
+	Call	EnemyDamageTarget	( .Actor:Self *Var[0] 00000000 0000FFFF 00000000 0000000E 00000020 )
+	Label	1
+	Call	SetAnimation	( .Actor:Self 00000001 00F10701 )
+	Wait	35` 
+	Call     EnableActorGlow 	( .Actor:Self .False )
+	Call     SetPartEventBits 	( .Actor:Self 00000001 00400000 .False )
+	Call     UseBattleCamPreset 	( 00000002 )
+	Call     UseIdleAnimation 	( .Actor:Self .True ) 
+	Call     EnableIdleScript 	( .Actor:Self 00000001 )
+	Return
+	End
+}
+
+#new:Script $Script_ChargeBolt_DarkAspirant
+{
+	Call     UseIdleAnimation 	( .Actor:Self .False ) 
+	Call     EnableIdleScript 	( .Actor:Self 00000000 )
+	Call     SetTargetActor ( .Actor:Self .Actor:Player )
+	Call	SetAnimation	( .Actor:Self 00000001 00F1070A )
+	Call	$Function_DarkenBackground ( )
+	Call	PlaySound		( 00000365 )
+	Call	GetActorPos		( .Actor:Self *Var[0] *Var[1] *Var[2] )
+	Sub		*Var[2]  10`
+	Call	PlayEffect		( 0000005E 00000000 *Var[0] *Var[1] *Var[2] *Var[0] 200` 0` *Fixed[4.0] 00000006 00000000 00000000 00000000 00000000 )
+	Call	$Function_SetLightningPalette ( *VarF )
+	Wait	10` 
+	Call	$Function_ThunderFX ( )
+	Wait	5` 
+	Call	80254218 ( 0000000A )
+	Call	ShakeCam ( 00000001 00000000 00000005 *Fixed[1.0] )
+	Call	EnemyTestTarget ( .Actor:Self  *Var[0] 00000000 00000000 00000001 00000010 )
+	Switch   *Var[0] 
+		CaseOR   ==  00000006 % transparent
+		CaseOR   ==  00000005 % lucky
+			Goto	1
+		EndCaseGroup
+	EndSwitch
+	Call	SetGoalToTarget	( .Actor:Self )
+	Call	EnemyDamageTarget	( .Actor:Self *Var[0] 00000000 0000FFFF 80010264 00000015 00000020 )
+	Label	1
+	Call	SetAnimation	( .Actor:Self 00000001 00F10701 )
+	Wait	35` 
+	Call	$Function_BrightenBackground ( )
+	Call     EnableActorGlow 	( .Actor:Self .False )
+	Call     SetPartEventBits 	( .Actor:Self 00000001 00400000 .False )
+	Call     UseBattleCamPreset 	( 00000002 )
+	Call     UseIdleAnimation 	( .Actor:Self .True ) 
+	Call     EnableIdleScript 	( .Actor:Self 00000001 )
+	Return
+	End
+}
+
+#new:Script $Script_MultiBolt_DarkAspirant
+{
+	Call     UseIdleAnimation 	( .Actor:Self .False ) 
+	Call     EnableIdleScript 	( .Actor:Self 00000000 )
+	Call     SetTargetActor ( .Actor:Self .Actor:Player )
+	Call	SetAnimation	( .Actor:Self 00000001 00F1070A )
+	Call	$Function_DarkenBackground ( )
+	Call	PlaySound		( 00000365 )
+	Call	GetActorPos		( .Actor:Self *Var[0] *Var[1] *Var[2] )
+	Sub		*Var[2]  10`
+	Call	PlayEffect		( 0000005E 00000000 *Var[0] *Var[1] *Var[2] *Var[0] 200` 0` *Fixed[4.0] 00000006 00000000 00000000 00000000 00000000 )
+	Call	$Function_SetLightningPalette ( *VarF )
+	Wait	10` 
+	Call	GetActorVar ( .Actor:Self 00000002 *VarF )
+	Sub *VarF 5
+	Loop *VarF
+		Thread
+			Call	$Function_ThunderFX ( )
+			Wait	2` 							%5 -> 2
+			Call	80254218 ( 0000000A )
+			Call	ShakeCam ( 00000001 00000000 00000005 *Fixed[1.0] )
+			Call	EnemyTestTarget ( .Actor:Self  *Var[0] 00000000 00000000 00000001 00000010 )
+			Switch   *Var[0] 
+				CaseOR   ==  00000006 % transparent
+				CaseOR   ==  00000005 % lucky
+					%Goto	1						cannot miss! you can't ignore my wacky boss design :)
+				EndCaseGroup
+			EndSwitch
+			Call	SetGoalToTarget	( .Actor:Self )
+			Call	EnemyDamageTarget	( .Actor:Self *Var[0] 00000000 0000FFFF 00000000 0000000C 00000020 )
+		EndThread
+		Wait 5`
+	EndLoop
+	Call	SetAnimation	( .Actor:Self 00000001 00F10701 )
+	Wait	35` 
+	Call	$Function_BrightenBackground ( )
+	Call     EnableActorGlow 	( .Actor:Self .False )
+	Call     SetPartEventBits 	( .Actor:Self 00000001 00400000 .False )
+	Call     UseBattleCamPreset 	( 00000002 )
+	Call     UseIdleAnimation 	( .Actor:Self .True ) 
+	Call     EnableIdleScript 	( .Actor:Self 00000001 )
+	%Resets charge level to 0 (Getting rid of the charge is still a good idea because of this ridiculously powerful attack)
+	Call	 SetActorVar 		( .Actor:Self 00000002 00000000 )
+	Return
+	End
+}
+
+#new:Function $Function_DarkenBackground
+{
+	ADDIU     SP, SP, FFE8
+	SW        S0, 10 (SP)
+	DADDU     S0, A0, R0
+	BEQ       A1, R0, .o48
+	SW        RA, 14 (SP)
+	JAL       8011D82C
+	ADDIU     A0, R0, 1
+	DADDU     A0, R0, R0
+	DADDU     A1, A0, R0
+	DADDU     A2, A0, R0
+	DADDU     A3, A0, R0
+	LAW       V0, 801512F0
+	ADDIU     V1, R0, 1
+	JAL       8011BE5C
+	SB        V1, 0 (V0)
+	ADDIU     V0, R0, 14
+	SW        V0, 70 (S0)
+       .o48
+	DADDU     A0, R0, R0
+	DADDU     A1, A0, R0
+	DADDU     A2, A0, R0
+	LW        V1, 70 (S0)
+	ADDIU     V0, R0, 14
+	SUBU      V0, V0, V1
+	SLL       A3, V0, 2
+	ADDU      A3, A3, V0
+	SLL       A3, A3, 1
+	JAL       8011BE5C
+	ANDI      A3, A3, FE
+	LW        V0, 70 (S0)
+	ADDIU     V0, V0, FFFF
+	SW        V0, 70 (S0)
+	SLTIU     V0, V0, 1
+	LW        RA, 14 (SP)
+	LW        S0, 10 (SP)
+	SLL       V0, V0, 1
+	JR        RA
+	ADDIU     SP, SP, 18
+}
+	
+#new:Function $Function_BrightenBackground
+{
+	ADDIU     SP, SP, FFE8
+	SW        S0, 10 (SP)
+	DADDU     S0, A0, R0
+	BEQ       A1, R0, .o1C
+	SW        RA, 14 (SP)
+	ADDIU     V0, R0, 14
+	SW        V0, 70 (S0)
+	.o1C
+	DADDU     A0, R0, R0
+	DADDU     A1, A0, R0
+	LW        V0, 70 (S0)
+	DADDU     A2, A0, R0
+	SLL       A3, V0, 2
+	ADDU      A3, A3, V0
+	SLL       A3, A3, 1
+	JAL       8011BE5C
+	ANDI      A3, A3, FE
+	LW        V0, 70 (S0)
+	ADDIU     V0, V0, FFFF
+	BEQ       V0, R0, .o58
+	SW        V0, 70 (S0)
+	BEQ       R0, R0, .o70
+	DADDU     V0, R0, R0
+	.o58
+	DADDU     A0, R0, R0
+	DADDU     A1, A0, R0
+	DADDU     A2, A0, R0
+	JAL       8011BE5C
+	DADDU     A3, A0, R0
+	ADDIU     V0, R0, 2
+	.o70
+	LW        RA, 14 (SP)
+	LW        S0, 10 (SP)
+	JR        RA
+	ADDIU     SP, SP, 18
+}
+	
+#new:Function $Function_ThunderFX
+{
+	ADDIU     SP, SP, FFC0
+	SW        RA, 24 (SP)
+	SW        S2, 20 (SP)
+	SW        S1, 1C (SP)
+	SW        S0, 18 (SP)
+	SDC1      F24, 38 (SP)
+	SDC1      F22, 30 (SP)
+	SDC1      F20, 28 (SP)
+	JAL       ~Func:get_actor
+	LW        A0, 148 (A0)
+	JAL       ~Func:get_actor
+	LH        A0, 428 (V0)
+	DADDU     S0, V0, R0
+	BEQ       S0, R0, .o128
+	ADDIU     V0, R0, 2
+	JAL       80149CB4
+	ADDIU     A0, R0, 366
+	LIO       V1, CCCCCCCD
+	LBU       A0, 191 (S0)
+	LBU       V0, 190 (S0)
+	MULTU     A0, V1
+	LWC1      F0, 188 (S0)
+	SRL       V1, V0, 2
+	ADDU      V0, V0, V1
+	MTC1      V0, F6
+	NOP
+	CVT.S.W   F6, F6
+	MUL.S     F6, F6, F0
+	NOP
+	ADDIU     V0, A0, FFFE
+	MTC1      V0, F4
+	NOP
+	CVT.S.W   F4, F4
+	MUL.S     F4, F4, F0
+	NOP
+	LWC1      F2, 148 (S0)
+	LWC1      F22, 144 (S0)
+	LWC1      F24, 14C (S0)
+	MFHI      T0
+	SRL       V0, T0, 3
+	ANDI      V0, V0, FF
+	MTC1      V0, F0
+	NOP
+	CVT.S.W   F0, F0
+	TRUNC.W.S F8, F6
+	MFC1      S1, F8
+	TRUNC.W.S F8, F4
+	MFC1      S2, F8
+	LW        V0, 0 (S0)
+	ANDI      V0, V0, 8000
+	BEQ       V0, R0, .oE8
+	ADD.S     F20, F2, F0
+	SRL       V0, A0, 1
+	MTC1      V0, F0
+	NOP
+	CVT.S.W   F0, F0
+	SUB.S     F20, F20, F0
+	.oE8
+	JAL       800299FC
+	ADDIU     A0, R0, 2
+	ADDIU     A0, V0, 3
+	MFC1      A1, F22
+	MFC1      A2, F20
+	MFC1      A3, F24
+	MTC1      S1, F0
+	NOP
+	CVT.S.W   F0, F0
+	SWC1      F0, 10 (SP)
+	MTC1      S2, F0
+	NOP
+	CVT.S.W   F0, F0
+	JAL       80070CD0
+	SWC1      F0, 14 (SP)
+	%Now to update the color of the lightning bolt (hopefully)
+	%the shockwave thing has RGB values but the lightning bolt itself seems to have a palette in the effect data
+	%problem: the second effect doesn't always exist
+	%LW		 S1, C (V0)	%get pointer
+	%ADDIU	 S2, R0, FF
+	%SW		 S2, 90 (S1)
+	%ADDIU	 S2, R0, 77
+	%SW		 S2, 94 (S1)
+	%ADDIU	 S2, R0, F7
+	%SW		 S2, 98 (S1)
+	%ADDIU	 S2, R0, FF
+	%SW		 S2, 9C (S1)
+	%ADDIU	 S2, R0, FF
+	%SW		 S2, A0 (S1)
+	%ADDIU	 S2, R0, FF
+	%SW		 S2, A4 (S1)
+	ADDIU     V0, R0, 2
+	.o128
+	LW        RA, 24 (SP)
+	LW        S2, 20 (SP)
+	LW        S1, 1C (SP)
+	LW        S0, 18 (SP)
+	LDC1      F24, 38 (SP)
+	LDC1      F22, 30 (SP)
+	LDC1      F20, 28 (SP)
+	JR        RA
+	ADDIU     SP, SP, 40
+}
+
+#new:Script $Script_ChargeWave_DarkAspirant
+{
+	Call     UseIdleAnimation 	( .Actor:Self .False ) 
+	Call     EnableIdleScript 	( .Actor:Self 00000000 )
+    Call     SetTargetActor ( .Actor:Self .Actor:Player )
+    Call     UseBattleCamPreset 	( 0000000E )
+    Call     BattleCamTargetActor ( .Actor:Self )
+    Call     MoveBattleCamOver 	( 0000000F )
+    Wait     0000000F 
+    Call     SetAnimation 	( .Actor:Self 00000001 00F1070A )
+    Wait     00000005 
+    Call     PlaySoundAtActor 	( .Actor:Self .Sound:BigPowerUp )
+	Wait	 0000000A
+    Call     UseBattleCamPreset 	( 00000002 ) %preset E doesn't have mario on screen so the attack would basically be unblockable without this
+	Wait	 0000000A							%the timing is really bad without some extra time for the zoom
+    Call     GetActorPos 	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+    Call     GetStatusFlags ( .Actor:Self *Var[A] )
+    If  *Var[A]  &  00080000 
+		Call     PlayEffect  	( ~FX:SnakingStatic *Var[0] *Var[1] *Var[2] *Fixed[1.2] 0000001E 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+		Call	 $Function_SetStaticColors ( *VarF )
+    Else
+    	%Sub  *Var[0]  00000010 
+    	%Add  *Var[1]  0000001F 
+		%Sub  *Var[2]  00000002 
+		Call     PlayEffect  	( ~FX:SnakingStatic *Var[0] *Var[1] *Var[2] *Fixed[0.7] 0000001E 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+		Call	 $Function_SetStaticColors ( *VarF )
+	EndIf
+    Call     GetStatusFlags ( .Actor:Self *Var[0] )
+    If  *Var[0]  !&  00080000 
+    	Call     GetActorPos 	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+    	%Add  *Var[0]  0000000D 
+    	%Set  *Var[1]  00000037 
+    	Call     PlayEffect  	( ~FX:EnergyShockwave *Var[0] *Var[1] *Var[2] *Fixed[1.0] 0000003C 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+    Else
+		Call     GetActorPos 	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+		%Add  *Var[0]  00000005 
+		%Set  *Var[1]  00000016 
+		Call     PlayEffect  	( ~FX:EnergyShockwave *Var[0] *Var[1] *Var[2] *Fixed[1.0] 0000003C 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+	EndIf
+    Wait     00000008 
+    Call     SetGoalToTarget 	( .Actor:Self )
+    Call     EnemyTestTarget ( .Actor:Self *Var[A] 00000000 00000000 00000001 00000010 )
+    Switch  *Var[A] 
+    	CaseOR  ==  .HitResult:Miss % 6
+    	CaseOR  ==  .HitResult:Lucky % 5
+    		Call     SetTargetActor ( .Actor:Self .Actor:Partner )
+    		Call     EnemyTestTarget ( .Actor:Self *Var[B] 00000000 00000000 00000001 00000010 )
+    		Switch  *Var[B] 
+    			Case  ==  .HitResult:Miss % 6
+    				Call     SetAnimation 	( .Actor:Self 00000001 00F1070A )
+    				Wait     0000001E 
+    				Return
+    			Default
+    				Wait     00000002 
+    				If  *Var[A]  ==  00000005 
+    					Call     SetTargetActor ( .Actor:Self .Actor:Player )
+    					Call     EnemyTestTarget ( .Actor:Self *Var[0] 80000000 00000000 00000000 00000000 )
+    				EndIf
+    				Wait     00000002 
+    				Call     SetTargetActor ( .Actor:Self .Actor:Partner )
+    				Call     SetGoalToTarget 	( .Actor:Self )
+    				Call     EnemyDamageTarget 	( .Actor:Self *Var[0] 20000020 0000FFFF 80010164 00000002 00000020 )
+    				Call     8026F44C ( 00010000 )
+    				If  *Var[A]  !=  00000005 
+    					Call     SetAnimation 	( .Actor:Self 00000001 00F1070A )
+    				EndIf
+    				Wait     0000001E 
+    				Return
+    		EndSwitch
+    	EndCaseGroup
+    	Default
+    EndSwitch
+    Call     8026BF48 ( 00000001 )
+    Thread
+    	Wait     00000007 	%4 -> 7 to make this not as hard
+    	Call     SetTargetActor ( .Actor:Self .Actor:Partner )
+    	Call     SetGoalToTarget 	( .Actor:Self )
+    	Call     EnemyDamageTarget 	( .Actor:Self *Var[0] 20000020 0000FFFF 80010164 00000003 00000020 )
+    	Call     8026BF48 ( 00000000 )
+    EndThread
+    Wait     00000002 
+    Call     SetGoalToTarget 	( .Actor:Self )
+	Call     EnemyDamageTarget 	( .Actor:Self *Var[F] 20000110 0000FFFF 80010164 00000014 00000020 )
+  	Call     UseBattleCamPreset 	( 00000002 )
+	Call     EnableActorGlow 	( .Actor:Self .False )
+	Call     SetPartEventBits 	( .Actor:Self 00000001 00400000 .False )
+    Call     SetAnimation 	( .Actor:Self 00000001 00F10701 )
+	Call     UseIdleAnimation 	( .Actor:Self .True ) 
+	Call     EnableIdleScript 	( .Actor:Self 00000001 )
+	Return
+	End
+}
+
+%she has no allies to turbo charge
+%so no need to have all the scripts for that
+
+
+
+%lightning effect color swapping
+#new:Function $Function_SetStaticColors
+{
+		PUSH		RA, S0
+    8:  LW			V0, C (A0)
+    C:  JAL			~Func:get_variable
+   10:  LW			A1, 0 (V0)
+   14:  LW			V1, C (V0)
+   18:  ADDIU		A1, R0, FF			%R
+   1C:  SW			A1, 18 (V1)
+   20:  LW			V1, C (V0)
+   18:  ADDIU		A1, R0, 00			%G
+   24:  SW			A1, 1C (V1)
+   28:  LW			V1, C (V0)
+   18:  ADDIU		A1, R0, 00			%B
+   2C:  SW			A1, 20 (V1)
+   30:  LW			A0, C (V0)
+   34:  ADDIU		V1, R0, FF			%R 2
+   38:  SW			V1, 24 (A0)
+   3C:  LW			A0, C (V0)
+   40:  ADDIU		V1, R0, 77			%G 2
+   44:  SW			V1, 28 (A0)
+   48:  LW			V1, C (V0)
+   18:  ADDIU		A1, R0, 77			%B 2
+   4C:  SW			A1, 2C (V1)
+		.end
+   54:  ADDIU		V0, R0, 2
+		JPOP		RA, S0
+}
+
+#new:Function $Function_SetLightningPalette
+{
+		PUSH		RA, S0
+    8:  LW			V0, C (A0)
+    C:  JAL			~Func:get_variable
+   10:  LW			A1, 0 (V0)
+   14:  LW			V1, C (V0)
+   18:  ADDIU		A1, R0, FF			%R
+   1C:  SW			A1, 30 (V1)
+   20:  LW			V1, C (V0)
+   18:  ADDIU		A1, R0, A0			%G
+   24:  SW			A1, 34 (V1)
+   28:  LW			V1, C (V0)
+   18:  ADDIU		A1, R0, A0			%B
+   2C:  SW			A1, 38 (V1)
+   30:  LW			A0, C (V0)
+   34:  ADDIU		V1, R0, FF			%R 2
+   38:  SW			V1, 40 (A0)
+   3C:  LW			A0, C (V0)
+   40:  ADDIU		V1, R0, 77			%G 2
+   44:  SW			V1, 44 (A0)
+   48:  LW			V1, C (V0)
+   18:  ADDIU		A1, R0, 77			%B 2
+   4C:  SW			A1, 48 (V1)
+   54:  ADDIU		V0, R0, 2
+		JPOP		RA, S0
+}
+
+%lightning effect color swapping
+#new:Function $Function_SetRadialPalette
+{
+		PUSH		RA, S0
+    8:  LW			V0, C (A0)
+    C:  JAL			~Func:get_variable
+   10:  LW			A1, 0 (V0)
+   14:  LW			V1, C (V0)
+   18:  ADDIU		A1, R0, FF77		%R + G
+   1C:  SH			A1, 68 (V1)
+   20:  LW			V1, C (V0)
+   18:  ADDIU		A1, R0, F7FF		%B + R2?
+   24:  SH			A1, 6A (V1)
+   28:  LW			V1, C (V0)
+   18:  ADDIU		A1, R0, 77F7		%G2 + B2?
+   2C:  SH			A1, 6C (V1)
+   30:  LW			A0, C (V0)
+   34:  ADDIU		V1, R0, 00FF		%supplemental data
+   38:  SH			V1, 6E (A0)
+		.end
+   54:  ADDIU		V0, R0, 2
+		JPOP		RA, S0
+}
+
+
+#new:Function $Function_8021973C_DarkAspirant
+{
+    0:  ADDIU		SP, SP, FFE8
+    4:  SW			RA, 10 (SP)
+    8:  JAL			8011D82C			%not in docs
+    C:  ADDIU		A0, R0, 1
+   10:  CLEAR		A0
+   14:  ADDIU		V0, R0, 1
+   18:  COPY		A1, A0
+   1C:  COPY		A2, A0
+   20:  LAW			V1, 801512F0		
+   28:  COPY		A3, A0
+   2C:  JAL			~Func:set_background_color_blend		%set to 0,0,0,0
+   30:  SB			V0, 0 (V1)
+   34:  LW			RA, 10 (SP)
+   38:  ADDIU		V0, R0, 2
+   3C:  JR			RA
+   40:  ADDIU		SP, SP, 18
+}
+ 
+#new:Function $Function_80219780_DarkAspirant
+{
+    0:  ADDIU		SP, SP, FFE8
+    4:  SW			RA, 10 (SP)
+    8:  LW			V0, C (A0)
+    C:  JAL			~Func:get_variable
+   10:  LW			A1, 0 (V0)
+   14:  CLEAR		A0
+   18:  COPY		A1, A0
+   1C:  COPY		A2, A0			%set background color to (0,0,0,(input && FF))
+   20:  JAL			~Func:set_background_color_blend
+   24:  ANDI		A3, V0, FF
+   28:  LW			RA, 10 (SP)
+   2C:  ADDIU		V0, R0, 2
+   30:  JR			RA
+   34:  ADDIU		SP, SP, 18
+}
+
+
+
+/%
+#new:ConstDouble $ConstDouble_80232B38_DarkAspirant
+4.800000d
+%/

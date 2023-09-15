@@ -1,0 +1,52 @@
+@ $Script_80240460
+{
+    0:  Add   *MapVar[0]  00000001
+   10:  Switch  *MapVar[0]
+   1C:  	Case  ==  00000001
+   28:  		If  *GF_SBK20_ItemBlock_Mushroom  ==  .False
+   38:  			Call  PlaySound     ( 0000000B )
+   48:  			Call  PlaySoundAt   ( 00002108 00000000 FFFFFFB0 0000003C FFFFFF38 )
+   68:  			Call  PlayEffect    ( ~FX:Sparkles:Star FFFFFFB0 00000049 FFFFFF38 0000000A 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+   AC:  			Call  MakeEntity    ( .Entity:YellowBlock ~Vec4d:Entity8024050C .Item:SuperShroom 80000000 )
+   D4:  			Call  AssignBlockFlag   ( *GF_SBK20_ItemBlock_Mushroom )
+   E4:  		EndIf
+   EC:  	Case  ==  0000000A
+   F8:  		If  *GF_SBK20_ItemBlock_SuperShroom  ==  .False
+  108:  			Call  PlaySound     ( 0000000B )
+  118:  			Call  PlaySoundAt   ( 00002108 00000000 FFFFFF4C 0000003C FFFFFF38 )
+  138:  			Call  PlayEffect    ( ~FX:Sparkles:Star FFFFFF4C 00000049 FFFFFF38 0000000A 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+  17C:  			Call  MakeEntity    ( .Entity:YellowBlock ~Vec4d:Entity802405DC .Item:SuperBunch 80000000 )
+  1A4:  			Call  AssignBlockFlag   ( *GF_SBK20_ItemBlock_SuperShroom )
+  1B4:  		EndIf
+  1BC:  	Case  ==  00000064
+  1C8:  		If  *GF_SBK20_ItemBlock_UltraShroom  ==  .False
+  1D8:  			Call  PlaySound     ( 0000000B )
+  1E8:  			Call  PlaySoundAt   ( 00002108 00000000 FFFFFF7E 0000003C FFFFFF6A )
+  208:  			Call  PlayEffect    ( ~FX:Sparkles:Star FFFFFF7E 00000049 FFFFFF6A 0000000A 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+  24C:  			Call  MakeEntity    ( .Entity:YellowBlock ~Vec4d:Entity802406AC .Item:GoldenShroom 80000000 )
+  274:  			Call  AssignBlockFlag   ( *GF_SBK20_ItemBlock_UltraShroom )
+  284:  		EndIf
+  28C:  EndSwitch
+  294:  Return
+  29C:  End
+}
+
+@ $Script_MakeEntities
+{
+    0:  Call  MakeEntity    ( .Entity:MultiTriggerBlock ~Vec4d:Entity80240704 80000000 )
+   24:  Call  AssignScript  ( $Script_80240460 )
+   34:  If  *GF_SBK20_ItemBlock_Mushroom  ==  .True
+   44:  	Call  MakeEntity        ( .Entity:YellowBlock ~Vec4d:Entity80240748 .Item:SuperShroom 80000000 )
+   6C:  	Call  AssignBlockFlag   ( *GF_SBK20_ItemBlock_Mushroom )
+   7C:  EndIf
+   84:  If  *GF_SBK20_ItemBlock_SuperShroom  ==  .True
+   94:  	Call  MakeEntity        ( .Entity:YellowBlock ~Vec4d:Entity80240798 .Item:SuperBunch 80000000 )
+   BC:  	Call  AssignBlockFlag   ( *GF_SBK20_ItemBlock_SuperShroom )
+   CC:  EndIf
+   D4:  If  *GF_SBK20_ItemBlock_UltraShroom  ==  .True
+   E4:  	Call  MakeEntity        ( .Entity:YellowBlock ~Vec4d:Entity802407E8 .Item:GoldenShroom 80000000 )
+  10C:  	Call  AssignBlockFlag   ( *GF_SBK20_ItemBlock_UltraShroom )
+  11C:  EndIf
+  124:  Return
+  12C:  End
+}

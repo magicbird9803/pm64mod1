@@ -1,0 +1,202 @@
+%Scrapped: an actual dark star fight
+%Didn't really want to make a whole bunch of sprites for that
+%This was before I decided that Bowser would have it
+
+%Dark Star:
+%	200 hp, 12 atk? 99/0 def
+%		The star has 99 defense until you kill 2 satellmites
+%		when you kill the satellmites, it becomes vulnerable for 3 turns or after getting to a certain HP
+%		Force summon at 200 hp, 150 hp, 100 hp, and 50hp
+%	attacks:
+%		clone attack: 5 hit for 6 each
+%			at lower health it gets faster
+%		lightning bolt (12 damage + paralyze proc)
+%		black hole attack: mashing minigame, just like huff n puff (but you have very little time to mash)
+%			damage:
+%				2 = safe (0 damage)
+%				3 = safe (0 damage)
+%				4 = 20 damage
+%				5 = 40 damage
+%				6 = 60 damage
+%				7 = 80 damage
+
+%Dark Satellmites:
+%	30 hp, 8 atk, 0*def
+%	You have to kill them to make dark star vulnerable
+%	On first possible turn, they turn into dark partners
+%		(might need to use weird programming to get everything to work)
+
+%Dark partner stats
+
+%All the buffing moves are changed
+%since there would only be one possible target
+
+%Dark goombario: 40 hp, 4x2 atk, 0 def
+%	Will not use tattle (no free turn for you)
+%	Can use charge to permanently raise attack power by 3
+%	Can also use megabonk for 12 damage
+%AI:
+%	headbonk (megabonk if mario HP < 50%)
+%	charge (headbonk if attack power >= 6)
+%	megabonk 
+
+%Dark kooper: 32 hp, 7 atk, 1 def
+%	Gets up and attacks on same turn
+%	Fire shell
+%	Can use dizzy shell :) 
+%AI:
+%	shell toss
+%	fire shell (dizzy shell if partner is stunned)
+%	dizzy shell (shell toss if mario is dizzy)
+
+%Dark bombette: 48 hp, 7 atk, 1 def
+%	Body slam rarely used
+%		if she gets zapped, you take 9 damage from the explosion
+%	Can use bomb for 9 damage
+%		shrink bomb does 6/1 and 100% shrink
+%		mega bomb does 9/3
+%AI:
+%	mega bomb (body slam if partner is stunned)
+%	regular bomb
+%	shrink bomb
+
+%Dark parakarry: 32 hp, 7 atk, 1 def
+%	Sky dive does 7
+%	Shell shot does 9
+%		Will do shell shot if he is zapped with zap tap
+%	Air lift does 12 unblockable
+%		*does shell shot if it fails
+%AI:
+%	sky dive
+%	shell shot
+%	air lift
+
+%Dark bow: 40 hp, 2x6 atk, 0 def
+%	If smack does less than 6 damage, she will avoid using it for the rest of battle
+%	Fan smack does 4x5 and each hit has increasing dizzy proc (15-30-45-60-85)
+%	Spook does 6 damage and 2 turn stop
+%AI:
+%	Smack (skip this if conditions are met, see above)
+%	Fan smack
+%	Spook
+
+%Dark watt: 24 hp, 7 atk, 0 def
+%	Can do charge wave and charge bolt
+%AI:
+%	Electro dash
+%	Charge bolt (skip if mario is stunned)
+%	Charge wave (skip if partner is stunned)
+
+%Dark sushie: 56 hp, 6 atk, 0 def
+%	Belly flop removes action commands
+%	squirt does 9 damage (with 1 turn poison)
+%	water block -> poison block (poisons for 3 turns)
+%AI:
+%	Poison block
+%	Squirt
+%	Belly flop
+
+%Dark lakilester: 48 hp, 7 atk, 0 def
+%	Spiny surge does 7/2
+%	Hurricane does 6/3 and has 2 turn ice proc
+%AI:
+%	Hurricane
+%	Spiny surge
+%	Spiny toss
+
+%placeholder stage
+#new:StageTable $StageTable
+{
+"kpa_83" $Boss_Stage
+"tem_03" $Stage_Temple
+00000000 00000000
+}
+
+#new:Script $Script_BeforeBattle_80234D60
+{
+    0:  Call     SetSpriteShading 	( FFFFFFFF )
+   10:  Call     SetCamBGColor 	( 00000001 00000000 00000000 00000000 )
+   2C:  Return
+   34:  End
+}
+
+#new:Script $Script_AfterBattle_80234D9C
+{
+    0:  Return
+    8:  End
+}
+
+#new:Stage $Boss_Stage
+{
+"kpa_tex"  % kpa_tex
+"kpa_bt13_shape"  % kpa_bt13_shape
+"kpa_bt13_hit"  % kpa_bt13_hit
+$Script_BeforeBattle_80234D60 
+$Script_AfterBattle_80234D9C 
+00000000 
+00000000 
+00000000 
+00000000 
+00000000 
+}
+
+#new:Stage $Stage_Temple
+{
+"kpa_tex"
+"tem_b07_shape"
+"tem_b07_hit"
+$Script_BeforeBattle_Temple
+$Script_AfterBattle_Temple
+00000000 
+00000000 
+00000000 
+00000000 
+00000000 
+}
+
+#new:Script $Script_BeforeBattle_Temple
+{
+	Return
+	End
+}
+
+#new:Script $Script_AfterBattle_Temple
+{
+	Return
+	End
+}
+
+#new:Vector3D $Vector3D_DarkStarPos
+{
+70` 70` 5`
+}
+
+/%
+#new:Formation $BossFormation %might change the position slightly
+$DarkStar 00000006 00000000 00000000 00000000 00000000
+%/
+
+#import newenemy/DarkPartners.bpat
+
+#new:Formation $DebugFormation1
+{
+$DarkGoombario 00000000 00000010 00000000 00000000 00000000 00000000
+$DarkKooper 00000001 0000000F 00000000 00000000 00000000 00000000
+$DarkBombette 00000002 0000000E 00000000 00000000 00000000 00000000
+$DarkSushie 00000003 0000000D 00000000 00000000 00000000 00000000
+$DarkParakarry 00000004 0000000C 00000000 00000000 00000000 00000000
+$DarkBow 00000005 0000000B 00000000 00000000 00000000 00000000
+$DarkWatt 00000006 0000000A 00000000 00000000 00000000 00000000
+$DarkLakilester 00000007 00000009 00000000 00000000 00000000 00000000
+}
+
+#new:FormationTable $FormationTable
+{ 
+00000000 00000008 $DebugFormation1 $Stage_Temple 00000000
+00000000 00000000 00000000 00000000 00000000
+}
+
+#new:Vector3D $Vector3D_Offscreen
+{
+0` -1000` 0`
+}

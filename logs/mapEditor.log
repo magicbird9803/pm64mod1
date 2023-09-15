@@ -1,0 +1,733 @@
+Initializing OpenGL 3.3 (core)
+Using driver: 3.3.0 NVIDIA 537.13
+NumberFormatException
+For input string: "-30,500000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "-8,660706"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "-8,660706"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "-8,000000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "-3,000000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "-8,000000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "-8,000000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "-2,000000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "-13,000000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "0,000000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "-13,000000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "3,000000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "-10,000000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "-6,000000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "16,000000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "-13,000000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "13,000000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "-13,000000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "13,000000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "13,000000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "-13,000000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "-13,000000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "-13,000000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "-13,000000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "5,040000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "9,000000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "7,500000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "-30,000000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "-2,000000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "14,000000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "14,000000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "-30,000000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "-13,000000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "9,973404"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "9,973404"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "29,920212"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "0,000000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "-12,000000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "-13,000000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "15,000000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "25,000000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "25,000000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "25,000000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "12,500000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "25,000000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "25,000000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "25,000000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "12,500000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "25,000000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "25,000000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "25,000000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+NumberFormatException
+For input string: "12,500000"
+  at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+  at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+  at java.base/java.lang.Float.parseFloat(Float.java:476)
+  at romdata.world.entity.EntityModel.readFromObj(EntityModel.java:465)
+  at romdata.world.entity.EntityInfo.loadModels(EntityInfo.java:253)
+  at editor.render.Renderer.<init>(Renderer.java:108)
+  at editor.MapEditor.glInit(MapEditor.java:651)
+  at editor.EditorCanvas.initGL(EditorCanvas.java:70)
+  at org.lwjgl.opengl.awt.AWTGLCanvas.render(AWTGLCanvas.java:104)
+  at editor.MapEditor.<init>(MapEditor.java:547)
+  at main.StarRodDev.main(StarRodDev.java:196)
+Loaded crash in 73,73 ms
+Loaded hos_14.backup in 68,47 ms
+Loaded 103 textures from hos_tex
+Map background is hos_bg
+Loaded 5 guide sprites for the 3D cursor.
+Compiling shader: ModelShader
+Compiling shader: EntityShader
+Compiling shader: TexturedShader
+Compiling shader: MarkerShader
+Compiling shader: HitShader
+Compiling shader: LineShader
+Compiling shader: SolidShader
+Compiling shader: TextShader
+Compiling shader: PassThroughShader
+Compiling shader: PointShader
+Compiling shader: SpriteShader
+Exec: Change Object Selection
+Exec: Change Object Selection
+Exec: Change Object Selection
+Exec: Set Marker Name
+Exec: Set Sprite
+Exec: Change Object Selection
+Exec: Change Object Selection
+Exec: Set Sprite
+Exec: Change Object Selection
+Exec: Change Object Selection
+Exec: Change Object Selection
+Exec: Set Sprite
+Exec: Set Sprite
+Exec: Set Sprite
+Exec: Change Object Selection
+Exec: Change Object Selection
+Exec: Change Object Selection
+Exec: Change Object Selection
+Exec: Change Object Selection
+Exec: Change Object Selection
+Exec: Change Object Selection
+Exec: Set Sprite
+Exec: Change Object Selection
+Exec: Change Object Selection
+Exec: Change Object Selection
+Exec: Change Object Selection
+Exec: Set Sprite
+Exec: Change Object Selection
+Exec: Change Object Selection
+Exec: Change Object Selection
+Exec: Change Object Selection
+Exec: Change Object Selection
+Exec: Change Object Selection
+Exec: Change Object Selection
+Saved hos_14.xml in 143,73 ms
+Exec: Change Object Selection
+Saved hos_14.xml in 104,59 ms
+Saved config: map_editor.cfg
+Exited without error.

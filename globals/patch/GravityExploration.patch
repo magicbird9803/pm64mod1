@@ -1,0 +1,13 @@
+%Mess up gravity lol
+%Gravity constants are 70 + 8010EFC8 = 8010F038
+%It looks like most aerial states hardcode these numbers
+
+%Check the stuff to see what changes these (the last one is changed the least often)
+
+
+%800F7B60 ? falling constants
+
+
+
+
+%Ultra boots sets 3 values using some hardcoded values around 802B6088

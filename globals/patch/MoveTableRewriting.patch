@@ -1,0 +1,274 @@
+%Move Table Rewriting
+
+%The move table and item tables are stored in ram, so they can be modified with code
+
+%Also, star rod has some restrictions on some values (prevents you from adding new ability IDs)
+
+%Move Table
+%Starts around 800878F8
+
+%star moves load this as 8008F071
+
+%sometimes loaded as 800878FA
+
+%800878E0	= loading name
+
+%Looks like it starts around 80087900		?
+%That is the first line that aligns the text and has all the required data in the line
+%Line length = 0x20
+
+%This one appears to be somewhat unused
+%It does not share the same updates as 
+
+
+%Move table
+%Line length = 0x14
+%First one is move name
+%Starts at 8008F060
+
+%Format
+%(4) = Move name
+%(4) = Flag block
+%(4) = Menu desc
+%(4) = Item desc
+%(1) = Type
+%(1) = FP
+%(1) = BP
+%(1) = Minigame
+
+%So unfortunately those abilities are not actually in the move table
+
+%Outta Sight FP cost value
+%8008FEA9
+
+%The FP cost gets increased by 2 every time you use it (To discourage outta sight spam strategies, but not stop you from just using it sparingly)
+
+%#define .OuttaSightAddress 8008FEA9
+%#export .OuttaSightAddress
+
+#export:Data $OuttaSightAddress
+{
+	8008FEA9
+}
+
+%bp cost of flower coins (increased when greed stone is active)
+#export:Data $FlowerCoinsBPAddress
+{
+	8008FCB6
+}
+
+#export:Function $SetFlowerCoinsCost
+{
+	PUSH	RA, S0, S1, S2, S3, S4
+	LAW		S0, $FlowerCoinsBPAddress
+	LI		S1, 8`
+	SB		S1, 0 (S0)
+	POP		RA, S0, S1, S2, S3, S4
+	JR		RA
+	NOP
+}
+
+
+%I found the "move table"
+%The "move table" is actually just a blob of code in 800E9D48 / 80438450
+%It checks specific badge values
+
+%So I guess I'll just use the custom badge function rather than change the move table
+
+
+%New mechanic: Air lift is a 100% chance (*if enemy is at least 25% to airlift)
+%	but can only be used once
+
+
+#export:Data $AirLiftBool
+{
+	00000000
+}
+
+%Copied from black pit code
+/%
+Parakarry - Air Lift
+%/
+@Hook 192360 % 80263A80
+{
+    PUSH    RA, A0, A1, A2, A3, V0, V1
+    LAW     V0, $AirLiftBool
+    BEQ     V0, R0, .End
+    NOP
+	%used move, is it time to disable the move?
+    LABU    V0, 8010F2A2 % load current partner
+    ORI     V1, R0, 4 % Parakarry
+    BEQ     V0, V1, .Parakarry
+    NOP
+    % Isn't any of those partners so just finish
+    BEQ     R0, R0, .End
+    NOP
+    .Parakarry
+    ORI     V1, R0, 2 % Air Lift
+    BNE     S1, V1, .End
+    NOP
+    BEQ     R0, R0, .End
+    CLEAR   S6 % Lock this move
+    .End
+    POP     RA, A0, A1, A2, A3, V0, V1
+    SB	    S6, 01F6 (S2)
+    ORI     S6, R0, 1
+    J       80263A88
+    LB	    V0, 040C (S5)
+}
+
+%This does not work (it doesn't actually check for stellar nova)
+/%
+@Hook 41B294 % 802A6504
+{
+    PUSH    RA, A0, A1, A2, A3, V1
+    LAW		A1, $StellarNovaBoolean
+	BEQ		A1, R0, .end
+	NOP
+	%can't do it anyway? don't try to set boolean
+    BEQ     V0, R0, .End
+    NOP
+    ORI     A2, R0, 8 % stellar nova?? (kalmar is 6 here?)
+    BNE     S3, A2, .End
+    NOP
+    .end
+    POP     RA, A0, A1, A2, A3, V1
+    SB	    V0, 01F6 (S0)
+    J       802A650C
+    LB	    V0, 040C (S7)
+}
+%/
+
+%Also send a special message if you try using the move again
+@Hook 419304 % 802A4574
+{
+	%Check if this is the star powers menu
+	BEQ	    V0, R0 .notStarSpirits
+    NOP
+	ORI	    S0, S0, 00A0 % You don't have enough Star Power
+	%Check for Stellar Nova inaccessibility
+	LAB		T0, $StellarNovaBoolean	
+	BEQ		T0, R0 .notSN
+	NOP
+    LABU    T0, 802AD109 % Cursor Pos
+	LI		T1, 9`	
+    BEQ  	T0, T1, .ShowMessage % Focus	
+    ORI	    S0, S0, 01B1 % Use Stylish Moves to get Star Energy!
+	%
+	%Check for stellar flowers also (and stellar coins)
+	.notSN	
+	PUSH	A0, V0, RA
+	JAL		$IsBadgeEquipped		%Stellar flowers
+	ORI		A0, R0, .Item:FlowerHealth
+	COPY	T0, A0
+	JAL		$HasGreedStone
+	NOP			
+	AND		T0, T0, V0		%flower health + has greed stone
+	POP		A0, V0, RA
+	LI		S0, 001D01B2
+	BNE		T0, R0, .ShowMessage	
+	NOP
+	.noSC
+	PUSH	A0, RA
+	JAL		$IsBadgeEquipped		%Stellar flowers
+	ORI		A0, R0, 14F
+	COPY	T0, A0
+	POP		A0, RA
+	LI		S0, 001D00A0
+	BEQ		T0, R0, .ShowMessage	
+	NOP
+	%ORI	S0, S0, 00A0 			% You don't have enough Star Power	
+	BEQ		R0, R0, .ShowMessage	
+	ADDI	S0, S0, FFFF 			%1D - 9F = not enough FP	
+	.notStarSpirits
+    % S0 = StringID
+	%	[001D0000] + ???	
+    LAW     V0, $AirLiftBool
+    BEQ     V0, R0, .checkHP
+    NOP
+    % The player is inside the Maze check the current partner
+    LABU    T0, 8010F2A2 % load current partner
+    ORI     T1, R0, 4 % Parakarry
+    BEQ     T0, T1, .Parakarry
+	NOP
+    % Isn't any of those partners so just finish
+    BEQ     R0, R0, .checkHP
+    NOP
+    .Parakarry
+    LABU    T0, 802AD109 % Cursor Pos
+    ORI     T1, R0, 2 % Air Lift
+    BNE     T0, T1, .checkHP
+    NOP
+    BEQ     R0, R0, .ShowMessage
+    ORI	    S0, S0, 01AF % special message
+	%wait, check flower health too
+	.checkHP
+	%also check flower coins
+	JAL		$IsBadgeEquipped
+	LI		A0, .Item:FlowerCoins
+	BEQ		A0, R0, .noFC2
+	NOP
+	ORI	    S0, S0, 01B2 			% not enough coins
+	BEQ		R0, R0, .ShowMessage
+	NOP
+	.noFC2
+	PUSH	A0, A1, A2, T0, T1, T2, T3, RA	 %no clue which internal values the function uses so...
+	JAL		800E9D48	
+	ADDIU 	A0, R0, 11	
+	POP		A0, A1, A2, T0, T1, T2, T3, RA	 %no clue which internal values the function uses so...
+	BEQ		V0, R0, .end
+	NOP
+	ORI	    S0, S0, 01B0 			% not enough HP	
+    .ShowMessage
+    J       802A4584
+    NOP
+    .End
+    J       802A457C	%show FP text
+    NOP
+}
+
+%8008F358 = ultra dual charge entry
+
+
+
+%display dual charges in both menus
+%80263580
+
+%Move type C => both jump and hammer
+
+@Hook 191E60
+{
+	ADDU	S1, V0, T1
+	LB		V0, 10 (S1)
+	PUSH	A0, A1, A2
+	LI		A0, 5
+	BNE		A0, V0, .no
+	NOP
+	LI		V0, 2
+	.no
+	POP		A0, A1, A2
+	J		80263588
+	NOP
+}
+%check against 2
+
+@Hook 19208C
+{
+	ADDU	S1, V0, T1
+	LB		V0, 10 (S1)
+	PUSH	A0, A1, A2
+	LI		A0, 5
+	BNE		A0, V0, .no
+	NOP
+	LI		V0, 1
+	.no
+	POP		A0, A1, A2
+	J		802637B4
+	NOP
+}
+%check against 1
+
+
+
+
+%

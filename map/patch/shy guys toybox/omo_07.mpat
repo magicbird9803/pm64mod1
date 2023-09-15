@@ -1,0 +1,136 @@
+%red fuzzy time
+
+@ $NpcGroup_802452EC
+{
+00000005 $NpcSettings_80243AF8 ~Vec3f:NPC_802452EC % 1050 0 0
+00440F00 $Script_Init_80244A20 00000000 00000000 0000010E 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus
+~Movement:NPC_802452EC
+002B0402 002B0402 002B0403 002B0403 002B0401 002B0401 002B0408 002B0408
+002B0403 002B0403 002B0403 002B0403 002B0403 002B0403 002B0403 002B0403% .Sprite:Fuzzy
+00000000 00000000 00000000 00000000 % no tattle string
+}
+
+
+%Add puffs here
+#import NPC_Puff.mpat
+
+#new:NpcGroup $NpcGroup_Puff1
+{
+0000000A $NpcSettings_Puff ~Vec3f:NPC_Puff1
+00000C00 00000000 00000000 00000000 0000005A 
+~İtems:5:SuperShroom:A
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:0:3
+~Movement:NPC_Puff1
+007D0000 007D0000 007D0005 007D0005 007D0000 007D0000 007D0006 007D0006
+007D0005 007D0001 007D0001 007D0001 007D0001 007D0001 007D0001 007D0001 
+00000003 00000000 00000000 00000000 % no tattle string
+}
+
+#new:NpcGroup $NpcGroup_Puff2
+{
+0000000B $NpcSettings_Puff ~Vec3f:NPC_Puff2
+00000C00 00000000 00000000 00000000 0000005A 
+~İtems:5:SuperShroom:A
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:0:3
+~Movement:NPC_Puff2
+007D0000 007D0000 007D0005 007D0005 007D0000 007D0000 007D0006 007D0006
+007D0005 007D0001 007D0001 007D0001 007D0001 007D0001 007D0001 007D0001 
+00000003 00000000 00000000 00000000 % no tattle string
+}
+
+%formation 12-0A -> 10-29
+@ $NpcGroupList_80245CB8
+{
+00000001 $NpcGroup_80244B2C 10290004 
+00000001 $NpcGroup_80244D1C 10290004 
+00000001 $NpcGroup_80244F0C 10290004 
+00000001 $NpcGroup_802450FC 10290004
+00000001 $NpcGroup_802456CC 10140001 
+00000001 $NpcGroup_802458BC 10120001 
+00000001 $NpcGroup_802452EC 12050006 
+00000001 $NpcGroup_Puff1    10200001
+00000001 $NpcGroup_Puff2    10210001
+00000000 00000000 00000000 
+}
+
+@ $NpcGroupList_80245D18
+{
+00000001 $NpcGroup_80244B2C 10290004 
+00000001 $NpcGroup_80244D1C 10290004 
+00000001 $NpcGroup_80244F0C 10290004 
+00000001 $NpcGroup_802450FC 10290004 
+00000001 $NpcGroup_802456CC 10140001 
+00000001 $NpcGroup_802458BC 10120001 
+00000001 $NpcGroup_802454DC 12070006 
+00000001 $NpcGroup_Puff1    10200001
+00000001 $NpcGroup_Puff2    10210001
+00000000 00000000 00000000 
+}
+
+@ $NpcGroupList_80245D78
+{
+00000001 $NpcGroup_80244B2C 10290004 
+00000001 $NpcGroup_80244D1C 10290004 
+00000001 $NpcGroup_80244F0C 10290004 
+00000001 $NpcGroup_802450FC 10290004 
+00000001 $NpcGroup_802456CC 10140001 
+00000001 $NpcGroup_802458BC 10120001 
+00000001 $NpcGroup_Puff1    10200001
+00000001 $NpcGroup_Puff2    10210001
+00000000 00000000 00000000 
+}
+
+@ $Script_Idle_80244834
+{
+	0:  Label    00000000 
+    C:  Call     GetPlayerPos 	( *Var[0] *Var[1] *Var[2] )
+   24:  If  *Var[0]  <  000003DE 
+   34:  	Wait     00000001 
+   40:  	Goto     00000000 
+   4C:  EndIf
+   54:  Call     DisablePlayerInput 	( .True )
+   64:  Call     $Function_80242E70 ( )
+   70:  Call     GetNpcPos   	( .Npc:Self *Var[0] *Var[1] *Var[2] )
+   8C:  Call     802CC3EC ( 00000000 *Fixed[5.0] *Var[0] *Var[1] *Var[2] 0000012C *Fixed[13.0] *Fixed[-9.5] )
+   B8:  If  *GB_OMO_PeachChoice2  ==  00000000 
+   C8:  	Call     SpeakToPlayer 	( 00000005 002B040B 002B0401 00000000 000F003C ) % !!!!!!!! Meeeoork! Mario! This'll be fun!
+   E8:  Else
+   F0:  	Call     SpeakToPlayer 	( 00000006 005A000A 005A0002 00000000 000F003D ) % Nyuck yuck yuck... What took you so long, Mario? R ...
+  110:  EndIf
+  118:  Thread
+  120:  	Call     $Function_80242E8C ( )
+  12C:  	Call     ResetCam    	( .Cam:Default *Fixed[4.0] )
+  140:  EndThread
+  148:  Call     DisablePlayerInput 	( .False )
+  158:  Call     StartBossBattle 	( .Song:SpecialBattle )
+  168:  Return
+  170:  End
+}
+
+@ $Script_MakeEntities
+{
+	0:  Call     MakeEntity  	( .Entity:Chest ~Vec4d:Entity802462C0 00000000 80000000 )
+   28:  Call     AssignFlag  	( *Flag_OMO_2C )
+   38:  Call     AssignScript 	( $Script_80245F4C )
+   48:  Call     MakeEntity  	( .Entity:Chest ~Vec4d:Entity80246308 00000000 80000000 )
+   70:  Call     AssignFlag  	( *Flag_OMO_2D )
+   80:  Call     AssignScript 	( $Script_80245FA8 )
+   90:  Call     MakeEntity  	( .Entity:Chest ~Vec4d:Entity80246350 00000000 80000000 )
+   B8:  Call     AssignFlag  	( *Flag_OMO_2E )
+   C8:  Call     AssignScript 	( $Script_80245FF4 )
+   D8:  Call     MakeEntity  	( .Entity:YellowBlock ~Vec4d:Entity80246398 .Item:SuperShroom 80000000 )
+  100:  Call     AssignBlockFlag 	( *Flag_OMO_2B )
+  110:  Call     MakeEntity  	( .Entity:StarBoxLaucher ~Vec4d:Entity802463D0 80000000 )
+  134:  Call     AssignScript 	( $Script_8024623C )
+  144:  Call     MakeEntity  	( .Entity:StarBoxLaucher ~Vec4d:Entity80246404 80000000 )
+  168:  Call     AssignScript 	( $Script_80246268 )
+  178:  Call     MakeEntity  	( .Entity:StarBoxLaucher ~Vec4d:Entity80246438 80000000 )
+  19C:  Call     AssignScript 	( $Script_80246294 )
+  1AC:  Return
+  1B4:  End
+}

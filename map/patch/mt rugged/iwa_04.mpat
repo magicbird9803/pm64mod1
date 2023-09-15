@@ -1,0 +1,24 @@
+@ $Script_NpcAI_802418EC
+{
+[90C]  		Set  *Var[B]  000D0034 %string id
+[91C]  		Set  *Var[C]  00670004 %set the talk animation to be the same as the other two cases 
+[A30]		Call     SpeakToPlayer 	( .Npc:Self *Var[C] 00670001 00000000 *Var[B] ) % variable string ID
+			If  *Var[A]  !=  *Var[A] %you are doomed to fail (this determines if you have to fight, false = fight, true = no fight)
+}
+
+@ $Script_MakeEntities %$Script_80241594
+{
+	0:  Thread
+    8:  	Call     $Function_80240000 ( )
+   14:  EndThread
+   1C:  Call     MakeEntity  	( .Entity:ScriptSpring ~Vec4d:Entity802415B0 80000000 )
+   40:  Call     AssignScript 	( $Script_80241484 )
+		Call     MakeEntity  	( .Entity:HealingBlock ~Vec4d:EntityHeartBlock 80000000 ) %heart block before boss fight
+   50:  Call     MakeEntity  	( .Entity:RedArrowSigns ~Vec4d:Entity802415E4 0000005A 80000000 )
+   78:  Call     MakeEntity  	( .Entity:RedArrowSigns ~Vec4d:Entity8024160C 0000010E 80000000 )
+   A0:  Call     MakeEntity  	( .Entity:RedArrowSigns ~Vec4d:Entity80241634 00000046 80000000 )
+   C8:  Call     MakeEntity  	( .Entity:RedArrowSigns ~Vec4d:Entity8024165C 0000005A 80000000 )
+   F0:  Call     MakeItemEntity ( .Item:Letter10 ~Vec3d:Item80241684 00000011 *Flag_IWA_15 )
+  114:  Return
+  11C:  End
+}

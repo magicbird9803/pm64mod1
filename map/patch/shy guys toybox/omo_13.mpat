@@ -1,0 +1,99 @@
+@ $Script_Interact_80241D98
+{
+%    0:  If  *Flag_OMO_07  ==  00000001 
+%   10:  	Call     SpeakToPlayer 	( .Npc:Self 003B0515 003B0515 00000005 000F004D ) % Oh...so good...tart... So yummy... 
+%   30:  	Return
+%   38:  EndIf
+   40:  Call     AdjustCam 	( .Cam:Default *Fixed[5.0] 0000000A *Fixed[300.0] *Fixed[15.0] *Fixed[-7.5] )
+   64:  Call     FindItem    	( .Item:LemonCandy *Var[0] )
+   78:  If  *Var[0]  ==  FFFFFFFF 
+   88:  	Thread
+   90:  		Wait     0000000A 
+   9C:  		Call     SetPlayerAnimation 	( 00080011 )
+   AC:  		Wait     00000014 
+   B8:  		Call     SetPlayerAnimation 	( 00010002 )
+   C8:  	EndThread
+   D0:  	Call     SpeakToPlayer 	( .Npc:Self 003B0511 003B0501 00000000 000F0046 ) % Hm? What do you want? Get away from that Treasure  ...
+   F0:  	Call     EndSpeech 	( .Npc:Self 003B0513 003B0501 00000000 )
+  10C:  	Call     ShowChoice  	( 001E0044 ) % Don't fight Fight 
+  11C:  	If  *Var[0]  ==  00000000 
+  12C:  		Call     ContinueSpeech 	( .Npc:Self 003B0511 003B0501 00000000 000F0048 ) % Good. You're a smart boy!
+  14C:  	Else
+  154:  		Wait     00000005 
+  160:  		Call     ContinueSpeech 	( .Npc:Self 003B0511 003B0501 00000000 000F0047 ) % You wanna fight? Are you nuts? You don't wanna mes ...
+  180:  		Call     ShowChoice  	( 001E0044 ) % Don't fight Fight 
+  190:  		If  *Var[0]  ==  00000000 
+  1A0:  			Call     ContinueSpeech 	( .Npc:Self 003B0511 003B0501 00000000 000F0048 ) % Good. You're a smart boy!
+  1C0:  		Else
+  1C8:  			Call     ContinueSpeech 	( .Npc:Self 003B0511 003B0501 00000000 000F0049 ) % What!! Well, all Right... I do love a challenge! H ...
+  1E8:  			Call     SetNpcVar   	( .Npc:Self 00000000 00000001 )
+  200:  		EndIf
+  208:  	EndIf
+  210:  Else
+  218:  	Call     SpeakToPlayer 	( .Npc:Self 003B0511 003B0501 00000000 000F004A ) % Sniff sniff... Sniff? Do I smell Lemon Candy? Hey! ...
+  238:  	Call     PlaySoundAtNpc ( .Npc:Self 00000262 00000000 )
+  250:  	Call     ShowEmote   	( .Npc:Self .Emote:Exclamation 00000000 0000001E 00000001 00000000 00000000 00000000 00000000 )
+  280:  	Wait     0000001E 
+  28C:  	Call     EndSpeech 	( .Npc:Self 003B0511 003B0501 00000000 )
+  2A8:  	Wait     0000000F 
+  2B4:  	Call     SetPlayerAnimation 	( 0008001E )
+  2C4:  	Wait     0000000F 
+  2D0:  	Call     SetPlayerAnimation 	( .PlayerAnim:NodYes )
+  2E0:  	Wait     0000000F 
+  2EC:  	Call     EndSpeech 	( .Npc:Self 003B0511 003B0501 00000000 )
+  308:  	Set  *Var[0]  $???_80241D90 
+  318:  	Set  *Var[1]  FFFFFFFF 
+  328:  	ExecWait $Script_80241D40 
+  334:  	If  *Var[0]  ==  FFFFFFFF 
+  344:  		Call     SpeakToPlayer 	( .Npc:Self 003B0511 003B0501 00000000 000F004B ) % Grrrrr!!! You stingy, candy-hogging punk! Well, yo ...
+  364:  		Call     ShowChoice  	( 001E0044 ) % Don't fight Fight 
+  374:  		If  *Var[0]  ==  00000000 
+  384:  			Call     ContinueSpeech 	( .Npc:Self 003B0511 003B0501 00000000 000F0048 ) % Good. You're a smart boy!
+  3A4:  		Else
+  3AC:  			Wait     00000005 
+  3B8:  			Call     ContinueSpeech 	( .Npc:Self 003B0511 003B0501 00000000 000F0047 ) % You wanna fight? Are you nuts? You don't wanna mes ...
+  3D8:  			Call     ShowChoice  	( 001E0044 ) % Don't fight Fight 
+  3E8:  			If  *Var[0]  ==  00000000 
+  3F8:  				Call     ContinueSpeech 	( .Npc:Self 003B0511 003B0501 00000000 000F0048 ) % Good. You're a smart boy!
+  418:  			Else
+  420:  				Call     ContinueSpeech 	( .Npc:Self 003B0511 003B0501 00000000 000F0049 ) % What!! Well, all Right... I do love a challenge! H ...
+  440:  				Call     SetNpcVar   	( .Npc:Self 00000000 00000001 )
+  458:  			EndIf
+  460:  		EndIf
+  468:  	Else
+  470:  		Call     SpeakToPlayer 	( .Npc:Self 003B0511 003B0501 00000000 000F004C ) % Yeeeaaaah! I got some Lemon Candy!
+  %490:  		Wait     00000014 
+  %49C:  		Set  *Flag_OMO_07  00000001 
+  %4AC:  		Call     ModifyColliderFlags 	( 00000000 ~Collider:he 7FFFFE00 )
+  %4C4:  		Call     SetNpcVar   	( .Npc:Self 00000000 00000002 )
+  4DC:  	EndIf
+  4E4:  EndIf
+  4EC:  Call     ResetCam    	( .Cam:Default *Fixed[5.0] )
+  500:  Return
+  508:  End
+}
+
+
+@ $NpcGroupList_80242C38
+{
+	00000001 $NpcGroup_80242668 102C0001
+	00000001 $NpcGroup_80242858 10030001
+	00000001 $NpcGroup_80242A48 10250001
+	00000001 $NpcGroup_NewShyGuy 10020001
+	00000000 00000000 00000000
+}
+
+%I can re use the shy guy code from the other shy guy, no need to import stuff :)
+#new:NpcGroup $NpcGroup_NewShyGuy
+{
+00000003 $NpcSettings_80241B30 ~Vec3f:NPC_ShyGuy % -770 0 0
+00000800 00000000 00000000 00000000 0000010E 
+~İtems:5:DizzyDial:2:SuperShroom:2:ThunderBolt:2:DriedShroom:2:SleepySheep:2:POWBlock:2:FrightJar:2			%Wow thats a lot of items!
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:0:2
+~Movement:NPC_ShyGuy
+003B0401 003B0402 003B0403 003B0403 003B0401 003B0401 003B040C 003B040C
+003B0415 003B0412 003B0411 003B0410 003B0405 003B0401 003B0401 003B0401
+00000001 00000000 00000000 00000000 % no tattle string
+}

@@ -1,0 +1,390 @@
+%Pit of 100 trials
+%This map is used for the floors 51-59
+
+%#import EnterViaPipe.mpat
+#import Pit_AI.mpat
+
+#import NPC_Dayzee.mpat
+#import NPC_Bzzap.mpat
+#import NPC_Puff.mpat
+
+#new:Header $Header
+{
+[MainScript] $Script_Main
+[Background] 80200000
+[EntryList] $EntryList
+[EntryCount] 2
+[MapTattle] $Function_GetTattle
+}
+
+#new:Function $Function_GetTattle
+{
+	ADDIU     SP, SP, FFE8
+	LIO       V0, $MapTattle
+	JR        RA
+	ADDIU     SP, SP, 18
+}
+
+%no pit_tex function so I have to do this
+#new:Function_Init $Function_Init
+{
+    PUSH      RA
+    LIA       A0, 800B0CF0
+    LIA       A1, "kpa_tex"
+    JAL       ~Func:sprintf
+    RESERVED
+    DADDU     V0, R0, R0
+    JPOP      RA
+}
+
+#string $MapTattle
+{
+[Style Tattle][EnableCDownNext]We're more than halfway through[BR]
+now. Now we just have to get[BR]
+through the other half of the pit.[BR]
+[Wait][NEXT]I get the feeling that it's[BR]
+going to be a lot worse than[BR]
+the first half though.
+[Wait][END]
+}
+
+#new:EntryList $EntryList
+{
+~Vec4f:Entry0	%top
+~Vec4f:Entry1	%bottom
+}
+
+#new:Script $Script_RaisePipe
+{
+	Wait     0000000A 
+	Call     PlaySound  ( .PipeRaiseSound )
+	Set      .PipeBool 	00000001
+	Unbind
+	Return
+	End
+}
+
+#new:Script $Script_UseBluePipe
+{
+	Call     GotoMap    ( "pit_06" 0 )
+	Call 	 $Reset_Enemy_Flag
+	Wait     00000064 
+	Return
+	End
+}
+	
+#new:Function $Reset_Enemy_Flag
+{
+	PUSH	RA
+	SAB 	R0, 800B10B3
+	POP 	RA
+	JR 		RA
+	NOP
+}	
+
+#new:Script $Script_GetPipeWorking
+{
+	Bind     $Script_RaisePipe .Trigger:GameFlagSet .PipeBool 00000001 00000000
+	Call     MakeEntity  ( .Entity:BlueWarpPipe ~Vec4d:Entry1 00000001 $Script_UseBluePipe ~İndex:*GF_PitPipeFlag 80000000 )
+	Return
+	End
+}
+
+#define .PipeBool *GF_PitPipeFlag
+#define .PipeRaiseSound 0000208E
+
+#new:Script $Script_Outcome
+{
+Call     GetBattleOutcome 	( *Var[0] )
+Switch  *Var[0] 
+	Case  ==  00000000 
+			Set  .PipeBool  00000001 %pipe is up
+			ExecWait	 $Script_RaisePipe
+			Call     DoNpcDefeat 	( )
+EndSwitch
+Return
+End
+}
+   
+%GetBattleOutcome :   int args: *out (0 = player won, 1 = player lost, 2 = player ran, 3 = enemy ran)  
+
+#new:Script $Script_Init_Enemy
+{
+    Call     BindNpcDefeat 	( .Npc:Self $Script_Outcome )
+    Return
+    End
+}
+
+/%
+	crazee dayzee
+	bzzrk
+	puff
+	spiny 
+%/
+
+#new:NpcGroup $NpcGroup_Dayzee
+{
+00000000 $NpcSettings_Dayzee ~Vec3f:ground_enemy % -350 0 40
+00002D00 $Script_Init_Enemy 00000000 00000000 0000005A 
+~İtems:15:MapleSyrup:6:HoneySyrup:4
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:4:40 ~FP:30:40:4:40 ~FP:50:40:4:40 ~FP:80:40:4:40 ~FP:100:30:4:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:0:3
+~Movement:ground_enemy
+00480001 00480002 00480003 00480003 00480001 00480001 00480008 00480008
+00480006 00480007 00480001 00480001 00480001 00480001 00480001 00480001 % .Sprite:Dayzee
+00000003 00000000 00000000 00000000 % no tattle string
+}
+
+	
+#new:NpcGroup $NpcGroup_Bzzrk
+{
+00000001 $NpcSettings_Bzzap ~Vec3f:air_enemy % -50 55 90
+00002D00 $Script_Init_Enemy 00000000 00000000 0000005A 
+~İtems:15:MapleSyrup:6:HoneySyrup:4
+~HP:20:70:3:50 ~HP:30:60:3:50 ~HP:50:50:3:40 ~HP:80:40:3:40 ~HP:100:30:3:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:1:4
+~Movement:air_enemy
+004B0102 004B0102 004B0103 004B0103 004B0101 004B0102 004B0106 004B0106
+004B0104 004B0102 004B0101 004B0101 004B0101 004B0101 004B0101 004B0101 
+00000003 00000000 00000000 00000000 % no tattle string
+}
+
+	
+#new:NpcGroup $NpcGroup_Puff
+{
+00000002 $NpcSettings_Puff ~Vec3f:air_enemy 
+00000C00 $Script_Init_Enemy 00000000 00000000 0000005A 
+~İtems:5:SuperShroom:A
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:0:3
+~Movement:air_enemy
+007D0300 007D0300 007D0305 007D0305 007D0300 007D0300 007D0306 007D0306
+007D0305 007D0301 007D0301 007D0301 007D0301 007D0301 007D0301 007D0301
+00000003 00000000 00000000 00000000 % no tattle string
+}
+
+
+#new:NpcGroup $NpcGroup_Spiny
+{
+00000003 $NpcSettings_BuzzyBeetle ~Vec3f:ground_enemy % 561 25 47
+00000400 $Script_Init_Enemy 00000000 00000000 00000163 
+~İtems:0:DriedShroom:A
+~HP:20:80:2:50 ~HP:30:70:2:50 ~HP:50:60:2:40 ~HP:80:50:2:40 ~HP:100:40:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:1:2
+~Movement:ground_enemy
+004A0001 004A0003 004A0004 004A0004 004A0001 004A0001 004A0009 004A0009
+004A0006 004A0008 004A0007 004A0001 004A0001 004A0001 004A0001 004A0001
+00000000 00000000 00000000 00000000 % no tattle string
+}
+
+
+/%
+		51: 2 crazee dayzees									18-27
+		52: 3 crazee dayzees + 1 bzzrk							18-28
+		53: bzzrk diagonal line (positions 0 5 10)				18-29
+		54: 1 crazee dayzee + 2 bzzrks + 1 ruff puff			18-2A
+		55: 3 ruff puffs										18-2B
+		56: 1 ruff puff + 2 lakitus								18-2C
+		57: 2 ruff puffs + 1 lakitus + 1 lil sparky				18-2D
+		58: 2 spinies + 1 bzzrk + 1 lakitu						18-2E
+		59: 3 lakitus + 2 spinies (spiny is front)				18-2F
+%/
+
+#new:NpcGroupList $NpcGroup_1
+{
+00000001 $NpcGroup_Dayzee 18270000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_2
+{
+00000001 $NpcGroup_Dayzee 18280000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_3
+{
+00000001 $NpcGroup_Bzzrk 18290000 
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_4
+{
+00000001 $NpcGroup_Dayzee 182A0000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_5
+{
+00000001 $NpcGroup_Puff 182B0000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_6
+{
+00000001 $NpcGroup_Puff 182C0000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_7
+{
+00000001 $NpcGroup_Puff 182D0000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_8
+{
+00000001 $NpcGroup_Spiny 182E0000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_9
+{
+00000001 $NpcGroup_Spiny 182F0000
+00000000 00000000 00000000
+}
+
+
+
+#new:Script_Main $Script_Main
+{
+	Add		*PitFloor 00000001
+	Set 	.PipeBool 00000000
+	Switch 	*PitFloor
+		Case == 00000033
+			Call     MakeNpcs           ( 00000001 $NpcGroup_1)
+		Case == 00000034
+			Call     MakeNpcs           ( 00000001 $NpcGroup_2)
+		Case == 00000035
+			Call     MakeNpcs           ( 00000001 $NpcGroup_3)
+		Case == 00000036
+			Call     MakeNpcs           ( 00000001 $NpcGroup_4)
+		Case == 00000037
+			Call     MakeNpcs           ( 00000001 $NpcGroup_5)
+		Case == 00000038
+			Call     MakeNpcs           ( 00000001 $NpcGroup_6)
+		Case == 00000039
+			Call     MakeNpcs           ( 00000001 $NpcGroup_7)
+		Case == 0000003A
+			Call     MakeNpcs           ( 00000001 $NpcGroup_8)
+		Case == 0000003B
+			Call     MakeNpcs           ( 00000001 $NpcGroup_9)
+		Case == 0000003C
+			Call     GotoMap    ( "pit_11" 0 )
+	EndSwitch
+	Call     MakeEntity  	( .Entity:Signpost ~Vec4d:sign 80000000 )
+	Call	 AssignScript ( $Script_SignPost )
+	Exec	 $Script_GetPipeWorking
+	Call     SetSpriteShading 	( 00080000 )
+	Call     SetCamPerspective 	( .Cam:Default 00000003 00000019 00000010 00001000 )
+	Call     SetCamBGColor 	( .Cam:Default 00000000 00000000 00000000 )
+	Call	 SetCamEnabled 	 	( .Cam:Default  .True )				% enabled?
+	Call	 SetCamLeadPlayer 	( .Cam:Default  .False )			% lead player motion?
+	Call     SetMusicTrack    	( 00000000 .Song:DryDryRuins 00000000 00000008 )
+	Return
+	End
+}
+
+#new:Script $Script_SignPost
+{
+	0:  Call     DisablePlayerInput 	( .True )
+		Switch *PitFloor
+			Case == 00000033
+				Call     ShowMessageAtScreenPos 	( $Floor1 000000A0 00000028 )  
+			Case == 00000034
+				Call     ShowMessageAtScreenPos 	( $Floor2 000000A0 00000028 )
+			Case == 00000035
+				Call     ShowMessageAtScreenPos 	( $Floor3 000000A0 00000028 )
+			Case == 00000036
+				Call     ShowMessageAtScreenPos 	( $Floor4 000000A0 00000028 )
+			Case == 00000037
+				Call     ShowMessageAtScreenPos 	( $Floor5 000000A0 00000028 )
+			Case == 00000038
+				Call     ShowMessageAtScreenPos 	( $Floor6 000000A0 00000028 )
+			Case == 00000039
+				Call     ShowMessageAtScreenPos 	( $Floor7 000000A0 00000028 )
+			Case == 0000003A
+				Call     ShowMessageAtScreenPos 	( $Floor8 000000A0 00000028 )
+			Case == 0000003B
+				Call     ShowMessageAtScreenPos 	( $Floor9 000000A0 00000028 )
+			Default
+				Call     ShowMessageAtScreenPos 	( $Error 000000A0 00000028 )
+		EndSwitch
+   28:  Call     DisablePlayerInput 	( .False )
+   38:  Return
+   40: End
+}
+   
+#string $Floor1
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 51
+
+[DelayOn][Wait][END] 
+}
+
+#string $Floor2
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 52
+
+[DelayOn][Wait][END] 
+}
+
+#string $Floor3
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 53
+
+[DelayOn][Wait][END] 
+}
+
+#string $Floor4
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 54
+
+[DelayOn][Wait][END] 
+}
+
+#string $Floor5
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 55
+
+[DelayOn][Wait][END] 
+}
+
+#string $Floor6
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 56
+
+[DelayOn][Wait][END] 
+}
+
+#string $Floor7
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 57
+
+[DelayOn][Wait][END] 
+}
+
+#string $Floor8
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 58
+
+[DelayOn][Wait][END] 
+}
+
+#string $Floor9
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 59
+
+[DelayOn][Wait][END] 
+}
+
+#string $Error
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Signpost error.[BR]
+(floor no. not between 51-60)
+[DelayOn][Wait][END] 
+}

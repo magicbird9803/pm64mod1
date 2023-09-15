@@ -1,0 +1,18 @@
+%damage
+%	normal: 1 + 1 / 1	(You can't really get d down jump with regular boots without sequence breaking)
+%	super: 1 + 1 / 1
+%	ultra: 2 + 2 / 2
+
+@ $Script_802A2B24
+{
+[F4]  		Call     PlayerDamageEnemy 	( *Var[0] 08000080 00000000 00000000 00000001 00000050 )
+[13C]  		Call     PlayerDamageEnemy 	( *Var[0] 08000080 00000000 00000000 00000001 00000030 )
+[36C]  Call     PlayerDamageEnemy 	( *Var[0] 08000080 00000000 00000000 00000001 000000E0 )
+}
+
+@ $Script_802A2EE0
+{
+[F4]  		Call     PlayerDamageEnemy 	( *Var[0] 08000080 00000000 00000000 00000002 00000050 )
+[13C]  		Call     PlayerDamageEnemy 	( *Var[0] 08000080 00000000 00000000 00000002 00000030 )
+[34C]  Call     PlayerDamageEnemy 	( *Var[0] 08000080 00000000 00000000 00000002 000000E0 )
+}

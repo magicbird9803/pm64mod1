@@ -1,0 +1,44 @@
+%Flower fields fog
+%I'll set this up on the back end to make this easier :P
+
+%Notes on 800740AB
+%	This value seems to be based on the map namespace you are in, so if you add more, then you will have new values here
+%	If you look at the map selection debug menu, you will see that the areas are in order from top to bottom, left to right (kmr = 0, mac = 1...)
+
+
+%AC444 --> 80115D44
+@Hook AC6A8 		%80115FA8	(+264)
+{
+	PUSH 	RA, S0, S1, S2, A0, A1, A2, A3, V0, V1
+	LAB		S0, 800740AB	%Area byte		<-- not *GB_WorldLocation (that is 800DBD70 + 1A9 / 800DBF19) (also, the locations in this byte are completely different from the world location byte)
+	LI		S1, 13
+	BNE		S0, S1, .end
+	NOP
+	LAB		A0, 800DBD70 	%story progress
+	SLTI	A0, A0, 35
+	BEQ		A0, R0, .end
+	NOP
+	%Do fog now
+	JAL		~Func:enable_world_fog
+	NOP
+	LI		A0, 03B6 
+	LI	    A1, 03E8
+	JAL		~Func:set_world_fog_dist
+	NOP	
+	LI		A0, 0
+	LI	    A1, 80
+	LI		A2, 0
+	JAL		~Func:set_world_fog_color
+	NOP		
+	BEQ		R0, R0, .modifiedend
+	NOP
+	.end
+	POP		RA, S0, S1, S2, A0, A1, A2, A3, V0, V1
+	SW		R0, 0 (V1)
+	J		80115FB0
+	SW		R0, 10 (V1)
+	.modifiedend
+	POP		RA, S0, S1, S2, A0, A1, A2, A3, V0, V1
+	J		80115FB0
+	SW		R0, 10 (V1)
+}

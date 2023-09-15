@@ -1,0 +1,198 @@
+%copied from mq & pro mode
+
+%formula
+%next jump damage = floor ((2x + x) / 4)
+%					floor(3x/4)
+%					(but forced to be at least 1)
+
+
+
+%Theoretical limit (never cap) = 4x
+%	*True limit is infinite because damage is forced to be at least 1
+
+%damage ~= (781/256)x for 5 cap
+%				~3.05
+%		   (37/16)x for 3 cap
+%				~2.31
+
+%			(14197/4096)x for 7 cap
+%				~3.47
+
+%this is a rough approximation, the true value can be way off since paper mario doesn't do fractional damage
+
+%Damage calculations
+
+%Ultra boots, no boosts (3 base damage)
+%3 -> 2 -> 1 						= 6
+%3 -> 2 -> 1 + 1 + 1 				= 8
+%3 -> 2 -> 1 + 1 + 1 + 1 + 1		= 10
+
+%Ultra boots + 1 (4 damage)
+%4 -> 3 -> 2 						= 9
+%4 -> 3 -> 2 + 1 + 1 				= 11
+%4 -> 3 -> 2 + 1 + 1 + 1 + 1		= 13
+
+%Ultra boots + 2 (5 damage)
+%5 -> 3 -> 2 						= 10
+%5 -> 3 -> 2 + 1 + 1 				= 12
+%5 -> 3 -> 2 + 1 + 1 + 1 + 1		= 14
+
+%Ultra boots + all passive attack bonuses (6 damage)
+%6 -> 4 -> 3 						= 13
+%6 -> 4 -> 3 + 2 + 1 				= 16
+%6 -> 4 -> 3 + 2 + 1 + 1 + 1		= 18
+
+%3 + 4 + 4 = 11
+
+%Ultra boots + 6 (Maximum charge) (9 damage)
+%9 -> 6 -> 4						= 19
+%9 -> 6 -> 4 -> 3 -> 2				= 24
+%9 -> 6 -> 4 -> 3 -> 2 -> 1 -> 1	= 26
+
+%Ultra boots + 10 (Maximum charge + mega rush) (13 damage)
+%13 -> 9 -> 6						= 27
+%13 -> 9 -> 6 -> 4 -> 3				= 34
+%13 -> 9 -> 6 -> 4 -> 3 -> 2 -> 1	= 37
+
+%Ultra boots + 13 (Max charge + mega rush + passive bonuses) (16 damage)
+%16 -> 12 -> 9 						= 37
+%16 -> 12 -> 9 -> 6 -> 4			= 47
+%16 -> 12 -> 9 -> 6 -> 4 -> 3 -> 2	= 52
+
+%Ultra boots + 16 (Max charge + mega rush + passive + flower power + stellar power) (19 damage)
+%	(this requires some tricky setup to get these bonuses to align though)
+%19
+
+%Ultra boots + 15 (Maximum bonus without merlee) (Max charge + mega rush + passive + flower power + stellar power + AoN + turbo charge) (21 damage)
+%21
+
+%Ultra boots + 18 (maximum bonuses I think) (24 damage!)
+%	(you really need the stars to align to make that happen though)
+%24 -> 18 -> 13						= 55
+%24 -> 18 -> 13 -> 9 -> 6			= 70
+%24 -> 18 -> 13 -> 9 -> 6 -> 4 -> 3	= 77
+
+#export:Data $IsPowerOrMegaBounce
+{
+	00000000
+}
+ 
+
+%%
+% Power Bounce
+%%
+
+% Amplitude is on S0, reduction counter is on V0.
+@Hook 1A0BE0 % 80272300:
+{
+PUSH	A1
+LAW		A1, $IsPowerOrMegaBounce
+BNE		A1, R0, .megabounceversion
+NOP
+% while(V0 < 0)
+.Loop
+BGEZ	V0, .EndLoop
+% S0 = ((S0 << 1) + S0) >> 2
+ADD		A1, S0, R0
+SLL		S0, S0, 1
+ADD		S0, A1, S0
+SRL		S0, S0, 2
+BEQ		S0, R0, .isZero
+NOP
+BEQ		R0, R0, .Loop
+ADDI	V0, V0, 1
+.isZero
+ORI 	S0, r0, 0001
+BEQ		R0, R0, .Loop
+ADDI	V0, V0, 1
+.EndLoop
+POP		A1
+J		8027230C
+NOP
+.megabounceversion
+% while(V0 < 0)
+.LoopB
+BGEZ	V0, .EndLoopB
+% S0 = (S0 * 2) / 3
+ADD		A1, S0, R0
+SLL		S0, S0, 1
+LI		A1, 3
+DIV		S0, A1	
+NOP
+NOP
+MFLO	S0		%not sure about these nops
+NOP				%S0 = damage
+NOP
+/%
+	%2/3 version
+	%mips division is annoying
+	SLL		S0, S0, 1
+	LI		A1, 2
+	DIV		S0, A1	
+	NOP
+	NOP
+	MFLO	S0		%not sure about these nops
+	NOP				%S0 = damage
+	NOP
+%/
+BEQ		S0, R0, .isZeroB
+NOP
+BEQ		R0, R0, .LoopB
+ADDI	V0, V0, 1
+.isZeroB
+ORI 	S0, r0, 0001
+BEQ		R0, R0, .LoopB
+ADDI	V0, V0, 1
+.EndLoopB
+POP		A1
+J		8027230C
+NOP
+}
+
+% For clarity, remove the unused instruction.
+@Function 1A0BE8
+{
+NOP
+}
+
+%%
+% Multibonk
+%%
+
+% Amplitude is on A0, reduction counter is on V0.
+@Hook 1AD368
+{
+ADDIU	SP, SP, -4
+SW		A1, 4 (SP)
+% while(V0 < 0)
+.Loop
+BGEZ	V0, .EndLoop
+% A0 = ((A0 << 1) + A0) >> 2
+ADD		A1, A0, R0
+SLL		A0, A0, 1
+ADD		A0, A1, A0
+SRL		A0, A0, 2
+BEQ		S0, R0, .isZero
+NOP
+BEQ		R0, R0, .Loop
+ADDI	V0, V0, 1
+.isZero
+ORI 	S0, r0, 0001
+BEQ		R0, R0, .Loop
+ADDI	V0, V0, 1
+.EndLoop
+LW		A1, 4 (SP)
+J		8027EA94
+ADDIU	SP, SP, 4
+}
+
+% For clarity, remove the unused instruction.
+@Function 1AD370
+{
+NOP
+}
+
+#new:Data $IntTable_StartingJumpCount
+{
+00000001
+}

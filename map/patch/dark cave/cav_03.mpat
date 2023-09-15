@@ -1,0 +1,162 @@
+%Pit entrance map
+
+
+#new:Header $Header
+{
+[MainScript] $Script_Main
+[EntryList] $EntryList
+[EntryCount] 00000002
+[Background] 80200000
+[MapTattle]   $Function_GetTattle
+}
+
+#new:Function $Function_GetTattle
+{
+	ADDIU     SP, SP, FFE8
+	LIO       V0, $MapTattle
+	JR        RA
+	ADDIU     SP, SP, 18
+}
+
+%there is no cav_tex so replace with kpa_tex
+#new:Function_Init $Function_Init
+{
+    PUSH      RA
+    LIA       A0, 800B0CF0
+    LIA       A1, "kpa_tex"
+    JAL       ~Func:sprintf
+    RESERVED
+    DADDU     V0, R0, R0
+    JPOP      RA
+}
+
+
+#string $MapTattle
+{
+[Style Tattle][EnableCDownNext]Is that... [PAUSE:0A]light?[BR]
+[Wait][NEXT]It must've taken a lot of work[BR]
+to get it all the way down here.[BR]
+[Wait][NEXT]There's also a lot of Buzzy[BR]
+Beetle statues for some reason.[BR]
+[Wait][NEXT]Whoever built this room really[BR]
+wanted this room to stand out.[BR]
+[Wait][END]
+}
+
+#import EnterViaPipe.mpat
+#import ExitViaPipe.mpat
+
+#new:EntryList $EntryList
+{
+~Vec4f:Entry0
+~Vec4f:Entry1
+}
+
+#define .Flag_PitPipe *GameFlag[1CF]
+
+#new:Script $Script_SetMusic
+{
+Call     SetMusicTrack 	( 00000000 .Song:CaveTheme 00000000 00000008 ) %New music maybe
+Return
+End
+}
+
+
+
+#new:Script_Main $Script_Main
+{
+Set  *GB_WorldLocation .Location:ToadTownTunnels%2D %hope this doesn't crash the game when trying to display world map
+Call	SetSpriteShading 	( FFFFFFFF )
+Call	SetCamPerspective	( .Cam:Default  3  25` 16` 4096` )	% default type, half vertical FOV, near clip, and far clip
+Call	SetCamBGColor   	( .Cam:Default  0  0  0 ) 			% color values are RGB bytes; (0,0,0) is black, (255`,255`,255`) is white, etc.
+Call	SetCamEnabled 	 	( .Cam:Default  .True )				% enabled?
+Call	SetCamLeadPlayer 	( .Cam:Default  .False )			% lead player motion?
+Exec     $Script_SetMusic 
+%switch (I might change the flag to something guaranteed to be enabled to remove the random switch)
+If       .Flag_PitPipe ==  00000000 
+	Call     MakeEntity  	( .Entity:BlueSwitch ~Vec4d:switch 80000000 )
+	Call     AssignAreaFlag ( 00000003 )
+	Set      *MapVar[1] *Var[0] 
+	Bind     $Script_RaisePipe .Trigger:AreaFlagSet *AreaFlag[003] 00000001 00000000 
+EndIf
+Call     MakeEntity  	( .Entity:Signpost ~Vec4d:sign 80000000 )
+Call	 AssignScript ( $Script_SignPost )
+Call     MakeEntity  	( .Entity:BlueWarpPipe ~Vec4d:pipe 00000001 $Script_UseBluePipe 000001CF 80000000 )
+%Call     $Function_SetSaveBlockColorToGray ( )
+Call     MakeEntity  	( .Entity:SavePoint ~Vec4d:saveblock 80000000 )
+Call 	 MakeEntity ( .Entity:HealingBlock ~Vec4d:heartblock 80000000 )
+Set *PitFloor 0			%For consistency, reset pit floor to 0 when outside of the pit so that this value can be used to check if you are in the pit (0 = no, 1-100 = yes)
+%entry 0 = loading zone
+%entry 1 = pipe
+Call	GetLoadType 	( *Var[1] )
+If		*Var[1] ==  00000001 
+	Exec	EnterSavePoint 
+	Exec	$Script_MakeExits
+Else
+	Call     GetEntryID  	( *Var[0] )
+	If (*Var[0] == 1) 
+		Set		*Var[A] $Script_MakeExits 
+		Exec $Script_EnterVerticalPipe %the script executes the script in *Var[A]
+	Else
+		Set		*Var[0] $Script_MakeExits 
+		Exec EnterWalk
+	EndIf
+EndIf
+Return
+End
+}
+
+#new:Script $Script_SignPost
+{
+	0:  Call     DisablePlayerInput 	( .True )
+		Call     ShowMessageAtScreenPos 	( $SignText 000000A0 00000028 )  
+   28:  Call     DisablePlayerInput 	( .False )
+   38:  Return
+   40: End
+}
+
+#string $SignText
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Pit of 100 Trials[BR]
+[Color:20]Enter if you dare!
+[DelayOn][Wait][END] 
+}
+
+#new:Script $Script_RaisePipe
+{
+	Wait     0000000A 
+	Call     PlaySound   	( 0000208E )
+	Set      .Flag_PitPipe 00000001 
+	Unbind
+	Return
+	End
+}
+  
+#new:Script $Script_UseBluePipe
+{
+	Set *PitFloor 0 %pit_01 will increment this to 1
+	%Call   	 $Function_SetSaveBlockColorToDefault ( )
+	Call     GotoMap     	( "pit_01" 0 ) %normal pit entrance
+	Wait     00000064 
+	Return
+	End
+}
+
+#new:Script $Script_MakeExits
+{
+	Bind     $Script_Entry0 .Trigger:FloorAbove ~Collider:LZ 00000001 00000000
+	Return
+    End
+}
+      
+#new:Script $Script_Entry0
+{
+		%Call   	 $Function_SetSaveBlockColorToDefault ( )
+	0:  SetGroup 0000001B 
+    C:  Call     UseExitHeading ( 0000003C 00000000 )
+   20:  Exec     ExitWalk 
+   2C:  Call     GotoMap     	( "cav_02" 00000001 )
+   40:  Wait     00000064 
+   4C:  Return
+   54:  End
+}

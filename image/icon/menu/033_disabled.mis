@@ -1,0 +1,26 @@
+op_08
+SetSize(2)
+Loop
+	op_15(0)
+	SetImage(3,"multiple/bigcoin_0",0,0)
+	SetImage(3,"multiple/bigcoin_1",0,0)
+	SetImage(3,"multiple/bigcoin_4",0,0)
+	SetImage(3,"multiple/bigcoin_5",0,0)
+	SetImage(3,"multiple/bigcoin_6",0,0)
+	SetImage(3,"multiple/bigcoin_7",0,0)
+	SetImage(3,"multiple/bigcoin_8",0,0)
+	SetImage(3,"multiple/bigcoin_9",0,0)
+	RandomRestart(64,46)
+	op_15(1)
+	SetImage(3,"multiple/bigcoin_0",0,0)
+	SetImage(2,"multiple/bigcoin_1",0,0)
+	SetImage(1,"multiple/bigcoin_2",0,0)
+	SetImage(1,"multiple/bigcoin_3",0,0)
+	SetImage(2,"multiple/bigcoin_4",0,0)
+	SetImage(3,"multiple/bigcoin_5",0,0)
+	SetImage(3,"multiple/bigcoin_6",0,0)
+	SetImage(3,"multiple/bigcoin_7",0,0)
+	SetImage(3,"multiple/bigcoin_8",0,0)
+	SetImage(3,"multiple/bigcoin_9",0,0)
+Restart
+End

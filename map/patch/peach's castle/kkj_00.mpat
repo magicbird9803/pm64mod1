@@ -1,0 +1,510 @@
+%greedy yoshi is here
+%no need to change the main script anymore
+
+
+%add luigi challenge stuff
+%but also add the badge stone 
+@ $Script_Interact_80241DD8
+{
+	Call     EnableNpcAI	( 00000001 .False )
+	Call     SetNpcAnimation 	( 00000000 00820004 )
+	Call     SetNpcAnimation 	( 00000001 00830001 )
+	Wait     10` 
+	Call	$Function_IsLuigiChallengeAccepted ( *Var[0] )
+	If *GB_FileCodeMode == 9`
+		Set *Var0 1`
+	EndIf
+	If  *Var[0]  ==  00000000
+		Call     SpeakToPlayer	( 00000000 00820014 00820004 00000000 $LuigiChallenge1 )
+		Call     ShowChoice		( 001E000D ) % Yes No 
+		If  *Var[0]  ==  00000000
+			Call     ContinueSpeech	( 00000000 00820014 00820004 00000000 $LuigiChallenge2 )
+			Call     ShowChoice		( 001E000D ) % Yes No 
+			If  *Var[0]  ==  00000000
+				Call     ContinueSpeech	( 00000000 00820014 00820004 00000000 $LuigiChallenge3 )
+				Call     ShowChoice		( 001E000D ) % Yes No 
+				If  *Var[0]  ==  00000000
+					Call	ContinueSpeech	( 00000000 00820014 00820004 00000000 $LuigiChallengeAccepted )
+					Set      *Var[0]  .Item:BadgeStone %Badge stone index
+					Call     ShowGotItem 	( *Var[0] 00000000 00000000 )
+					Call     AddKeyItem  	( *Var[0] )
+					Call	$Function_ActivateLuigiChallenge ( )
+					Goto	ScriptEnd
+				EndIf
+			EndIf
+		EndIf
+		Call	ContinueSpeech	( 00000000 00820014 00820004 00000000 $LuigiChallengeDeclined )
+	Else
+		Call	SpeakToPlayer	( .Npc:Self 00820014 00820004 00000010 00000025 ) % Say, Mario, why don't you go see Princess Peach? I ...
+	EndIf
+	Label	ScriptEnd
+	Call	EnableNpcAI		( 00000001 .True )
+	Return
+	End
+}
+	
+#string $LuigiChallenge1
+{
+[STYLE:Right]
+Hey bro, I've got a challenge[BR]
+for you. Do you want to hear it?[BR]
+[Yield][END]
+}
+
+#string $LuigiChallenge2
+{
+[NEXT]This is for true veterans only,[BR]
+are you sure you want to hear[BR]
+about it?[BR]
+[Wait][NEXT]
+Also, you might have some problems[BR]
+if you try to do multiple [BR]
+challenges at the same time.[BR]
+[Yield][END]
+}
+
+#string $LuigiChallenge3
+{
+[NEXT]Here's the challenge:[BR]
+You can't earn any star points,[BR]
+[PAUSE:10]but [PAUSE:10]you can equip 16 badges for[BR]
+free. Do you want to try it?[BR]
+[Yield][END]
+}
+
+#string $LuigiChallengeAccepted
+{
+[NEXT]Good luck bro![Wait][END]
+}
+
+#string $LuigiChallengeDeclined
+{
+[NEXT]AlRight then, maybe next time.[Wait][END]
+}
+ 
+ 
+ 
+#new:NpcGroup $NpcGroup_Yoshi
+{
+00000030 $YoshiSettings ~Vec3f:NPC_GreedYoshi %???
+00000D0D $Script_Init_Yoshi 00000000 00000000 00000080 %???
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus
+~Movement:NPC_GreedYoshi
+% 00C30101 00C30102 00C30103 00C30103 00C30101 00C30101 00C3010B 00C3010C %animation table
+% 00C30101 00C30101 00C30101 00C30101 00C30101 00C30101 00C30101 00C30101 
+%
+00EC0001 00EC0002 00EC0003 00EC0003 00EC0001 00EC0001 00EC000B 00EC000C %animation table
+00EC0001 00EC0001 00EC0001 00EC0001 00EC0001 00EC0001 00EC0001 00EC0001  %thanks star rod
+00000000 00000000 00000000 00000000 % can't tattle him
+}
+
+@ $NpcGroupList_802439C4
+{
+0000000B $NpcGroup_80242474 00000000 
+00000001 $NpcGroup_Yoshi 00000000 
+00000000 00000000 00000000 
+}
+
+#new:NpcSettings $YoshiSettings
+{
+00000000 00300018 00000000 00000000 00000000 00000000 00000000 00000000 
+00000000 00000000 00630000 
+}
+
+#new:Script $Script_Init_Yoshi
+{
+	Call     BindNpcIdle 		( .Npc:Self $Script_IdleAI )
+	Call     BindNpcInteract	( .Npc:Self $Script_Interact )
+	Call	 $Function_HasGreedStone ( *Var[0] )
+	If *Var0 == 1`
+		Call	 SetNpcPos ( .Npc:Self 0` -1000` 0` )
+	EndIf
+	Return
+	End
+}
+
+#new:Script $Script_IdleAI
+{
+	Return
+	End
+}
+	
+#new:Script $Script_Interact
+{
+	Call	 DisablePlayerInput ( .True )
+	/%
+	%testing anti save state thing
+	Call	 $Function_CheckSavestate_B ( *Var0 )
+	If *Var0 == 1
+		Call     SpeakToPlayer 	( 00000030 00EC0004 00EC0001 00000000 $TimelineAnomaly )
+	Else
+		Call     SpeakToPlayer 	( 00000030 00EC0004 00EC0001 00000000 $EverythingIsFine )
+	EndIf
+	Call	 DisablePlayerInput ( .False )
+	Return
+	%/
+	Call	 $Function_HasGreedStone ( *Var[0] )
+	If *GB_FileCodeMode == 9`
+		Set *Var0 1`
+	EndIf	
+	If ( *Var[0] == 0 )
+		Call     SpeakToPlayer 	( 00000030 00EC0004 00EC0001 00000000 $GreedStone1 )
+		Call 	 ShowChoice ( 001E000D ) % Yes No
+		If ( *Var[0] == 0 )
+			Call     ContinueSpeech 	( 00000030 00EC0004 00EC0001 00000000 $GreedStone2 )
+			Call 	 ShowChoice ( 001E000D ) % Yes No
+			If ( *Var[0] == 0 )
+				Call     ContinueSpeech 	( 00000030 00EC0004 00EC0001 00000000 $GreedStoneAccept )
+				Call	 SetNpcAnimation ( .Npc:Self 00EC000D ) %giving an item
+				Wait	 00000004
+				Call	 SetNpcAnimation ( .Npc:Self 00EC000E ) %giving an item
+				Set      *Var[0]  .Item:GreedStone %Greed stone index
+				Call     ShowGotItem 	( *Var[0] 00000000 00000000 )
+				Call     AddKeyItem  	( *Var[0] )
+				Call	 $Function_GreedStoneMode ( )
+				Call	 SetNpcAnimation ( .Npc:Self 00EC0001 ) %go back to normal
+				%	The problem is that he can get stuck behind the player
+				%	...so Mario moves too
+				Call     PlayerMoveTo 	( -312` -162` 00000003 )
+				Call     SetNpcSpeed ( 00000030 *Fixed[5.0] ) %hope this is fast enough
+				Call	 SetNpcAnimation ( .Npc:Self 00EC0002 )
+				Call 	 NpcMoveTo ( 00000030 0` 350` 0 )
+				Call	 SetNpcPos ( .Npc:Self 0` -1000` 0` )
+			Else
+				Goto 00000000
+			EndIf
+		Else	
+			Label	 00000000
+			Call     ContinueSpeech 	( .Npc:Self 00EC0004 00EC0001 00000000 $DeclineMessage )
+		EndIf
+	Else
+		Call     SpeakToPlayer 	( 00000030 00EC0004 00EC0001 00000000 $GreedStoneAfterAccept )
+	EndIf
+	Call	 DisablePlayerInput ( .False )
+	Return
+	End
+}	
+
+#new:Function $Function_GreedStoneMode
+{
+LIO		A1, 8010F290
+ADDIU	A2, R0, 5`
+SB		A2, 4 (A1)
+SB		A2, 3 (A1)
+LB		A2, 2 (A1) %check current health
+LIO		A1, 5
+BLE		A2, A1, .label %health is within limits, do nothing
+NOP
+LIO		A1, 8010F290
+ADDIU	A2, R0, 5`
+SB		A2, 2 (A1)
+.label
+LIO		A1, 8010F290 %redundant
+ADDIU	A2, R0, 1`
+SB		A2, 16 (A1) %hopefully this is unused so I can use it to check greed stone
+% just for aesthetics, let the coins slowly count up
+% ADDIU	A2, R0, 999`
+% SH		A2, C (A1) %coins = 999
+JR		RA
+NOP
+}
+
+#string $TimelineAnomaly
+{
+[STYLE:Right]Yep, you used a savestate.[BR]
+[Wait][END]
+}
+
+#string $EverythingIsFine
+{
+[STYLE:Right]Mmmm... No savestate here.[BR]
+[Wait][END]
+}
+
+#string $GreedStone1
+{
+[STYLE:Right]Hey, Mario. I've got something[BR]
+great to give you![BR]
+[Yield][END]
+}
+
+#string $GreedStone2
+{
+[NEXT]This stone will give you[BR]
+unlimted money. There are[BR]
+no drawbacks![BR]
+[Wait][NEXT]It might set your HP to 5,[BR]
+but you'll be fine![BR]
+[Yield][END]
+}
+
+#string $GreedStoneAccept
+{
+[NEXT]Heh heh.[PAUSE:0A] Here you go![BR]
+By the way, don't try to[BR]
+increase your HP.[BR]
+[Wait][NEXT]
+That stone is powerful enough[BR]
+to completely change certain[BR]
+badges, so some HP badges will[BR]
+turn into FP badges somehow.[BR]
+[Wait][END]
+}
+
+#string $DeclineMessage
+{
+[NEXT]What? How could you say[BR]
+no to infinite money?[Wait][END]
+}
+
+#string $GreedStoneAfterAccept
+{
+[STYLE:Right]With enemies this strong[BR]
+you probably wouldn't last[BR]
+a second with only 5 hp.[Wait][END]
+}
+
+/%
+#string $GreedStoneAfterAccept
+{
+[STYLE:Right]It's yours now. I'm not[BR]
+taking it back![Wait][END]
+}
+%/
+
+@ $Script_Main
+{
+    0:  Set   *GB_WorldLocation  .Location:PeachCastleGrounds
+   10:  Call  SetSpriteShading  ( .Shading:None )
+   20:  Call  SetCamPerspective ( .Cam:Default 00000003 00000019 00000010 00001000 )
+   40:  Call  SetCamBGColor     ( .Cam:Default 00000000 00000000 00000000 )
+   5C:  Call  SetCamEnabled     ( .Cam:Default .True )
+   70:  Call  SetCamLeadPlayer  ( .Cam:Default .False )
+   84:  If  *GB_StoryProgress  ==  .Story:Intro % FFFFFF80
+   94:  	Call  MakeNpcs  ( .False $NpcGroupList_802439C4 )
+   A8:  Else
+			If *GF_TEM_FinalBoss == .True
+   B0:  		Call  MakeNpcs  ( .False $NpcGroupList_Buzzatrice )
+			Else
+				Call  MakeNpcs  ( .False $NpcGroupList_80248DC4 )
+			EndIf
+   C4:  EndIf
+   CC:  Call  EnableGroup   ( ~Model:g2 .False )
+   E0:  Call  EnableGroup   ( ~Model:g51 .False )
+   F4:  If  *GB_StoryProgress  ==  .Story:Intro % FFFFFF80
+  104:  	Call  SetMusicTrack ( 00000000 .Song:PeachsCastleParty 00000001 00000008 )
+  120:  Else
+  128:  	Thread
+  130:  		Wait  90`
+  13C:  		Call  FadeOutMusic  ( 00000000 00000BB8 )
+  150:  	EndThread
+  158:  EndIf
+  160:  Exec  $Script_802413C4
+  16C:  Exec  $Script_EnterSingleDoor_80241460
+  178:  Wait  1`
+  184:  Return
+  18C:  End
+}
+
+#new:NpcGroupList $NpcGroupList_Buzzatrice
+{
+	00000001 $NpcGroup_80244044 00000000
+	00000004 $NpcGroup_80244234 00000000
+	00000008 $NpcGroup_802449F4 00000000
+	00000005 $NpcGroup_80245974 00000000
+	00000004 $NpcGroup_80246324 00000000
+	00000005 $NpcGroup_80246AE4 00000000
+	00000004 $NpcGroup_80247494 00000000
+	00000004 $NpcGroup_80247C54 00000000
+	00000005 $NpcGroup_80248414 00000000
+	00000001 $NpcGroup_Buzzatrice 00000000
+	00000000 00000000 00000000
+}
+
+#new:NpcGroup $NpcGroup_Buzzatrice
+{
+00000031 $YoshiSettings ~Vec3f:NPC_Buzzatrice %???
+00000D0D $Script_Init_Buzzatrice 00000000 00000000 00000080 %???
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus
+~Movement:NPC_Buzzatrice
+00FC0001 00FC0001 00FC0001 00FC0001 00FC0001 00FC0001 00FC0001 00FC0001
+00FC0001 00FC0001 00FC0001 00FC0001 00FC0001 00FC0001 00FC0001 00FC0001
+00000000 00000000 00000000 00000000
+}
+
+#new:Script $Script_Init_Buzzatrice
+{
+	Call     BindNpcIdle 		( .Npc:Self $Script_IdleAI_Buzzatrice )
+	Call     BindNpcInteract	( .Npc:Self $Script_Interact_Buzzatrice )
+	Return
+	End
+}
+
+#new:Script $Script_IdleAI_Buzzatrice
+{
+	Return
+	End
+}
+
+#new:Script $Script_Interact_Buzzatrice
+{
+	Return
+	End
+}
+
+@ $Script_80249178
+{
+    0:  Call  DisablePlayerInput    ( .True )
+   10:  Call  UseSettingsFrom   ( .Cam:Default 00000032 00000000 000000FA )
+   2C:  Call  SetPanTarget  ( .Cam:Default 00000032 00000000 000000FA )
+   48:  Call  SetCamSpeed   ( .Cam:Default *Fixed[90.0] )
+   5C:  Call  PanToTarget   ( .Cam:Default 00000000 00000001 )
+   74:  Wait  10`
+   80:  Exec  $Script_80248E40
+   8C:  Call  802D1270      ( 00000000 0000012C *Fixed[4.0] )
+   A4:  Call  SetNpcAnimation   ( 00000001 00890002 )
+   B8:  Call  NpcMoveTo     ( 00000001 0000004A 000000F3 0000000A )
+   D4:  Call  SetNpcAnimation   ( 00000001 00890001 )
+   E8:  Call  SpeakToPlayer ( 00000001 00890004 00890001 00000000 00010064 ) % Mario, welcome to the castle. Princess Peach shoul ...
+  108:  Wait  10`
+  114:  Call  UseSettingsFrom   ( .Cam:Default 00000000 00000064 FFFFFEDE )
+  130:  Call  SetPanTarget  ( .Cam:Default 00000000 00000064 FFFFFEDE )
+  14C:  Call  SetCamDistance    ( .Cam:Default 00000190 )
+  160:  Call  SetCamPitch   ( .Cam:Default 0000000A FFFFFFF9 )
+  178:  Call  PanToTarget   ( .Cam:Default 00000000 00000001 )
+  190:  Wait  20`
+  19C:  Call  SpeakToPlayer ( 00000028 00870004 00870001 00000005 00010065 ) % And now... Princess Peach!
+  1BC:  Call  InterpPlayerYaw   ( 00000000 00000000 )
+  1D0:  Wait  10`
+  1DC:  Call  SetMusicTrack ( 00000000 .Song:PeachAppears 00000000 00000008 )
+  1F8:  Exec  $Script_80248FDC
+  204:  Thread
+  20C:  	Call  SetNpcAnimation   ( 00000000 000A0002 )
+  220:  	Call  SetNpcSpeed       ( 00000000 *Fixed[2.0] )
+  234:  	Call  NpcMoveTo ( 00000000 00000000 FFFFFF38 00000000 )
+  250:  	Call  SetNpcAnimation   ( 00000000 000A0001 )
+  264:  EndThread
+  26C:  Loop
+  278:  	Call  GetNpcPos ( 00000000 *Var0 *Var1 *Var2 )
+  294:  	If  *Var0  >  FFFFFEA2
+  2A4:  		BreakLoop
+  2AC:  	EndIf
+  2B4:  	Wait  1`
+  2C0:  EndLoop
+  2C8:  Call  UseSettingsFrom   ( .Cam:Default 00000000 00000064 FFFFFF38 )
+  2E4:  Call  SetPanTarget  ( .Cam:Default 00000000 00000064 FFFFFF38 )
+  300:  Call  SetCamDistance    ( .Cam:Default 00000226 )
+  314:  Call  SetCamPitch   ( .Cam:Default 0000000A FFFFFFF9 )
+  32C:  Call  SetCamSpeed   ( .Cam:Default *Fixed[0.6] )
+  340:  Call  PanToTarget   ( .Cam:Default 00000000 00000001 )
+  358:  Call  WaitForCam    ( .Cam:Default *Fixed[1.0] )
+  36C:  Call  UseSettingsFrom   ( .Cam:Default 00000000 00000064 FFFFFF38 )
+  388:  Call  SetPanTarget  ( .Cam:Default 00000000 00000064 FFFFFF38 )
+  3A4:  Call  SetCamDistance    ( .Cam:Default 000000FA )
+  3B8:  Call  SetCamPitch   ( .Cam:Default 00000003 FFFFFFF5 )
+  3D0:  Call  SetCamSpeed   ( .Cam:Default *Fixed[90.0] )
+  3E4:  Call  PanToTarget   ( .Cam:Default 00000000 00000001 )
+  3FC:  Wait  20`
+  408:  Call  SetMusicTrack ( 00000000 .Song:PeachAppears 00000001 00000008 )
+  424:  Call  SetNpcAnimation   ( 00000000 000C0000 )
+  438:  Wait  10`
+  444:  Call  SetNpcAnimation   ( 00000000 000C0026 )
+  458:  Call  SpeakToPlayer ( 00000000 000C0001 000C0026 00000005 00010066 ) % Greetings to all of you! I'm so glad everyone coul ...
+  478:  Call  UseSettingsFrom   ( .Cam:Default 00000032 00000000 000000FA )
+  494:  Call  SetPanTarget  ( .Cam:Default 00000032 00000000 000000FA )
+  4B0:  Call  SetCamDistance    ( .Cam:Default 000001F4 )
+  4C4:  Call  SetCamPitch   ( .Cam:Default 00000003 FFFFFFF6 )
+  4DC:  Call  PanToTarget   ( .Cam:Default 00000000 00000001 )
+  4F4:  Wait  1`
+  500:  Call  SpeakToPlayer ( 00000000 000C0001 000C0026 00000005 00010067 ) % The Star Rod stolen by Bowser has been returned to ...
+  520:  Wait  10`
+  52C:  Call  UseSettingsFrom   ( .Cam:Default 00000000 00000064 FFFFFF38 )
+  548:  Call  SetPanTarget  ( .Cam:Default 00000000 00000064 FFFFFF38 )
+  564:  Call  SetCamDistance    ( .Cam:Default 0000012C )
+  578:  Call  SetCamPitch   ( .Cam:Default 00000019 *Fixed[-9.5] )
+  590:  Call  PanToTarget   ( .Cam:Default 00000000 00000001 )
+  5A8:  Call  InterpPlayerYaw   ( 0000005A 00000000 )
+  5BC:  Wait  10`
+  5C8:  Call  SpeakToPlayer ( 00000000 000C0001 000C0026 00000005 00010068 ) % Above us, the stars shine with more beauty and pow ...
+  5E8:  Call  SetNpcAnimation   ( 00000000 000C0002 )
+  5FC:  Wait  10`
+  608:  Call  SetNpcAnimation   ( 00000000 000A0001 )
+  61C:  Call  UseSettingsFrom   ( .Cam:Default 00000000 00000000 0000012C )
+  638:  Call  SetPanTarget  ( .Cam:Default 00000000 00000000 0000012C )
+  654:  Call  SetCamDistance    ( .Cam:Default *Fixed[252.7] )
+  668:  Call  SetCamPitch   ( .Cam:Default 00000005 *Fixed[-9.5] )
+  680:  Call  SetCamPosA    ( .Cam:Default 000001F4 00000064 )
+  698:  Call  PanToTarget   ( .Cam:Default 00000000 00000001 )
+  6B0:  Wait  20`
+  6BC:  Call  ShowMessageAtWorldPos ( 00010069 00000000 00000064 FFFFFF38 ) % Mario...
+  6D8:  Call  UseSettingsFrom   ( .Cam:Default 000000FA 00000000 00000064 )
+  6F4:  Call  SetPanTarget  ( .Cam:Default 000000FA 00000000 00000064 )
+  710:  Call  SetCamDistance    ( .Cam:Default 00000190 )
+  724:  Call  SetCamPitch   ( .Cam:Default 0000000F FFFFFFFF )
+  73C:  Call  SetCamPosA    ( .Cam:Default FFFFFF9C 00000064 )
+  754:  Call  PanToTarget   ( .Cam:Default 00000000 00000001 )
+  76C:  Wait  1`
+  778:  Call  ShowMessageAtWorldPos ( 0001006A 00000000 00000064 FFFFFF38 ) % Goombario, Kooper, Bombette, Parakarry,...
+  794:  Call  UseSettingsFrom   ( .Cam:Default FFFFFF06 00000000 00000032 )
+  7B0:  Call  SetPanTarget  ( .Cam:Default FFFFFF06 00000000 00000032 )
+  7CC:  Call  SetCamDistance    ( .Cam:Default 000001C2 )
+  7E0:  Call  SetCamPitch   ( .Cam:Default 0000000F FFFFFFF9 )
+  7F8:  Call  PanToTarget   ( .Cam:Default 00000000 00000001 )
+  810:  Wait  1`
+		If    *GF_TEM_FinalBoss == .True
+  81C:  	Call  ShowMessageAtWorldPos ( $Everyone 00000000 00000064 FFFFFF38 ) % Bow, Watt, Sushie, Lakilester,
+		Else
+  81C:  	Call  ShowMessageAtWorldPos ( 0001006B 00000000 00000064 FFFFFF38 ) % Bow, Watt, Sushie, Lakilester,
+		EndIf
+  838:  Call  UseSettingsFrom   ( .Cam:Default FFFFFF6A 00000000 00000168 )
+  854:  Call  SetPanTarget  ( .Cam:Default FFFFFF6A 00000000 00000168 )
+  870:  Call  SetCamDistance    ( .Cam:Default 0000012C )
+  884:  Call  SetCamPitch   ( .Cam:Default 00000019 FFFFFFF3 )
+  89C:  Call  SetCamPosA    ( .Cam:Default 00000334 FFFFFF9C )
+  8B4:  Call  PanToTarget   ( .Cam:Default 00000000 00000001 )
+  8CC:  Wait  1`
+  8D8:  Call  ShowMessageAtWorldPos ( 0001006C 00000000 00000064 FFFFFF38 ) % and everybody across the lands of the Mushroom Kin ...
+  8F4:  Wait  10`
+  900:  Call  UseSettingsFrom   ( .Cam:Default 00000000 00000064 FFFFFF38 )
+  91C:  Call  SetPanTarget  ( .Cam:Default 00000000 00000064 FFFFFF38 )
+  938:  Call  SetCamDistance    ( .Cam:Default 000000FA )
+  94C:  Call  SetCamPitch   ( .Cam:Default 00000005 FFFFFFF6 )
+  964:  Call  SetCamPosA    ( .Cam:Default FFFFFE0C FFFFFA88 )
+  97C:  Call  PanToTarget   ( .Cam:Default 00000000 00000001 )
+  994:  Wait  1`
+  9A0:  Call  SetNpcAnimation   ( 00000000 000C0000 )
+  9B4:  Wait  10`
+  9C0:  Call  SetNpcAnimation   ( 00000000 000C0026 )
+  9D4:  Call  SpeakToPlayer ( 00000000 000C0001 000C0026 00000000 0001006D ) % Thank you very much, indeed. I appreciate it from  ...
+  9F4:  Call  SetNpcAnimation   ( 00000000 000C0002 )
+  A08:  Wait  30`
+  A14:  Call  SetNpcAnimation   ( 00000000 000D000F )
+  A28:  Wait  60`
+  A34:  Call  SetNpcAnimation   ( 00000000 000C0026 )
+  A48:  Call  SpeakToPlayer ( 00000000 000C0001 000C0026 00000000 0001006E ) % So, let's celebrate! Enjoy the festivities, everyo ...
+  A68:  Call  SetNpcAnimation   ( 00000000 000C0010 )
+  A7C:  Call  EnableGroup   ( ~Model:chandelier .False )
+  A90:  Call  UseSettingsFrom   ( .Cam:Default 00000000 00000000 00000078 )
+  AAC:  Call  SetPanTarget  ( .Cam:Default 00000000 00000000 00000078 )
+  AC8:  Call  SetCamDistance    ( .Cam:Default 00000514 )
+  ADC:  Call  SetCamPitch   ( .Cam:Default 0000001E FFFFFFF9 )
+  AF4:  Call  SetCamPosA    ( .Cam:Default FFFFFF88 0000004B )
+  B0C:  Call  SetCamSpeed   ( .Cam:Default *Fixed[0.5] )
+  B20:  Call  PanToTarget   ( .Cam:Default 00000000 00000001 )
+  B38:  Wait  120`
+  B44:  Call  $Function_80240F40 ( )
+  B50:  Wait  60`
+  B5C:  Call  FadeOutMusic  ( 00000000 000007D0 )
+  B70:  Call  GotoMapSpecial    ( $ASCII_80249ED0 00000000 00000005 ) % end_00
+  B88:  Wait  100`
+  B94:  Return
+  B9C:  End
+}
+
+#new:String $Everyone
+{
+	[Style Right]
+	Bow, [Pause 15]Watt,[BR]
+	[Pause 15]Sushie, [Pause 15]Lakilester,[BR]
+	Buzzatrice[Wait][End]
+}

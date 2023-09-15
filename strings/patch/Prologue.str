@@ -1,0 +1,59 @@
+#message:0B:001
+{
+	[Style Right]
+	[Voice Star][DitherFade 217]But Bowser has the Star Rod![BR]
+	And the Dark Star![BR]
+	Now he's mightier than Mario![BR]
+	[Wait][Next]
+	It's hopeless! All is lost![Wait][End]
+}
+
+#message:0B:05D
+{
+	[Style Right]
+	Nyeah heh heh heh![BR]
+	[Wait][Next]
+	Mario! [Pause 10]You will kneel and weep[BR]
+	when you see the wonderful[BR]
+	changes King Bowser's made! [BR]
+	[Wait][Next]
+	[Color 32]Your world is ours now![Color 10][Wait][End]
+}
+
+#message:0A:004
+{
+	[Style Right]
+	[Voice Star][DitherFade 217]Bowser...that fiend...[BR]
+	[Wait][Next]
+	When he found out that we were[BR]
+	ignoring his wishes, he came and[BR]
+	stole the Star Rod so he could[BR]
+	grant his own wishes.[BR]
+	[Wait][Next]
+	It seems that he even found[BR]
+	the Dark Star, just to make[BR]
+	sure there was no way you[BR]
+	could beat him.[BR]
+	[Wait][Next]
+	He seems content right now,[BR]
+	mainly because he defeated you[BR]
+	and captured the princess.[BR]
+	[Wait][Next]
+	Soon enough, though, I fear he[BR]
+	will wish for more...and then[BR]
+	terrible things will happen.[Wait][End]
+}
+
+#message:0A:006
+{
+	[Style Right]
+	[Voice Star][DitherFade 217]Sadly...[BR]
+	[Wait][Next]
+	...right now you are not strong[BR]
+	enough to challenge Bowser...[BR]
+	[Wait][Next]
+	...he has made himself all-[BR]
+	powerful with the powers of the[BR]
+	Star Rod and the Dark Star.[BR]
+	He is terrible to behold![Wait][End]
+}

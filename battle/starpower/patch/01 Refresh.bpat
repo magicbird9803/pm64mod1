@@ -1,0 +1,151 @@
+@ $Script_UsePower
+{
+    0:  ExecWait $Script_802A1A70 
+		If *GameByte[00A] == 5
+			Call $ShowCustomMessage	( 002F002A 0000005A )
+			Call     UseBattleCamPreset 	( 00000002 )
+			ExecWait $Script_802A27FC  
+			Return
+		EndIf
+		Set *VarF 5`
+		Call	$Function_CheckStellarNova ( *VarE )
+		If *VarE > 0`
+			Mul *VarF 2`
+		EndIf
+    C:  SetConst  *Var[0]  00190001 
+   1C:  ExecWait $Script_802A21A0 
+   28:  Call     SetNpcAnimation 	( 00000064 00190002 )
+   3C:  Wait     00000010 
+   48:  Thread
+   50:  	Wait     0000000A 
+   5C:  	Call     UseBattleCamPreset 	( 00000002 )
+   6C:  EndThread
+   74:  Call     PlaySound   	( 00000242 )
+   84:  Call     EnableNpcBlur 	( 00000064 .True )
+   98:  Call     $Function_802A1518 ( 00000064 )
+   A8:  Call     EnableNpcBlur 	( 00000064 .False )
+   BC:  Call     802CDC1C ( 00000064 )
+   CC:  Call     GetActorPos 	( .Actor:Player *Var[0] *Var[1] *Var[2] )
+   E8:  Add  *Var[0]  00000000 
+   F8:  Add  *Var[1]  00000023 
+  108:  Call     $Function_802A18E8 ( *Var[0] *Var[1] *Var[2] *VarF )		%Effect spawning function	(hp?)
+		Call 	 $Function_CheckBadge ( .Item:FlowerHealth *VarB )
+		Call	 $Function_HasGreedStone ( *Var3 )
+		Set *Var2 0`
+		If *VarB == 1`
+			If *Var3 == 1`
+				Set *Var2 1`
+			EndIf
+		EndIf
+		%stellar coins negates stellar flowers
+		If *Var2 == 0`
+			Call 	 $Function_CheckBadge ( .Item:StellarFlowers *VarB )
+		Else
+			Set *VarB 0`
+		EndIf
+		If *VarB != 1`
+  124:  	Call     GetActorPos 	( .Actor:Player *Var[0] *Var[1] *Var[2] )
+  140:  	Add  *Var[0]  00000014 
+  150:  	Add  *Var[1]  00000019 		
+  160:  	Call     $Function_802A19A8 ( *Var[0] *Var[1] *Var[2] *VarF )		%Effect spawning function	(fp)
+		EndIf
+  17C:  Call     GetActorPos 	( .Actor:Player *Var[0] *Var[1] *Var[2] )
+  198:  Add  *Var[1]  00000019 
+  1A8:  Call     802D7520 ( *Var[0] *Var[1] *Var[2] *VarF )					%??? (another effect spawning thing?)
+  1C4:  Call     $Function_802A1840 ( *VarF )
+		Call 	 $Function_CheckBadge ( .Item:FlowerHealth *VarB )
+		Call	 $Function_HasGreedStone ( *Var5 )
+		Set *Var4 0`
+		If *VarB == 1`
+			If *Var5 == 1`
+				Set *Var4 1`
+			EndIf
+		EndIf
+		%stellar coins negates stellar flowers
+		If *Var4 == 0`
+			Call 	 $Function_CheckBadge ( .Item:StellarFlowers *VarB )
+		Else
+			Set *VarB 0`
+		EndIf
+		If *VarB != 1`
+  1D4:  	Call     $Function_802A1894 ( *VarF )								%fp heal
+		EndIf
+  1E4:  Call     $Function_802A17D4 ( )
+  1F0:  Wait     0000001E 
+  1FC:  Call     80276EFC ( )
+  208:  ExecWait $Script_802A27FC 
+  214:  Return
+  21C:  End
+}
+
+
+
+#new:Function $Function_CheckStellarNova
+{
+PUSH	S1, A1, A2, T0, RA
+COPY	S1, A0
+%get
+LAB		A0, $StellarNovaBoolean
+%reset
+SAB		R0, $StellarNovaBoolean
+COPY	A2, A0
+COPY	A0, S1
+JAL		~Func:set_variable
+LW		A1, 0 (S0) %get argument
+NOP
+POP		S1, A1, A2, T0, RA
+JR		RA
+ADDIU	V0, R0, 2 	
+}
+
+%just do it in the original status function
+%remove atk and def reductions
+@ $Function_802A17D4
+{
+    0:  ADDIU     SP, SP, FFE8
+    4:  SW        S0, 10 (SP)
+    8:  LAW       S0, 800DC148
+   10:  SW        RA, 14 (SP)
+   14:  LB        V0, 210 (S0)
+		SB		  R0, 221 (S0)
+		SB		  R0, 222 (S0)
+		SAB		  R0, $EternalCostIncreases
+   18:  BEQ       V0, R0, .o30
+   1C:  NOP
+   20:  LH        A0, 436 (S0)
+   24:  SB        R0, 211 (S0)
+   28:  JAL       80047898
+   2C:  SB        R0, 210 (S0)
+        .o30
+   30:  LB        V0, 216 (S0)
+   34:  BEQ       V0, R0, .o50
+   38:  NOP
+   3C:  LW        V0, 440 (S0)
+   40:  SB        R0, 217 (S0)
+   44:  SB        R0, 216 (S0)
+   48:  LW        V0, C (V0)
+   4C:  SW        R0, 3C (V0)
+        .o50
+   50:  JAL       ~Func:btl_update_ko_status
+   54:  NOP
+   58:  LW        RA, 14 (SP)
+   5C:  LW        S0, 10 (SP)
+   60:  LI        V0, 2
+   64:  JR        RA
+   68:  ADDIU     SP, SP, 18
+}
+
+#new:Function $Function_ResetStatus %set debuff turns to 0, set attack boost and defense boost to 0 (note that the partner buff moves work separately to them)
+{
+	PUSH	RA, A0, A1
+	LIO		A0, 800DC070
+	LW		A0, D8 (A0) %where player actor struct is
+	SB		R0, 210 (A0) %debuff id
+	SB		R0, 211 (A0) %debuff turns
+	SB		R0, 221 (A0)
+	SB		R0, 222 (A0)
+	SAB		R0, $EternalCostIncreases
+	POP		RA, A0, A1
+	JR		RA
+	ORI 	V0, R0, 2
+}

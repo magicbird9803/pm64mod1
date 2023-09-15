@@ -1,0 +1,602 @@
+%the game uses *AreaByte[1] to determine which cake step you're on
+%if you do something wrong, it gets locked at a certain value, then gourmet guy tells you how you messed up that step
+%6 = complete
+%5 = decorate
+%4 = bake
+%3 = more ingredients
+%2 = mix
+%1 = ingredients
+
+%AreaFlag[009] is the "bad cake" flag
+%0 = no, 1 = yes
+
+%seems like AreaFlag[00E] is for if the ingredients are correct
+
+%A,B,C,D are ingredient 1,2,3,4 validity
+
+@ $Script_80242A18
+{
+	0:  If  *AreaByte[0]  ==  00000006
+   10:  	Return
+   18:  EndIf
+   20:  SetGroup  00000000
+   2C:  Call  SetTimeFreezeMode ( 00000001 )
+   3C:  Call  ShowKeyChoicePopup ( )
+   48:  Set   *Var2  *Var0
+   58:  Switch  *Var2
+   64:  	Case  ==  00000000
+   70:  		Call  CloseChoicePopup ( )
+   7C:  		Call  SetTimeFreezeMode ( 00000000 )
+   8C:  		Return
+   94:  	Case  ==  FFFFFFFF
+   A0:  		Call  CloseChoicePopup ( )
+   AC:  		Call  SetTimeFreezeMode ( 00000000 )
+   BC:  		Return
+   C4:  EndSwitch
+   CC:  Call  RemoveKeyItemAt       ( *Var1 )
+   DC:  Set   *AreaByte[2]  00000000
+   EC:  Call  $Function_80240C10    ( 00000000 )
+   FC:  Call  SetPlayerActionState  ( .ActionState:Idle )
+  10C:  Switch  *AreaByte[0]
+  118:  	Case  ==  00000001
+  124:  		Switch  *Var0
+  130:  			Case  ==  0000005D
+  13C:  				Set   *AreaFlag[00B]  .True
+  14C:  			Case  ==  0000005F
+  158:  				Set   *AreaFlag[00A]  .True
+					Case  ==  00000063 %soap
+						Set  *AreaFlag[00A]  00000001
+						Set  *AreaFlag[00B]  00000001
+  168:  			Default
+  170:  				Set   *AreaFlag[00E]  .False
+  180:  		EndSwitch
+  188:  		If  *AreaByte[3]  ==  00000000
+  198:  			Call  RemoveItemEntity  ( *AreaByte[4] )
+  1A8:  			Call  MakeItemEntity    ( .Item:CakeMixed ~Vec3d:Item80242BC0 .ItemSpawnMode:Decoration 00000000 )
+  1CC:  			Set   *AreaByte[4]  *Var0
+  1DC:  		EndIf
+  1E4:  		If  *AreaByte[3]  >  00000001
+  1F4:  			Set   *AreaFlag[00E]  .False
+  204:  		EndIf
+  20C:  	Case  ==  00000003
+  218:  		Switch  *Var0
+  224:  			Case  ==  00000065
+  230:  				Set   *AreaFlag[00C]  .True
+  240:  			Case  ==  00000062
+  24C:  				Set   *AreaFlag[00D]  .True
+					Case  ==  00000063 %soap
+						Set  *AreaFlag[00C]  00000001
+						Set  *AreaFlag[00D]  00000001
+  25C:  			Default
+  264:  				Set   *AreaFlag[00E]  .False
+  274:  		EndSwitch
+  27C:  		If  *AreaByte[3]  >  00000001
+  28C:  			Set   *AreaFlag[00E]  .False
+  29C:  		EndIf
+  2A4:  	Case  ==  00000005
+  2B0:  		Switch  *AreaByte[3]
+  2BC:  			Case  ==  00000000
+  2C8:  				If  *Var0  !=  00000060
+  2D8:  					Set   *AreaFlag[009]  .True
+  2E8:  				EndIf
+  2F0:  			Case  ==  00000001
+  2FC:  				If  *Var0  !=  00000061
+  30C:  					Set   *AreaFlag[009]  .True
+  31C:  				EndIf
+  324:  			Default
+  32C:  				Set   *AreaFlag[009]  .True
+  33C:  		EndSwitch
+  344:  		Call  RemoveItemEntity  ( *AreaByte[5] )
+  354:  		Switch  *Var0
+  360:  			Case  ==  00000061
+  36C:  				If  *AreaFlag[00F]  ==  .False
+  37C:  					Call  MakeItemEntity    ( .Item:CakeWithBerries ~Vec3d:Item80242D94 .ItemSpawnMode:Decoration 00000000 )
+  3A0:  					Set   *AreaByte[5]  *Var0
+  3B0:  				Else
+  3B8:  					Call  MakeItemEntity    ( .Item:CakeDone ~Vec3d:Item80242DD0 .ItemSpawnMode:Decoration 00000000 )
+  3DC:  					Set   *AreaByte[5]  *Var0
+  3EC:  				EndIf
+  3F4:  				Set   *AreaFlag[010]  .True
+  404:  			Default
+  40C:  				Call  MakeItemEntity    ( .Item:CakeWithIcing ~Vec3d:Item80242E24 .ItemSpawnMode:Decoration 00000000 )
+  430:  				Set   *AreaByte[5]  *Var0
+  440:  				Set   *AreaFlag[00F]  .True
+  450:  				Set   *AreaFlag[010]  .False
+  460:  		EndSwitch
+  468:  EndSwitch
+  470:  Add   *AreaByte[3]  00000001
+  480:  Call  CloseChoicePopup ( )
+  48C:  Call  SetTimeFreezeMode ( 00000000 )
+  49C:  Return
+  4A4:  End
+}
+
+
+%Add some cleanser for the memes
+@ $Script_Main
+{
+    0:  Set   *GB_WorldLocation  .Location:PeachsCastle
+   10:  Call  SetSpriteShading  ( .Shading:None )
+   20:  Call  SetCamPerspective ( .Cam:Default 00000003 00000019 00000010 00001000 )
+   40:  Call  SetCamBGColor     ( .Cam:Default 00000000 00000000 00000000 )
+   5C:  Call  SetCamEnabled     ( .Cam:Default .True )
+   70:  Switch  *GB_StoryProgress
+   7C:  	Case  ==  .Story:Intro % FFFFFF80
+   88:  		Call  MakeNpcs  ( .False $NpcGroupList_802416E4 )
+   9C:  	Case  ==  .Story:Ch4_BeganPeachMission % 6
+   A8:  		Call  MakeNpcs  ( .False $NpcGroupList_80241AF4 )
+			Case > .Story:Ch7_StarSpritDeparted
+				Call  MakeNpcs  ( .False $NpcGroupList_Shopkeeper )
+   BC:  EndSwitch
+   C4:  Exec  $Script_80240D60
+   D0:  Call  UseDoorSounds ( .DoorSounds:Basic )
+   E0:  Exec  $Script_EnterSingleDoor_8024103C
+   EC:  Wait  1`
+   F8:  If  *GB_StoryProgress  ==  .Story:Ch4_BeganPeachMission % 6
+  108:  	Call  $Function_802401FC ( )
+  114:  EndIf
+		If  *GB_StoryProgress > .Story:Ch7_StarSpritDeparted
+			ExecWait $Script_MakeEntities
+		EndIf
+  11C:  Return
+  124:  End
+}
+
+#new:Script $Script_MakeEntities
+{
+	%Set 	 *GF_KKJ19_Cleanser .False
+	%Call     MakeItemEntity ( .Item:BakingCleanser ~Vec3d:Item802420B4 00000011 *GF_KKJ19_Cleanser )
+	Return
+	End
+}
+
+
+
+
+%guy who gives you cooking ingredients
+
+%%
+% NPCs
+%%
+
+#new:NpcGroupList $NpcGroupList_Shopkeeper  /%%/
+{
+00000001 $NpcGroup_Rowf 3A010002
+00000000 00000000 00000000 
+}
+
+%%
+% Rowf
+%%
+
+#new:NpcGroup $NpcGroup_Rowf
+{
+00000001 $NpcSettings_802411F0 ~Vec3f:NPC_802414F4
+00A40D01 $InitRowf 00000000 00000000 00000000 
+~NoDrops
+~Movement:NPC_802414F4
+~AnimationTable:NPC_802414F4 % .Sprite:Toad
+00000000 00000000 00000000 $ShopkeeperTattle % no tattle string
+}
+
+#new:String $ShopkeeperTattle
+{
+	[Style Tattle]
+	[EnableCDownNext]He's a Toad who works in the[BR]
+	kitchen of Peach's Castle.[BR]
+	[PAUSE:10]Wow, even in a time like this,[BR]
+	he still does his job.[BR]
+	[Wait][Next]
+	He'll let us have some of the[BR]
+	ingredients in here though, but[BR]
+	we have to pay him.[BR]
+	[Wait][Next]	
+	That doesn't make sense though...[BR]
+	I bet this guy just wants to[BR]
+	rip us off.[BR]
+	[Wait][NEXT]
+	Maybe there's some technical[BR]
+	reason he has to be here...[BR]
+	[Wait][End]
+}
+
+#new:Script $InitRowf
+{
+    0:  Set  *MapFlag[00]  00000000 
+   10:  Call     BindNpcInteract 	( .Npc:Self $RowfInteraction )
+   24:  Return
+   2C:  End
+}
+  
+#new:Script $RowfInteraction
+{
+   78:  If  *MapFlag[00]  ==  00000001 
+   88:  	Call     SpeakToPlayer 	( 00000001 00830004 00830001 00000000 $GetMore ) % You want to trade more? 
+   A8:  Else
+   F8:  		Call     SpeakToPlayer 	( 00000001 00830004 00830001 00000000 $GetStuff ) % I'm the famous Merlow of Shooting Star Summit. Got ...
+  120:  EndIf
+  128:  Call     ShowChoice  	( 001E0014 ) % Yes No 
+  138:  If  *Var[0]  ==  00000001 
+  148:  	Call     ContinueSpeech 	( 00000001 00830004 00830001 00000000 $Goodbye ) % Later!
+  168:  	Return
+  170:  EndIf
+  178:  Call     $LoadCoins ( *Var[0] )
+  188:  If  *Var[0]  ==  00000000 
+  198:  	Call     ContinueSpeech 	( 00000001 00830004 00830001 00000000 $YouArePoor ) % Ahhh... I can tell you don't have any Star Pieces. ...
+  1B8:  	Return
+  1C0:  EndIf
+  1C8:  Call     ContinueSpeech 	( 00000001 00830004 00830001 00000000 $WhatDoYouWant ) % Which Badges do you want to swap for?
+  1E8:  Label    00000000 
+  1F4:  Call     $LoadInventory ( )
+  200:  Wait     0000000A 
+  Call     ShowCoinCounter 	( .True )
+  20C:  If  *Var[0]  ==  FFFFFFFF 
+  21C:  	Call     SpeakToPlayer 	( 00000001 00830004 00830001 00000000 $Goodbye2 ) % Ahh... Did you change your mind? I see...
+  Call     ShowCoinCounter 	( .False )
+  23C:  	Return
+  244:  EndIf
+  24C:  Call     $LoadCoins ( *Var[3] )
+  25C:  If  *Var[3]  <  *Var[1] 
+  26C:  	Call     SpeakToPlayer 	( 00000001 00830004 00830001 00000000 $YouArePoor ) % Ahh... Did you change your mind? I see...
+  Call     ShowCoinCounter 	( .False )
+  28C:  	Goto     00000000 
+  298:  EndIf
+  %2A0:  Call     SetMessageString 	( *Var[4] 00000000 )
+  %2B4:  Call     SetMessageValue 	( *Var[1] 00000001 )
+  %2C8:  Call     SetMessageValue 	( *Var[5] 00000002 )
+		%type = string var 0
+		%cost = string var 1
+  2B4:  Call     SetMessageString 	( *Var[4] 00000000 )
+  2B4:  Call     SetMessageValue 	( *Var[1] 00000001 )
+  2DC:  If  *Var[1]  ==  00000001 
+  2EC:  	Call     SpeakToPlayer 	( 00000001 00830004 00830001 00000000 $BuyOneCoin ) % I'm going to exchange "" for  Star Piece. The numb ...
+  30C:  Else
+  314:  	Call     SpeakToPlayer 	( 00000001 00830004 00830001 00000000 $BuyManyCoins ) % I'm going to exchange "" for  Star Pieces. The num ...
+  334:  EndIf
+  33C:  Set  *Var[3]  *Var[0] 
+  34C:  Call     ShowChoice  	( 001E000D ) % Yes No 
+  35C:  If  *Var[0]  ==  00000001 
+  36C:  	Call     ContinueSpeech 	( 00000001 00830004 00830001 00000000 $Decline ) % Ahh... Did you change your mind? You're an indecis ...
+  38C:  	Goto     00000000 
+  398:  EndIf
+    Call     $InventoryAvailability ( )
+  2D8:  		If  *Var[0]  ==  00000000 
+  2E8:  			Call     ShowCoinCounter 	( .False )
+  2F8:  			Call     ContinueSpeech 	( 00000001 00830004 00830001 00000000 $NoSpace ) % Oh, this is unfortunate... You have too much stuff ...
+  318:  			Return
+  320:  		EndIf
+  3A0:  Call     802D0A98 ( )
+  3AC:  Mul  *Var[1]  FFFFFFFF 
+  3BC:  Call     AddCoin 	( *Var[1] )
+  3FC:  Set  *Var[0]  *Var[3] 
+  40C:  Set  *Var[1]  00000002 
+  41C:  ExecWait $GotItem 
+		Call 	 AddItem 		( *Var0 *Var1 )		%should be addItem?		addBadge is probably wrong but it might still work somehow
+  %428:  Call     AddBadge    	( *Var[0] *Var[1] )
+  47C:  Call     $LoadCoins ( *Var[0] )
+		Call     ShowCoinCounter 	( .False )
+  48C:  If  *Var[0]  <=  00000000 
+  49C:  	Call     SpeakToPlayer 	( 00000001 00830004 00830001 00000000 $ThanksCantBuyMore ) % All Right! These Star Pieces really help round out ...
+  4BC:  	Return
+  4C4:  EndIf
+		Call     $InventoryAvailability ( )		%add an inventory check
+  48C:  If  *Var[0]  ==  00000000 
+  49C:  	Call     SpeakToPlayer 	( 00000001 00830004 00830001 00000000 $ThanksCantBuyMore ) % All Right! These Star Pieces really help round out ...
+  4BC:  	Return
+  4C4:  EndIf
+  4CC:  Call     SpeakToPlayer 	( 00000001 00830004 00830001 00000000 $Thanks ) % All Right then, mister. Why don't we swap some mor ...
+  4EC:  Call     ShowChoice  	( 001E000D ) % Yes No 
+  4FC:  If  *Var[0]  ==  00000001 
+  50C:  	Call     ContinueSpeech 	( 00000001 00830004 00830001 00000000 $ThanksGoodbye ) % You don't want to? Oh well. At least I was able to ...
+  52C:  	Return
+  534:  EndIf
+  53C:  Call     802D0A98 ( )
+  548:  Goto     00000000 
+  554:  Return
+  55C:  End
+}
+
+%shop guy strings
+#new:String $GetMore
+{
+	[Style Right]Do you want to get more[BR]
+	ingredients?[BR]
+	[Yield][End]
+}
+
+#new:String $GetStuff
+{
+	[Style Right]Hey, Mario.[BR]
+	I'm... [Pause 10]uh... [Pause 10]the guy[BR]
+	in charge of supplies here[BR]
+	in Peach's Castle.[BR]
+	[Wait][NEXT]
+	I'll let you have some of the[BR]
+	ingredients here, but I can't[BR]
+	let you take things for free,[BR]
+	even for you.[BR]
+	[Wait][NEXT]
+	Sorry, but I would probably lose[BR]
+	my job if there's a lot of[BR]
+	ingredients missing.[BR]
+	[Wait][NEXT]
+	So do you want to take any[BR]
+	of the ingredients with you?[BR]
+	[Yield][End]
+}
+
+#new:String $Goodbye
+{
+	[Style Right]Goodbye, Mario.[Wait][END]
+}
+
+#new:String $YouArePoor
+{
+	[Next]
+	Sorry Mario, but you don't[BR]
+	have enough coins, so I can't[BR]
+	let you take anything.[Wait][END]
+}
+
+#new:String $WhatDoYouWant
+{
+	[Next]Which one do you want?[Wait][END]
+}
+
+#new:String $Goodbye2
+{
+	[Style Right]Goodbye, Mario.[Wait][END]
+}
+
+#new:String $BuyOneCoin
+{
+	[Style Right]That [Var 0] is worth 1[BR]
+	coin. Are you ok with that?[BR]
+	[Yield][End]
+}
+
+#new:String $BuyManyCoins
+{
+	[Style Right]That [Var 0] is worth [Var 1][BR]
+	coins. Are you ok with that?[BR]
+	[Yield][End]
+}
+
+#new:String $Decline
+{
+	[Next]
+	AlRight, do you want something[BR]
+	else then?[Wait][END]
+}
+
+#new:String $NoSpace
+{
+	[Next]
+	It looks like you are carring[BR]
+	too much Right now.[Wait][END]
+}
+
+#new:String $ThanksCantBuyMore
+{
+	[Style Right]Thanks, Mario.[Wait][END]
+}
+
+#new:String $ThanksGoodbye
+{
+	[Next]Thanks, Mario.[Wait][END]
+}
+
+#new:String $Thanks
+{
+	[Style Right]Thanks, Mario. Do you want[BR]
+	to take something else?[BR]
+	[Yield][End]
+}
+
+
+
+  
+#new:BadgeShopInventory $RowfInventory
+{
+.Item:BakingFlour         	20`    002400E0
+.Item:BakingSugar      		30`    002400D8
+.Item:BakingSalt     		15`    002400D9
+.Item:Egg     				15`    00230021
+.Item:BakingMilk       		25`    002400E1
+.Item:BakingStrawberry      30`    002400DC
+.Item:BakingCream      		20`    002400DB
+.Item:BakingButter      	30`    002400DD
+.Item:BakingCleanser      	35`    002400DE
+.Item:BakingWater      		 5`    002400DF
+}
+  
+  %This Function check if Mario have space in his inventory
+#new:Function $InventoryAvailability 
+{ 
+ 0:  ADDIU     SP, SP, FFE8
+    4:  SW        S0, 10 (SP)
+    8:  SW        RA, 14 (SP)
+    C:  JAL       800E7620
+   10:  DADDU     S0, A0, R0
+   14:  SW        V0, 84 (S0)
+   18:  LW        RA, 14 (SP)
+   1C:  LW        S0, 10 (SP)
+   20:  ADDIU     V0, R0, 2
+   24:  JR        RA
+   28:  ADDIU     SP, SP, 18
+}  
+  
+#new:Script $GotItem
+{
+    0:  Call     ShowGotItem 	( *Var[0] 00000001 00000000 )
+   18:  Return
+   20:  Return
+   28:  End
+}   
+  
+	%Checking If you have Coins to buy anything
+#new:Function $LoadCoins 
+{
+    0:  ADDIU     SP, SP, FFE8
+    4:  SW        RA, 10 (SP)
+    8:  LW        V0, C (A0)
+    C:  LAH       A2, 8010F29C
+   14:  JAL       ~Func:set_variable
+   18:  LW        A1, 0 (V0)
+   1C:  LW        RA, 10 (SP)
+   20:  ADDIU     V0, R0, 2
+   24:  JR        RA
+   28:  ADDIU     SP, SP, 18
+}
+   
+  %Inventory List
+#new:Function $LoadInventory
+{
+    0:  ADDIU     SP, SP, FFC8
+    4:  SW        S3, 1C (SP)
+    8:  DADDU     S3, A0, R0
+    C:  SW        S6, 28 (SP)
+   10:  LIA       S6, 8010F28D % This Line load the players coins (The Two LHU commands below do a offset to the coins address)
+   18:  SW        RA, 34 (SP)
+   1C:  SW        S8, 30 (SP)
+   20:  SW        S7, 2C (SP)
+   24:  SW        S5, 24 (SP)
+   28:  SW        S4, 20 (SP)
+   2C:  SW        S2, 18 (SP)
+   30:  SW        S1, 14 (SP)
+   34:  BEQ       A1, R0, .o130
+   38:  SW        S0, 10 (SP)
+   3C:  JAL       ~Func:heap_malloc
+   40:  ADDIU     A0, R0, 330
+   44:  SW        V0, 78 (S3)
+   48:  DADDU     S5, V0, R0
+   4C:  DADDU     S4, R0, R0
+   50:  DADDU     S2, S4, R0
+   54:  LIO       S7, *GF_HOS06_MerlowBadge_00
+   5C:  LIA       S8, $Global_ItemHudScripts
+        LIO       S1, $RowfInventory
+   6C:  DADDU     S0, S5, R0
+        .o70
+   70:  DADDU     A0, R0, R0
+   74:  JAL       ~Func:get_variable
+   78:  ADDU      A1, S2, S7
+   7C:  BNEL      V0, R0, .o108
+   80:  ADDIU     S2, S2, 1
+   84:  LW        V0, 0 (S1)
+   88:  LIA       A2, 800878E0
+   90:  SLL       V0, V0, 5
+   94:  ADDU      V0, V0, A2
+   98:  LH        V1, 4 (V0)
+   9C:  SW        S2, 108 (S0)
+   A0:  LW        V0, 0 (V0)
+   A4:  SLL       V1, V1, 3
+   A8:  ADDU      A0, V1, S8
+   AC:  SW        V0, 84 (S0)
+   B0:  LW        V0, 0 (A0)
+   B4:  SW        V0, 0 (S0)
+   B8:  LHU       V0, F (S6) % This line turn on the available items (Name) 1
+   BC:  LW        V1, 4 (S1)
+   C0:  SLT       V0, V0, V1
+   C4:  XORI      V0, V0, 1
+   C8:  SW        V0, 18C (S0)
+   CC:  LHU       V0, F (S6) % Related to track if player have enough coins?
+   D0:  LW        V1, 4 (S1)
+   D4:  SLT       V0, V0, V1
+   D8:  BEQ       V0, R0, .oEC
+   DC:  NOP
+   E0:  LW        V0, 4 (A0)
+   E4:  SW        R0, 18C (S0)
+   E8:  SW        V0, 0 (S0)
+        .oEC
+   EC:  LW        V0, 8 (S1)
+   F0:  SW        V0, 294 (S0)
+   F4:  LW        V0, 4 (S1)
+   F8:  ADDIU     S4, S4, 1
+   FC:  SW        V0, 210 (S0)
+  100:  ADDIU     S0, S0, 4
+  104:  ADDIU     S2, S2, 1
+        .o108
+  108:  SLTI      V0, S2, A %Total Items in the List,if the inventory list have a bigger one the game will crash
+  10C:  BNE       V0, R0, .o70
+  110:  ADDIU     S1, S1, C
+  114:  DADDU     A0, S5, R0
+  118:  ADDIU     V0, R0, 5 % This Line is to make appear the List Box style you want
+  11C:  SW        V0, 318 (A0)
+  120:  SW        S4, 324 (A0)
+  124:  JAL       800F4E40
+  128:  SW        R0, 328 (A0)
+  12C:  SW        R0, 70 (S3)
+        .o130
+  130:  LW        V0, 70 (S3)
+  134:  LW        S5, 78 (S3)
+  138:  BNE       V0, R0, .o15C
+  13C:  ADDIU     V0, V0, 1
+  140:  LH        V0, 32C (S5)
+  144:  BEQ       V0, R0, .o16C
+  148:  SW        V0, 74 (S3)
+  14C:  JAL       800F13B0
+  150:  NOP
+  154:  LW        V0, 70 (S3)
+  158:  ADDIU     V0, V0, 1
+        .o15C
+  15C:  SW        V0, 70 (S3)
+  160:  SLTI      V0, V0, 14
+  164:  BEQ       V0, R0, .o174
+  168:  NOP
+        .o16C
+  16C:  BEQ       R0, R0, .o224
+  170:  DADDU     V0, R0, R0
+        .o174
+  174:  JAL       800F1538
+  178:  NOP
+  17C:  LW        V1, 74 (S3)
+  180:  ADDIU     V0, R0, FF
+  184:  BEQ       V1, V0, .o210
+  188:  ADDIU     V0, V1, FFFF
+  18C:  SLL       V0, V0, 2
+  190:  ADDU      V0, S5, V0
+  194:  LW        S2, 108 (V0)
+  198:  LIO       V0, $RowfInventory
+  1A0:  SLL       V1, S2, 1
+  1A4:  ADDU      V1, V1, S2
+  1A8:  SLL       V1, V1, 2
+  1AC:  ADDU      V1, V1, V0
+  1B0:  LW        V0, 0 (V1)
+  1B4:  SW        V0, 84 (S3)
+  1B8:  LW        V0, 4 (V1)
+  1BC:  SW        S2, 8C (S3)
+  1C0:  SW        V0, 88 (S3)
+  1C4:  LW        V0, 0 (V1)
+  1C8:  SLL       V0, V0, 5
+  1CC:  LTW       V0, V0 (800878E0)
+  1D8:  SW        V0, 94 (S3)
+  1DC:  LW        V0, 0 (V1)
+  1E0:  SLL       V0, V0, 5
+  1E4:  LTBU      V1, V0 (800878FA)
+  1F0:  SLL       V0, V1, 2
+  1F4:  ADDU      V0, V0, V1
+  1F8:  SLL       V0, V0, 2
+  1FC:  LTB       V0, V0 (8008F072)
+  208:  BEQ       R0, R0, .o218
+  20C:  SW        V0, 98 (S3)
+        .o210
+  210:  ADDIU     V0, R0, FFFF
+  214:  SW        V0, 84 (S3)
+        .o218
+  218:  JAL       ~Func:heap_free
+  21C:  LW        A0, 78 (S3)
+  220:  ADDIU     V0, R0, 2
+        .o224
+  224:  LW        RA, 34 (SP)
+  228:  LW        S8, 30 (SP)
+  22C:  LW        S7, 2C (SP)
+  230:  LW        S6, 28 (SP)
+  234:  LW        S5, 24 (SP)
+  238:  LW        S4, 20 (SP)
+  23C:  LW        S3, 1C (SP)
+  240:  LW        S2, 18 (SP)
+  244:  LW        S1, 14 (SP)
+  248:  LW        S0, 10 (SP)
+  24C:  JR        RA
+  250:  ADDIU     SP, SP, 38
+}

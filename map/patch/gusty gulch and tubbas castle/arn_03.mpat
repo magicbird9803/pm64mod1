@@ -1,0 +1,5 @@
+@ $Script_Interact_8024254C
+{
+   [40]  		Set   *Var0  .Item:KootPackageB
+   [6C] 		Call  AddKeyItem    ( .Item:KootPackageB )
+}

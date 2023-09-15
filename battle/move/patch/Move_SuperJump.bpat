@@ -1,0 +1,218 @@
+%Smart stomp
+%Inflicts a status that works :)
+%	stop, shrink, dizzy, paralyze, sleep
+%	This move will only try to use statuses that work
+%attack power = jump + 1
+%6 fp because it just tells you the status weakness of enemies (but once you know the weaknesses you can use cheaper stuff)
+
+
+%Return best status in var0 (0 if not possible)
+#new:Function $Function_DetermineBestStatus
+{
+		PUSH	  RA, S0, S1, S2, S3, S4, S5, S6
+    8:  LAW       S0, 800DC148		%Mario
+   14:  COPY      S2, A0			%script context
+   20:  JAL       ~Func:get_actor
+   24:  LH        A0, 428 (S0)
+   28:  LB        A1, 426 (S0)		
+   2C:  COPY      S0, V0
+   30:  JAL       ~Func:get_actor_part
+   34:  COPY      A0, S0
+   44:  COPY      S1, V0
+		%
+		%Check to see if statusing isn't possible
+   4C:  LB        V1, 218 (S0)		%Invisible?
+   50:  LI        V0, E
+   54:  BEQ       V1, V0, .store
+   58:  CLEAR     A0
+   5C:  LW        V0, 7C (S1)
+   60:  ANDI      V0, V0, 20
+   64:  BNE       V0, R0, .store
+   68:  CLEAR     A0
+		%set stuff up
+		DADDU	  S3, R0, R0 		%best status
+		DADDU	  S4, R0, R0 		%best status chance
+		ADDI	  S5, R0, 4 		%status (Do not check statuses 3,2,1,0)
+		%Time to loop over stuff
+		.readstatustable
+		DADDU	  A1, S5, R0
+   3C:  LW        A0, 20C (S0)		%status table?
+   40:  JAL       ~Func:lookup_status_chance
+		NOP
+   48:  COPY      A0, V0
+		%best status?
+		%SLT      A1, A0, S4		biases towards statuses higher in the list (dizzy, paralyze, sleep, stop, shrink)
+		%BNE	  A1, R0, .no
+		%NOP
+		SLT       A1, S4, A0		%biases towards statuses lower in the list (shrink, stop, sleep, paralyze, dizzy)
+		BEQ		  A1, R0, .no
+		NOP
+		%set status
+		DADDU	  S3, S5, R0
+		DADDU	  S4, A0, R0
+		.no
+		%Skip statuses you can't inflict (or I don't want you to)
+		ADDI	  S5, S5, 1		%increment
+		ORI		  T0, R0, 7
+		BNE		  S5, T0, .not7
+		NOP
+		ADDI	  S5, S5, 1
+		.not7
+		ORI		  T0, R0, 9
+		BNE		  S5, T0, .not9
+		NOP
+		ADDI	  S5, S5, 1
+		.not9		
+		SLTI	  T0, S5, B
+		%End loop (stop checking when status is B)
+		BNE		  T0, R0, .readstatustable
+		NOP
+		/%
+		%Actually unneeded because it applies to all statuses equally
+		%Subtract status infliction modifier
+		LB        T0, 209 (S0)
+		%
+		ORI		  V1, R0, 50`
+		MULT	  V1, T0
+		NOP		
+		NOP		
+		MFLO	  V1 
+		SUB		  A0, A0, V1
+		%/
+		%
+        .store
+		DADDU	  A0, S3, R0
+   6C:  SW        A0, 84 (S2)		%var0   
+		POP		  RA, S0, S1, S2, S3, S4, S5, S6
+   84:  JR        RA
+   80:  LI        V0, 2
+}
+
+
+@ $Script_802A278C %statuses are 1 turn
+{
+    0:  ExecWait $Script_802A2184 
+    C:  Call     PlayerTestEnemy 	( *Var[0] 00000080 00000000 00000000 00000001 00000000 )
+   30:  If  *Var[0]  ==  00000006 
+   40:  	ExecWait $Script_802A1FEC 
+   4C:  	Return
+   54:  EndIf
+   5C:  ExecWait $Script_802A26B4 
+   68:  Wait     00000001 
+   74:  Call     80276EB4 ( *Var[0] )
+   84:  Switch  *Var[0] 
+   90:  	Case  >  00000000 
+   9C:  		Call     SetActorSounds ( 00000000 00000003 0000015A 00000000 )
+				Call 	 $Function_DetermineBestStatus ( )
+				Switch *Var[0]
+					Case == 4`	%Dizzy
+						Call     PlayerDamageEnemy 	( *Var[0] 00000080 00000000 80040164 00000002 00000070 )
+					Case == 5`	%Paralyze
+						Call     PlayerDamageEnemy 	( *Var[0] 00000080 00000000 80010164 00000002 00000070 )
+					Case == 6`	%Sleep
+						Call     PlayerDamageEnemy 	( *Var[0] 00000080 00000000 80001164 00000002 00000070 )
+					Case == 8`	%Stop
+						Call     PlayerDamageEnemy 	( *Var[0] 00000080 00000000 80200164 00000002 00000070 )
+					Case == 10`	%Shrink
+						Call     PlayerDamageEnemy 	( *Var[0] 00000080 00000000 80080164 00000002 00000070 )
+					Default		%Fail
+						Call     PlayerDamageEnemy 	( *Var[0] 00000080 00000000 00000000 00000002 00000070 )
+				EndSwitch
+   DC:  	Default
+   E4:  		Call     SetActorSounds ( 00000000 00000003 0000015A 00000000 )
+  100:  		Call     PlayerDamageEnemy 	( *Var[0] 00000080 00000000 00000000 00000001 00000030 )
+  124:  EndSwitch
+  12C:  Switch  *Var[0] 
+  138:  	Case  >  00000000 
+  144:  		ExecWait $Script_802A15D8 
+  150:  	Default
+  158:  		ExecWait $Script_802A17C4 
+  164:  EndSwitch
+  16C:  Return
+  174:  End
+}
+
+@ $Script_802A2908
+{
+    0:  ExecWait $Script_802A2184 
+    C:  Call     PlayerTestEnemy 	( *Var[0] 00000080 00000000 00000000 00000001 00000000 )
+   30:  If  *Var[0]  ==  00000006 
+   40:  	ExecWait $Script_802A1FEC 
+   4C:  	Return
+   54:  EndIf
+   5C:  ExecWait $Script_802A26B4 
+   68:  Wait     00000001 
+   74:  Call     80276EB4 ( *Var[0] )
+   84:  Switch  *Var[0] 
+   90:  	Case  >  00000000 
+   9C:  		Call     SetActorSounds ( 00000000 00000003 0000015B 00000000 )
+				Call 	 $Function_DetermineBestStatus ( )
+				Switch *Var[0]
+					Case == 4`	%Dizzy
+						Call     PlayerDamageEnemy 	( *Var[0] 00000080 00000000 80040264 00000003 00000070 )
+					Case == 5`	%Paralyze
+						Call     PlayerDamageEnemy 	( *Var[0] 00000080 00000000 80010264 00000003 00000070 )
+					Case == 6`	%Sleep
+						Call     PlayerDamageEnemy 	( *Var[0] 00000080 00000000 80001264 00000003 00000070 )
+					Case == 8`	%Stop
+						Call     PlayerDamageEnemy 	( *Var[0] 00000080 00000000 80200264 00000003 00000070 )
+					Case == 10`	%Shrink
+						Call     PlayerDamageEnemy 	( *Var[0] 00000080 00000000 80080264 00000003 00000070 )
+					Default		%Fail
+						Call     PlayerDamageEnemy 	( *Var[0] 00000080 00000000 00000000 00000003 00000070 )
+				EndSwitch
+   DC:  	Default
+   E4:  		Call     SetActorSounds ( 00000000 00000003 0000015B 00000000 )
+  100:  		Call     PlayerDamageEnemy 	( *Var[0] 00000080 00000000 00000000 00000002 00000030 )
+  124:  EndSwitch
+  12C:  Switch  *Var[0] 
+  138:  	Case  >  00000000 
+  144:  		ExecWait $Script_802A15D8 
+  150:  	Default
+  158:  		ExecWait $Script_802A17C4 
+  164:  EndSwitch
+  16C:  Return
+  174:  End
+}
+
+@ $Script_802A2A84
+{
+    0:  ExecWait $Script_802A2184 
+    C:  Call     PlayerTestEnemy 	( *Var[0] 00000080 00000000 00000000 00000001 00000000 )
+   30:  If  *Var[0]  ==  00000006 
+   40:  	ExecWait $Script_802A1FEC 
+   4C:  	Return
+   54:  EndIf
+   5C:  Wait     00000001 
+   68:  Call     80276EB4 ( *Var[0] )
+   78:  Switch  *Var[0] 
+   84:  	Case  >  00000000 
+   90:  		Call     SetActorSounds ( 00000000 00000003 0000015C 00000000 )				
+				Call 	 $Function_DetermineBestStatus ( )
+				Switch *Var[0]
+					Case == 4`	%Dizzy
+						Call     PlayerDamageEnemy 	( *Var[0] 00000080 00000000 80040364 00000004 00000070 )
+					Case == 5`	%Paralyze
+						Call     PlayerDamageEnemy 	( *Var[0] 00000080 00000000 80010364 00000004 00000070 )
+					Case == 6`	%Sleep
+						Call     PlayerDamageEnemy 	( *Var[0] 00000080 00000000 80001364 00000004 00000070 )
+					Case == 8`	%Stop
+						Call     PlayerDamageEnemy 	( *Var[0] 00000080 00000000 80200364 00000004 00000070 )
+					Case == 10`	%Shrink
+						Call     PlayerDamageEnemy 	( *Var[0] 00000080 00000000 80080364 00000004 00000070 )
+					Default		%Fail
+						Call     PlayerDamageEnemy 	( *Var[0] 00000080 00000000 00000000 00000004 00000070 )
+				EndSwitch
+   D0:  	Default
+   D8:  		Call     SetActorSounds ( 00000000 00000003 0000015C 00000000 )
+   F4:  		Call     PlayerDamageEnemy 	( *Var[0] 00000080 00000000 00000000 00000003 00000030 )
+  118:  EndSwitch
+  120:  Switch  *Var[0] 
+  12C:  	Case  >  00000000 
+  138:  		ExecWait $Script_802A15D8 
+  144:  	Default
+  14C:  		ExecWait $Script_802A17C4 
+  158:  EndSwitch
+  160:  Return
+  168:  End
+}

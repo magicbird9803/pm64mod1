@@ -1,0 +1,81 @@
+
+%damage buffed from 1 to 2, so you'll need to block the attacks to avoid taking damage
+
+@ $Script_80234624
+{
+[5D8]  		Call     EnemyDamageTarget 	( .Actor:Self *Var[F] 00000000 00000000 00000000 00000002 00000020 )
+[6AC]  	Call     EnemyDamageTarget 	( .Actor:Self *Var[F] 00000000 00000000 00000000 00000001 *Var[0] )
+}
+
+@ $Script_8023392C %Fix this script to account for potentially higher HP
+{
+    0:  Set  *Var[1]  *Var[1] 
+   10:  ExecWait $Script_80233DA4 
+   1C:  Call     GetActorVar 	( .Actor:Self 00000004 *Var[0] )
+   34:  Call     GetLastDamage 	( .Actor:Self *Var[1] )
+   48:  Add  *Var[0]  *Var[1] 
+   58:  Call     SetActorVar 	( .Actor:Self 00000004 *Var[0] )
+   70:  Label    00000000 
+   7C:  Call     GetActorVar 	( .Actor:Self 00000004 *Var[0] )
+   94:  If  *Var[0]  <=  00000000 
+   A4:  	Return
+   AC:  EndIf
+   B4:  Call     GetActorVar 	( .Actor:Self 00000003 *Var[1] )
+   CC:  If  *Var[1]  >=  0000000F 
+   DC:  	Return
+   E4:  EndIf
+   EC:  Set  *Var[0]  00000002 
+   FC:  Add  *Var[0]  *Var[1] 
+  10C:  If  *Var[0]  !=  00000010 
+  11C:  	Thread
+  124:  		Call     SetPartFlagBits 	( .Actor:Self *Var[0] 20000000 .True )
+  140:  		Call     GetPartOffset 	( .Actor:Self *Var[0] *Var[1] *Var[2] *Var[3] )
+  160:  		Call     GetPartMovementVar 	( .Actor:Self *Var[0] 00000002 *Var[7] )
+  17C:  		Call     GetPartMovementVar 	( .Actor:Self *Var[0] 00000003 *Var[8] )
+  198:  		Add  *Var[1]  *Var[7] 
+  1A8:  		Add  *Var[3]  *Var[8] 
+  1B8:  		Call     SetPartJumpGravity 	( .Actor:Self *Var[0] *Fixed[0.5] )
+  1D0:  		Call     JumpPartTo 	( .Actor:Self *Var[0] *Var[1] 00000000 *Var[3] 0000000F .True )
+  1F8:  		Call     80269E80 ( *Var[5] )
+  208:  		Switch  *Var[5] 
+  214:  			CaseOR  ==  0000000A 
+  220:  			CaseOR  ==  0000000E 
+  22C:  			CaseOR  ==  0000000C 
+  238:  			CaseOR  ==  00000010 
+  244:  			CaseOR  ==  0000000B 
+  250:  			CaseOR  ==  0000000F 
+  25C:  			CaseOR  ==  0000000D 
+  268:  			CaseOR  ==  00000011 
+  274:  			CaseOR  ==  00000002 
+  280:  			EndCaseGroup
+  288:  			Default
+  290:  				Set  *Var[7]  00000000 
+  2A0:  				Loop     00000018 
+  2AC:  					Call     SetPartRotation 	( .Actor:Self *Var[0] 00000000 *Var[7] 00000000 )
+  2CC:  					Add  *Var[7]  0000001E 
+  2DC:  					Wait     00000001 
+  2E8:  				EndLoop
+  2F0:  		EndSwitch
+  2F8:  		Call     PlayEffect  	( ~FX:BigSmokePuff *Var[1] *Var[2] *Var[3] 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+  33C:  		Set  *Var[8]  00000000 
+  34C:  		Loop     0000000C 
+  358:  			Call     SetPartRotation 	( .Actor:Self *Var[0] *Var[8] 00000000 00000000 )
+  378:  			Add  *Var[8]  00000008 
+  388:  			Wait     00000001 
+  394:  		EndLoop
+  39C:  		Call     SetPartFlagBits 	( .Actor:Self *Var[0] 00000001 .True )
+  3B8:  		Call     8026F59C ( FFFFFF81 *Var[0] )
+  3CC:  	EndThread
+  3D4:  EndIf
+  3DC:  Call     GetActorVar 	( .Actor:Self 00000004 *Var[0] )
+		Call	 GetEnemyMaxHP	( .Actor:Self *Var[F] )
+		Div *Var[F] 15`
+  3F4:  Sub  *Var[0]  *Var[F] 
+  404:  Call     SetActorVar 	( .Actor:Self 00000004 *Var[0] )
+  41C:  Call     GetActorVar 	( .Actor:Self 00000003 *Var[0] )
+  434:  Add  *Var[0]  00000001 
+  444:  Call     SetActorVar 	( .Actor:Self 00000003 *Var[0] )
+  45C:  Goto     00000000 
+  468:  Return
+  470:  End
+}

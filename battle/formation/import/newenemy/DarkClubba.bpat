@@ -1,0 +1,406 @@
+%Dark Clubba
+%because the endgame area has a few too many 0-def enemies, it's time for a super tanky enemy
+
+#new:IdleAnimations $IdleAnimations_DClubba %$IdleAnimations_80218000
+{
+.Status:Normal    003A0301
+.Status:Stone     003A0300
+.Status:Sleep     003A0303
+.Status:Poison    003A0301
+.Status:Stop      003A0300
+.Status:Static    003A0301
+.Status:Paralyze  003A0300
+.Status:Dizzy     003A0305
+.Status:Fear      003A0305
+.Status:End
+}
+
+#new:DefenseTable $DefenseTable_DClubba %$DefenseTable_8021804C
+{
+.Element:Normal 00000005 %pretty high
+.Element:Cosmic FFFFFFFD %but star storm does 10 against them
+.Element:End
+}
+
+#new:StatusTable $StatusTable_DClubba %$StatusTable_80218058
+{
+.Status:Normal      0`
+.Status:Default     0`
+.Status:Sleep      60` %might work
+.Status:Poison      0`
+.Status:Frozen      0`
+.Status:Dizzy       0` 
+.Status:Fear        0`
+.Status:Static      0` 
+.Status:Paralyze   50` %maybe
+.Status:Shrink      0` 
+.Status:Stop        0` 
+.Status:DefaultTurnMod    0`
+.Status:SleepTurnMod     -1`
+.Status:PoisonTurnMod     0`
+.Status:FrozenTurnMod     0`
+.Status:DizzyTurnMod     -3`
+.Status:FearTurnMod       0`
+.Status:StaticTurnMod     0`
+.Status:ParalyzeTurnMod  -1` %1 -> -1
+.Status:ShrinkTurnMod     0`
+.Status:StopTurnMod      -1`
+.Status:End
+}
+
+#new:PartsTable $PartsTable_DClubba %$PartsTable_80218104
+{
+00800000 01000000 F42000FF $IdleAnimations_DClubba $DefenseTable_DClubba 20210010 00000000 08FD0000 00000000 %both front and top spiky :) (And I even implemented a third spikiness flag so that even more things don't work)
+}																			%flag 00200000 stops bow from attacking?
+
+#new:Actor $DarkClubba
+{
+% stats
+[Index]        5Eb 
+[Level]        33`b %endgame enemies
+[MaxHP]        16`b 
+[Coins]         1`b 
+[Flags]       00000000 
+[StatusTable] $StatusTable_DClubba 
+% ai
+[PartsCount]   1`s 
+[PartsTable] $PartsTable_DClubba 
+[Script]      $Script_Init_DClubba 
+% move effectiveness
+[Escape]       20`b 
+[Item]          0`b 
+[AirLift]       0`b % no
+[Hurricane]     0`b % Bow's "Spook" as well
+[UpAndAway]    60`b 
+[PowerBounce]  80`b 
+[SpinSmash]     4`b % weight (0-4)  heavier
+% ui positions
+[Size]         42`b  42`b % width height
+[HealthBar]     0`b   0`b % dx dy
+[StatusTurn]  -10`b  20`b % dx dy
+[StatusIcon]   10`b  35`b % dx dy
+}
+
+#new:Script $Script_Init_DClubba %$Script_Init_80218150
+{
+    0:  Call     BindTakeTurn 	( .Actor:Self $Script_TakeTurn_DClubba )
+   14:  Call     BindIdle    	( .Actor:Self $Script_Idle_DClubba )
+   28:  Call     BindHandleEvent 	( .Actor:Self $Script_HandleEvent_DClubba )
+		Call	 SetActorVar	( .Actor:Self 00000001 00000000 )
+   3C:  Return
+   44:  End
+}
+
+#new:Script $Script_Idle_DClubba %$Script_Idle_8021819C
+{
+    0:  Return
+    8:  End
+}
+
+#new:Script $Script_HandleEvent_DClubba %$Script_HandleEvent_802181AC
+{
+    0:  Call     UseIdleAnimation 	( .Actor:Self .False )
+   14:  Call     EnableIdleScript 	( .Actor:Self 00000000 )
+   28:  Call     GetLastEvent 	( .Actor:Self *Var[0] )
+   3C:  Switch  *Var[0] 
+   48:  	CaseOR  ==  .Event:HitCombo
+   54:  	CaseOR  ==  .Event:Hit
+   60:  		SetConst  *Var[0]  00000001 
+   70:  		SetConst  *Var[1]  003A0304 
+   80:  		ExecWait DoNormalHit 
+   8C:  	EndCaseGroup
+   94:  	Case  ==  .Event:BurnHit
+   A0:  		SetConst  *Var[0]  00000001 
+   B0:  		SetConst  *Var[1]  003A0306 
+   C0:  		SetConst  *Var[2]  003A0307 
+   D0:  		ExecWait DoBurnHit 
+   DC:  	Case  ==  .Event:BurnDeath
+   E8:  		SetConst  *Var[0]  00000001 
+   F8:  		SetConst  *Var[1]  003A0306 
+  108:  		SetConst  *Var[2]  003A0307 
+  118:  		ExecWait DoBurnHit 
+  124:  		SetConst  *Var[0]  00000001 
+  134:  		SetConst  *Var[1]  003A0307 
+  144:  		ExecWait DoDeath 
+  150:  		Return
+  158:  	Case  ==  .Event:SpinSmashHit
+  164:  		SetConst  *Var[0]  00000001 
+  174:  		SetConst  *Var[1]  003A0304 
+  184:  		ExecWait 8029B998 
+  190:  	Case  ==  .Event:SpinSmashDeath
+  19C:  		SetConst  *Var[0]  00000001 
+  1AC:  		SetConst  *Var[1]  003A0304 
+  1BC:  		ExecWait 8029B998 
+  1C8:  		SetConst  *Var[0]  00000001 
+  1D8:  		SetConst  *Var[1]  003A0304 
+  1E8:  		ExecWait DoDeath 
+  1F4:  		Return
+  1FC:  	Case  ==  .Event:ShockHit
+  208:  		SetConst  *Var[0]  00000001 
+  218:  		SetConst  *Var[1]  003A0304 
+  228:  		ExecWait DoShockHit 
+  234:  		SetConst  *Var[0]  00000001 
+  244:  		SetConst  *Var[1]  003A0304 
+  254:  		ExecWait DoJumpBack 
+  260:  		SetConst  *Var[0]  00000001 
+  270:  		SetConst  *Var[1]  003A0302 
+  280:  		ExecWait DoReturnHome 
+  28C:  	Case  ==  .Event:ShockDeath
+  298:  		SetConst  *Var[0]  00000001 
+  2A8:  		SetConst  *Var[1]  003A0304 
+  2B8:  		ExecWait DoShockHit 
+  2C4:  		SetConst  *Var[0]  00000001 
+  2D4:  		SetConst  *Var[1]  003A0304 
+  2E4:  		ExecWait DoDeath 
+  2F0:  		Return
+  2F8:  	CaseOR  ==  00000017
+  304:  	CaseOR  ==  .Event:Immune
+  310:  	CaseOR  ==  .Event:AirLiftFailed
+  31C:  		SetConst  *Var[0]  00000001 
+  32C:  		SetConst  *Var[1]  003A0301 
+  33C:  		ExecWait DoImmune 
+  348:  	EndCaseGroup
+  350:  	Case  ==  .Event:Death
+  35C:  		SetConst  *Var[0]  00000001 
+  36C:  		SetConst  *Var[1]  003A0304 
+  37C:  		ExecWait DoNormalHit 
+  388:  		Wait     0000000A 
+  394:  		SetConst  *Var[0]  00000001 
+  3A4:  		SetConst  *Var[1]  003A0304 
+  3B4:  		ExecWait DoDeath 
+  3C0:  		Return
+  3C8:  	Case  ==  .Event:RecoverStatus
+  3D4:  		SetConst  *Var[0]  00000001 
+  3E4:  		SetConst  *Var[1]  003A0301 
+  3F4:  		ExecWait DoRecover 
+  400:  	Case  ==  .Event:ScareAway
+  40C:  		SetConst  *Var[0]  00000001 
+  41C:  		SetConst  *Var[1]  003A0302 
+  42C:  		SetConst  *Var[2]  003A0304 
+  43C:  		ExecWait DoScareAway 
+  448:  		Return
+  450:  	Case  ==  .Event:BeginAirLift
+  45C:  		SetConst  *Var[0]  00000001 
+  46C:  		SetConst  *Var[1]  003A0304 
+  47C:  		ExecWait DoAirLift 
+  488:  	Case  ==  .Event:BlowAway
+  494:  		SetConst  *Var[0]  00000001 
+  4A4:  		SetConst  *Var[1]  003A0304 
+  4B4:  		ExecWait DoBlowAway 
+  4C0:  		Return
+			Case  ==  .Event:SpikeTaunt
+				Call     GetStatusFlags ( .Actor:Self *Var[0] )
+				If  *Var[0]  !&  0035D000 
+					Call     SetAnimation 	( .Actor:Self 00000001 003A0308 ) %swing once
+				EndIf
+				Wait     0000000A 
+  4C8:  	Default
+  4D0:  EndSwitch
+  4D8:  Call     EnableIdleScript 	( .Actor:Self 00000001 )
+  4EC:  Call     UseIdleAnimation 	( .Actor:Self .True )
+  500:  Return
+  508:  End
+}
+
+#new:Script $Script_TakeTurn_DClubba %$Script_TakeTurn_802186BC
+{
+    0:  Call     UseIdleAnimation 	( .Actor:Self .False )
+   14:  Call     EnableIdleScript 	( .Actor:Self 00000000 )
+   28:  Call     SetTargetActor ( .Actor:Self .Actor:Player )
+   3C:  Call     UseBattleCamPreset 	( 0000003F )
+   4C:  Call     BattleCamTargetActor ( .Actor:Self )
+   5C:  Call     8024ECF8 ( FFFFFFFF 00000001 00000000 )
+   74:  Call     GetBattlePhase ( *Var[0] )
+   84:  If  *Var[0]  ==  .Phase:FirstStrike
+   94:  	Call     SetGoalToTarget 	( .Actor:Self )
+   A4:  	Call     GetGoalPos  	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+   C0:  	Add  *Var[0]  0000001B 
+   D0:  	Set  *Var[1]  00000000 
+   E0:  	Sub  *Var[2]  00000006 
+   F0:  	Call     SetActorPos 	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+  10C:  	Wait     0000000F 
+  118:  Else
+  120:  	Call     SetAnimation 	( .Actor:Self 00000001 003A0302 )
+  138:  	Call     SetActorSpeed 	( .Actor:Self *Fixed[8.0] ) %4 -> 8
+  14C:  	Call     SetGoalToTarget 	( .Actor:Self )
+  15C:  	Call     GetStatusFlags ( .Actor:Self *Var[0] )
+  170:  	If  *Var[0]  !&  00080000 
+  180:  		Call     AddGoalPos 	( .Actor:Self 0000001B 00000000 FFFFFFFA )
+  19C:  	Else
+  1A4:  		Call     AddGoalPos 	( .Actor:Self 0000000A 00000000 FFFFFFFA )
+  1C0:  	EndIf
+  1C8:  	Call     RunToGoal   	( .Actor:Self 00000000 .False )
+  1E0:  	Call     SetAnimation 	( .Actor:Self 00000001 003A0301 )
+  1F8:  	Wait     00000005 %A -> 5
+  204:  EndIf
+		%choose attack
+		%50%: shrink smash (12 damage) (Will attack partner too if Mario is shrunken)
+		%50% multihit (4 x 5 damage)
+		%
+		%new: do multihit then shrink smash (deterministic)
+		Call	 GetActorVar 	( .Actor:Self 00000001 *VarC )
+		Add		 *VarC 1
+		Mod		 *VarC 2
+		Call	 SetActorVar 	( .Actor:Self 00000001 *VarC )
+		If (*Var[C] == 1)
+  20C:  	Call     EnemyTestTarget ( .Actor:Self *Var[0] 00000000 00000000 00000001 00000010 )
+  230:  	Switch  *Var[0] 
+  23C:  		CaseOR  ==  00000006 
+  248:  		CaseOR  ==  00000005 
+  254:  			Set  *Var[A]  *Var[0] 
+  264:  			Call     PlaySoundAtActor 	( .Actor:Self 000020C5 )
+  278:  			Call     SetAnimation 	( .Actor:Self 00000001 003A0308 )
+  290:  			Wait     0000000A 
+  29C:  			If  *Var[A]  ==  00000005 
+  2AC:  				Call     EnemyTestTarget ( .Actor:Self *Var[0] 80000000 00000000 00000000 00000000 )
+  2D0:  				Wait     00000014 
+  2DC:  			EndIf
+  2E4:  			Call     YieldTurn   	( )
+  2F0:  			Call     UseBattleCamPreset 	( 00000002 )
+  300:  			Call     SetActorYaw 	( .Actor:Self 000000B4 )
+  314:  			Call     AddActorDecoration 	( .Actor:Self 00000001 00000000 .Decoration:Sweat )
+  330:  			SetConst  *Var[0]  00000001 
+  340:  			SetConst  *Var[1]  003A0302 
+  350:  			ExecWait DoReturnHome 
+  35C:  			Call     RemoveActorDecoration 	( .Actor:Self 00000001 00000000 )
+  374:  			Call     SetActorYaw 	( .Actor:Self 00000000 )
+  388:  			Call     EnableIdleScript 	( .Actor:Self 00000001 )
+  39C:  			Call     UseIdleAnimation 	( .Actor:Self .True )
+  3B0:  			Return
+  3B8:  		EndCaseGroup
+  3C0:  	EndSwitch
+  3C8:  	Call     SetAnimation 	( .Actor:Self 00000001 003A0309 )
+  3E0:  	Wait     00000006 %very little delay 15 -> 6
+  3EC:  	Call     PlaySoundAtActor 	( .Actor:Self 000020C5 )
+  400:  	Call     SetAnimation 	( .Actor:Self 00000001 003A030A )
+  418:  	Wait     00000002 
+  424:  	Wait     00000002 
+  430:  	Call     SetGoalToTarget 	( .Actor:Self )
+  440:  	Call     EnemyDamageTarget 	( .Actor:Self *VarD 10000000 00000000 80080364 0000000A 00000020 )
+			Call     GetStatusFlags ( .Actor:Player *Var[0] ) %only do it if player is shrunken
+			If  *Var[0]  !&  00080000
+				Goto 1
+			EndIf
+			Call     GetStatusFlags ( .Actor:Self *Var[0] ) %don't do it if you're shrunken yourself
+			If  *Var[0]  &  00080000
+				Goto 1
+			EndIf
+			Call     GetStatusFlags ( .Actor:Partner *Var[B] ) % so it doesnt stunlock your partner
+			If  *Var[B]  &  01000000 
+				Goto 1
+			EndIf
+			Call	 GetActorFlags ( .Actor:Partner *Var[E] )
+			If *Var[E] & 00000200 %can't reach high enough to hit flying partners
+				Goto 1
+			EndIf
+			Call     SetAnimation 	( .Actor:Self 00000001 003A0302 )
+			Call     SetActorSpeed 	( .Actor:Self *Fixed[8.0] ) %4 -> 8
+			Call     SetTargetActor ( .Actor:Self .Actor:Partner )
+			Call     SetGoalToTarget 	( .Actor:Self )
+			Call     GetStatusFlags ( .Actor:Self *Var[0] )
+			Call     AddGoalPos 	( .Actor:Self 0000001B 00000000 FFFFFFFA )
+			Call     RunToGoal   	( .Actor:Self 00000000 .False )
+			Call     SetAnimation 	( .Actor:Self 00000001 003A0301 )
+			Wait     0000000A 
+			Call     SetAnimation 	( .Actor:Self 00000001 003A0309 )
+			Wait     00000006 %very little delay 15 -> 6
+			Call     PlaySoundAtActor 	( .Actor:Self 000020C5 )
+			Call     SetAnimation 	( .Actor:Self 00000001 003A030A )
+			Wait     00000004
+			Call     SetGoalToTarget 	( .Actor:Self )
+			Call     EnemyDamageTarget 	( .Actor:Self *VarD 10000000 00000000 80080364 00000002 00000020 )
+			Label 1 %can't do partner attack
+  468:  	Switch  *VarD
+  474:  		CaseOR  ==  00000000 
+  480:  		CaseOR  ==  00000002 					
+  48C:  			Thread
+  494:  				Call     ShakeCam    	( 00000001 00000000 0000000A *Fixed[1.5] )
+  4B0:  			EndThread
+  4B8:  			Call     UseBattleCamPreset 	( 00000002 )
+  4C8:  			Wait     00000013 
+  4D4:  			Call     YieldTurn   	( )
+  4E0:  			SetConst  *Var[0]  00000001 
+  4F0:  			SetConst  *Var[1]  003A0302 
+  500:  			ExecWait DoReturnHome 
+  50C:  		EndCaseGroup
+  514:  	EndSwitch
+		Else
+			Call     EnemyTestTarget ( .Actor:Self *Var[0] 00000000 00000000 00000001 00000010 )
+			Switch  *Var[0] 
+				CaseOR  ==  00000006 
+				CaseOR  ==  00000005 
+					Set  *Var[A]  *Var[0] 
+					Call     PlaySoundAtActor 	( .Actor:Self 000020C5 )
+					Call     SetAnimation 	( .Actor:Self 00000001 003A0308 )
+					Wait     0000000A 
+					If  *Var[A]  ==  00000005 
+						Call     EnemyTestTarget ( .Actor:Self *Var[0] 80000000 00000000 00000000 00000000 )
+						Wait     00000014 
+					EndIf
+					Call     YieldTurn   	( )
+					Call     UseBattleCamPreset 	( 00000002 )
+					Call     SetActorYaw 	( .Actor:Self 000000B4 )
+					Call     AddActorDecoration 	( .Actor:Self 00000001 00000000 .Decoration:Sweat )
+					SetConst  *Var[0]  00000001 
+					SetConst  *Var[1]  003A0302 
+					ExecWait DoReturnHome 
+					Call     RemoveActorDecoration 	( .Actor:Self 00000001 00000000 )
+		  			Call     SetActorYaw 	( .Actor:Self 00000000 )
+					Call     EnableIdleScript 	( .Actor:Self 00000001 )
+					Call     UseIdleAnimation 	( .Actor:Self .True )
+					Return
+				EndCaseGroup
+			EndSwitch
+			Loop 4
+				Call     SetAnimation 	( .Actor:Self 00000001 003A0309 )
+				Wait     00000004
+				Call     PlaySoundAtActor 	( .Actor:Self 000020C5 )
+				Call     SetAnimation 	( .Actor:Self 00000001 003A030A )
+				Wait     00000002 
+				Wait     00000002 
+				Call     SetGoalToTarget 	( .Actor:Self )
+				Call     EnemyDamageTarget 	( .Actor:Self *Var[0] 10000000 00000000 00000000 00000004 00000010 )
+				Wait	 00000001 %almost no delay
+				Switch  *Var[0] %but a lot of shakycam
+					CaseOR  ==  00000000 
+					CaseOR  ==  00000002 
+						Thread
+							Call     ShakeCam    	( 00000001 00000000 0000000A *Fixed[1.5] )
+						EndThread
+						% Call     UseBattleCamPreset 	( 00000002 )
+						% Wait     00000013 
+						% Call     YieldTurn   	( )
+						% SetConst  *Var[0]  00000001 
+						% SetConst  *Var[1]  003A0302 
+						% ExecWait DoReturnHome 
+					EndCaseGroup
+				EndSwitch
+			EndLoop
+			Call     SetAnimation 	( .Actor:Self 00000001 003A0309 )
+			Wait     00000004
+			Call     PlaySoundAtActor 	( .Actor:Self 000020C5 )
+			Call     SetAnimation 	( .Actor:Self 00000001 003A030A )
+			Wait     00000002 
+			Wait     00000002 
+			Call     SetGoalToTarget 	( .Actor:Self )
+			Call     EnemyDamageTarget 	( .Actor:Self *Var[0] 10000000 00000000 00000000 00000004 00000020 )
+			Switch  *Var[0] 
+				CaseOR  ==  00000000 
+				CaseOR  ==  00000002 
+					Thread
+						Call     ShakeCam    	( 00000001 00000000 0000000A *Fixed[1.5] )
+					EndThread
+					Call     UseBattleCamPreset 	( 00000002 )
+					Wait     00000013 
+					Call     YieldTurn   	( )
+					SetConst  *Var[0]  00000001 
+					SetConst  *Var[1]  003A0302 
+					ExecWait DoReturnHome 
+				EndCaseGroup
+			EndSwitch
+		EndIf
+  51C:  Call     EnableIdleScript 	( .Actor:Self 00000001 )
+  530:  Call     UseIdleAnimation 	( .Actor:Self .True )
+  544:  Return
+  54C:  End
+}

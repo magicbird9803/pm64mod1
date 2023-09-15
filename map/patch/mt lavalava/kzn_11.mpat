@@ -1,0 +1,43 @@
+@ $NpcGroupList_802457F8
+{
+	00000004 $NpcGroup_80243CD8 00000000
+	00000004 $NpcGroup_80244498 00000000
+	00000004 $NpcGroup_80244C58 00000000
+	00000001 $NpcGroup_80245418 16000003
+	00000001 $NpcGroup_80245608 16070003
+	00000000 00000000 00000000
+}
+
+
+%Also add a swoopix at the bottom
+#import NPC_Paragoomba.mpat
+
+#new:NpcGroup $NpcGroup_Swoopix1
+{
+	00000069 $NpcSettings_Paragoomba ~Vec3f:NPC_Swoopix		%no clue what ids are empty since the ids are really high in this room for some reason
+	00000400 00000000 00000000 00000000 0000010E
+	~İtems:5:DriedFruit:A ~HP:Standard:2 ~FP:Standard:2 ~CoinBonus:0:2
+	~Movement:NPC_Swoopix
+	00340902 00340906 00340906 00340906 00340905 00340905 00340904 00340904
+	00340902 00340902 00340902 00340902 00340902 00340902 00340902 00340902
+	00000001 00000000 00000000 00000000 % no tattle string
+}
+
+@ $Script_NpcAI_Paragoomba
+{
+    [0]  Call  SetSelfVar    ( 00000000 00000001 )
+   [14]  Call  SetSelfVar    ( 00000005 FFFFFCAE )
+   [28]  Call  SetSelfVar    ( 00000006 0000003C )
+   [3C]  Call  SetSelfVar    ( 00000001 000002BC )
+}
+
+@ $NpcGroupList_802457F8
+{
+	00000004 $NpcGroup_80243CD8 00000000
+	00000004 $NpcGroup_80244498 00000000
+	00000004 $NpcGroup_80244C58 00000000
+	00000001 $NpcGroup_80245418 16000003
+	00000001 $NpcGroup_80245608 16070003
+	00000001 $NpcGroup_Swoopix1 16020002
+	00000000 00000000 00000000
+}

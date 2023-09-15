@@ -1,0 +1,366 @@
+%Hit the tree a lot in order to make the new badge fall off the tree
+%You have to work to get the badge
+
+%invisible sprite so it doesn't matter what it is
+#new:NpcGroup $NpcGroup_DarkMario
+{
+	00000001 $NpcSettings_80241220 ~Vec3f:NPC_InvisibleNpc % -260 0 0
+	00000D01 $Script_Init_Invis 00000000 00000000 0000005A
+	~NoDrops
+	~Movement:NPC_InvisibleNpc
+	~AnimationTable:NPC_InvisibleNpc
+	00000000 00000000 00000000 001A00DE % She's Posie. A lily. She looks generous and kind,  ...
+}
+
+#new:Script $Script_Init_Invis
+{
+    0:  Call  BindNpcIdle   ( .Npc:Self $Script_Nothing )
+   14:  Call  BindNpcDefeat ( .Npc:Self $Script_Nothing )
+   28:  Return
+   30:  End
+}
+
+#new:Script $Script_Nothing
+{
+	Return
+	End
+}
+
+@ $NpcGroupList_80242B0C
+{
+	00000001 $NpcGroup_8024291C 00000000
+	00000001 $NpcGroup_DarkMario 00000000
+	00000000 00000000 00000000
+}
+
+@ $Script_Main_EnterWalk
+{
+    0:  Set   *GB_WorldLocation  .Location:FlowerFields
+   10:  Call  SetSpriteShading  ( .Shading:None )
+   20:  Call  SetCamLeadPlayer  ( .Cam:Default .False )
+   34:  Call  SetCamPerspective ( .Cam:Default 00000003 00000019 00000010 00001000 )
+   54:  Call  SetCamBGColor     ( .Cam:Default 00000000 00000000 00000000 )
+   70:  Call  SetCamEnabled     ( .Cam:Default .True )
+   84:  Set   *AreaFlag[006]  .False
+   94:  Call  MakeNpcs  ( .False $NpcGroupList_80242B0C )
+   A8:  ExecWait  $Script_802428C4
+   B4:  Call  ModifyColliderFlags   ( 00000003 ~Collider:o76 00000006 )
+   CC:  Set   *Var0  00000129
+   DC:  Set   *Var1  FFFFFFA1
+   EC:  Set   *Var2  0000017F
+   FC:  Set   *Var3  FFFFFFBF
+  10C:  Set   *Var4  00000000
+  11C:  Exec  $Script_8024096C
+  128:  Set   *Var0  00000125
+  138:  Set   *Var1  00000047
+  148:  Set   *Var2  0000017A
+  158:  Set   *Var3  00000071
+  168:  Set   *Var4  00000000
+  178:  Exec  $Script_8024096C
+  184:  Set   *Var0  00000015
+  194:  Set   *Var1  FFFFFEA6
+  1A4:  Set   *Var2  00000093
+  1B4:  Set   *Var3  FFFFFF0E
+  1C4:  Set   *Var4  00000014
+  1D4:  Exec  $Script_8024096C
+  1E0:  Set   *Var0  FFFFFEA2
+  1F0:  Set   *Var1  FFFFFF42
+  200:  Set   *Var2  FFFFFFAF
+  210:  Set   *Var3  FFFFFF96
+  220:  Set   *Var4  00000000
+  230:  Exec  $Script_8024096C
+  23C:  Set   *Var0  FFFFFE84
+  24C:  Set   *Var1  00000055
+  25C:  Set   *Var2  FFFFFFA1
+  26C:  Set   *Var3  00000096
+  27C:  Set   *Var4  00000000
+  28C:  Exec  $Script_8024096C
+  298:  Call  EnableTexPanning  ( ~Model:o51 .True )
+  2AC:  Call  EnableTexPanning  ( ~Model:o36 .True )
+  2C0:  Call  EnableTexPanning  ( ~Model:o37 .True )
+  2D4:  Thread
+  2DC:  	Set   *Var0  00000002
+  2EC:  	Set   *Var1  FFFFFF9C
+  2FC:  	Set   *Var2  00000064
+  30C:  	Set   *Var3  00000000
+  31C:  	Set   *Var4  00000000
+  32C:  	Set   *Var5  00000001
+  33C:  	Set   *Var6  00000001
+  34C:  	Set   *Var7  00000000
+  35C:  	Set   *Var8  00000000
+  36C:  	Set   *Var9  00000000
+  37C:  	Set   *VarA  00000000
+  38C:  	Set   *VarB  00000000
+  39C:  	Set   *VarC  00000000
+  3AC:  	Exec  $Script_UpdateTexturePan_802408D0
+  3B8:  EndThread
+  3C0:  Thread
+  3C8:  	Set   *Var0  00000003
+  3D8:  	Set   *Var1  00000000
+  3E8:  	Set   *Var2  FFFFFB50
+  3F8:  	Set   *Var3  00000000
+  408:  	Set   *Var4  00000000
+  418:  	Set   *Var5  00000000
+  428:  	Set   *Var6  00000001
+  438:  	Set   *Var7  00000000
+  448:  	Set   *Var8  00000000
+  458:  	Set   *Var9  00000000
+  468:  	Set   *VarA  00000000
+  478:  	Set   *VarB  00000000
+  488:  	Set   *VarC  00000000
+  498:  	Exec  $Script_UpdateTexturePan_802408D0
+  4A4:  EndThread
+  4AC:  Call  GetEntryID    ( *Var0 )
+  4BC:  If  *Var0  ==  ~Entry:Entry1
+  4CC:  	Exec  $Script_80241C14
+  4D8:  Else
+  4E0:  	Call  ModifyColliderFlags   ( 00000000 ~Collider:deilite 7FFFFE00 )
+  4F8:  	Set   *Var0  $Script_80240C74
+  508:  	Exec  EnterWalk
+  514:  	Exec  $Script_802424F4
+  520:  EndIf
+  528:  ExecWait  $Script_802407A0
+  534:  If  *GB_StoryProgress  >=  .Story:Ch6_DestroyedPuffPuffMachine % 35
+  544:  	Call  $Function_8024030C ( )
+  550:  EndIf
+  558:  Call  $Function_80240344 ( )
+  		Set		 *MapFlag[7] .False
+		ExecWait $Script_SpawnItem
+  564:  Return
+  56C:  End
+}
+
+#new:Script $Script_SpawnItem
+{
+	If *GF_FLO07_FlowerShield == .False
+		Call  MakeItemEntity    ( .Item:FlowerShield ~Vec3d:ItemBadge .ItemSpawnMode:Fixed_NeverVanish *GF_FLO07_FlowerShield )
+		Set   *VarA  *Var0
+		Set   *MapVar[6] *VarA
+	EndIf
+	Return
+	End
+}
+
+
+%problem: once you trigger the "get out and stay out" message, every tree hit takes way longer
+
+%so reducing this to 10 tree hits
+
+@ $Script_Tree1_Callback
+{
+    0:  Call  DisablePlayerInput    ( .True )
+   10:  If  *GB_StoryProgress  <  .Story:Ch6_GotCrystalBerry % 2F
+   20:  	Call  NpcFacePlayer ( 00000000 00000001 )
+   34:  	Wait  10`
+   40:  	Call  SpeakToPlayer ( 00000000 00C80004 00C80001 00000000 00110067 ) % Ouch! Be gentle with this tree! The tree and I are ...
+   60:  	If  *GB_StoryProgress  ==  .Story:Ch6_GotFertileSoil % 2E
+   70:  		If  *GF_FLO12_RosieRequestedSomethingBeautiful  ==  .True
+   80:  			Call  UseSettingsFrom   ( .Cam:Default FFFFFF06 00000000 00000000 )
+   9C:  			Call  SetPanTarget      ( .Cam:Default FFFFFF06 00000000 00000000 )
+   B8:  			Call  SetCamDistance    ( .Cam:Default 0000015E )
+   CC:  			Call  PanToTarget       ( .Cam:Default 00000000 00000001 )
+   E4:  			ExecWait  $Script_80241DBC
+   F0:  			Call  ResetCam  ( .Cam:Default *Fixed[4.0] )
+  104:  		EndIf
+  10C:  	EndIf
+  114:  Else
+  11C:  	If  *GF_FLO07_Item_CrystalBerry  ==  .False
+  12C:  		Call  NpcFacePlayer ( 00000000 00000001 )
+  140:  		Wait  10`
+  14C:  		Call  SpeakToPlayer ( 00000000 00C80004 00C80001 00000000 00110067 ) % Ouch! Be gentle with this tree! The tree and I are ...
+  16C:  	Else
+				Add   *GlobalTreeWhackCount 00000001
+  174:  		Add   *AreaByte[2]  00000001
+				If *GF_FLO07_FlowerShield == .True
+  184:  			Switch  *AreaByte[2]
+  190:  				Case  <  00000002
+  19C:  					Call  SpeakToPlayer ( 00000000 00C80003 00C80001 00000000 $NoBadgeAnymore ) % Ouch! That hurts! What's the matter with you? I ga ...
+  1BC:  				Case  <  00000005
+  1C8:  					Call  SpeakToPlayer ( 00000000 00C80003 00C80001 00000000 0011006C ) % Youch ouch ouch!!! Don't you hear me...OUCH!! ...O ...
+  1E8:  				Case  >=  00000005
+  1F4:  					Call  SpeakToPlayer ( 00000000 00C80003 00C80001 00000000 0011006D ) % Ouch! What're you...OW! Stop it! I...OUCH! OUCH! I ...
+  214:  					Set   *AreaByte[3]  00000001
+  224:  					Call  GotoMap       ( $ASCII_80242B40 00000001 ) % flo_25
+  238:  					Wait  100`
+  244:  			EndSwitch
+  24C:  		Else
+					%is it time to drop the badge?
+					If *GlobalTreeWhackCount >= 8`
+						If *MapFlag[7] == .False						
+							ExecWait $ItemBigJump	
+						EndIf
+						Set		 *MapFlag[7] .True
+						Call  SpeakToPlayer ( 00000000 00C80003 00C80001 00000000 $GetTheBadge )
+						Call  ResetCam  ( .Cam:Default *Fixed[4.0] )
+						Call  DisablePlayerInput    ( .False )
+						Return
+					Else
+						Set		 *MapFlag[7] .False
+						ExecWait $ItemSmallJump
+					EndIf
+  184:  			Switch  *AreaByte[2]
+  190:  				Case  <  00000002							
+  19C:  					Call  SpeakToPlayer ( 00000000 00C80003 00C80001 00000000 0011006B ) % Ouch! That hurts! What's the matter with you? I ga ...
+  1BC:  				Case  <  00000005
+  1C8:  					Call  SpeakToPlayer ( 00000000 00C80003 00C80001 00000000 0011006C ) % Youch ouch ouch!!! Don't you hear me...OUCH!! ...O ...
+  1E8:  				Case  >=  00000005
+  1F4:  					Call  SpeakToPlayer ( 00000000 00C80003 00C80001 00000000 0011006D ) % Ouch! What're you...OW! Stop it! I...OUCH! OUCH! I ...
+  214:  					Set   *AreaByte[3]  00000001
+  224:  					Call  GotoMap       ( $ASCII_80242B40 00000001 ) % flo_25
+  238:  					Wait  100`
+  244:  			EndSwitch
+				EndIf
+			EndIf
+  254:  EndIf
+  25C:  Call  ResetCam  ( .Cam:Default *Fixed[4.0] )
+  270:  Call  DisablePlayerInput    ( .False )
+  280:  Return
+  288:  End
+}
+
+%script for when you are banned from the room
+@ $Script_802424F4
+{
+    0:  If  *AreaByte[3]  !=  00000000
+   10:  	Call  DisablePlayerInput    ( .True )
+   20:  	Wait  10`			
+   2C:  	If  *AreaByte[3]  <  00000005
+   3C: 		 		Call  SpeakToPlayer ( 00000000 00C80002 00C80001 00000000 0011006E ) % Don't come back here!!! Get out and stay out!!
+   5C:  		Call  GetPlayerPos  ( *Var1 *Var2 *Var3 )
+   74:  		Call  PlayerMoveTo  ( 0000019A *Var3 0000000A )
+   8C:  		Add   *AreaByte[3]  00000001
+   9C:  	Else
+				If *GF_FLO07_FlowerShield == .True
+   3C: 		 		Call  SpeakToPlayer ( 00000000 00C80002 00C80001 00000000 $NoBadgeBanned ) % Don't come back here!!! Get out and stay out!!
+				Else
+   A4:  			Call  SpeakToPlayer ( 00000000 00C80002 00C80001 00000000 0011006F ) % Sigh... You keep coming back... You've got guts. I ...
+				EndIf
+   C4:  		Set   *AreaByte[3]  00000000
+   D4:  	EndIf
+   DC:  	Call  DisablePlayerInput    ( .False )
+   EC:  EndIf
+   F4:  Return
+   FC:  End
+}
+
+%use the invisible penguin trick 
+%because there is no item jump :P
+#new:Script $ItemSmallJump
+{
+	Set   *Var7  *MapVar[6]
+	Call  SetNpcFlagBits    ( 00000001 00000002 .True )
+	Call  SetNpcFlagBits    ( 00000001 00000010 .False )
+	Switch *GlobalTreeWhackCount
+		Case == 1`
+			Call  SetNpcJumpscale   ( 00000001 *Fixed[0.25] )
+		Case == 2`
+			Call  SetNpcJumpscale   ( 00000001 *Fixed[0.35] )
+		Case == 3`
+			Call  SetNpcJumpscale   ( 00000001 *Fixed[0.45] )
+		Case == 4`
+			Call  SetNpcJumpscale   ( 00000001 *Fixed[0.55] )
+		Case == 5`
+			Call  SetNpcJumpscale   ( 00000001 *Fixed[0.85] )
+		Case == 6`
+			Call  SetNpcJumpscale   ( 00000001 *Fixed[0.95] )
+		Case == 7`
+			Call  SetNpcJumpscale   ( 00000001 *Fixed[1.05] )
+		Case == 8`
+			Call  SetNpcJumpscale   ( 00000001 *Fixed[1.15] )
+		Case == 9`
+			Call  SetNpcJumpscale   ( 00000001 *Fixed[1.25] )
+		Default
+			Call  SetNpcJumpscale   ( 00000001 *Fixed[1.35] )
+	EndSwitch
+	Call  SetNpcPos			( 00000001 -232` 125` 26` )
+	Thread
+		Call  NpcJump0  ( 00000001 -232` 125` 26` 0000000A )
+		If *GlobalTreeWhackCount >= 5`
+			Call  NpcJump0  ( 00000001 -232` 125` 26` 0000000A )			
+		EndIf
+  	EndThread
+	Loop  00000035
+		Call  GetNpcPos     ( 00000001 *Var1 *Var2 *Var3 )
+		Call  SetItemPos    ( *Var7 *Var1 *Var2 *Var3 )
+		Wait  1`
+	EndLoop
+	Call  SetNpcPos ( 00000001 00000000 FFFFFC18 00000000 )
+	Call  SetNpcFlagBits    ( 00000001 00000002 .False )
+	Call  SetNpcFlagBits    ( 00000001 00000010 .True )
+	Return
+	End
+}
+
+#new:Script $ItemBigJump
+{
+	Set   *Var7  *MapVar[6]
+	Call  SetNpcFlagBits    ( 00000001 00000002 .True )
+	Call  SetNpcFlagBits    ( 00000001 00000010 .False )
+	Call  SetNpcJumpscale   ( 00000001 *Fixed[1.25] )
+	Call  SetNpcPos			( 00000001 -232` 125` 26` )
+	Thread
+		Call  NpcJump0  ( 00000001 -162` 0` 16` 00000010 )
+  	EndThread
+	Loop  00000035
+		Call  GetNpcPos     ( 00000001 *Var1 *Var2 *Var3 )
+		Call  SetItemPos    ( *Var7 *Var1 *Var2 *Var3 )
+		Wait  1`
+	EndLoop
+	Call  SetNpcPos ( 00000001 00000000 FFFFFC18 00000000 )
+	Call  SetNpcFlagBits    ( 00000001 00000002 .False )
+	Call  SetNpcFlagBits    ( 00000001 00000010 .True )
+	Return
+	End
+}
+
+#new:String $NoBadgeBanned
+{
+	[Style Right]
+	Sigh... You keep coming back...[BR]
+	You've got guts.[BR]
+	[Pause 10]I like that![BR]
+	[Wait][Next]
+	I guess you can keep hitting the[BR]
+	tree if that's what you want...[BR]
+	[Wait][Next]
+	But you're not going to get[BR]
+	anything else by hitting the tree,[BR]
+	so quit it![BR]
+	[Wait][Next]
+	...Get ahold of yourself, Posie.[BR]
+	You're losing control.[BR]
+	[Wait][Next]
+	Hee hee hee hee hee hee...[Wait][End]
+}
+
+#new:String $NoBadgeAnymore
+{
+	[Style Right]
+	Ouch! That hurts![BR]
+	[Wait][Next]
+	What's the matter with you?[BR]
+	You already got a Crystal Berry[BR]
+	and that badge![BR]
+	[Wait][Next]
+	Don't tell me that you want[BR]
+	even more![BR]
+	[Pause 10]You shouldn't be so greedy.[BR]
+	[Wait][Next]
+	Do you think it was easy shaking[BR]
+	that root? I can't just do it[BR]
+	over and over![Wait][End]
+}
+
+#new:String $GetTheBadge
+{
+	[Style Right]
+	Youch ouch ouch!!![BR]
+	Don't you hear me...OUCH!![BR]
+	[Wait][Next]	
+	...Ooh, I shouldn't be so loud.[BR]
+	Huh? Where did that come from?[BR]
+	[Wait][Next]
+	AlRight, you won't get anything[BR]
+	else from the tree, so will[BR]
+	you please stop hitting it?[Wait][End]
+}

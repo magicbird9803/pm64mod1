@@ -1,0 +1,9 @@
+@ $Script_MakeEntities
+{
+    0:  Call  MakeEntity        ( .Entity:HiddenPanel ~Vec4d:Entity80244080 ~Model:ji_3 80000000 )
+   28:  Call  AssignPanelFlag   ( *GF_KMR00_HiddenPanel )
+		Call     MakeEntity  	( .Entity:HiddenYellowBlock ~Vec4d:hiddenblock .Item:ShootingStar 80000000 )
+		Call     AssignBlockFlag 	( *GF_KMR00_HiddenBlock )	
+   38:  Return
+   40:  End
+}

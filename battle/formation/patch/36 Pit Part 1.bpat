@@ -1,0 +1,102 @@
+%Pit minibosses/bosses part 1
+%For floors 10, 20, and 30
+%the other 90 formations are handled in separate bpats
+
+#import newenemy/BlueNinjakoopa.bpat
+#import newenemy/DarkBones.bpat
+#import newenemy/AtomicBoo.bpat
+%#import newenemy/SparkQueen.bpat
+
+#new:StageTable $StageTable
+{
+"pit_10" $Stage_Pit1
+00000000 00000000 
+}
+
+#new:Stage $Stage_Pit1
+{
+"kpa_tex"
+"pit_b01_shape"
+"pit_b01_hit"
+$Script_BeforeBattle_Normal
+$Script_AfterBattle_Normal
+00000000 
+00000000 
+00000000 
+00000000 
+00000000 
+}
+
+%got rid of the anti-SE stuff
+%to make it not a total pain to get through the pit
+#new:Script $Script_BeforeBattle_Normal
+{
+	Return
+	End
+}
+
+#new:Script $Script_AfterBattle_Normal
+{
+	Return
+	End
+}
+	
+#new:Formation $Formation_00
+{
+$BlueNinjakoopa 00000002 0000000A 00000000 00000000 00000000 00000000
+}
+	
+#new:Formation $Formation_01
+{
+$DarkBones 00000002 0000000A 00000000 00000000 00000000 00000000
+}
+
+#new:Vector3D $AtomicBooPos
+{
+50` 20` 0`
+}
+
+#new:Formation $Formation_02
+{
+$AtomicBoo $AtomicBooPos 0000000A 00000000 00000000 00000000 00000000
+}
+	
+%out of space, look in the other files for these battles
+/%
+#new:Formation $Formation_03
+$SparkQueen 00000006 0000000A 00000000 00000000 00000000 00000000
+
+#new:Formation $Formation_04
+$LavaCheep 00000002 0000000A 00000000 00000000 00000000 00000000
+
+#new:Formation $Formation_05
+$BlazeeDayzee 00000002 0000000A 00000000 00000000 00000000 00000000
+
+#new:Formation $Formation_06
+$Doople 00000002 0000000A 00000000 00000000 00000000 00000000
+
+#new:Formation $Formation_07
+$Kooval 00000002 0000000A 00000000 00000000 00000000 00000000
+
+#new:Formation $Formation_08
+$EmperorBeetle 00000002 0000000A 00000000 00000000 00000000 00000000
+
+#new:Formation $Formation_09
+$DarkMario 00000002 0000000A 00000000 00000000 00000000 00000000
+
+%/
+	
+#new:FormationTable $FormationTable
+{
+00000000 00000001 $Formation_00 $Stage_Pit1 00000000
+00000000 00000001 $Formation_01 $Stage_Pit1 00000000
+00000000 00000001 $Formation_02 $Stage_Pit1 00000000
+/%00000000 00000001 $Formation_03 $Stage_Pit1 00000000
+00000000 00000001 $Formation_04 $Stage_Pit1 00000000
+00000000 00000001 $Formation_05 $Stage_Pit1 00000000
+00000000 00000001 $Formation_06 $Stage_Pit1 00000000
+00000000 00000001 $Formation_07 $Stage_Pit1 00000000
+00000000 00000001 $Formation_08 $Stage_Pit1 00000000
+00000000 00000001 $Formation_09 $Stage_Pit1 00000000%/
+00000000 00000000 00000000 00000000 00000000 % unused
+}

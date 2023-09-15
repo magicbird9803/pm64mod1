@@ -1,0 +1,1409 @@
+#string:25:007
+{
+Turns Mario to stone and makes[BR]
+him unable to move for a while.[BR]
+While in this state, Mario's[BR]
+defense increases by 9.[END]
+}
+
+#string:23:00C
+{
+A life-giving Mushroom. Restores[BR]
+10 HP when Mario's HP hits 0.[END]
+}
+
+#string:24:00C
+{
+A life-giving Mushroom. Restores[BR]
+10 HP when Mario's HP hits 0.[END]
+}
+
+#string:25:00C
+{
+A life-giving Mushroom. Restores[BR]
+10 HP when Mario's HP hits 0.[BR]
+Having multiple will cause them[BR]
+to trigger at the same time.[END]
+}
+
+#string:23:00E
+{
+A very tasty tonic. Cures[BR]
+all negative statuses.[END]
+}
+
+#string:24:00E
+{
+A very tasty tonic. Cures[BR]
+all negative statuses.[END]
+}
+
+#string:25:00E
+{
+A very tasty tonic. Cures[BR]
+all negative statuses.[BR]
+This includes attack/defense[BR]
+decreases.[END]
+}
+
+#string:23:010
+{
+	A berry found in Flower Fields.[BR]
+	Restores 5 FP...[End]
+}
+
+#string:25:010
+{
+	A berry found in Flower Fields.[BR]
+	Restores 5 FP...[BR]
+	Increases defense by 1 for[BR]
+	4 turns.[End]
+}
+
+#string:23:011
+{
+	A berry found in Flower Fields.[BR]
+	Restores 5 HP...[End]
+}
+
+#string:25:011
+{
+	A berry found in Flower Fields.[BR]
+	Restores 5 HP...[BR]
+	Increases attack by 1 for[BR]
+	4 turns.[End]
+}
+
+#string:23:012
+{
+	A berry found in Flower Fields.[BR]
+	Restores 3 HP and 3 FP...[End]
+}
+
+#string:25:012
+{
+	A berry found in Flower Fields.[BR]
+	Restores 3 HP and 3 FP...[BR]
+	Electrifies Mario for 2 turns.[End]
+}
+
+#string:23:013
+{
+	A berry found in Flower Fields.[BR]
+	Restores 5 HP...[End]
+}
+
+#string:25:013
+{
+	A berry found in Flower Fields.[BR]
+	Restores 5 HP...[BR]
+	Gives invisibility for 1 turn but[BR]
+	-2 atk and def for 3 turns.[BR]
+	Move costs get increased by 1[BR]
+	until you cure statuses.[End]
+}
+
+#string:23:01A
+{
+A sweet, tangy apple. Restores[BR]
+6 HP.[END]
+}
+
+#string:25:01A
+{
+A sweet, tangy apple. Restores[BR]
+6 HP.[END]
+}
+
+#string:23:01B
+{
+	A special nut found only in [BR]
+	Goomba Village. Restores 3 FP...[BR]
+	[End]
+}
+
+#string:25:01B
+{
+	A special nut found only in[BR]
+	Goomba Village. Restores 3 FP...[BR]
+	Boosts attack by 1 for 3 turns.[End]
+}
+
+#string:23:01C
+{
+	A leaf found in Koopa Village.[BR]
+	Restores 3 FP and boosts defense.[End]
+}
+
+#string:25:01C
+{
+	A leaf found in Koopa Village.[BR]
+	Restores 3 FP and boosts defense[BR]
+	by 1 for 2 turns.[End]
+}
+
+
+#string:23:01F
+{
+	A very rare leaf. Sets HP and FP[BR]
+	to the amount missing...[BR]
+	[End]
+}
+
+#string:25:01F
+{
+	A very rare leaf. Sets HP and FP[BR]
+	to the difference between[BR]
+	maximum HP / FP and current[BR]
+	HP / FP.[BR]
+	[End]
+}
+
+
+#string:23:023
+{
+A succulent, ripe melon. Restores[BR]
+20 HP and 3 FP.[END]
+}
+
+#string:25:023
+{
+A succulent, ripe melon. Restores[BR]
+20 HP and 3 FP.[END]
+}
+
+#string:23:024
+{
+	This herb smells kind of bad...[BR]
+	Missing HP and FP is halved...[End]
+}
+
+#string:25:024
+{
+	This herb smells kind of bad...[BR]
+	Missing HP and FP is halved...[BR]
+	HP and FP is set to[BR]
+	maximum / 2 + current / 2[END]
+}
+
+#string:23:025
+{
+	A tough potato found in the[BR]
+	Shiver Region. Restores 5 HP...[End]
+}
+
+#string:25:025
+{
+	A tough potato found in the[BR]
+	Shiver Region. Restores 5 HP...[BR]
+	Freezes and grants +5 defense[BR]
+	for 2 turns.[End]
+}
+
+#string:23:028
+{
+	If it works, stops all[BR]
+	enemies for a short time.[End]
+}
+
+#string:23:029
+{
+	If it works, stops all[BR]
+	enemies for a short time.[End]
+}
+
+#string:23:029
+{
+	If it works, dazes all enemies[BR]
+	briefly.[BR]
+	[End]
+}
+
+#string:24:029
+{
+	If it works, dazes all enemies[BR]
+	briefly.[BR]
+	[End]
+}
+
+#string:25:029
+{
+	If it works, dazes all enemies[BR]
+	briefly.[BR]
+	It's especially effective against[BR]
+	flying enemies. [End]
+}
+
+#string:23:02C
+{
+	Makes Mario transparent and[BR]
+	invulnerable for one turn... [End]
+}
+
+#string:24:02C
+{
+	Makes Mario transparent and[BR]
+	invulnerable for one turn... [End]
+}
+
+#string:25:02C
+{
+	Makes Mario transparent and[BR]
+	invulnerable for one turn... [BR]
+	Move costs get increased by 1[BR]
+	until you cure statuses.[End]
+	Removes Hustle Drink's effect.[END]
+}
+
+#string:23:02D
+{
+A hot soup cooked by Tayce T.[BR]
+Restores 4 HP and 6 FP.[END]
+}
+
+#string:25:02D
+{
+A hot soup cooked by Tayce T.[BR]
+Restores 4 HP and 6 FP.[END]
+}
+
+#string:23:02E
+{
+An apple pie baked by Tayce T.[BR]
+Restores 7 HP and 20 FP.[END]
+}
+
+#string:25:02E
+{
+An apple pie baked by Tayce T.[BR]
+Restores 7 HP and 20 FP.[END]
+}
+
+#string:23:038
+{
+Special pasta made by Tayce T.[BR]
+Restores 10 HP and 15 FP...[END]
+}
+
+#string:25:038
+{
+Special pasta made by Tayce T.[BR]
+Restores 10 HP and 15 FP.[BR]
+Increases defense by 4 for[BR]
+1 turn.[END]
+}
+
+#string:23:039
+{
+A snack made by Tayce T.[BR]
+Restores 6 HP and 4 FP.[END]
+}
+
+#string:25:039
+{
+A snack made by Tayce T.[BR]
+Restores 6 HP and 4 FP.[END]
+}
+
+#string:23:03A
+{
+A snack made by Tayce T.[BR]
+Restores 15 HP.[END]
+}
+
+#string:25:03A
+{
+A snack made by Tayce T.[BR]
+Restores 15 HP.[END]
+}
+
+#string:23:03B
+{
+	A dish cooked by Tayce T.[BR]
+	Restores 30 HP and 10 FP...[BR]
+	[End]
+}
+
+#string:25:03B
+{
+	A dish cooked by Tayce T.[BR]
+	Restores 30 HP and 10 FP...[BR]
+	Gives you 3 turns of -1 move[BR]
+	costs.[End]
+}
+
+#string:23:03C
+{
+A cake that restores 15 HP [BR]
+and 15 FP over three turns.[END]
+}
+
+#string:25:03C
+{
+A cake baked by Tayce T.[BR]
+Restores 15 HP and 15 FP over[BR]
+three turns. [BR]
+(5 HP and 5 FP per turn)[END]
+}
+
+#string:23:03D
+{
+A yummy cake baked by Tayce T.[BR]
+Restores 20 HP and 40 FP.[END]
+}
+
+#string:25:03D
+{
+A yummy cake baked by Tayce T.[BR]
+Restores 20 HP and 40 FP.[END]
+}
+
+#string:23:03E
+{
+	Boring food cooked by Tayce T.[BR]
+	Restores 10 HP and 10 FP...[End]
+}
+
+#string:25:03E
+{
+	Boring food cooked by Tayce T.[BR]
+	Restores 10 HP and 10 FP.[BR]
+	Gives you 2 turns of -1 move[BR]
+	costs.[End]
+}
+
+#string:23:03F
+{
+	Tasty food cooked by Tayce T.[BR]
+	Restores 20 HP and 20 FP...[End]
+}
+
+#string:25:03F
+{
+	Tasty food cooked by Tayce T.[BR]
+	Restores 20 HP and 20 FP.[BR]
+	Gives you 3 turns of -1 move[BR]
+	costs.[End]
+}
+
+#string:23:040
+{
+	Amazing food cooked by Tayce T.[BR]
+	Restores 40 HP and 40 FP...[End]
+}
+
+#string:25:040
+{
+	Amazing food cooked by Tayce T.[BR]
+	Restores 40 HP and 40 FP.[BR]
+	Gives you 4 turns of -1 move[BR]
+	costs.[End]
+}
+
+
+#string:23:041
+{
+A smoothie made by Tayce T.[BR]
+Restores 3 HP and 25 FP...[END]
+}
+
+#string:25:041
+{
+A smoothie made by Tayce T.[BR]
+Restores 3 HP and 25 FP.[BR]
+Gives you 2 turns of -3 move[BR]
+costs.[End]
+}
+
+#string:23:042
+{
+A juice blend made by Tayce T.[BR]
+Restores 30 HP and 30 FP.[END]
+}
+
+#string:25:042
+{
+A juice blend made by Tayce T.[BR]
+Restores 30 HP and 30 FP.[END]
+}
+
+#string:23:043
+{
+A huge cookie baked by Tayce T.[BR]
+Restores 30 FP...[END]
+}
+
+#string:25:043
+{
+A huge cookie baked by Tayce T.[BR]
+Restores 30 FP...[BR]
+Reduces move costs by 5 for[BR]
+2 turns.[END]
+}
+
+#string:23:046
+{
+	Tea brewed by Tayce T.[BR]
+	Restores 7 FP...[End]
+}
+
+#string:25:046
+{
+	Tea brewed by Tayce T.[BR]
+	Restores 7 FP...[BR]
+	Boosts defense by 1 for[BR]
+	3 turns.[End]
+}
+
+#string:23:047
+{
+Spaghetti cooked by Tayce T.[BR]
+Restores 10 HP and 5 FP.[END]
+}
+
+#string:25:047
+{
+Spaghetti cooked by Tayce T.[BR]
+Restores 10 HP and 5 FP.[END]
+}
+
+#string:23:049
+{
+Food cooked by Tayce T.[BR]
+Restores 9 HP and 1 FP.[END]
+}
+
+#string:25:049
+{
+Food cooked by Tayce T.[BR]
+Restores 9 HP and 1 FP.[END]
+}
+
+#string:23:04A
+{
+	A sweet candy made by Tayce T.[BR]
+	Restores 20 FP...[End]
+}
+
+#string:25:04A
+{
+	A sweet candy made by Tayce T.[BR]
+	Restores 20 FP...[BR]
+	Paralyzes for 1 turn, but gives[BR]
+	+1 atk and def for 3 turns.[End]
+}
+
+#string:23:04C
+{
+A hot lollipop made by Tayce T.[BR]
+Restores 40 FP but uses 10 HP.[END]
+}
+
+#string:25:04C
+{
+A hot lollipop made by Tayce T.[BR]
+Restores 40 FP but uses 10 HP.[END]
+}
+
+#string:23:04D
+{
+	A tangy candy made by Tayce T.[BR]
+	Restores 20 FP...[End]
+}
+
+#string:25:04D
+{
+	A tangy candy made by Tayce T.[BR]
+	Restores 20 FP...[BR]
+	Increases defense by 1 for 3[BR]
+	turns.[End]
+}
+
+#string:23:04E
+{
+A sweet candy made by Tayce T.[BR]
+Restores 3 HP and 15 FP...[End]
+}
+
+#string:25:04E
+{
+A sweet candy made by Tayce T.[BR]
+Restores 3 HP and 15 FP.[BR]
+Also makes guarding automatic[BR]
+for one turn.[End]
+}
+
+#string:23:04F
+{
+	A tangy candy made by Tayce T.[BR]
+	Restores 5 HP and 15 FP...[END]
+}
+
+#string:25:04F
+{
+	A tangy candy made by Tayce T.[BR]
+	Restores 5 HP and 15 FP...[BR]
+	Increases attack by 1 for 3[BR]
+	turns.[End]
+}
+
+#string:23:051
+{
+Swaps HP and FP.[END]
+}
+
+#string:24:051
+{
+Swaps HP and FP.[END]
+}
+
+#string:25:051
+{
+Swaps HP and FP.[END]
+}
+
+#string:23:052
+{
+Restores HP equal to your FP,[BR]
+and FP equal to your HP.[END]
+}
+
+#string:24:052
+{
+Restores HP equal to your FP,[BR]
+and FP equal to your HP.[END]
+}
+
+#string:25:052
+{
+Restores HP equal to your FP,[BR]
+and FP equal to your HP.[END]
+}
+
+#string:23:053
+{
+A side dish made by Tayce T.[BR]
+Restores 25 HP...[END]
+}
+
+#string:24:053
+{
+A side dish made by Tayce T.[BR]
+Restores 25 HP...[END]
+}
+
+#string:25:053
+{
+A side dish made by Tayce T.[BR]
+Restores 25 HP...[BR]
+Reduces attack by 3 but boosts[BR]
+defense by 5 for 3 turns.[END]
+}
+
+#string:23:054
+{
+	A side dish made by Tayce T.[BR]
+	Restores 10 HP...[End]
+}
+
+#string:24:054
+{
+	A side dish made by Tayce T.[BR]
+	Restores 10 HP...[End]
+}
+
+#string:25:054
+{
+	A side dish made by Tayce T.[BR]
+	Restores 10 HP...[BR]
+	Reduces attack by 1 but boosts[BR]
+	defense by 3 for 3 turns.[End]
+}
+
+
+#string:23:055
+{
+A nut cake baked by Tayce T.[BR]
+Restores 1 HP and 9 FP...[END]
+}
+
+#string:25:055
+{
+A nut cake baked by Tayce T.[BR]
+Restores 1 HP and 9 FP...[BR]
+Boosts attack by 1 for 4 turns.[END]
+}
+
+#string:23:056
+{
+Food cooked by Tayce T.[BR]
+Restores 15 HP and 15 FP.[END]
+}
+
+#string:25:056
+{
+Food cooked by Tayce T.[BR]
+Restores 15 HP and 15 FP.[END]
+}
+
+#string:23:057
+{
+A cookie baked by Tayce T.[BR]
+Restores 10 HP and 10 FP...[END]
+}
+
+#string:25:057
+{
+A cookie baked by Tayce T.[BR]
+Restores 10 HP and 10 FP...[BR]
+Next food / drink item is 1.5x[BR]
+more effective.[BR]
+Affects healing and duration of[BR]
+buffs.[BR]
+For recovery over time items,[BR]
+only duration is boosted.[END]
+}
+
+
+#string:25:05A
+{
+Lets you charge up Jump power.[BR]
+Uses 3 FP.[BR]
+When charged, Mario's Jump[BR]
+power goes up by 2.[BR]
+Lets you charge up to +6 damage,[BR]
+but power fades after attack.[END]
+}
+
+#string:25:05B
+{
+Greatly charges up Jump power.[BR]
+Uses 5 FP.[BR]
+When supercharged, Mario's Jump[BR]
+power goes up by 3.[BR]
+Lets you charge up to +6 damage,[BR]
+but power fades after attack.[END]
+}
+
+#string:25:05C
+{
+Lets you do a Sleep Stomp.[BR]
+Uses 3 FP.[BR]
+If it works, the enemy Mario[BR]
+jumps on falls asleep for a bit.[END]
+}
+
+#string:25:05D
+{
+Lets you do a Dizzy Stomp.[BR]
+Uses 4 FP.[BR]
+If it works, the enemy Mario [BR]
+jumps on becomes dizzy.[BR]
+It also prevents that enemy from[BR]
+hitting attacks for a short time.[END]
+}
+
+#string:25:059
+{
+Lets you do a Mega Jump.[BR]
+Uses 7 FP.[BR]
+Mario stomps on a single enemy[BR]
+using tons of attack power.[BR]
+Attack Power = 2x Jump + 6.[END]
+}
+
+#string:25:05F
+{
+Lets you do a Shrink Stomp.[BR]
+Uses 4 FP.[BR]
+If it works, the enemy Mario [BR]
+stomps on shrinks.[BR]
+It also decreases the enemy's[BR]
+attack power by half for a bit.[END]
+}
+
+#string:25:064
+{
+Lets you charge up your Hammer.[BR]
+Uses 2 FP.[BR]
+When charged, Mario's Hammer[BR]
+power goes up by 2.[BR]
+Lets you charge up to +6 damage,[BR]
+but power fades after attack.[END]
+}
+
+#string:25:065
+{
+Greatly charges up your Hammer.[BR]
+Uses 4 FP.[BR]
+When supercharged, Mario's [BR]
+Hammer power goes up by 3.[BR]
+Lets you charge up to +6 damage,[BR]
+but power fades after attack.[END]
+}
+
+#string:25:060
+{
+Lets you do a D-Down Jump.[BR]
+Uses 6 FP.[BR]
+Disables an enemy's defense[BR]
+power and causes some damage.[BR]
+Boot upgrades aren't as[BR]
+effective at increasing DMG.[END]
+}
+
+#string:25:061
+{
+Lets you do a Power Bounce.[BR]
+Uses 6 FP.[BR]
+Jumps on one enemy continuously [BR]
+until you miss an action command.[BR]
+Each bounce is 3/4 as strong as[BR]
+the last bounce rounded down.[BR]
+Bosses usually have a 3 cap,[BR]
+normal enemies have a 5 cap.[END]
+}
+
+#string:25:063
+{
+Lets you do a Mega Smash.[BR]
+Uses 8 FP.[BR]
+Hammers an enemy with a huge[BR]
+amount of attack power.[BR]
+Attack Power = Hammer + 8.[END]
+}
+
+#string:25:066
+{
+Lets you do a Hammer Throw.[BR]
+Uses 2 FP.[BR]
+Hits one enemy with the Hammer,[BR]
+no matter where the enemy is. [BR]
+More effective on aerial enemies.[END]
+}
+
+#string:23:067
+{
+Hit an enemy very hard, but[BR]
+take damage in return.[END]
+}
+
+
+#string:24:067
+{
+Hit an enemy very hard, but[BR]
+take damage in return.[END]
+}
+
+#string:25:067
+{
+Lets you do a Recoil Throw.[BR]
+Uses 7 FP.[BR]
+Much stronger than Hammer Throw,[BR]
+but you will take damage too.[BR]
+Recoil damage is around[BR]
+the strength of a regular Hammer.[END]
+}
+
+#string:2A:00F
+{
+	Recoil Throw[End]
+}
+
+#string:26:067
+{
+	Recoil Throw[End]
+}
+
+#string:25:068
+{
+Lets you do a Spin Smash.[BR]
+Uses 1 FP.[BR]
+If Mario hits an enemy, it[BR]
+smashes into the ones behind it.[END]
+}
+
+#string:25:069
+{
+Lets you do a D-Down Pound.[BR]
+Uses 4 FP.[BR]
+Disables an enemy's defense[BR]
+power and injures it.[END]
+}
+
+#string:25:06A
+{
+Lets you do a Quake Hammer.[BR]
+Uses 3 FP.[BR]
+Slightly damages all enemies on[BR]
+the ground or ceiling.[END]
+}
+
+#string:25:06B
+{
+Lets you do a Power Quake.[BR]
+Uses 5 FP.[BR]
+Greatly damages all enemies on[BR]
+the ground or ceiling.[END]
+}
+
+#string:25:06C
+{
+Lets you do a Mega Quake.[BR]
+Uses 7 FP.[BR]
+Severely damages all enemies on[BR]
+the ground or ceiling.[END]
+}
+
+#string:25:06D
+{
+During battle, lets you use two[BR]
+items during one turn.[BR]
+Uses 5 FP.[END]
+}
+
+#string:25:06E
+{
+During battle, lets you use three[BR]
+items during one turn.[BR]
+Uses 10 FP.[END]
+}
+
+#string:23:071
+{
+Increases maximum HP by 5.[BR]
+Cannot negate cursed artifacts.[END]
+}
+
+#string:25:071
+{
+Increases maximum HP by 5.[BR]
+Cannot negate cursed artifacts.[END]
+}
+
+#string:23:078
+{
+Decreases Mario's attack power [BR]
+by 1. Restores 1 HP per hit...[END]
+}
+
+#string:23:078
+{
+Decreases Mario's attack power [BR]
+by 1. Restores 1 HP per hit...[END]
+}
+
+#string:23:078
+{
+Decreases Mario's attack power [BR]
+by 1. Restores 1 HP per hit...[END]
+}
+
+#string:24:078
+{
+Decreases Mario's attack power [BR]
+by 1. Restores 1 HP per hit...[END]
+}
+
+#string:25:078
+{
+Decreases Mario's attack power[BR]
+by 1. Restores 1 HP per hit.[BR]
+Mario's HP can recover by a[BR]
+maximum of 5 per turn.[BR]
+Does not work if Mario's max HP[BR]
+is 5 or below.[END]
+}
+
+#string:23:07E
+{
+	When using Focus, charges Star[BR]
+	Power more than usual.[End]
+}
+
+#string:24:07E
+{
+	When using Focus, charges Star[BR]
+	Power more than usual.[End]
+}
+
+#string:25:07E
+{
+	When using Focus, charges Star[BR]
+	Power more than usual.[End]
+}
+
+#string:23:081
+{
+Doubles passive Star Power[BR]
+regeneration.[END]
+}
+
+#string:24:081
+{
+Doubles passive Star Power[BR]
+regeneration.[END]
+}
+
+#string:25:081
+{
+Doubles passive Star Power[BR]
+regeneration.[END]
+}
+
+#string:26:081
+{
+Star Gift[END]
+}
+
+#string:23:082
+{
+At the start of battle, you get[BR]
+2 turns instead of 1.[END]
+}
+
+#string:25:082
+{
+At the start of battle, you get[BR]
+2 turns instead of 1.[END]
+}
+
+#string:26:082
+{
+Head Start[END]
+}
+
+#string:23:083
+{
+When Mario's in Danger, you[BR]
+save 1 FP per attack.[END]
+}
+
+#string:24:083
+{
+When Mario's in Danger, you[BR]
+save 1 FP per attack.[END]
+}
+
+#string:25:083
+{
+When Mario's in Danger, you[BR]
+save 1 FP per attack.[END]
+}
+
+#string:26:083
+{
+Danger Saver[END]
+}
+
+#string:25:085
+{
+When Mario's in Danger, he[BR]
+receives only half the damage.[BR]
+This is applied after all[BR]
+other defense bonuses.[END]
+}
+
+#string:23:087
+{
+Increases the power of Mario's[BR]
+First Strikes.[END]
+}
+
+#string:24:087
+{
+Increases the power of Mario's[BR]
+First Strikes.[END]
+}
+
+#string:25:087
+{
+Increases the power of Mario's[BR]
+First Strikes.[END]
+}
+
+#string:26:087
+{
+First Attack[END]
+}
+
+#string:23:088
+{
+Doubles enemy damage, enemy[BR]
+HP and star point gain.[END]
+}
+
+#string:24:088
+{
+Doubles enemy damage, enemy[BR]
+HP and star point gain.[END]
+}
+
+#string:25:088
+{
+Doubles enemy damage, enemy[BR]
+HP, coin and star point gain.[BR]
+This may make some encounters[BR]
+unwinnable. For true Superstars.[END]
+}
+
+#string:26:088
+{
+Ultra Curse[END]
+}
+
+#string:23:089
+{
+	Reduces move costs by 1 FP[BR]
+	when at maximum health.[END]
+}
+
+#string:24:089
+{
+	Reduces move costs by 1 FP[BR]
+	when at maximum health.[END]
+}
+
+#string:25:089
+{
+	Reduces move costs by 1 FP[BR]
+	when at maximum health.[END]
+}
+
+#string:26:089
+{
+	Perfect Saver[End]
+}
+
+#string:23:08A
+{
+	Delivers a blow that makes an[BR]
+	enemy dizzy temporarily. [End]
+}
+
+#string:24:08A
+{
+	Delivers a blow that makes an[BR]
+	enemy dizzy temporarily. [End]
+}
+
+#string:25:08A
+{
+	Delivers a blow that makes an[BR]
+	enemy dizzy temporarily. [End]
+}
+
+#string:23:08C
+{
+	Protects Mario from attacks[BR]
+	that inflict normal statuses...[End]
+}
+
+#string:24:08C
+{
+	Protects Mario from attacks[BR]
+	that inflict normal statuses.[End]
+}
+
+#string:25:08C
+{
+	Protects Mario from attacks[BR]
+	that inflict normal statuses...[BR]
+	Protects Mario's partner from[BR]
+	all statuses also.[End]
+}
+
+#string:23:094
+{
+Makes Mario move slightly faster.[END]
+}
+
+#string:24:094
+{
+Makes Mario move slightly faster.[END]
+}
+
+#string:25:094
+{
+Makes Mario move slightly faster.[END]
+}
+
+#string:26:094
+{
+Haste Step[END]
+}
+
+#string:23:096
+{
+	Causes all of Mario's guarding[BR]
+	to be done automatically.[End]
+}
+
+#string:24:096
+{
+	Causes all of Mario's guarding[BR]
+	to be done automatically.[End]
+}
+
+#string:25:096
+{
+	Causes all of Mario's guarding[BR]
+	to be done automatically.[End]
+}
+
+#string:26:096
+{
+	Auto Dodge[End]
+}
+
+#string:23:098
+{
+Reduces move costs by 1,[BR]
+but they use HP instead of FP.[END]
+}
+
+#string:24:098
+{
+Reduces move costs by 1,[BR]
+but they use HP instead of FP.[END]
+}
+
+#string:25:098
+{
+Reduces move costs by 1,[BR]
+but they use HP instead of FP.[END]
+}
+
+#string:26:098
+{
+Flower Health[END]
+}
+
+#string:23:09C
+{
+	Increases Mario's attack power[BR]
+	by 2 when at max FP.[END]
+}
+
+#string:24:09C
+{
+	Increases Mario's attack power[BR]
+	by 2 when at max FP.[END]
+}
+
+#string:25:09C
+{
+	Increases Mario's attack power[BR]
+	by 2 when at max FP.[BR]
+	Using an FP using move at max[BR]
+	FP will give you the boost.[BR]
+	With Flower Health equipped,[BR]
+	this takes effect at max HP.[END]
+}
+
+#string:26:09C
+{
+	Flower Power[End]
+}
+
+
+#string:23:0B2
+{
+	Trade all Star Power for an[BR]
+	attack and defense boost.[End]
+}
+
+
+#string:25:0B2
+{
+	Trade all Star Power for an[BR]
+	attack and defense boost.[BR]
+	For each bar of Star Power,[BR]
+	get 1 turn of +2 atk and def.[BR]
+	Maximum turn count = 15.[End]
+}
+
+
+#string:26:0B2
+{
+	Dark Cake[End]
+}
+
+
+#string:23:0D8
+{
+	Snow white sugar.[End]
+}
+
+#string:24:0D8
+{
+	Snow white sugar. +1 turn, but[BR]
+	move costs are +5 for 3 turns.[End]
+}
+
+#string:25:0D8
+{
+	Snow white sugar. You can move[BR]
+	twice next turn, but your[BR]
+	move costs are increased by 5[BR]
+	for 3 turns.[BR]
+	Does not work if you use it[BR]
+	with Double / Triple Dip[End]
+}
+
+#string:23:0D9
+{
+	As salty as salt gets.[End]
+}
+
+#string:24:0D9
+{
+	As salty as salt gets.[BR]
+	Gain attack power at a price.[End]
+}
+
+#string:25:0D9
+{
+	As salty as salt gets.[BR]
+	-5 HP and FP, but get[BR]
+	+3 atk for 3 turns.[End]
+}
+
+#string:23:0DA
+{
+	Newly laid eggs.[End]
+}
+
+#string:23:0DB
+{
+	Very rich and fresh cream.[End]
+}
+
+#string:24:0DB
+{
+	Very rich and fresh cream.[BR]
+	Doubles current HP and FP.[End]
+}
+
+#string:25:0DB
+{
+	Very rich and fresh cream.[BR]
+	Doubles current HP and FP.[End]
+}
+
+#string:23:0DC
+{
+	Bright red strawberries. They[BR]
+	look fresh and juicy.[End]
+}
+
+#string:24:0DC
+{
+	A bright red strawberry.[BR]
+	Heals 12 HP while move costs...[End]
+}
+
+#string:25:0DC
+{
+	A bright red strawberry.[BR]
+	Heals 12 HP while move costs[BR]
+	are reduced by 1 for 3 turns.[End]
+}
+
+#string:23:0DD
+{
+	The best butter available. It[BR]
+	looks freshly churned.[End]
+}
+
+#string:24:0DD
+{
+	The best butter available.[BR]
+	+5 HP, +5 FP, next item is...[End]
+}
+
+#string:25:0DD
+{
+	The best butter available.[BR]
+	+5 HP, +5 FP...[BR]
+	Next food / drink item is 1.5x[BR]
+	more effective.[BR]
+	Affects healing and duration of[BR]
+	buffs.[BR]
+	For recovery over time items,[BR]
+	only duration is boosted.[END]
+}
+
+#string:23:0DE
+{
+	Detergent to wash utensils.[BR]
+	Don't eat it![End]
+}
+
+#string:24:0DE
+{
+	Detergent to wash utensils.[BR]
+	-9 HP and cures statuses.[End]
+}
+
+#string:25:0DE
+{
+	Detergent to wash utensils.[BR]
+	Don't eat it![BR]
+	-9 HP, Removes all statuses.[End]
+}
+
+#string:23:0DF
+{
+	Ordinary water.[BR]
+	Hydration is important![End]
+}
+
+#string:24:0DF
+{
+	Ordinary water. No effect.[BR]
+	Hydration is important![End]	
+}
+
+#string:25:0DF
+{
+	Ordinary water. No effect.[BR]
+	Hydration is important![End]	
+}
+
+#string:23:0E0
+{
+	The best flour available to bake[BR]
+	the finest royal cakes.[End]
+}
+
+#string:24:0E0
+{
+	The best flour around. Restores[BR]
+	9 HP and 9 FP over 3 turns.[End]
+}
+
+#string:25:0E0
+{
+	The best flour around. Restores[BR]
+	9 HP and 9 FP over 3 turns.[BR]
+	(3 HP and FP per turn.)[End]
+}
+
+#string:23:0E1
+{
+	Milk, fresh from the cow![End]
+}
+
+#string:24:0E1
+{
+	Milk, fresh from the cow![BR]
+	Restores 8 HP and boosts def...[End]
+}
+
+#string:25:0E1
+{
+	Milk, fresh from the cow![BR]
+	Restores 8 HP and boosts defense[BR]
+	by 3 for 2 turns.[End]
+}

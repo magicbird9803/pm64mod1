@@ -1,0 +1,101 @@
+%Toadinator fight
+% + ultra shroom fight
+
+#import newenemy/Toadinator.bpat
+#import newenemy/EvilUltraShroom.bpat
+#import newenemy/UnstableStar.bpat
+
+#new:StageTable $StageTable
+{
+"cav_13" $Stage_Cave1
+"cav_11" $Stage_Cave5
+"cav_17" $Stage_Palace
+00000000 00000000 
+}
+
+#new:Script $Script_BeforeBattle_NormalCave
+{
+	Set *EnviroEffectsAux 3
+	Return
+	End
+}
+
+#new:Script $Script_AfterBattle_NormalCave
+{
+	Set *EnviroEffectsAux 0
+	Return
+	End
+}
+
+#new:Stage $Stage_Cave1
+{
+"kpa_tex"
+"cav_b01_shape"
+"cav_b01_hit"
+$Script_BeforeBattle_NormalCave
+$Script_AfterBattle_NormalCave
+00000000 
+00000000 
+00000000 
+00000000 
+00000000 
+}
+
+%stage next to river
+#new:Stage $Stage_Cave5
+{
+"kpa_tex"
+"cav_b05_shape"
+"cav_b05_hit"
+$Script_BeforeBattle_NormalCave
+$Script_AfterBattle_NormalCave
+00000000 
+00000000 
+00000000 
+00000000 
+00000000 
+}
+
+
+%stage inside palace
+#new:Stage $Stage_Palace
+{
+"kpa_tex"
+"cav_b08_shape"
+"cav_b08_hit"
+$Script_BeforeBattle_NormalCave
+$Script_AfterBattle_NormalCave
+00000000 
+00000000 
+00000000 
+00000000 
+00000000 
+}
+
+#new:Vector3D $Pos_Toadinator
+{
+70` 0` 5`
+}
+
+#new:Formation $Formation_00
+{
+$Toadinator $Pos_Toadinator 0000000A 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_01
+{
+$EvilUltraShroom 00000002 0000000A 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_02
+{
+$UnstableStar 00000006 0000000A 00000000 00000000 00000000 00000000
+}
+
+#new:FormationTable $FormationTable
+{
+00000000 00000001 $Formation_00 $Stage_Cave5 00000000
+00000000 00000001 $Formation_01 $Stage_Cave1 00000000
+00000000 00000001 $Formation_02 $Stage_Palace 00000000
+00000000 00000000 00000000 00000000 00000000 % unused
+}

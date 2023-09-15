@@ -1,0 +1,9 @@
+#delete $DefenseTable_80231000
+#delete $StatusTable_8023100C
+#delete $PartsTable_802310B8
+#delete $ShyGuy
+#delete $IdleAnimations_80231104
+#delete $Script_Init_80231110
+#delete $Script_Idle_8023129C
+#delete $Script_HandleEvent_802312D0
+#delete $Script_TakeTurn_80231754

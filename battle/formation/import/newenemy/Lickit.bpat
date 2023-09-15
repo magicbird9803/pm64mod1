@@ -1,0 +1,295 @@
+% Automatically dumped from section 1D
+
+%5 hp, 1 atk (2 turn poison!!!), 0 def
+
+#new:Actor $Lickit {
+% stats
+[Index]        61b 
+[Level]         5`b 
+[MaxHP]         5`b 
+[Coins]         1`b 
+[Flags]       00000000 
+[StatusTable] $StatusTable_80227E40_Lickit 
+% ai
+[PartsCount]    3`s 
+[PartsTable]  $PartsTable_80227EEC_Lickit 
+[Script]      $Script_Init_80227F80_Lickit 
+% move effectiveness
+[Escape]       70`b
+[Item]         90`b
+[AirLift]      50`b %too thicc to pick up
+[Hurricane]    90`b % Bow's "Spook" as well
+[UpAndAway]    95`b
+[PowerBounce] 100`b
+[SpinSmash]     0`b % weight (0-4)
+% ui positions
+[Size]         53`b  50`b % width height
+[HealthBar]     0`b   0`b % dx dy
+[StatusTurn]   -3`b  37`b % dx dy
+[StatusIcon]   10`b  45`b % dx dy
+}
+
+#new:IdleAnimations $IdleAnimations_80227DD0_Lickit {
+.Status:Normal    00520201
+.Status:Stone     00520200
+.Status:Sleep     0052020F
+.Status:Poison    00520201
+.Status:Stop      00520200
+.Status:Static    00520201
+.Status:Paralyze  00520200
+.Status:Dizzy     0052020E
+.Status:Fear      0052020E
+.Status:End
+}
+
+#new:IdleAnimations $IdleAnimations_80227E1C_Lickit {
+.Status:Normal    00520210
+.Status:End
+}
+
+#new:IdleAnimations $IdleAnimations_80227E28_Lickit {
+.Status:Normal    00520212
+.Status:End
+}
+
+#new:DefenseTable $DefenseTable_80227E34_Lickit {
+.Element:Normal 00000000
+.Element:End
+}
+
+#new:StatusTable $StatusTable_80227E40_Lickit {
+.Status:Normal      0`
+.Status:Default     0`
+.Status:Sleep      60`
+.Status:Poison     80`
+.Status:Frozen      0`
+.Status:Dizzy      90`
+.Status:Fear        0`
+.Status:Static     10`
+.Status:Paralyze   80`
+.Status:Shrink     75`
+.Status:Stop       85`
+.Status:DefaultTurnMod    0`
+.Status:SleepTurnMod      0`
+.Status:PoisonTurnMod     0`
+.Status:FrozenTurnMod     0`
+.Status:DizzyTurnMod      0`
+.Status:FearTurnMod       0`
+.Status:StaticTurnMod     0`
+.Status:ParalyzeTurnMod   1`
+.Status:ShrinkTurnMod     0`
+.Status:StopTurnMod       0`
+.Status:End
+}
+
+#new:PartsTable $PartsTable_80227EEC_Lickit {
+00800000 01000000 F93000FF $IdleAnimations_80227DD0_Lickit $DefenseTable_80227E34_Lickit 00000000 00000000 FDE90000 00000000 
+00120001 02000000 000000FF $IdleAnimations_80227E1C_Lickit $DefenseTable_80227E34_Lickit 00000000 00000000 00000000 00000000 
+00120001 03000000 000000FF $IdleAnimations_80227E28_Lickit $DefenseTable_80227E34_Lickit 00000000 00000000 00000000 00000000 
+}
+
+#new:Script $Script_Init_80227F80_Lickit {
+    0:  Call  BindTakeTurn      ( .Actor:Self $Script_TakeTurn_Lickit )
+   14:  Call  BindIdle  ( .Actor:Self $Script_Idle_80227FCC_Lickit )
+   28:  Call  BindHandleEvent   ( .Actor:Self $Script_HandleEvent_80228030_Lickit )
+   3C:  Return
+   44:  End
+}
+
+#new:Script $Script_Idle_80227FCC_Lickit {
+    0:  Return
+    8:  End
+}
+
+#new:Script $Script_80227FDC_Lickit {
+    0:  SetConst  *Var0  00000001 
+   10:  SetConst  *Var1  00520203 
+   20:  ExecWait  DoReturnHome 
+   2C:  Call  SetAnimation  ( .Actor:Self 00000001 00520201 )
+   44:  Return
+   4C:  End
+}
+
+#new:Script $Script_HandleEvent_80228030_Lickit {
+    0:  Call  UseIdleAnimation  ( .Actor:Self .False )
+   14:  Call  EnableIdleScript  ( .Actor:Self 00000000 )
+   28:  Call  GetLastEvent      ( .Actor:Self *Var0 )
+   3C:  Switch  *Var0 
+   48:  	CaseOR  ==  .Event:HitCombo % 9
+   54:  	CaseOR  ==  .Event:Hit % A
+   60:  		SetConst  *Var0  00000001 
+   70:  		SetConst  *Var1  0052020B 
+   80:  		ExecWait  DoNormalHit 
+   8C:  	EndCaseGroup
+   94:  	Case  ==  .Event:BurnHit % E
+   A0:  		SetConst  *Var0  00000001 
+   B0:  		SetConst  *Var1  0052020C 
+   C0:  		SetConst  *Var2  0052020D 
+   D0:  		ExecWait  DoBurnHit 
+   DC:  	Case  ==  .Event:BurnDeath % 24
+   E8:  		SetConst  *Var0  00000001 
+   F8:  		SetConst  *Var1  0052020C 
+  108:  		SetConst  *Var2  0052020D 
+  118:  		ExecWait  DoBurnHit 
+  124:  		SetConst  *Var0  00000001 
+  134:  		SetConst  *Var1  0052020D 
+  144:  		ExecWait  DoDeath 
+  150:  		Return
+  158:  	Case  ==  .Event:SpinSmashHit % B
+  164:  		SetConst  *Var0  00000001 
+  174:  		SetConst  *Var1  0052020B 
+  184:  		ExecWait  DoSpinSmashHit 
+  190:  	Case  ==  .Event:SpinSmashDeath % 21
+  19C:  		SetConst  *Var0  00000001 
+  1AC:  		SetConst  *Var1  0052020B 
+  1BC:  		ExecWait  DoSpinSmashHit 
+  1C8:  		SetConst  *Var0  00000001 
+  1D8:  		SetConst  *Var1  0052020B 
+  1E8:  		ExecWait  DoDeath 
+  1F4:  		Return
+  1FC:  	Case  ==  .Event:ShockHit % 2F
+  208:  		SetConst  *Var0  00000001 
+  218:  		SetConst  *Var1  0052020B 
+  228:  		ExecWait  DoShockHit 
+  234:  		SetConst  *Var0  00000001 
+  244:  		SetConst  *Var1  0052020B 
+  254:  		ExecWait  DoJumpBack 
+  260:  		ExecWait  $Script_80227FDC_Lickit 
+  26C:  	Case  ==  .Event:ShockDeath % 26
+  278:  		SetConst  *Var0  00000001 
+  288:  		SetConst  *Var1  0052020B 
+  298:  		ExecWait  DoShockHit 
+  2A4:  		SetConst  *Var0  00000001 
+  2B4:  		SetConst  *Var1  0052020B 
+  2C4:  		ExecWait  DoDeath 
+  2D0:  		Return
+  2D8:  	CaseOR  ==  00000017 % 17
+  2E4:  	CaseOR  ==  .Event:Immune % 19
+  2F0:  	CaseOR  ==  .Event:AirLiftFailed % 1F
+  2FC:  		SetConst  *Var0  00000001 
+  30C:  		SetConst  *Var1  00520201 
+  31C:  		ExecWait  DoImmune 
+  328:  	EndCaseGroup
+  330:  	Case  ==  .Event:Death % 20
+  33C:  		SetConst  *Var0  00000001 
+  34C:  		SetConst  *Var1  0052020B 
+  35C:  		ExecWait  DoNormalHit 
+  368:  		Wait  10`
+  374:  		SetConst  *Var0  00000001 
+  384:  		SetConst  *Var1  0052020B 
+  394:  		ExecWait  DoDeath 
+  3A0:  		Return
+  3A8:  	Case  ==  .Event:RecoverStatus % 31
+  3B4:  		SetConst  *Var0  00000001 
+  3C4:  		SetConst  *Var1  00520201 
+  3D4:  		ExecWait  DoRecover 
+  3E0:  	Case  ==  .Event:ScareAway % 39
+  3EC:  		SetConst  *Var0  00000001 
+  3FC:  		SetConst  *Var1  00520203 
+  40C:  		SetConst  *Var2  0052020B 
+  41C:  		ExecWait  DoScareAway 
+  428:  		Return
+  430:  	Case  ==  .Event:BeginAirLift % 3A
+  43C:  		SetConst  *Var0  00000001 
+  44C:  		SetConst  *Var1  00520203 
+  45C:  		ExecWait  DoAirLift 
+  468:  	Case  ==  .Event:BlowAway % 16
+  474:  		SetConst  *Var0  00000001 
+  484:  		SetConst  *Var1  00520203 
+  494:  		ExecWait  DoBlowAway 
+  4A0:  	Default
+  4A8:  EndSwitch
+  4B0:  Call  EnableIdleScript  ( .Actor:Self 00000001 )
+  4C4:  Call  UseIdleAnimation  ( .Actor:Self .True )
+  4D8:  Return
+  4E0:  End
+}
+
+#new:Script $Script_Lick_Lickit {
+    0:  Call  UseIdleAnimation  ( .Actor:Self .False )
+   14:  Call  EnableIdleScript  ( .Actor:Self 00000000 )
+   28:  Call  SetTargetActor    ( .Actor:Self .Actor:Player )
+   3C:  Call  UseBattleCamPreset    ( 0000003F )
+   4C:  Call  BattleCamTargetActor  ( .Actor:Self )
+   5C:  Call  8024ECF8  ( FFFFFFFF 00000001 00000000 )
+   74:  Call  GetBattlePhase    ( *Var0 )
+   84:  If  *Var0  ==  00000001 
+   94:  	Call  SetGoalToTarget   ( .Actor:Self )
+   A4:  	Call  GetGoalPos        ( .Actor:Self *Var0 *Var1 *Var2 )
+   C0:  	Add   *Var0  00000050 
+   D0:  	Set   *Var1  00000000 
+   E0:  	Call  SetActorPos       ( .Actor:Self *Var0 *Var1 *Var2 )
+   FC:  EndIf
+  104:  Call  SetAnimation      ( .Actor:Self 00000001 00520203 )
+  11C:  Call  SetGoalToTarget   ( .Actor:Self )
+  12C:  Call  GetStatusFlags    ( .Actor:Self *Var0 )
+  140:  If  *Var0  &  ~Flags:StatusFlags:Shrink % 80000
+  150:  	Call  AddGoalPos    ( .Actor:Self 0000000A 00000000 00000000 )
+  16C:  Else
+  174:  	Call  AddGoalPos    ( .Actor:Self 00000014 00000000 00000000 )
+  190:  EndIf
+  198:  Call  SetActorSpeed ( .Actor:Self *Fixed[4.0] )
+  1AC:  Call  RunToGoal     ( .Actor:Self 00000000 .False )
+  1C4:  Call  SetAnimation  ( .Actor:Self 00000001 00520201 )
+  1DC:  Wait  10`
+  1E8:  Thread
+  1F0:  	Wait  3`
+  1FC:  	Call  PlaySoundAtActor  ( .Actor:Self 000020EE )
+  210:  EndThread
+  218:  Call  SetAnimation      ( .Actor:Self 00000001 00520204 )
+  230:  Wait  9`
+  23C:  Call  EnemyTestTarget   ( .Actor:Self *Var0 ~Flags:DamageType:0 00000000 00000001 00000010 )
+  260:  Switch  *Var0 
+  26C:  	CaseOR  ==  .HitResult:Miss % 6
+  278:  	CaseOR  ==  .HitResult:Lucky % 5
+  284:  		Set   *VarA  *Var0 
+  294:  		If  *VarA  ==  .HitResult:Lucky % 5
+  2A4:  			Call  EnemyTestTarget   ( .Actor:Self *Var0 ~Flags:DamageType:TriggerLucky 00000000 00000000 00000000 )
+  2C8:  		EndIf
+  2D0:  		Wait  15`
+  2DC:  		Call  UseBattleCamPreset    ( 00000002 )
+  2EC:  		Call  YieldTurn ( )
+  2F8:  		Call  SetActorYaw   ( .Actor:Self 000000B4 )
+  30C:  		Call  AddActorDecoration    ( .Actor:Self 00000001 00000000 .Decoration:Sweat )
+  328:  		ExecWait  $Script_80227FDC_Lickit 
+  334:  		Call  RemoveActorDecoration ( .Actor:Self 00000001 00000000 )
+  34C:  		Call  SetActorYaw   ( .Actor:Self 00000000 )
+  360:  		Call  EnableIdleScript      ( .Actor:Self 00000001 )
+  374:  		Call  UseIdleAnimation      ( .Actor:Self .True )
+  388:  		Return
+  390:  	EndCaseGroup
+  398:  EndSwitch
+  3A0:  Wait  2`
+  3AC:  Call  EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:0 00000000 80020264 00000001 00000020 )
+  3D4:  Switch  *Var0 
+  3E0:  	CaseOR  ==  .HitResult:Hit % 0
+  3EC:  	CaseOR  ==  00000002 % 2
+  3F8:  		Call  UseBattleCamPreset    ( 00000002 )
+  408:  		Wait  10`
+  414:  		Call  YieldTurn ( )
+  420:  		ExecWait  $Script_80227FDC_Lickit 
+  42C:  	EndCaseGroup
+  434:  EndSwitch
+  43C:  Call  EnableIdleScript  ( .Actor:Self 00000001 )
+  450:  Call  UseIdleAnimation  ( .Actor:Self .True )
+  464:  Return
+  46C:  End
+}
+
+%Get rid of all the checks for rocks
+#new:Script $Script_TakeTurn_Lickit {
+    0:  Call  GetBattlePhase    ( *Var0 )
+   10:  If  *Var0  ==  00000001 
+   20:  	ExecWait  $Script_Lick_Lickit 
+   2C:  	Return
+   34:  EndIf
+   3C:  Call  GetStatusFlags    ( .Actor:Self *Var0 )
+   50:  If  *Var0  &  ~Flags:StatusFlags:Shrink % 80000
+   60:  	ExecWait  $Script_Lick_Lickit 
+   6C:  	Return
+   74:  EndIf
+  1BC:  ExecWait  $Script_Lick_Lickit 
+  304:  Return
+  30C:  End
+}
+

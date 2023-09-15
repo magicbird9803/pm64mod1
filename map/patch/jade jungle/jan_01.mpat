@@ -1,0 +1,15 @@
+@ $Script_MakeEntities
+{
+    0:  Call  MakeItemEntity    ( .Item:Letter11 ~Vec3d:Item80243400 .ItemSpawnMode:Fixed_NeverVanish *GF_JAN01_Item_Letter11 )
+   24:  Call  MakeEntity        ( .Entity:BellbellPlant ~Vec4d:Entity80243424 80000000 )
+   48:  Call  MakeEntity        ( .Entity:HiddenYellowBlock ~Vec4d:Entity80243448 .Item:RepelGel 80000000 )
+   70:  Call  AssignBlockFlag   ( *GF_JAN01_HiddenItem_RepelGel )
+   80:  Call  MakeEntity        ( .Entity:BellbellPlant ~Vec4d:Entity80243480 80000000 )
+   A4:  Call  MakeEntity        ( .Entity:HiddenYellowBlock ~Vec4d:Entity802434A4 .Item:GoldenMelon 80000000 )			%add a golden melon here
+   CC:  Call  AssignBlockFlag   ( *GF_JAN01_HiddenItem_Mystery )
+   DC:  Call  MakeItemEntity    ( .Item:Coin ~Vec3d:Item802434DC .ItemSpawnMode:Fixed_NeverVanish *GF_JAN01_Item_CoinA )
+  100:  Call  MakeItemEntity    ( .Item:Coin ~Vec3d:Item80243500 .ItemSpawnMode:Fixed_NeverVanish *GF_JAN01_Item_CoinB )
+  124:  Call  MakeEntity        ( .Entity:SpinningFlower ~Vec4d:Entity80243524 80000000 )
+  148:  Return
+  150:  End
+}

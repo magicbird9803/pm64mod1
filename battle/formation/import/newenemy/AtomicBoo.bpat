@@ -1,0 +1,895 @@
+%copied from regular boo
+%but with heavy modifications
+
+%boo cannon copied from mq
+%with heavy modifications ofc
+
+#define .AnimStop	00EF0005
+#define .AnimIdle	00EF0000
+#define .AnimRun	00EF0005
+#define .AnimPain	00EF0001
+#define .AnimHide	00EF0002
+#define .AnimSpook	00EF0003
+
+%might add dizzy animation later
+%#define .AnimDizzy	00950009
+%#define .AnimDead	00950012 %unused?
+#define .AnimDead	00EF0001
+
+%stats in ttyd:
+%40 hp, 4 atk (but most attacks pierce) + statuses, 0 def
+
+%stats here:
+%40 hp, 10 atk (no statuses), 0 def
+
+%Cannon does 3 x 8
+%(If you don't block and have no defense buffs, it'll do 24 damage)
+%but you can easily give yourself 3 defense, at least in lategame
+
+#new:Actor $AtomicBoo
+{
+% stats
+[Index]        F3b 
+[Level]        36`b %miniboss stats 
+[MaxHP]        40`b 
+[Coins]         0`b 
+[Flags]       00000200 
+[StatusTable] $StatusTable_AtomicBoo 
+% ai
+[PartsCount]   1`s 
+[PartsTable] $PartsTable_AtomicBoo 
+[Script]      $Script_Init_AtomicBoo 
+% move effectiveness
+[Escape]        0`b %no escape 
+[Item]          0`b 
+[AirLift]       0`b 
+[Hurricane]     0`b % Bow's "Spook" as well
+[UpAndAway]     0`b 
+[PowerBounce]   3`b 
+[SpinSmash]     4`b % weight (0-4)
+% ui positions
+[Size]        100`b 100`b % width height
+[HealthBar]     0`b   0`b % dx dy
+[StatusTurn]  -45`b 75`b % dx dy (usually top left)
+[StatusIcon]   45`b 75`b % dx dy (usually top right)
+}
+
+%regular boo is 48 x 40, atomic boo is (usually) 120 x 108
+
+#new:StatusTable $StatusTable_AtomicBoo 
+{
+.Status:Normal            0`
+.Status:Sleep             0` 
+.Status:Poison            0`
+.Status:Frozen            0`
+.Status:Dizzy             0` %I don't have animations for dizzy yet
+.Status:Static           50`
+.Status:Paralyze         50`
+.Status:Shrink           75`
+.Status:Stop             75`
+.Status:SleepTurnMod      1`
+.Status:PoisonTurnMod     0`
+.Status:FrozenTurnMod     0`
+.Status:DizzyTurnMod     -1`
+.Status:StaticTurnMod     0`
+.Status:ParalyzeTurnMod  -1`
+.Status:ShrinkTurnMod     1`
+.Status:StopTurnMod      -1`
+.Status:End
+}
+
+#new:StatusTable $StatusTable_AtomicBoo_Charged
+{
+.Status:Normal            0`
+.Status:Sleep             0` 
+.Status:Poison            0`
+.Status:Frozen            0`
+.Status:Dizzy             0` %I don't have animations for dizzy yet
+.Status:Static            0`
+.Status:Paralyze          0`
+.Status:Shrink            0`
+.Status:Stop              0`
+.Status:SleepTurnMod      0`
+.Status:PoisonTurnMod     0`
+.Status:FrozenTurnMod     0`
+.Status:DizzyTurnMod      0`
+.Status:StaticTurnMod     0`
+.Status:ParalyzeTurnMod   0`
+.Status:ShrinkTurnMod     0`
+.Status:StopTurnMod       0`
+.Status:End
+}
+
+#new:PartsTable $PartsTable_AtomicBoo
+{
+00800000 01000000 003C00FF $IdleAnimations_AtomicBoo $DefenseTable_AtomicBoo 00000000 00000000 FDF60000 00000000 
+}
+
+#new:IdleAnimations $IdleAnimations_AtomicBoo
+{
+.Status:Normal    .AnimIdle
+.Status:Stone     .AnimStop
+.Status:Sleep     .AnimStop %.AnimSleep
+.Status:Poison    .AnimIdle
+.Status:Stop      .AnimStop
+.Status:Static    .AnimIdle
+.Status:Paralyze  .AnimStop
+.Status:Dizzy     .AnimPain %.AnimDizzy
+.Status:End
+}
+
+#new:IdleAnimations $IdleAnimations_AtomicBoo_Charged
+{
+.Status:Normal    .AnimHide
+.Status:Stone     .AnimHide
+.Status:Sleep     .AnimHide %.AnimSleep
+.Status:Poison    .AnimHide
+.Status:Stop      .AnimHide
+.Status:Static    .AnimHide
+.Status:Paralyze  .AnimHide
+.Status:Dizzy     .AnimHide %.AnimDizzy
+.Status:End
+}
+
+#new:DefenseTable $DefenseTable_AtomicBoo
+{
+.Element:Normal 00000000
+.Element:Throw FFFFFFFF
+.Element:End
+}
+
+%don't give atomic boo a free turn
+/%
+% Immediately vanishes owner of calling script.
+#new:Function $Function_Vanish_AtomicBoo % ( duration )
+	ADDIU	SP, SP, FFE0
+	SW		RA, 10 (SP)
+	SW		S1, 14 (SP)
+	SW		S2, 18 (SP)
+	% get turn count
+	LW		A1, 0 (S0)
+	JAL		~Func:get_variable
+	DADDU	S1, A0, R0
+	ANDI	V0, V0, 00FF
+	% add electify status
+	LW		A0, 148 (S1)
+	JAL		~Func:get_actor
+	DADDU	S2, V0, R0
+	ORI		S2, S2, 0E00
+	SH		S2, 218 (V0)
+	% return
+	LW		RA, 10 (SP)
+	LW		S1, 14 (SP)
+	LW		S2, 18 (SP)
+	ADDIU	V0, R0, 2
+	JR		RA
+	ADDIU	SP, SP, 20
+%/
+
+#new:Script $Script_Init_AtomicBoo
+{
+	Call	BindTakeTurn	( .Actor:Self $Script_TakeTurn_AtomicBoo )
+	Call	BindIdle		( .Actor:Self $Script_Idle_AtomicBoo )
+	Call	BindHandleEvent	( .Actor:Self $Script_HandleEvent_AtomicBoo )
+	Call	GetActorPos		( .Actor:Self *Var[0] *Var[1] *Var[2] )
+	Call	SetActorVar		( .Actor:Self 00000000 .False )
+	Call	SetActorVar		( .Actor:Self 00000001 00000000 )
+	Call	SetActorVar 	(.Actor:Self 00000002 00000000 ) %is charged
+	Call	SetActorVar 	(.Actor:Self 00000003 00000000 ) %ai state
+	Add  *Var[1]  10` 
+	Call	ForceHomePos	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+	Call	HPBarToHome		( .Actor:Self )
+	   % 75% chance to spawn with invisible status
+	%Call	RandInt	 ( 100` *Var[0] )
+	%If	*Var[0] > 75`
+	%	Call	$Function_Vanish_AtomicBoo ( 1 )
+	%EndIf
+	Return
+	End
+}
+
+#new:Script $Script_Idle_AtomicBoo
+{
+	Call	RandInt	( 10` *Var[0] ) % randomize initial pattern a little
+	Wait	*Var[0]
+	Label	00000000 
+	Call	MakeLerp    	( 00000000 0000000A 00000019 0000000A )
+	Label	00000001 
+	Call	UpdateLerp  	( )
+	Call	GetHomePos  	( .Actor:Self *Var[2] *Var[3] *Var[4] )
+	Add  *Var[0]  *Var[3] 
+	Call	SetActorPos 	( .Actor:Self *Var[2] *Var[0] *Var[4] )
+	If  *Var[1]  ==  00000001 
+		Label	0000000B 
+		Wait	00000001 
+		Call	GetStatusFlags ( .Actor:Self *Var[0] )
+		If  *Var[0]  &  0035D000 
+			Goto	0000000B 
+		EndIf
+		Goto	00000001 
+	EndIf
+	Call	MakeLerp    	( 0000000A 00000000 00000019 0000000A )
+	Label	00000002 
+	Call	UpdateLerp  	( )
+	Call	GetHomePos  	( .Actor:Self *Var[2] *Var[3] *Var[4] )
+	Add  *Var[0]  *Var[3] 
+	Call	SetActorPos 	( .Actor:Self *Var[2] *Var[0] *Var[4] )
+	If  *Var[1]  ==  00000001 
+		Label	00000016 
+		Wait	00000001 
+		Call	GetStatusFlags ( .Actor:Self *Var[0] )
+		If  *Var[0]  &  0035D000 
+			Goto	00000016 
+		EndIf
+		Goto	00000002 
+	EndIf
+	Goto	00000000 
+	Return
+	End
+}
+
+#new:Script $Script_ReturnHome_AtomicBoo
+{
+	Call     SetAnimation 	( .Actor:Self 00000001 .AnimRun )
+	Call     SetGoalToHome 	( .Actor:Self )
+	Call     SetActorSpeed 	( .Actor:Self *Fixed[8.0] )
+	Thread
+		Call     $Function_ReturnHome_AtomicBoo ( )
+	EndThread
+	Call     FlyToGoal  	( .Actor:Self 00000000 00000001 .Easing:SinOut )
+	Call     SetAnimation 	( .Actor:Self 00000001 .AnimIdle )
+	Return
+	End
+}
+	
+#new:Function $Function_ReturnHome_AtomicBoo
+{
+	ADDIU     SP, SP, FFD8
+	SW        S2, 20 (SP)
+	DADDU     S2, A0, R0
+	SW        RA, 24 (SP)
+	SW        S1, 1C (SP)
+	SW        S0, 18 (SP)
+	LW        A0, 148 (S2)
+	JAL       ~Func:get_actor
+	DADDU     S0, A1, R0
+	BEQ       S0, R0, .oDC
+	DADDU     S1, V0, R0
+	LWC1      F2, 18 (S1)
+	LWC1      F0, 144 (S1)
+	SUB.S     F2, F2, F0
+	MUL.S     F2, F2, F2
+	NOP
+	LWC1      F6, 1C (S1)
+	LWC1      F0, 148 (S1)
+	SUB.S     F6, F6, F0
+	MUL.S     F6, F6, F6
+	NOP
+	LWC1      F4, 14C (S1)
+	LWC1      F0, 20 (S1)
+	SUB.S     F0, F0, F4
+	MUL.S     F0, F0, F0
+	NOP
+	ADD.S     F2, F2, F6
+	ADD.S     F12, F2, F0
+	SQRT.S    F4, F12
+	C.EQ.S    F4, F4
+	NOP
+	BC1T      .o90
+	NOP
+	JAL       80061EF0
+	NOP
+	MOV.S     F4, F0
+        .o90
+	LWC1      F0, 4C (S1)
+	LIF       F2, 0.5
+	DIV.S     F0, F4, F0
+	MUL.S     F0, F0, F2
+	NOP
+	LIF       F2, 1.0
+	NOP
+	ADD.S     F0, F0, F2
+	TRUNC.W.S F8, F0
+	SWC1      F8, 70 (S2)
+	LWC1      F0, 14C (S1)
+	ADDIU     A0, R0, 359
+	SWC1      F0, 10 (SP)
+	LW        A2, 144 (S1)
+	LW        A3, 148 (S1)
+	JAL       80149D5C
+	DADDU     A1, R0, R0
+        .oDC
+	LW        V0, 70 (S2)
+	DADDU     V1, V0, R0
+	ADDIU     V0, V0, FFFF
+	BGTZ      V1, .o114
+	SW        V0, 70 (S2)
+	LWC1      F0, 14C (S1)
+	ADDIU     A0, R0, 759
+	SWC1      F0, 10 (SP)
+	LW        A2, 144 (S1)
+	LW        A3, 148 (S1)
+	JAL       80149D5C
+	DADDU     A1, R0, R0
+	BEQ       R0, R0, .o118
+	ADDIU     V0, R0, 2
+        .o114
+	DADDU     V0, R0, R0
+        .o118
+	LW        RA, 24 (SP)
+	LW        S2, 20 (SP)
+	LW        S1, 1C (SP)
+	LW        S0, 18 (SP)
+	JR        RA
+	ADDIU     SP, SP, 28
+}
+
+#new:Script $Script_HandleEvent_AtomicBoo
+{
+	Call     UseIdleAnimation 	( .Actor:Self .False )
+	Call     EnableIdleScript 	( .Actor:Self 00000000 )
+	Call     GetLastEvent 	( .Actor:Self *Var[0] )
+	Switch  *Var[0] 
+		CaseOR  ==  .Event:HitCombo
+		CaseOR  ==  .Event:Hit
+			SetConst  *Var[0]  00000001 
+			SetConst  *Var[1]  .AnimPain 
+			ExecWait DoNormalHit 
+		EndCaseGroup
+		Case  ==  .Event:BurnHit
+			SetConst  *Var[0]  00000001 
+			SetConst  *Var[1]  .AnimPain 
+			SetConst  *Var[2]  .AnimDead 
+			ExecWait DoBurnHit 
+		Case  ==  .Event:BurnDeath
+			SetConst  *Var[0]  00000001 
+			SetConst  *Var[1]  .AnimPain 
+			SetConst  *Var[2]  .AnimDead 
+			ExecWait DoBurnHit 
+			SetConst  *Var[0]  00000001 
+			SetConst  *Var[1]  .AnimDead 
+			ExecWait DoDeath 
+			Return
+		Case  ==  .Event:SpinSmashHit
+			SetConst  *Var[0]  00000001 
+			SetConst  *Var[1]  .AnimPain 
+			ExecWait 8029B998 
+		Case  ==  .Event:SpinSmashDeath
+			SetConst  *Var[0]  00000001 
+			SetConst  *Var[1]  .AnimPain 
+			ExecWait 8029B998 
+			SetConst  *Var[0]  00000001 
+			SetConst  *Var[1]  .AnimPain 
+			ExecWait DoDeath 
+			Return
+		Case  ==  .Event:ShockHit
+			Call     PlaySoundAtActor 	( .Actor:Self 00000759 )
+			SetConst  *Var[0]  00000001 
+			SetConst  *Var[1]  .AnimPain 
+			ExecWait DoShockHit 
+			SetConst  *Var[0]  00000001 
+			SetConst  *Var[1]  .AnimPain 
+			ExecWait 8029BD70 
+			ExecWait $Script_ReturnHome_AtomicBoo 
+		Case  ==  .Event:ShockDeath
+			Call     PlaySoundAtActor 	( .Actor:Self 00000759 )
+			SetConst  *Var[0]  00000001 
+			SetConst  *Var[1]  .AnimPain 
+			ExecWait DoShockHit 
+			SetConst  *Var[0]  00000001 
+			SetConst  *Var[1]  .AnimPain 
+			ExecWait DoDeath 
+			Return
+		CaseOR  ==  00000017
+		CaseOR  ==  .Event:Immune
+		CaseOR  ==  .Event:AirLiftFailed
+		CaseOR  ==  .Event:BurnTaunt
+			SetConst  *Var[0]  00000001 
+			SetConst  *Var[1]  .AnimIdle 
+			ExecWait DoImmune 
+		EndCaseGroup
+		Case  ==  .Event:Death
+			SetConst  *Var[0]  00000001 
+			SetConst  *Var[1]  .AnimPain 
+			ExecWait DoNormalHit 
+			SetConst  *Var[0]  00000001 
+			SetConst  *Var[1]  .AnimPain 
+			ExecWait DoDeath 
+			Return
+		Case  ==  .Event:BeginFirstStrike
+			Call     SetActorPos 	( .Actor:Self 00000014 00000000 00000000 )
+			Call     HPBarToCurrent ( .Actor:Self )
+		Case  ==  .Event:EndFirstStrike
+			ExecWait $Script_ReturnHome_AtomicBoo 
+			Call     HPBarToHome 	( .Actor:Self )
+		Case  ==  .Event:RecoverStatus
+			SetConst  *Var[0]  00000001 
+			SetConst  *Var[1]  .AnimIdle 
+			ExecWait DoRecover 
+		Case  ==  .Event:ScareAway
+			SetConst  *Var[0]  00000001 
+			SetConst  *Var[1]  .AnimRun 
+			SetConst  *Var[2]  .AnimPain 
+			ExecWait DoScareAway 
+			Return
+		Case  ==  .Event:BeginAirLift
+			SetConst  *Var[0]  00000001 
+			SetConst  *Var[1]  .AnimRun 
+			ExecWait DoAirLift 
+		Case  ==  .Event:BlowAway
+			SetConst  *Var[0]  00000001 
+			SetConst  *Var[1]  .AnimRun 
+			ExecWait DoBlowAway 
+			Return
+		Case  ==  .Event:UpAndAway
+		Default
+	EndSwitch
+	Call     EnableIdleScript 	( .Actor:Self 00000001 )
+	Call     UseIdleAnimation 	( .Actor:Self .True )
+	Return
+	End
+}
+
+%AI: 
+%	if charged, use charge
+%	if state 0, choose charge/cannon with 50/50 either way
+%	if state 1, choose charge/cannon with 25/75 probability
+%	if state 2, choose charge/cannon with 75/25 probability
+
+%state 0: default (bow not out, not in state 2)
+%state 1: bow out, not in state 2
+%state 2: boo cannon hit but did less than 4 damage
+
+#new:Script $Script_TakeTurn_AtomicBoo
+{
+	Call GetActorVar (.Actor:Self 00000002 *Var[0] ) %always use the charged spook if already charged
+	If *Var[0] == 00000001
+		ExecWait $Script_Spook
+		Return
+	EndIf
+	Call GetActorVar (.Actor:Self 00000003 *Var[0] ) %check state
+	If *Var[0] != 00000002
+		Call     GetCurrentPartnerID 	( *Var[1] )
+		If  *Var[1]  ==  00000009 
+			Set *Var[0] 1
+		Else
+			Set *Var[0] 0
+		EndIf
+	EndIf
+	Call SetActorVar (.Actor:Self 00000003 *Var[0])
+	Switch (*Var[0])
+		Case == 00000000
+			Call     RandInt     	( 00000001 *Var[2] )
+			If *Var[2] == 1`
+				ExecWait $Script_ChargeSpook
+				Return
+			Else
+				ExecWait $Script_BooCannon
+				Return
+			EndIf
+		Case == 00000001
+			Call     RandInt     	( 00000003 *Var[2] )
+			If *Var[2] == 1`
+				ExecWait $Script_ChargeSpook
+				Return
+			Else
+				ExecWait $Script_BooCannon
+				Return
+			EndIf
+		Case == 00000002
+			Call     RandInt     	( 00000003 *Var[2] )
+			If *Var[2] == 1`
+				ExecWait $Script_BooCannon
+				Return
+			Else
+				ExecWait $Script_ChargeSpook
+				Return
+			EndIf
+	EndSwitch
+	Return
+	End
+}
+
+
+#new:Script $Script_ChargeSpook
+{
+	Call	UseIdleAnimation	( .Actor:Self .False )
+	Call	EnableIdleScript	( .Actor:Self 00000000 )
+	Call	SetAnimation		( .Actor:Self 00000001 .AnimRun )
+	Call	SetTargetActor		( .Actor:Self .Actor:Player )
+	Call	SetGoalToTarget ( .Actor:Self )
+	Call	GetGoalPos  		( .Actor:Self *Var[0] *Var[1] *Var[2] )
+	Add  *Var[0] 55`
+	Set  *Var[1] 13` 
+	Call	SetGoalPos  		( .Actor:Self *Var[0] *Var[1] *Var[2] )
+	Call	SetActorSpeed 	( .Actor:Self *Fixed[4.0] )
+	Call    FlyToGoal  	( .Actor:Self 00000000 00000001 .Easing:SinOut )
+	Wait	15`
+	Call    SetActorRotation 	( .Actor:Self 00000000 000000B4 00000000 )	
+	Call	SetAnimation		( .Actor:Self 00000001 .AnimHide )	
+	Call	AddGoalPos 	( .Actor:Self 25` 10` 00000000 )
+	Call	SetActorSpeed 	( .Actor:Self *Fixed[14.0] )
+	Call    FlyToGoal  	( .Actor:Self 00000000 00000001 .Easing:SinOut )
+	Call	SetIdleAnimations 	( .Actor:Self 00000001 $IdleAnimations_AtomicBoo_Charged )
+	Call    SetStatusTable ( .Actor:Self $StatusTable_AtomicBoo_Charged )
+	Call	SetActorVar (.Actor:Self 00000002 00000001 )
+	Call	SetGoalToHome (.Actor:Self)
+	Call	SetActorSpeed 	( .Actor:Self *Fixed[5.0] )
+	Wait	10`
+	Call    FlyToGoal  	( .Actor:Self 00000000 00000001 .Easing:SinOut )
+	Call    SetActorRotation 	( .Actor:Self 00000000 00000000 00000000 )
+	Call	EnableIdleScript 	( .Actor:Self 00000001 )
+	Call	UseIdleAnimation 	( .Actor:Self .True )
+	Return
+	End
+}
+
+#new:Script $Script_Spook
+{
+	Call	UseIdleAnimation	( .Actor:Self .False )
+	Call	EnableIdleScript	( .Actor:Self 00000000 )
+	Call	SetActorVar (.Actor:Self 00000002 00000000 )
+	Call	SetIdleAnimations 	( .Actor:Self 00000001 $IdleAnimations_AtomicBoo )
+	Call    SetStatusTable ( .Actor:Self $StatusTable_AtomicBoo )
+	Call	SetGoalToTarget 	( .Actor:Self )
+	Call	GetGoalPos  		( .Actor:Self *Var[0] *Var[1] *Var[2] )
+	Add  *Var[0] 55` %atomic boo is really big, so he needs a lot of space
+	Set  *Var[1] 13` 
+	Call	SetGoalPos  		( .Actor:Self *Var[0] *Var[1] *Var[2] )
+	Call	SetActorSpeed 	( .Actor:Self *Fixed[4.0] )
+	Call    FlyToGoal  	( .Actor:Self 00000000 00000001 .Easing:SinOut )
+	Wait 	48`
+	Thread
+		Wait	23`
+		Call	GetGoalPos  	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+		Sub  *Var[0] 10`
+		Call	SetGoalPos  	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+		Call	RunToGoal   	( .Actor:Self  3` .False )	
+	EndThread
+	Thread
+		Wait	24`
+		Call	MakeLerp	( 100` 130` 2` 00000000 )
+		Label	1
+			Call	UpdateLerp  	( )
+			DivF	*Var[0]  100`
+			Call	SetActorScale	( .Actor:Self *Var[0] *Var[0] *Var[0] )
+			Wait	1 
+		If  *Var[1]  ==  .True 
+			Goto	1
+		EndIf
+	EndThread
+	%wiggle a little bit
+	Thread
+		Wait	13`
+		Call	GetActorPos  	( .Actor:Self *VarD *VarE *VarF )
+		Sub  *VarD 1`
+		Call	SetActorPos   	( .Actor:Self  *VarD *VarE *VarF )	
+		Wait 	2`
+		Call	GetActorPos  	( .Actor:Self *VarD *VarE *VarF )
+		Add  *VarD 2`
+		Call	SetActorPos   	( .Actor:Self  *VarD *VarE *VarF )	
+		Wait 	2`
+		Call	GetActorPos  	( .Actor:Self *VarD *VarE *VarF )
+		Sub  *VarD 3`
+		Call	SetActorPos   	( .Actor:Self  *VarD *VarE *VarF )	
+		Wait 	2`
+		Call	GetActorPos  	( .Actor:Self *VarD *VarE *VarF )
+		Add  *VarD 4`
+		Call	SetActorPos   	( .Actor:Self  *VarD *VarE *VarF )	
+		Wait 	2`
+		Call	GetActorPos  	( .Actor:Self *VarD *VarE *VarF )
+		Sub  *VarD 5`
+		Call	SetActorPos   	( .Actor:Self  *VarD *VarE *VarF )	
+		Wait 	2`
+		Call	GetActorPos  	( .Actor:Self *VarD *VarE *VarF )
+		Add  *VarD 6`
+		Call	SetActorPos   	( .Actor:Self  *VarD *VarE *VarF )	
+		Wait 	2`
+		Call	GetActorPos  	( .Actor:Self *VarD *VarE *VarF )
+		Sub  *VarD 7`
+		Call	SetActorPos   	( .Actor:Self  *VarD *VarE *VarF )	
+	EndThread
+	Call	SetAnimation 	( .Actor:Self 00000001 .AnimSpook )
+	Wait	26`
+	Call	EnemyTestTarget ( .Actor:Self *Var[0] 10000000 00000000 *Var[1] 00000010 )
+	Switch  *Var[0] 
+		CaseOR   ==  00000006 
+		CaseOR   ==  00000005 
+			If  *Var[0] == 00000005 
+				Call	EnemyTestTarget ( .Actor:Self *Var[0] 80000000 00000000 00000000 00000000 )
+			EndIf
+			Goto	10
+		EndCaseGroup
+	EndSwitch
+	Call	PlaySoundAtActor	( .Actor:Self 00000291 )
+	Wait	2` %hope this gives the right timing
+	Call	EnemyDamageTarget 	( .Actor:Self *Var[0] 10000000 00000000 00000000 0000000A 00000020 ) %10 damage and hard to block
+	Label	10
+	Wait	8`
+	Call	SetAnimation 	( .Actor:Self 00000001 .AnimIdle )
+	Call     MakeLerp	( 130` 100` 6` 00000000 )
+	Label    2
+		Call	UpdateLerp  	( )
+		DivF	*Var[0]  100`
+		Call	SetActorScale	( .Actor:Self *Var[0] *Var[0] *Var[0] )
+		Wait     1 
+	If  *Var[1]  ==  .True 
+		Goto     2
+	EndIf
+	Wait	10`
+	Call	SetGoalToHome (.Actor:Self)
+	Call	SetActorSpeed 	( .Actor:Self *Fixed[5.0] )
+	Call    FlyToGoal  	( .Actor:Self 00000000 00000001 .Easing:SinOut )
+	Call	EnableIdleScript 	( .Actor:Self 00000001 )
+	Call	UseIdleAnimation 	( .Actor:Self .True )
+	Return
+	End
+}
+/%
+	Call	UseIdleAnimation	( .Actor:Self .False )
+	Call	EnableIdleScript	( .Actor:Self 00000000 )
+	Call	SetTargetActor		( .Actor:Self .Actor:Player )
+	Call	PlaySoundAtActor	( .Actor:Self .Sound:BooVanish )
+	SetF  *Var[0]  256`
+	Loop	16`
+		Sub  *Var[0]  16`
+		Call	SetPartAlpha	( .Actor:Self 00000000 *Var[0] )
+		Wait	1 
+	EndLoop
+	Call	SetAnimation		( .Actor:Self 00000001 .AnimHide )
+	Wait	20`
+	Call	UseBattleCamPreset 		( 00000013 )
+	Call	SetGoalToTarget	( .Actor:Self )
+	Call	GetGoalPos  		( .Actor:Self *Var[0] *Var[1] *Var[2] )
+	Add  *Var[0] 20` 
+	Set  *Var[1] 0` 
+	Call	SetBattleCamTarget 		( *Var[0] *Var[1] *Var[2] )
+	Call	SetBattleCamZoom  		( 0000015E )
+	Call	SetBattleCamOffsetZ 		( 0000002D )
+	Call	8024ECF8 			( FFFFFFFF 00000001 00000000 )
+	Call	MoveBattleCamOver 		( 00000014 )
+	Call	SetGoalToTarget 	( .Actor:Self )
+	Call	GetGoalPos  		( .Actor:Self *Var[0] *Var[1] *Var[2] )
+	Add  *Var[0] 25` 
+	Set  *Var[1] 10` 
+	Call	SetGoalPos  		( .Actor:Self *Var[0] *Var[1] *Var[2] )
+	Call	SetActorSpeed 	( .Actor:Self *Fixed[10.0] )
+	Call	RunToGoal   	( .Actor:Self 00000000 .False )	
+	Call	PlaySoundAtActor	( .Actor:Self .Sound:BooAppear )
+	SetF  *Var[0]  0`
+	Loop	16`
+		Add  *Var[0]  16`
+		Call	SetPartAlpha	( .Actor:Self 00000000 *Var[0] )
+		Wait	1
+	EndLoop
+	% randomized delay
+	Call	RandInt			( 48` *Var[0] )
+	Wait	*Var[0]
+	% lunge and attack (4 frame delay)
+	Thread
+		Wait	23`
+		Call	GetGoalPos  	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+		Sub  *Var[0] 10`
+		Call	SetGoalPos  	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+		Call	RunToGoal   	( .Actor:Self  3` .False )	
+	EndThread
+	Thread
+		Wait	24`
+		Call	MakeLerp	( 100` 150` 2` 00000000 )
+		Label	1
+			Call	UpdateLerp  	( )
+			DivF	*Var[0]  100`
+			Call	SetActorScale	( .Actor:Self *Var[0] *Var[0] *Var[0] )
+			Wait	1 
+		If  *Var[1]  ==  .True 
+			Goto	1
+		EndIf
+	EndThread
+	Call	SetAnimation 	( .Actor:Self 00000001 .AnimSpook )
+	Wait	27`
+	Call	EnemyTestTarget ( .Actor:Self *Var[0] 10000000 00000000 *Var[1] 00000010 )
+	Switch  *Var[0] 
+		CaseOR   ==  00000006 
+		CaseOR   ==  00000005 
+			If  *Var[0] == 00000005 
+				Call	EnemyTestTarget ( .Actor:Self *Var[0] 80000000 00000000 00000000 00000000 )
+			EndIf
+			Goto	10
+		EndCaseGroup
+	EndSwitch
+	Call	PlaySoundAtActor	( .Actor:Self 00000291 )
+	Wait	2 
+	Call	EnemyDamageTarget 	( .Actor:Self *Var[0] 10000000 00000000 00000000 0000000A 00000020 ) %3 damage and hard to block
+	Label	10
+	Wait	10`
+	Call	SetAnimation 	( .Actor:Self 00000001 .AnimIdle )
+	Call     MakeLerp	( 150` 100` 6` 00000000 )
+	Label    2
+		Call	UpdateLerp  	( )
+		DivF	*Var[0]  100`
+		Call	SetActorScale	( .Actor:Self *Var[0] *Var[0] *Var[0] )
+		Wait     1 
+	If  *Var[1]  ==  .True 
+		Goto     2
+	EndIf
+	Wait	10`
+	Call	UseBattleCamPreset 	( 00000002 )
+	Call	MoveBattleCamOver 	( 00000014 )
+	Call	SetGoalToHome 	( .Actor:Self )
+	Call	SetActorSpeed 	( .Actor:Self *Fixed[10.0] )
+	Call	RunToGoal   	( .Actor:Self 00000000 .False )	
+	Wait	20` 
+	Call	EnableIdleScript 	( .Actor:Self 00000001 )
+	Call	UseIdleAnimation 	( .Actor:Self .True )
+	Return
+	End
+%/
+
+#new:Vector3D $BooPos %position is no longer hardcoded, so I don't have to recalculate this every time I move atomic boo around
+{
+0` -1000` 0` %45` 65` 15`
+}
+
+%delta vector: -5, 45, 15
+
+#new:SpecialFormation $BooFormation
+{
+$SkyBoo	$BooPos 00000009 00000000 00000000 00000000 00000000 
+}
+
+%Problem: blocking in a certain combination will crash the game (particle overflow?)
+
+#new:Script $Script_BooCannon	
+{
+	Call     SetTargetActor ( .Actor:Self .Actor:Player )
+	Call     UseIdleAnimation 	( .Actor:Self .False )
+    Call     EnableIdleScript 	( .Actor:Self 00000000 )
+	Call     SetAnimation 		( .Actor:Self 00000001 00EF0001 )
+	Set *Flag[01] 1 %flag for entering state 2
+	Call	GetPlayerHP ( *Var[F] )
+	Loop 4`
+		Thread
+			Call     SummonEnemy		( $BooFormation 00000000 )
+			Set *Var[1] *Var[0]
+			Call	 GetActorPos		( .Actor:Self *Var[A] *Var[B] *Var[C] )
+			Sub *Var[A] 5`
+			Add *Var[B] 45`
+			Add *Var[C] 15`
+			Call	 SetActorPos 		( *Var[1] *Var[A] *Var[B] *Var[C] )
+			Call     UseIdleAnimation 	( *Var[1] .False )
+			Call     EnableIdleScript 	( *Var[1] 00000000 )
+			Call	 SetAnimation 		( *Var[1] 00000001 00950006 )
+			Call     SetTargetActor ( *Var[1] .Actor:Player )
+			Call     SetGoalToTarget 	( *Var[1] )
+			Call     SetActorSpeed     	( *Var[1] *Fixed[18.0] ) %12 -> 18
+			Call     SetActorJumpGravity 	( *Var[1] *Fixed[1.0] )
+			Call     JumpToGoal      	( *Var[1] 0000000E 00000000 00000001 00000000 ) %14 (dec 20) -> E (dec 14)
+			Wait 	 2`
+			Call	EnemyTestTarget ( .Actor:Self  *Var[5] 00000000 00000000 00000001 00000010 )
+			Switch  *Var[5] 
+				CaseOR  ==  00000006 
+				CaseOR  ==  00000005 % lucky, transparent
+				Set *Flag[01] 0
+				Goto 00000001
+			EndSwitch
+				Call     EnemyDamageTarget 	( *Var[1] *Var[8] 10000000 00000000 00000000 00000003 00000020 ) %3 each
+			Wait     1`
+			% Go off-screen
+			Label 00000001
+			Call     SetGoalPos		( *Var[1] -300` 0` 0` )
+			Call     SetActorJumpGravity 	( *Var[1] *Fixed[1.0] )
+			Call     JumpToGoal    		( *Var[1] 0000000E 00000000 00000001 00000000 ) %14 (dec 20) -> E (dec 14)
+			Wait     4
+			Call     RemoveActor 	( *Var[1] )
+		EndThread
+		Thread
+			Wait 	 10`
+			Call     SummonEnemy		( $BooFormation 00000000 )
+			Set *Var[2] *Var[0]
+			Call	 GetActorPos		( .Actor:Self *Var[A] *Var[B] *Var[C] )
+			Sub *Var[A] 5`
+			Add *Var[B] 45`
+			Add *Var[C] 15`
+			Call	 SetActorPos 		( *Var[2] *Var[A] *Var[B] *Var[C] )			
+			Call     UseIdleAnimation 	( *Var[2] .False )
+			Call     EnableIdleScript 	( *Var[2] 00000000 )
+			Call	 SetAnimation 		( *Var[2] 00000001 00950006 )
+			Call     SetTargetActor ( *Var[2] .Actor:Player )
+			Call     SetGoalToTarget 	( *Var[2] )
+			Call     SetActorSpeed     	( *Var[2] *Fixed[30.0] ) %20 -> 30
+			Call     SetActorJumpGravity 	( *Var[2] *Fixed[0.2] )
+			Call     JumpToGoal      	( *Var[2] 0000000E 00000000 00000001 00000000 ) %14 (dec 20) -> E (dec 14)
+			Wait 	 2`
+			Call	EnemyTestTarget ( .Actor:Self  *Var[5] 00000000 00000000 00000001 00000010 )
+			Switch  *Var[5] 
+				CaseOR  ==  00000006 
+				CaseOR  ==  00000005 % lucky, transparent
+				Set *Flag[01] 0
+				Goto 00000001
+			EndSwitch
+				Call     EnemyDamageTarget 	( *Var[2] *Var[8] 10000000 00000000 00000000 00000003 00000020 )
+			Wait     1`
+			% Go off-screen
+			Label 00000001
+			Call     SetGoalPos		( *Var[2] -300` 0` 0` )
+			Call     SetActorJumpGravity 	( *Var[2] *Fixed[1.0] )
+			Call     JumpToGoal    		( *Var[2] 0000000E 00000000 00000001 00000000 ) %14 (dec 20) -> E (dec 14)
+			Wait     4
+			Call     RemoveActor 	( *Var[2] )
+		EndThread
+		Wait 28` 
+	EndLoop
+	Call	GetPlayerHP ( *Var[E] )
+	Sub *Var[F] *Var[E] %find HP difference
+	If *Var[F] < 4 %took less than 4 damage
+		If *Flag[01] == 00000001
+			Call SetActorVar (.Actor:Self 00000003 00000002 )
+		EndIf
+	EndIf
+	Call     UseIdleAnimation 	( .Actor:Self .True )
+    Call     EnableIdleScript 	( .Actor:Self 00000001 )
+	Return
+	End
+}
+
+#new:Actor $SkyBoo
+{
+% stats
+[Index]        7b % no need for a index
+[Level]        12`b 
+[MaxHP]         7`b 
+[Coins]         2`b 
+[Flags]       00000000 
+[StatusTable] $StatusTable_AtomicBoo_Charged
+% ai
+[PartsCount]   1`s 
+[PartsTable] $PartsTable_Boo 
+[Script]      $Script_Init_Boo 
+% move effectiveness
+[Escape]       30`b 
+[Item]         50`b 
+[AirLift]      90`b 
+[Hurricane]    10`b % Bow's "Sp
+[SpinSmash]     0`b % weight (0-4)
+% ui positions
+[Size]         20`b  20`b % width height
+[HealthBar]     0`b   0`b % dx dyook" as well
+[UpAndAway]    95`b 
+[PowerBounce]  3`b 
+[StatusTurn]  -10`b  20`b % dx dy
+[StatusIcon]   10`b  20`b % dx dy
+}
+
+#new:PartsTable $PartsTable_Boo
+{
+00800000 01000000 001400FF $IdleAnimations_Boo $DefenseTable_AtomicBoo 00000000 00000000 00F60000 00000000 
+}
+
+#new:IdleAnimations $IdleAnimations_Boo
+{
+.Status:Normal    00950006
+.Status:Stone     00950006
+.Status:Sleep     00950006
+.Status:Poison    00950006
+.Status:Stop      00950006
+.Status:Static    00950006
+.Status:Paralyze  00950006
+.Status:Dizzy     00950006
+.Status:Fear  	  00950006
+.Status:End
+}
+
+#new:Script $Script_Init_Boo
+{
+	Call	BindTakeTurn	( .Actor:Self $Script_Idle_Boo )
+	Call	BindIdle		( .Actor:Self $Script_Idle_Boo )
+	Call	BindHandleEvent	( .Actor:Self $Script_Idle_Boo )
+	Return
+	End
+}
+	
+#new:Script $Script_Idle_Boo
+{
+Return
+End
+}

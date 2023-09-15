@@ -1,0 +1,94 @@
+%Internal sound exploration
+%80149AB8 controls a lot of sounds, more than the script version PlaySound
+%80149D5C is probably a better place to breakpoint into
+
+%2107 is also played for partner damage?
+%E9 = another damage sound (partners)
+
+%E1 = one damage sound
+
+%231 = block but not negated
+% + E1
+% + 208C
+
+%10F = small damage?
+% + E1
+
+%231 = block and is negated
+%	+10C
+%	+208C
+
+%sounds played when power bouncing kent c
+%	(he takes 0 damage, so the "immune" sound effect is here)
+%DC + 10C + 15C + E9 + 235 + 160
+%DC + 10C + 15C + E9 + 236 + 160
+%DC + 10C + 15C + E9 + 237 + 160
+%DC + 10C + 	  E9 + 238 + 7F
+
+%80277A38 is where the blocking sound effect is played (231)
+%	at least one of them
+
+%10C + 3E2 + 208C = negated, but didn't block (i.e. it would do 0 damage anyway)
+
+%Mario death sound: 371
+%Mario falls to ground sound: 3FB
+
+%Immune sound effect: 10C 
+%	*note that other sound effects often play in conjunction with it
+
+
+%Music stuff
+%800B0F10 + C = current music? (set by StartBossBattle)
+
+%GS codes info
+%sets battle music to arbitrary music
+%80159B0F 00xx
+
+%max HP = 
+%80 10f292 0063
+%first section = code type
+%second section = memory offset (80000000 + ???)
+%third section = value to set to
+
+%Change normal battle music for final area
+%But I don't have good music for it yet :(
+%placeholder is miniboss theme
+/%
+% 000E168C --> 8014AF8C
+#new:Function $Function_bgm_set_battle_song
+{
+    0:  LA        V0, 80159AF0
+    8:  SW        A0, 1C (V0)
+    C:  JR        RA
+   10:  SW        A1, 20 (V0)
+}
+%/
+
+%well I edited the song enum so I don't need this
+%	.Song:TempleTheme
+%#define .TempleNormalMusic .Song:CrystalPalace
+%#export .TempleNormalMusic
+
+
+
+#define .TempleBattleMusic 03
+
+@Hook E168C
+{
+	PUSH	S0, S1
+	LI		S0, 1E
+	LAB		V0, 800740AB	%Area byte
+	BNE		V0, S0, .end
+	NOP
+	LI		S0, 2
+	BNE		A0, S0, .end	%Probably unneccessary check (*make sure this replaces the regular battle theme only?)
+	NOP
+	LI		A0, .TempleBattleMusic
+	.end
+	POP		S0, S1
+	LA      V0, 80159AF0
+	J		8014AF94
+	NOP
+}
+
+%Battle end song is set around 8025E298

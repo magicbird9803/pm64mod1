@@ -1,0 +1,84 @@
+%all badge thingy
+
+#export:Function $Function_EquipAllBadges
+{
+	PUSH	S0, S1, S2, S3
+	LI		S0, 8010F344
+	ORI		S1, R0, 0
+	%delete everything
+	.looptop
+	SH		R0, 0 (S0)
+	ADDI	S1, S1, 1
+	ADDI	S0, S0, 2
+	SLTI	S2, S1, 80
+	BNE		S2, R0, .looptop
+	NOP
+	%now add all badges back
+	LI		S0, 8010F344
+	ORI		S1, R0, E0
+	.looptop2
+	SH		S1, 0 (S0)
+	ADDI	S1, S1, 1
+	ADDI	S0, S0, 2
+	SLTI	S2, S1, 156					%end of first block + 1
+	BNE		S2, R0, .looptop2
+	NOP	
+	%Second loop
+	ORI		S1, R0, .Item:FPPlusTemplate
+	ADDI	S1, S1, 1
+	.looptop3
+	SH		S1, 0 (S0)
+	ADDI	S1, S1, 1
+	ADDI	S0, S0, 2
+	SLTI	S2, S1, 178					%end of second block + 1
+	BNE		S2, R0, .looptop3
+	NOP		
+	POP		S0, S1, S2, S3
+	JR		RA
+	ORI		V0, R0, 2
+}
+
+#export:Function $Function_CountBadges
+{
+	PUSH	  RA, S1, S2, S3
+	COPY	  S2, A0
+	LW        V0, C (S2)
+	COPY	  S1, V0
+	JAL		  $CountBadges
+	NOP
+	COPY	  A0, V0
+	LW        V0, C (S2)
+	COPY	  A2, A0
+	COPY	  A0, S2
+	JAL       ~Func:set_variable
+	LW        A1, 0 (S1) 
+	POP 	  RA, S1, S2, S3
+	JR		  RA
+	ORI 	  V0, R0, 2
+}
+
+%easy to count, just count 0000
+#export:Function $CountBadges
+{
+	PUSH	RA, S0, S1, S2, S3, T0
+	LI		S0, 8010F344
+	%End = (0x80 * 0x2) = 8010F444
+	LI		S3, 0
+	LI		S1, 0
+	.looptop
+	ADD		S2, S0, S1
+	LHU		S2, 0 (S2)
+	BEQ		S2, R0, .noadd
+	NOP
+	ADDI	S3, S3, 1
+	.noadd
+	ADDI	S1, S1, 2
+	SLTI	T0, S1, 100
+	BNE		T0, R0, .looptop
+	NOP
+	.end
+	COPY	V0, S3
+	POP		RA, S0, S1, S2, S3, T0
+	JR		RA
+	NOP
+}

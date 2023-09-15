@@ -1,0 +1,13 @@
+$Script_Main#Script_Main#0#80240000#C8
+$Start#Unknown#0#80240000#0
+$MapTattle#String#C8#802400C8#6C
+$Header#Header#134#80240134#40
+$Script_Entry1#Script#174#80240174#40
+$Script_Entry2#Script#1B4#802401B4#40
+$Script_MakeEntities#Script#1F4#802401F4#38
+$Script_MakeExits#Script#22C#8024022C#38
+$EntryList#EntryList#264#80240264#20
+$Function_GetTattle#Function#284#80240284#14
+$ASCII_"arn_21"_Literal#ASCII#298#80240298#C
+$ASCII_"sbk_03"_Literal#ASCII#2A4#802402A4#C
+$End#Unknown#2B0#802402B0#27D50

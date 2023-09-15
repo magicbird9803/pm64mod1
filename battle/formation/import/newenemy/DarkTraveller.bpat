@@ -1,0 +1,840 @@
+%Dark traveller
+
+%Has several teleporting attacks
+
+%Land attack (versions for jumping left and right)
+%Shell attack (versions for left and right)
+
+%Creates some solid voids that just prevent you from using certain moves
+%Problem: the solid void in front of him doesn't block hammer moves (*On the other hand, the void gets blocked by the dark traveller)
+
+/%
+	100 hp, 10 atk, 3 def
+	Teleports in front of you or behind to attack (8 damage)
+	Home position starts on the ground, but partway through the fight he becomes airborne
+		(Actor flag 200)
+	His home position changes, and eventually, he creates "Solid Void"s that just take up space and prevent you from attacking the main guy with certain moves
+		Solid voids have actor flags 00044004
+	
+	Position and void position over time
+		100% hp
+			Nothing unusual (teleport to grounded positions 0,1,2,3)
+		90% hp
+			Spawn a solid void in front of him (teleport to ground positions 1,2,3 and put solid void in any position in front of that)
+		75% hp
+			Spawn solid voids in front and above him (teleport to ground positions 1,2,3 and put solid void in front and above)
+		50% hp
+			Airborne with solid voids in front and above (with some extraneous ones)
+%/
+
+
+#new:DefenseTable $DefenseTable_Normal
+{
+.Element:Normal 00000002
+.Element:Ice	00000063 %Same as original blue ninjakoopa
+.Element:End
+}
+
+#new:StatusTable $StatusTable_DarkTraveller %statusing him is hard but not impossible
+{
+.Status:Normal            0`	   %but if you're coming here in a lategame setting, you probably don't need to status him anyway
+.Status:Default          0`
+.Status:Sleep             0`
+.Status:Poison            0`
+.Status:Frozen            0`
+.Status:Dizzy             0`
+.Status:Fear          	  0`
+.Status:Static            0`
+.Status:Paralyze          0`
+.Status:Shrink            0`
+.Status:Stop              0`
+.Status:DefaultTurnMod   0`
+.Status:SleepTurnMod     -1`
+.Status:PoisonTurnMod     0`
+.Status:FrozenTurnMod     0`
+.Status:DizzyTurnMod     -1`
+.Status:FearTurnMod   0`
+.Status:StaticTurnMod     0`
+.Status:ParalyzeTurnMod   0`
+.Status:ShrinkTurnMod    -1`
+.Status:StopTurnMod      -1`
+.Status:End
+}
+
+#new:IntTable $IntTable_8022DD30
+{
+00000009 00000010 00000016 0000001A 0000001E 00000020 00000021 00000020 
+0000001E 0000001A 00000016 00000010 00000009 00000000 00000004 00000006 
+00000007 00000006 00000004 00000000 00000002 00000000 
+}
+
+#new:Actor $DarkTraveller
+{
+% stats
+[Index]        ACb 
+[Level]        70`b
+[MaxHP]       120`b 
+[Coins]         0`b 
+[Flags]       00000000 
+[StatusTable] $StatusTable_DarkTraveller
+% ai
+[PartsCount]   1`s 
+[PartsTable] $PartsTable_DarkTraveller 
+[Script]      $Script_Init_DarkTraveller
+% move effectiveness
+[Escape]         0`b 
+[Item]           0`b 
+[AirLift]        0`b 
+[Hurricane]      0`b % Bow's "Spook" as well
+[UpAndAway]      0`b 
+[PowerBounce]   3`b 
+[SpinSmash]     0`b % weight (0-4)
+% ui positions
+[Size]         38`b  42`b % width height
+[HealthBar]     0`b   0`b % dx dy
+[StatusTurn]  -10`b  20`b % dx dy
+[StatusIcon]   10`b  20`b % dx dy
+}
+
+#new:PartsTable $PartsTable_DarkTraveller
+{
+00800000 01000000 FB2400FF $IdleAnimations_DarkTraveller $DefenseTable_Normal 00000000 00000000 00000000 00000000 	%Remove flip-ability
+}
+
+#new:IdleAnimations $IdleAnimations_DarkTraveller
+{
+.Status:Normal    00660E04
+.Status:Stone     00660E00
+.Status:Sleep     00660E15
+.Status:Poison    00660E00
+.Status:Stop      00660E00
+.Status:Static    00660E00
+.Status:Paralyze  00660E00
+.Status:Paralyze  00660E00
+.Status:Dizzy     00660E18
+.Status:Dizzy     00660E18
+.Status:End
+}
+
+#new:Script $Script_Init_DarkTraveller
+{
+	Call	BindTakeTurn	( .Actor:Self $Script_TakeTurn_DarkTraveller )
+	Call	BindHandleEvent	( .Actor:Self $Script_HandleEvent_DarkTraveller )
+	Call	SetActorVar		( .Actor:Self 00000001 00000000 )
+	Call	SetActorVar		( .Actor:Self 00000002 00000000 )
+	Call	SetActorVar		( .Actor:Self 00000003 00000000 )	%Solid void 1
+	Call	SetActorVar		( .Actor:Self 00000004 00000000 )	%Solid void 2
+	Call	SetActorVar		( .Actor:Self 00000005 00000000 )	%Solid void 3
+	Call	SetActorVar		( .Actor:Self 00000006 00000000 )	%Solid void 4
+	Call	 $SetAuraToDark ( )
+	Call     AddActorDecoration 	( .Actor:Self 00000001 00000000 00000001 )	%dark fire now (was gold but I used special functions)
+	Call     ModifyActorDecoration 	( .Actor:Self 00000001 00000000 67` 67` 00000000 00000000 )	
+	Return
+	End
+}
+	
+#new:Script $Script_HandleEvent_DarkTraveller
+{
+	Call	 EnableActorBlur ( .Actor:Self .False )		%fix crashes
+	Call     UseIdleAnimation 	( .Actor:Self .False )
+	Call     EnableIdleScript 	( .Actor:Self .False )
+	Call     SetActorYaw 	( .Actor:Self 00000000 )
+	Call     GetLastEvent 	( .Actor:Self *Var[0] )
+	Switch   *Var[0] 
+		CaseOR   ==  .Event:HitCombo
+		CaseOR   ==  .Event:Hit
+			SetConst *Var[0] 00000001 
+			SetConst *Var[1] 00660E0B 
+			ExecWait DoNormalHit 
+		EndCaseGroup
+		Case     ==  .Event:BurnHit
+			SetConst *Var[0] 00000001 
+			SetConst *Var[1] 00660E0E 
+			SetConst *Var[2] 00660E0F 
+			ExecWait DoBurnHit 
+		Case     ==  .Event:BurnDeath
+			SetConst *Var[0] 00000001 
+			SetConst *Var[1] 00660E0E 
+			SetConst *Var[2] 00660E0F 
+			ExecWait DoBurnHit 
+			ExecWait $DeleteSolidVoids
+			SetConst *Var[0] 00000001 
+			SetConst *Var[1] 00660E0F 
+			ExecWait DoDeath 
+			Return
+		Case     ==  .Event:SpinSmashHit
+			SetConst *Var[0] 00000001 
+			SetConst *Var[1] 00660E0B 
+			ExecWait 8029B998 
+		Case     ==  .Event:SpinSmashDeath
+			SetConst *Var[0] 00000001 
+			SetConst *Var[1] 00660E0B 
+			ExecWait 8029B998 
+			ExecWait $DeleteSolidVoids
+			SetConst *Var[0] 00000001 
+			SetConst *Var[1] 00660E0B 
+			ExecWait DoDeath 
+			Return
+		Case     ==  .Event:ShockHit
+			SetConst *Var[0] 00000001 
+			SetConst *Var[1] 00660E0B 
+			ExecWait DoShockHit 
+		Case     ==  .Event:ShockDeath
+			SetConst *Var[0] 00000001 
+			SetConst *Var[1] 00660E0B 
+			ExecWait DoShockHit 
+			ExecWait $DeleteSolidVoids
+			SetConst *Var[0] 00000001 
+			SetConst *Var[1] 00660E0B 
+			ExecWait DoDeath 
+			Return
+		CaseOR   ==  00000017
+		CaseOR   ==  .Event:Immune
+			Call     GetActorVar 	( .Actor:Self 00000001 *Var[0] )
+			If       *Var[0] ==  00000000 
+				SetConst *Var[0] 00000001 
+				SetConst *Var[1] 00660E08 
+				ExecWait DoImmune 
+				Call     GetStatusFlags ( .Actor:Self *Var[0] )
+				If       *Var[0] ==  00000000 
+					Call     SetAnimation 	( .Actor:Self 00000001 00660E09 )
+					Wait     0000000A 
+				EndIf
+			Else
+				SetConst *Var[0] 00000001 
+				SetConst *Var[1] 00660E0C 
+				ExecWait DoImmune 
+			EndIf
+		EndCaseGroup
+		Case     ==  .Event:Death
+			SetConst *Var[0] 00000001 
+			SetConst *Var[1] 00660E0B 
+			ExecWait DoNormalHit 
+			ExecWait $DeleteSolidVoids
+			SetConst *Var[0] 00000001 
+			SetConst *Var[1] 00660E0B 
+			ExecWait DoDeath 
+			Return
+		Case     ==  .Event:RecoverStatus
+			Call     GetActorVar 	( .Actor:Self 00000001 *Var[0] )
+			If       *Var[0] ==  00000000 
+				SetConst *Var[0] 00000001 
+				SetConst *Var[1] 00660E04 
+				ExecWait DoRecover 
+			EndIf
+	EndSwitch
+	Call     EnableIdleScript 	( .Actor:Self .True )
+	Call     UseIdleAnimation 	( .Actor:Self .True )
+	Return
+	End
+}
+
+#new:Script $DeleteSolidVoids
+{
+	Call  GetActorVar 		( .Actor:Self 00000003 *VarF )
+	If *VarF != 00000000
+		Call	RemoveActor ( *VarF )
+	EndIf
+	Call  GetActorVar 		( .Actor:Self 00000004 *VarF )
+	If *VarF != 00000000
+		Call	RemoveActor ( *VarF )
+	EndIf
+	Call  GetActorVar 		( .Actor:Self 00000005 *VarF )
+	If *VarF != 00000000
+		Call	RemoveActor ( *VarF )
+	EndIf
+	Call  GetActorVar 		( .Actor:Self 00000006 *VarF )
+	If *VarF != 00000000
+		Call	RemoveActor ( *VarF )
+	EndIf
+	Return
+	End
+}
+
+%Teleport home and set up actor flags and solid voids
+%I've split this into several scripts to make this easier to understand
+#new:Script $Script_WarpHome_DarkTraveller
+{
+	ExecWait $Script_TrySummonSolidVoids
+	Call	GetActorHP ( .Actor:Self *Var[1] )
+	Call	GetEnemyMaxHP ( .Actor:Self *Var[2] )
+	Mul *Var[1] 100`
+	Div *Var[1] *Var[2]
+	Switch *Var1
+		Case < 50`	%4 solid voids, dark traveller is airborne at positions 5, 6 or 7	Solid void at higher position (9, 10, 11), solid void in front (4,5,6 depending on chosen index), 2 solid voids elsewhere
+			Call	RandInt ( 2` *VarA )
+			Add *VarA 5
+			Set *Var6 *VarA
+			ExecWait $Script_GotoIndex
+			ExecWait $Script_SmokeEffects
+			%
+			%Call	GetActorPos			( .Actor:Self *VarC *VarD *VarE )
+			%Position the first solid void in front of him
+			Set *Var7 *Var6
+			Sub *Var7 5
+			Call	RandInt ( *Var7 *Var9 )
+			Set *VarA *Var9
+			Add *VarA 4
+			Call	GetActorVar			( .Actor:Self 00000003 *Var0 )
+			Call	SetGoalToIndex  	( *Var0 *VarA )	
+			Call	GetGoalPos			( *Var0 *Var7 *Var8 *Var9 )
+			Call	SetActorPos			( *Var0 *Var7 *Var8 *Var9 )
+			Call	ForceHomePos 		( *Var0 *Var7 *Var8 *Var9 )
+			Call	HPBarToHome    		( *Var0 )
+			%
+			%Position the second one above him
+			Set		*VarA *Var6
+			Add 	*VarA 4
+			Call	GetActorVar			( .Actor:Self 00000004 *Var0 )
+			Call	GetActorPos			( .Actor:Self *Var7 *Var8 *Var9 )
+			Add *Var8 50`
+			Call	SetActorPos			( *Var0 *Var7 *Var8 *Var9 )
+			Call	ForceHomePos 		( *Var0 *Var7 *Var8 *Var9 )
+			Call	HPBarToHome    		( *Var0 )			
+			%
+			%Position a third one at a random spot below him
+			Call	RandInt ( 3` *VarA )
+			Call	GetActorVar			( .Actor:Self 00000005 *Var0 )
+			Call	SetGoalToIndex  	( *Var0 *VarA )	
+			Call	GetGoalPos			( *Var0 *Var7 *Var8 *Var9 )
+			Call	SetActorPos			( *Var0 *Var7 *Var8 *Var9 )
+			Call	ForceHomePos 		( *Var0 *Var7 *Var8 *Var9 )
+			Call	HPBarToHome    		( *Var0 )					
+			%
+			%Position a fourth one at a random spot high up
+			Call	RandInt ( 3` *VarA )
+			Add 	*VarA 12`
+			Call	GetActorVar			( .Actor:Self 00000006 *Var0 )
+			Call	SetGoalToIndex  	( *Var0 *VarA )	
+			Call	GetGoalPos			( *Var0 *Var7 *Var8 *Var9 )
+			Call	SetActorPos			( *Var0 *Var7 *Var8 *Var9 )
+			Call	ForceHomePos 		( *Var0 *Var7 *Var8 *Var9 )
+			Call	HPBarToHome    		( *Var0 )					
+		Case < 75`	%3 solid voids, dark traveller is grounded at positions 1, 2 or 3	Solid void at higher position (5, 6, 7), solid void in front (0,1,2 depending on chosen index)
+			Call	RandInt ( 2` *VarA )
+			Add *VarA 1
+			Set *Var6 *VarA
+			ExecWait $Script_GotoIndex
+			ExecWait $Script_SmokeEffects
+			%
+			%Position the first solid void in front of him
+			Sub *VarA 1
+			Call	RandInt ( *VarA *Var9 )
+			Set *VarA *Var9
+			Call	GetActorVar			( .Actor:Self 00000003 *Var0 )
+			Call	SetGoalToIndex  	( *Var0 *VarA )	
+			Call	GetGoalPos			( *Var0 *Var7 *Var8 *Var9 )
+			Call	SetActorPos			( *Var0 *Var7 *Var8 *Var9 )
+			Call	ForceHomePos 		( *Var0 *Var7 *Var8 *Var9 )
+			Call	HPBarToHome    		( *Var0 )
+			%
+			%Position the second one above him
+			Set		*VarA *Var6
+			Add 	*VarA 4
+			Call	GetActorVar			( .Actor:Self 00000004 *Var0 )
+			Call	GetActorPos			( .Actor:Self *Var7 *Var8 *Var9 )
+			Add *Var8 50`
+			Call	SetActorPos			( *Var0 *Var7 *Var8 *Var9 )
+			Call	ForceHomePos 		( *Var0 *Var7 *Var8 *Var9 )
+			Call	HPBarToHome    		( *Var0 )			
+			%
+			%Position a third one at a random spot really high up
+			Call	RandInt ( 3` *VarA )
+			Add *VarA 8
+			Call	GetActorVar			( .Actor:Self 00000005 *Var0 )
+			Call	SetGoalToIndex  	( *Var0 *VarA )	
+			Call	GetGoalPos			( *Var0 *Var7 *Var8 *Var9 )
+			Call	SetActorPos			( *Var0 *Var7 *Var8 *Var9 )
+			Call	ForceHomePos 		( *Var0 *Var7 *Var8 *Var9 )
+			Call	HPBarToHome    		( *Var0 )											
+		Case < 90`	%1 solid void, dark traveller grounded at positions 1,2,3, solid void at positions 0,1,2
+			Call	RandInt ( 2` *VarA )
+			Add *VarA 1
+			ExecWait $Script_GotoIndex
+			ExecWait $Script_SmokeEffects
+			%
+			%Position the first solid void
+			Sub *VarA 1
+			Call	RandInt ( *VarA *Var9 )
+			Set *VarA *Var9
+			Call	GetActorVar			( .Actor:Self 00000003 *Var0 )
+			Call	SetGoalToIndex  	( *Var0 *VarA )	
+			Call	GetGoalPos			( *Var0 *Var7 *Var8 *Var9 )
+			Call	SetActorPos			( *Var0 *Var7 *Var8 *Var9 )
+			Call	ForceHomePos 		( *Var0 *Var7 *Var8 *Var9 )
+			Call	HPBarToHome    		( *Var0 )
+		Default		%No solid voids, dark traveller grounded at positions 0,1,2,3		
+			Call	RandInt ( 3` *VarA )
+			ExecWait $Script_GotoIndex
+			ExecWait $Script_SmokeEffects
+	EndSwitch
+	Return
+	End
+}
+
+#new:Script $Script_SmokeEffects
+{
+	Call	 EnableActorBlur ( .Actor:Self .False )		%fix crashes?
+	Thread 
+		Call	GetActorPos		( .Actor:Self *Var[0] *Var[1] *Var[2] )
+		Add		*Var[1]  3 
+		Loop	3 
+			Call	PlayEffect	( 00000001 *Var[0] *Var[1] *Var[2] 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+			Wait	00000003 
+		EndLoop
+	EndThread
+	Return
+	End
+}
+
+%VarA = target index
+#new:Script $Script_GotoIndex
+{
+	Call	SetGoalToIndex  	( .Actor:Self *VarA )	
+	Call	GetGoalPos			( .Actor:Self *Var7 *Var8 *Var9 )
+	Call	SetActorPos			( .Actor:Self *Var7 *Var8 *Var9 )
+	Call	ForceHomePos 		( .Actor:Self *Var7 *Var8 *Var9 )
+	Call	HPBarToHome    		( .Actor:Self )
+	If *VarA > 3`
+		Call	SetActorFlagBits 	( .Actor:Self 00000200 .True )
+	EndIf
+	Return
+	End
+}
+
+%Solid void IDs are stored in actor vars 3,4,5,6
+#new:Script $Script_TrySummonSolidVoids
+{
+	Call	GetActorHP ( .Actor:Self *Var[1] )
+	Call	GetEnemyMaxHP ( .Actor:Self *Var[2] )
+	Mul *Var[1] 100`
+	Div *Var[1] *Var[2]
+	Switch *Var1
+		Case < 50`	%4 solid voids
+			Call  GetActorVar 		( .Actor:Self 00000003 *VarF )
+			If *VarF == 00000000
+				Call  SummonEnemy       ( $SpecialFormation_SolidVoid 00000000 )
+				Call  SetActorVar 		( .Actor:Self 00000003 *Var0 )
+			EndIf
+			Call  GetActorVar 		( .Actor:Self 00000004 *VarF )
+			If *VarF == 00000000
+				Call  SummonEnemy       ( $SpecialFormation_SolidVoid 00000000 )
+				Call  SetActorVar 		( .Actor:Self 00000004 *Var0 )
+			EndIf
+			Call  GetActorVar 		( .Actor:Self 00000005 *VarF )
+			If *VarF == 00000000
+				Call  SummonEnemy       ( $SpecialFormation_SolidVoid 00000000 )
+				Call  SetActorVar 		( .Actor:Self 00000005 *Var0 )
+			EndIf
+			Call  GetActorVar 		( .Actor:Self 00000006 *VarF )
+			If *VarF == 00000000
+				Call  SummonEnemy       ( $SpecialFormation_SolidVoid 00000000 )
+				Call  SetActorVar 		( .Actor:Self 00000006 *Var0 )
+			EndIf
+		Case < 75`	%3 solid voids
+			Call  GetActorVar 		( .Actor:Self 00000003 *VarF )
+			If *VarF == 00000000
+				Call  SummonEnemy       ( $SpecialFormation_SolidVoid 00000000 )
+				Call  SetActorVar 		( .Actor:Self 00000003 *Var0 )
+			EndIf
+			Call  GetActorVar 		( .Actor:Self 00000004 *VarF )
+			If *VarF == 00000000
+				Call  SummonEnemy       ( $SpecialFormation_SolidVoid 00000000 )
+				Call  SetActorVar 		( .Actor:Self 00000004 *Var0 )
+			EndIf
+			Call  GetActorVar 		( .Actor:Self 00000005 *VarF )
+			If *VarF == 00000000
+				Call  SummonEnemy       ( $SpecialFormation_SolidVoid 00000000 )
+				Call  SetActorVar 		( .Actor:Self 00000005 *Var0 )
+			EndIf
+		Case < 90`	%1 solid void
+			Call  GetActorVar 		( .Actor:Self 00000003 *VarF )
+			If *VarF == 00000000
+				Call  SummonEnemy       ( $SpecialFormation_SolidVoid 00000000 )
+				Call  SetActorVar 		( .Actor:Self 00000003 *Var0 )
+			EndIf
+		Default		%No solid voids
+	EndSwitch
+	Return
+	End
+}
+
+#new:Script $Script_TakeTurn_DarkTraveller
+{
+	Call	RandInt	( 2` *Var[0] )
+	If *Var0 == 1`
+		ExecWait $Script_Land_DarkTraveller
+	Else
+		ExecWait $Script_ShellToss_DarkTraveller
+	EndIf
+	%really want to put some time pressure on you to beat this guy fast
+	%otherwise he's not much of a threat
+	Thread
+		Call  8026BF48      ( 00000001 )
+		Call  BoostAttack   ( .Actor:Self 00000001 )	
+		Call  8026BF48      ( 00000000 )
+	EndThread
+	Return
+	End
+}
+
+%Creates some effects
+#new:Function $Function_80218438
+{
+    0:  ADDIU		SP, SP, FFD8
+    4:  SW			S1, 14 (SP)
+    8:  COPY		S1, A0
+    C:  SW			RA, 20 (SP)
+   10:  SW			S3, 1C (SP)
+   14:  SW			S2, 18 (SP)
+   18:  SW			S0, 10 (SP)
+   1C:  LW			S0, C (S1)
+   20:  LW			A1, 0 (S0)
+   24:  JAL			~Func:get_variable
+   28:  ADDIU		S0, S0, 4
+   2C:  LW			A1, 0 (S0)
+   30:  ADDIU		S0, S0, 4
+   34:  COPY		A0, S1
+   38:  JAL			~Func:get_variable
+   3C:  COPY		S3, V0
+   40:  LW			A1, 0 (S0)
+   44:  ADDIU		S0, S0, 4
+   48:  COPY		A0, S1
+   4C:  JAL			~Func:get_variable
+   50:  COPY		S2, V0
+   54:  COPY		A0, S1
+   58:  LW			A1, 0 (S0)
+   5C:  JAL			~Func:get_variable
+   60:  COPY		S0, V0
+   64:  ADDIU		A0, R0, 6
+   68:  LIA			A1, $End[80]
+   70:  MTC1		S3, F0
+   74:  NOP
+   78:  CVT.S.W		F0, F0
+   7C:  SWC1		F0, 28 (A1)
+   80:  MTC1		S2, F0
+   84:  NOP
+   88:  CVT.S.W		F0, F0
+   8C:  COPY		A3, V0
+   90:  LIF			F2, 10.0
+   98:  LUI			A2, 3F80
+   9C:  SUB.S		F0, F0, F2
+   A0:  MTC1		S0, F2
+   A4:  NOP
+   A8:  CVT.S.W		F2, F2
+   AC:  SWC1		F2, 30 (A1)
+   B0:  JAL			800712D0
+   B4:  SWC1		F0, 2C (A1)
+   B8:  LW			RA, 20 (SP)
+   BC:  LW			S3, 1C (SP)
+   C0:  LW			S2, 18 (SP)
+   C4:  LW			S1, 14 (SP)
+   C8:  LW			S0, 10 (SP)
+   CC:  ADDIU		V0, R0, 2
+   D0:  JR			RA
+   D4:  ADDIU		SP, SP, 28
+}
+
+%spliced from one of the koopa bros' scripts
+#new:Script $Script_ShellToss_DarkTraveller
+{
+						Call     UseIdleAnimation 	( .Actor:Self .False )
+						Call     EnableIdleScript 	( .Actor:Self .False )
+						Call	RandInt ( 2` *VarD )
+						If *VarD == 1`
+							Call GetActorPos 	( .Actor:Player *Var5 *Var6 *Var7 )
+							Add *Var5 100`
+							Call SetActorPos 	( .Actor:Self *Var5 *Var6 *Var7 )
+							ExecWait $Script_SmokeEffects
+						Else
+							Call GetActorPos 	( .Actor:Player *Var5 *Var6 *Var7 )
+							Sub *Var5 100`
+							Call SetActorPos 	( .Actor:Self *Var5 *Var6 *Var7 )
+							ExecWait $Script_SmokeEffects
+						EndIf
+ 1ED8:  				Call     GetActorPos  	( .Actor:Player *Var[0] *Var[1] *Var[2] )
+ 1EF4:  				Set  *Var[2]  0000000F 
+ 1F04:  				Call     SetGoalPos 	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+ 1F20:  				Call     SetAnimation 	( .Actor:Self 00000001 00660E03 )
+ %1F38:  				Call     RunToGoal   	( .Actor:Self 0000000A .False )
+ 1F50:  				Call     SetAnimation 	( .Actor:Self 00000001 00660E1F )
+ 1F68:  				Wait     0000000A 
+ 1F74:  				Call     PlaySoundAtActor 	( .Actor:Self 00000353 )
+ 1F88:  				Call     SetAnimation 	( .Actor:Self 00000001 00660E07 )
+ 1FA0:  				Call     GetActorPos 	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+ 1FBC:  				Call     $Function_80218438 ( *Var[0] *Var[1] *Var[2] 0000001E )
+ 1FD8:  				Wait     0000001E 
+ 1FE4:  				Thread
+ 1FEC:  					Call     EnemyTestTarget ( .Actor:Self *Var[0] 08000000 00000000 00000000 00000010 )
+ 2010:  					Switch  *Var[0] 
+ 201C:  						Case  ==  .HitResult:Lucky % 5
+ 2028:  							Wait     00000014 
+ 2034:  							Call     EnemyTestTarget ( .Actor:Self *Var[0] 80000000 00000000 00000000 00000000 )
+ 2058:  							Return
+ 2060:  						Case  ==  .HitResult:Miss % 6
+ 206C:  							Return
+ 2074:  					EndSwitch
+ 207C:  					Label    00000000 
+ 2088:  					Call     GetActorPos 	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+ 20A4:  					Call     GetActorPos 	( .Actor:Player *Var[3] *Var[4] *Var[5] )
+							If *VarD == 1
+ 20C0:  						If  *Var[0]  >  *Var[3] 
+ 20D0:  							Wait     00000001 
+ 20DC:  							Goto     00000000 
+ 20E8:  						EndIf
+							Else
+								If  *Var[0]  <  *Var[3] 
+									Wait     00000001 
+									Goto     00000000 
+								EndIf
+							EndIf
+ 20F0:  					Call     SetTargetActor ( .Actor:Self .Actor:Player )
+ 2104:  					Call     SetGoalToTarget 	( .Actor:Self )
+ 2114:  					Call     EnemyDamageTarget 	( .Actor:Self *Var[0] 00000000 0000FFFF 00000000 0000000A 00000020 )
+ 213C:  				EndThread
+ 2144:  				Call     UseBattleCamPreset 	( 00000002 )
+ 2154:  				Call     PlaySoundAtActor 	( .Actor:Self 0000037C )
+ 2168:  				Call     SetActorSounds ( FFFFFF81 00000000 00000000 00000000 )
+ 2184:  				Call     EnableActorBlur 	( .Actor:Self 00000001 )
+ 2198:  				Call     SetActorSpeed 	( .Actor:Self *Fixed[16.0] )
+ 21AC:  				Call     GetActorPos 	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+						If *VarD == 1
+							Call     SetGoalPos 	( .Actor:Self FFFFFF60 *Var[1] *Var[2] )
+						Else
+ 21C8:  					Call     SetGoalPos 	( .Actor:Self 40` *Var[1] *Var[2] )
+						EndIf
+ 21E4:  				Call     RunToGoal   	( .Actor:Self 00000000 .False )
+ 21FC:  				Call     8026F838 ( FFFFFF81 00000000 )
+ 2210:  				Call     EnableActorBlur 	( .Actor:Self 00000000 )
+						/%
+ 2224:  				Thread
+ 222C:  					Call     SetPartRotationOffset 	( .Actor:Self 00000001 00000000 0000000F 00000000 )
+ 224C:  					Set  *Var[0]  00000000 
+ 225C:  					Loop     00000014 			
+ 2268:  						Sub  *Var[0]  0000002D 
+ 2278:  						Call     SetPartRotation 	( .Actor:Self 00000001 00000000 00000000 *Var[0] )
+ 2298:  						Wait     00000001 
+ 22A4:  					EndLoop
+ 22AC:  					Call     SetPartRotationOffset 	( .Actor:Self 00000001 00000000 00000000 00000000 )
+ 22CC:  					Call     SetPartRotation 	( .Actor:Self 00000001 00000000 00000000 00000000 )
+ 22EC:  				EndThread
+						%/
+ 22F4:  				Call     GetHomePos  	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+ 2310:  				Set  *Var[2]  0000000F 
+ 2320:  				Call     SetGoalPos 	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+ 233C:  				Call     SetActorJumpGravity 	( .Actor:Self *Fixed[0.5] )
+						ExecWait $Script_WarpHome_DarkTraveller
+						/%
+ 2350:  				Call     JumpToGoal  	( .Actor:Self 00000028 00000000 00000001 00000000 )
+ 2370:  				Call     GetActorPos 	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+ 238C:  				Call     $Function_80218438 ( *Var[0] *Var[1] *Var[2] 0000001E )
+ 23A8:  				Wait     0000001E 
+ 23B4:  				Call     SetAnimation 	( .Actor:Self 00000001 00660E09 )
+ 23CC:  				Wait     0000000A 
+ 23D8:  				Call     PlaySoundAtActor 	( .Actor:Self 000020F3 )
+ 23EC:  				Call     SetActorYaw 	( .Actor:Self 00000000 )
+ 2400:  				Call     SetAnimation 	( .Actor:Self 00000001 00660E1B )
+ 2418:  				Call     GetActorPos 	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+ 2434:  				Sub  *Var[0]  00000016 
+ 2444:  				Add  *Var[1]  00000013 
+ 2454:  				Call     PlayEffect  	( ~FX:LensFlare:Rotating *Var[0] *Var[1] *Var[2] 0000001E 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+ 2498:  				Wait     0000001E 
+ 24A4:  				Call     SetAnimation 	( .Actor:Self 00000001 00660E03 )
+ 24BC:  				Call     SetGoalToHome 	( .Actor:Self )
+ 24CC:  				Call     RunToGoal   	( .Actor:Self 0000000A .False )
+						Call     EnableIdleScript 	( .Actor:Self .True )
+						Call     UseIdleAnimation 	( .Actor:Self .True )
+						%/
+						Return
+						End
+}
+						
+	
+#new:Script $Script_Land_DarkTraveller
+{
+	Call	UseIdleAnimation	( .Actor:Self .False )
+	Call	EnableIdleScript	( .Actor:Self .False )
+	Call	SetActorVar			( .Actor:Self 00000002 .False )
+	Call	SetTargetActor		( .Actor:Self .Actor:Player )
+	Call	SetAnimation 		( .Actor:Self 00000001 00660E12 )
+	Call	GetActorPos			( .Actor:Player *Var[0] *Var[1] *Var[2] )
+	Call	RandInt ( *VarD 2`)
+	If *VarD == 1`
+		Add		*Var[0]	 75`
+	Else
+		Call	SetActorRotation	( .Actor:Self 0 180` 0 )
+		Sub		*Var[0]	 75`
+	EndIf
+	Add		*Var[2]	  2`
+	Call	SetActorPos			( .Actor:Self *Var[0] 150` *Var[2] )
+	Call	PlaySoundAtActor 	( .Actor:Self 00000301 )
+	Wait	10`
+	Call	EnemyTestTarget ( .Actor:Self *Var[0] 00000000 00000000 00000005 00000020 )
+	Switch   *Var[0] 
+		CaseOR  ==  00000006 
+		CaseOR  ==  00000005 
+			If       *Var[0] ==  00000005 
+				Call     EnemyTestTarget ( .Actor:Self *Var[0] 80000000 00000000 00000000 00000000 )
+			EndIf
+			Call	GetActorPos			( .Actor:Player *Var[0] *Var[1] *Var[2] )
+			Add		*Var[0]  10`
+			Add		*Var[2]  20`
+			Call	SetGoalPos		( .Actor:Self *Var[0] 0 *Var[2] )
+			Call	EnableActorBlur 	( .Actor:Self .True )
+			Call	FlyToGoal			( .Actor:Self 7` 00000000 00000000 ) %10 -> 7
+			Call	EnableActorBlur 	( .Actor:Self .False )
+			Call	PlayEffect  		( 00000006 00000004 *Var[0] *Var[1] *Var[2] 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+			Call	SetAnimation 		( .Actor:Self 00000001 00660E0B )
+			Sub		*Var[0]  30`
+			Call	SetGoalPos		( .Actor:Self *Var[0] 0 *Var[2] )
+			Call	SetActorJumpGravity 	( .Actor:Self *Fixed[0.8] )
+			Call	JumpToGoal  		( .Actor:Self 16` 00000000 00000001 00000000 )
+			Sub		*Var[0]  20`
+			Call	SetGoalPos		( .Actor:Self *Var[0] 0 *Var[2] )
+			Call	SetActorJumpGravity 	( .Actor:Self *Fixed[0.6] )
+			Call	JumpToGoal  		( .Actor:Self 8` 00000000 00000001 00000000 )
+			Sub		*Var[0]  10`
+			Call	SetGoalPos		( .Actor:Self *Var[0] 0 *Var[2] )
+			Call	SetActorJumpGravity 	( .Actor:Self *Fixed[0.4] )
+			Call	JumpToGoal  		( .Actor:Self 4` 00000000 00000001 00000000 )
+			Wait	15`
+			Goto	0
+		EndCaseGroup
+	EndSwitch
+	Call	GetActorPos			( .Actor:Player *Var[0] *Var[1] *Var[2] )
+	Add		*Var[0]  10`
+	Add		*Var[1]  20`
+	Call	SetGoalPos		( .Actor:Self *Var[0] *Var[1] *Var[2] )
+			Call	EnableActorBlur 	( .Actor:Self .True )
+	Call	FlyToGoal			( .Actor:Self 7` 00000000 00000000 ) %10 -> 7
+	Call	EnableActorBlur 	( .Actor:Self .False )
+	Thread
+		Call     ShakeCam    	( 00000001 00000000 00000002 *Fixed[1.0] )
+		Call     ShakeCam    	( 00000001 00000000 00000002 *Fixed[4.0] )
+		Call     ShakeCam    	( 00000001 00000000 00000002 *Fixed[3.0] )
+		Call     ShakeCam    	( 00000001 00000000 00000002 *Fixed[2.0] )
+		Call     ShakeCam    	( 00000001 00000000 00000002 *Fixed[1.0] )
+		Call     ShakeCam    	( 00000001 00000000 00000002 *Fixed[0.5] )
+	EndThread
+	Call	PlaySoundAtActor 	( .Actor:Self 000003ED )
+	Call	PlaySoundAtActor 	( .Actor:Self 000020BB )
+	Wait	2
+	Call	EnemyDamageTarget		( .Actor:Self *Var[0] 00000000 0000FFFF 00000000 0000000A 00000020 )
+	Wait	8
+	Thread
+		Call	SetActorRotationOffset	( .Actor:Self 00000000 14` 00000000 )
+		Set		*Var[0]  0 
+		Loop	20` 
+			Sub		*Var[0]  18` 
+			Call	SetActorRotation	( .Actor:Self 00000000 00000000 *Var[0] )
+			Wait	1
+		EndLoop
+		Call	SetActorRotationOffset	( .Actor:Self 00000000 00000000 00000000 )
+	EndThread
+	Call	GetActorPos  		( .Actor:Self *Var[0] *Var[1] *Var[2] )
+	Add		*Var[0]  50`
+	Call	SetGoalPos 		( .Actor:Self *Var[0] 0 *Var[2] )
+	Call	SetAnimation 		( .Actor:Self 00000001 00660E08 )
+	Call	PlaySoundAtActor 	( .Actor:Self .Sound:Jump )
+	Call	SetActorJumpGravity 	( .Actor:Self *Fixed[0.8] )
+	Call	JumpToGoal  		( .Actor:Self 25` 00000000 00000001 00000000 )
+	Call	PlaySoundAtActor 	( .Actor:Self 000003B4 )
+	Wait	10`
+	Call	SetAnimation 		( .Actor:Self 00000001 00660E09 )
+	Wait	8`
+	Call	SetAnimation 		( .Actor:Self 00000001 00660E1A )
+	Wait	20`
+	Label	0
+	Call	SetActorRotation	( .Actor:Self 0 0` 0 )
+	ExecWait $Script_WarpHome_DarkTraveller
+	Call	EnableIdleScript 	( .Actor:Self .True )
+	Call	UseIdleAnimation 	( .Actor:Self .True )
+	Return
+	End
+}
+
+
+%Solid void actor info
+
+#new:Vector3D $Vector3D_SolidVoid
+{
+	0` -1000` 0`
+}
+
+#new:SpecialFormation $SpecialFormation_SolidVoid
+{
+	$SolidVoid $Vector3D_SolidVoid 00000000 00000000 00000000 00000000 00000000
+}
+
+#new:Actor $SolidVoid
+{
+	% stats
+	[Index]        8Eb
+	[Level]         0`b
+	[MaxHP]         1`b
+	[Coins]         0`b
+	[Flags]       00040200						%need to keep the flags that make it targettable		(ok flag 4000 has too many side effects so its gone)
+	[StatusTable] $StatusTable_DarkTraveller
+	% ai
+	[PartsCount]    2`s
+	[PartsTable]  $PartsTable_SolidVoid
+	[Script]      $Script_Init_SolidVoid
+	% move effectiveness
+	[Escape]        0`b
+	[Item]          0`b
+	[AirLift]       0`b
+	[Hurricane]     0`b % Bow's "Spook" as well
+	[UpAndAway]     0`b
+	[PowerBounce]   0`b
+	[SpinSmash]     0`b % weight (0-4)
+	% ui positions
+	[Size]         18`b  15`b % width height
+	[HealthBar]     0`b   0`b % dx dy
+	[StatusTurn]  -10`b  20`b % dx dy
+	[StatusIcon]   10`b  20`b % dx dy
+}
+
+#new:PartsTable $DefenseTable_SolidVoid
+{
+	.Element:Normal 00000063
+	.Element:End
+}
+
+#new:IdleAnimations $IdleAnimations_SolidVoid
+{
+	.Status:Normal    007F160A
+	.Status:End
+}
+
+#new:PartsTable $PartsTable_SolidVoid
+{
+	00020000 01000000 001000FF $IdleAnimations_SolidVoid $DefenseTable_SolidVoid 080C0028 00000000 00F60000 00000000
+	80800021 02003200 00DE00FF 00000000 $DefenseTable_SolidVoid 080C0028 00000000 00F60000 00000000
+}
+
+#new:Script $Script_Init_SolidVoid
+{
+    0:  Call  BindTakeTurn  ( .Actor:Self $Script_TakeTurn_SolidVoid )
+   14:  Call  BindIdle      ( .Actor:Self $Script_Idle_SolidVoid )
+   28:  Call  BindHandleEvent   ( .Actor:Self $Script_HandleEvent_SolidVoid )
+   50:  Return
+   58:  End
+}
+
+#new:Script $Script_Idle_SolidVoid
+{
+	Return
+	End
+}
+
+#new:Script $Script_HandleEvent_SolidVoid
+{
+	Return
+	End
+}
+
+#new:Script $Script_TakeTurn_SolidVoid
+{
+	Return
+	End
+}

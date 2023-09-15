@@ -1,0 +1,10 @@
+@ $Script_MakeEntities
+{
+    0:  Call  MakeEntity        ( .Entity:SavePoint ~Vec4d:Entity80247590 80000000 )
+   24:  Call  MakeEntity        ( .Entity:HiddenYellowBlock ~Vec4d:Entity802475B4 .Item:SuperTrio 80000000 )
+   4C:  Call  AssignBlockFlag   ( *GF_OMO08_HiddenItem_FireFlower )
+   5C:  Call  MakeEntity        ( .Entity:HiddenPanel ~Vec4d:Entity802475EC ~Model:soto 80000000 )
+   84:  Call  AssignPanelFlag   ( *GF_OMO08_HiddenPanel )
+   94:  Return
+   9C:  End
+}

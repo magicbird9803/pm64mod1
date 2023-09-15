@@ -1,0 +1,300 @@
+%More ultra-strong enemies
+%I might even be able to fit the five guys fight here
+
+#import newenemy/DarkSentinel.bpat
+#import newenemy/DarkGoomba.bpat
+#import newenemy/InsaneeDayzee.bpat
+#import newenemy/Ztar.bpat
+#import newenemy/DarkClubba.bpat
+%#import newenemy/DarkBubble.bpat
+
+#import newenemy/AntiGuy.bpat
+#import newenemy/PhalanxGuy.bpat
+#import newenemy/CovertGuy.bpat
+#import newenemy/PermafrostGuy.bpat
+#import newenemy/NuclearGuy.bpat
+
+#new:StageTable $StageTable
+{
+"pit_10" $Stage_Pit1
+"tem_00" $Stage_Temple
+"tem_03" $Stage_InsideBasic
+"tem_13" $Stage_InsidePlatforms
+"tem_09" $Stage_InsidePillars
+00000000 00000000 
+}
+
+#new:Stage $Stage_Pit1
+{
+"kpa_tex"
+"pit_b01_shape"
+"pit_b01_hit"
+$Script_BeforeBattle_Pit
+$Script_AfterBattle_Pit
+00000000 
+00000000 
+00000000 
+00000000 
+00000000 
+}
+
+#new:Stage $Stage_Temple
+{
+"kpa_tex"
+"tem_b01_shape"
+"tem_b01_hit"
+$Script_BeforeBattle_Temple
+$Script_AfterBattle_Temple
+00000000 
+00000000 
+00000000 
+00000000 
+00000000 
+}
+
+#new:Stage $Stage_InsideBasic
+{
+"kpa_tex"
+"tem_b02_shape"
+"tem_b02_hit"
+$Script_BeforeBattle_Pit
+$Script_AfterBattle_Pit
+00000000 
+00000000 
+00000000 
+00000000 
+00000000 
+}
+
+#new:Stage $Stage_InsideSwitches
+{
+"kpa_tex"
+"tem_b04_shape"
+"tem_b04_hit"
+$Script_BeforeBattle_Pit
+$Script_AfterBattle_Pit
+00000000 
+00000000 
+00000000 
+00000000 
+00000000 
+}
+
+#new:Stage $Stage_InsidePillars
+{
+"kpa_tex"
+"tem_b05_shape"
+"tem_b05_hit"
+$Script_BeforeBattle_Pit
+$Script_AfterBattle_Pit
+00000000 
+00000000 
+00000000 
+00000000 
+00000000 
+}
+
+#new:Stage $Stage_InsidePlatforms
+{
+"kpa_tex"
+"tem_b06_shape"
+"tem_b06_hit"
+$Script_BeforeBattle_Pit
+$Script_AfterBattle_Pit
+00000000 
+00000000 
+00000000 
+00000000 
+00000000 
+}
+
+%pit does not remove SE because that would make it worse
+#new:Script $Script_BeforeBattle_Pit
+{
+	Return
+	End
+}
+
+#new:Script $Script_AfterBattle_Pit
+{
+	Return
+	End
+}
+
+#new:Script $Script_BeforeBattle_Temple
+{
+	Return
+	End
+}
+
+#new:Script $Script_AfterBattle_Temple
+{
+	Return
+	End
+}
+
+
+#new:Formation $Formation_00
+{
+$DarkGoomba 00000001 0000000A 00000000 00000000 00000000 00000000
+$DarkGoomba 00000002 00000009 00000000 00000000 00000000 00000000
+$DarkClubba 00000003 00000008 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_01
+{
+$DarkClubba 00000002 00000009 00000000 00000000 00000000 00000000
+$DarkClubba 00000003 00000008 00000000 00000000 00000000 00000000
+$Ztar 00000006 00000007 00000000 00000000 00000000 00000000
+$Ztar 00000007 00000006 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_02
+{
+$InsaneeDayzee 00000002 0000000A 00000000 00000000 00000000 00000000
+$DarkClubba 00000003 00000009 00000000 00000000 00000000 00000000
+$Ztar 00000006 00000008 00000000 00000000 00000000 00000000
+$DarkSentinel 00000007 00000007 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_03
+{
+$DarkClubba 00000002 0000000A 00000000 00000000 00000000 00000000
+$DarkGoomba 00000003 00000009 00000000 00000000 00000000 00000000
+$Ztar 00000007 00000008 00000000 00000000 00000000 00000000
+$DarkSentinel 0000000B 00000007 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_04
+{
+$DarkClubba	 	00000000 0000000A 00000000 00000000 00000000 00000000
+$DarkGoomba 	00000001 00000009 00000000 00000000 00000000 00000000
+$InsaneeDayzee  00000002 00000008 00000000 00000000 00000000 00000000
+$Ztar 			00000006 00000007 00000000 00000000 00000000 00000000
+$DarkSentinel 	00000007 00000006 00000000 00000000 00000000 00000000
+}
+
+%the game normally only allows 4 enemies in a line
+%but manually specifying positions works fine
+
+#new:Vector3D $Vector3D_Pos1
+{
+5` 0` -20`
+}
+
+#new:Vector3D $Vector3D_Pos2
+{
+35` 0` -9`
+}
+
+#new:Vector3D $Vector3D_Pos3
+{
+65` 0` 2`
+}
+
+#new:Vector3D $Vector3D_Pos4
+{
+95` 0` 13`
+}
+
+#new:Vector3D $Vector3D_Pos5
+{
+125` 0` 25`
+}
+
+#new:Formation $Formation_05
+{
+$AntiGuy $Vector3D_Pos1 0000000A 00000000 00000000 00000000 00000000 
+$PhalanxGuy $Vector3D_Pos2 00000009 00000000 00000000 00000000 00000000 
+$CovertGuy $Vector3D_Pos3 00000008 00000000 00000000 00000000 00000000 
+$PermafrostGuy $Vector3D_Pos4 00000007 00000000 00000000 00000000 00000000 
+$NuclearGuy $Vector3D_Pos5 00000006 00000000 00000000 00000000 00000000 
+}
+
+@ $Script_NextTurn_PermafrostGuy %remove the time limit
+{
+Return							 %if you actually beat them within 6 turns, i'll be impressed
+End
+}
+
+%DSE anti-five vs MQ anti-five
+%-no malpractice guy
+%+anti-invis moves
+%+less status overlap
+
+%sentinel and clubba encounters
+
+#new:Formation $Formation_06
+{
+$DarkClubba 00000001 0000000A 00000000 00000000 00000000 00000000
+$DarkClubba 00000002 00000008 00000000 00000000 00000000 00000000
+$DarkClubba 00000003 00000007 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_07
+{
+$DarkClubba 00000001 0000000A 00000000 00000000 00000000 00000000
+$DarkSentinel 00000006 00000009 00000000 00000000 00000000 00000000
+$DarkSentinel 00000007 00000008 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_08
+{
+$DarkSentinel 00000005 0000000A 00000000 00000000 00000000 00000000
+$DarkSentinel 00000006 00000009 00000000 00000000 00000000 00000000
+$DarkSentinel 00000007 00000008 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_09
+{
+$DarkClubba 00000002 0000000A 00000000 00000000 00000000 00000000
+$DarkClubba 00000003 00000009 00000000 00000000 00000000 00000000
+$DarkSentinel 00000006 00000008 00000000 00000000 00000000 00000000
+$DarkSentinel 00000007 00000007 00000000 00000000 00000000 00000000
+}
+
+%goomba and clubba
+#new:Formation $Formation_0A
+{
+$DarkGoomba 00000001 0000000A 00000000 00000000 00000000 00000000
+$DarkClubba 00000002 00000009 00000000 00000000 00000000 00000000
+$DarkClubba 00000003 00000008 00000000 00000000 00000000 00000000
+$Ztar 00000007 00000007 00000000 00000000 00000000 00000000
+}
+
+%dayzee and clubbas
+#new:Formation $Formation_0B
+{
+$InsaneeDayzee 00000001 0000000A 00000000 00000000 00000000 00000000
+$DarkClubba 00000002 00000009 00000000 00000000 00000000 00000000
+$DarkClubba 00000003 00000008 00000000 00000000 00000000 00000000
+}
+
+%add a ztar + sentinel fight, yay
+#new:Formation $Formation_0C
+{
+$Ztar 		  00000004 0000000A 00000000 00000000 00000000 00000000
+$DarkSentinel 00000005 00000009 00000000 00000000 00000000 00000000
+$Ztar 		  00000006 00000008 00000000 00000000 00000000 00000000
+$DarkSentinel 00000007 00000007 00000000 00000000 00000000 00000000
+}
+
+
+#new:FormationTable $FormationTable %I made the pit before the rest of the temple :P, so the formations are first
+{
+00000000 00000003 $Formation_00 $Stage_Pit1 00000000 %floor 95
+00000000 00000003 $Formation_01 $Stage_Pit1 00000000 %floor 96
+00000000 00000004 $Formation_02 $Stage_Pit1 00000000 %floor 97
+00000000 00000004 $Formation_03 $Stage_Pit1 00000000 %floor 98
+00000000 00000005 $Formation_04 $Stage_Pit1 00000000 %floor 99
+00000000 00000005 $Formation_05 $Stage_Temple 00000000 %fix stage when possible
+%
+00000000 00000003 $Formation_06 $Stage_InsidePlatforms 00000000 
+00000000 00000003 $Formation_07 $Stage_InsidePlatforms 00000000 
+00000000 00000003 $Formation_08 $Stage_InsidePlatforms 00000000 
+00000000 00000004 $Formation_09 $Stage_InsidePlatforms 00000000 
+00000000 00000004 $Formation_0A $Stage_InsidePlatforms 00000000 
+00000000 00000003 $Formation_0B $Stage_InsidePillars 00000000 
+00000000 00000004 $Formation_0C $Stage_InsidePillars 00000000 
+00000000 00000000 00000000 00000000 00000000 % unused
+}

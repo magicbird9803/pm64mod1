@@ -1,0 +1,30 @@
+@ $Script_Main
+{
+		ExecWait $Script_PeachForceFlags
+    0:  Set   *GB_WorldLocation  .Location:PeachsCastle
+   10:  Call  SetSpriteShading  ( .Shading:kkj_17 )
+   20:  Call  SetCamPerspective ( .Cam:Default 00000003 00000019 00000010 00001000 )
+   40:  Call  SetCamBGColor     ( .Cam:Default 00000000 00000000 00000000 )
+   5C:  Call  SetCamEnabled     ( .Cam:Default .True )
+   70:  ExecWait  $Script_8024084C
+   7C:  Exec  $Script_80240FF8
+   88:  Call  UseDoorSounds     ( .DoorSounds:Basic )
+   98:  Bind  $Script_ExitSingleDoor_802405F0 .Trigger:WallPressA ~Collider:ttw 00000001 00000000
+   B4:  Exec  $Script_EnterSingleDoor_80240694
+   C0:  Wait  1`
+   CC:  Return
+   D4:  End
+}
+
+@ $Function_802402BC
+{
+  [98]  LA        S8, $Global_ItemHudScripts		%= 8040FB24
+}
+
+/%
+Legal chest items
+#new:IntTable $IntTable_8024092C
+{
+	0000010D 00000083 00000129 00000111 000000A2
+}
+%/

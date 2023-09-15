@@ -1,0 +1,36 @@
+@ $Script_MakeEntities
+{
+		Call 	 MakeEntity ( .Entity:HealingBlock ~Vec4d:EntityHeartBlock 80000000 )
+	0:  Call     MakeEntity  	( .Entity:SuperBlock ~Vec4d:Entity802418E0 80000000 )
+   24:  Set  *MapVar[0]  *Var[0] 
+   34:  Call     AssignBlockFlag 	( *Flag_ISK_21 )
+   44:  Call     AssignScript 	( $Script_802412C8 )
+   54:  Thread
+   5C:  	Call     $Function_80240D38 ( )
+   68:  EndThread
+   70:  Call     MakeEntity  	( .Entity:ScriptSpring ~Vec4d:Entity80241950 80000000 )
+   94:  Call     AssignScript 	( $Script_80241748 )
+   A4:  Call     PlayEffect  	( ~FX:Fire:LargeRed FFFFFE02 FFFFFE3B 0000002B *Fixed[0.30078125] *Var[0] 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+   E8:  Call     PlayEffect  	( ~FX:Fire:LargeRed FFFFFE02 FFFFFD37 0000002B *Fixed[0.30078125] *Var[0] 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+  12C:  Return
+  134:  End
+}
+
+%Super block stuff
+@ $Function_802401CC
+{
+   [40]   LI        A0, 396					%330 -> 396
+   [14C]  SLTI      V0, S2, 9				%8 -> 9
+}
+
+@ $???_80241108
+{
+	00010002 00030004 00090006 00070008 000A0000
+}
+
+@ $???_80241118
+{
+	001D00E0 001D00E1 001D00E2 001D00E3 001D00E4 001D00E5 001D00E6 001D00E7
+	001D00E8 001D00E9 001D00EA 001D00EB 001D00EC 001D00ED 001D00EE 001D00EF
+	001D01AD 001D01AE
+}

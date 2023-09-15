@@ -1,0 +1,9 @@
+@ $Script_MakeEntities
+{
+    0:  Call  MakeEntity        ( .Entity:PinkFlower ~Vec4d:Entity802437F0 80000000 )
+   24:  Call  MakeEntity        ( .Entity:HiddenYellowBlock ~Vec4d:Entity80243814 .Item:DualShroom 80000000 )
+   4C:  Call  AssignBlockFlag   ( *GF_JAN13_HiddenItem_VoltShroom )
+   5C:  Call  UseDynamicShadow  ( .True )
+   6C:  Return
+   74:  End
+}

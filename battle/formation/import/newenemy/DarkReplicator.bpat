@@ -1,0 +1,764 @@
+%Dark replicator
+%At the start of battle she creates three clones with identical stats
+%Only the original can clone, and it loses 1 hp when cloning (Only way to hurt it)
+
+%If the original can't clone, instead it will heal all the clones for 8
+
+
+% Define your graphics here
+#define .AnimStopRtor	00F40500
+#define .AnimIdleRtor	00F40502
+#define .AnimPoisonRtor	00F40502
+#define .AnimPainRtor	00F4050A
+#define .AnimDizzyRtor	00F4050E
+#define .AnimDeadRtor	00F4050A
+#define .AnimSleepRtor  00F4050D
+#define .AnimBurnRtor   00F4050C
+#define .AnimBurnRtor2  FFFFFFFF %doesn't exist (*but putting FFFFFFFF does work here)
+#define .AnimRunRtor	00F40504
+
+#define .AnimStopRtion	004E0500
+#define .AnimIdleRtion	004E0502
+#define .AnimPoisonRtion	004E0502
+#define .AnimPainRtion	004E050A
+#define .AnimDizzyRtion	004E050E
+#define .AnimDeadRtion	004E050A
+#define .AnimSleepRtion  004E050D
+#define .AnimBurnRtion   004E050C
+#define .AnimBurnRtion2  FFFFFFFF %doesn't exist (*but putting FFFFFFFF does work here)
+#define .AnimRunRtion	004E0504
+
+#new:Actor $DarkReplicator
+{
+% stats
+[Index]        D1b % index from ActorTable.xml
+[Level]        70`b %pretty good SP gain
+[MaxHP]        20`b 
+[Coins]         0`b 
+[Flags]       00000000 
+[StatusTable] $StatusTable_DarkReplicator
+% ai
+[PartsCount]   1`s 
+[PartsTable] $PartsTable_DarkReplicator 
+[Script]      $Script_Init_DarkReplicator 
+% move effectiveness
+[Escape]        0`b 
+[Item]          0`b 
+[AirLift]       0`b 
+[Hurricane]     0`b % Bow's "Spook" as well
+[UpAndAway]     0`b 
+[PowerBounce]   3`b 
+[SpinSmash]     0`b % weight (0-4)
+% ui positions
+[Size]         36`b  36`b % width height
+[HealthBar]     0`b   0`b % dx dy
+[StatusTurn]  -10`b  20`b % dx dy
+[StatusIcon]   10`b  20`b % dx dy
+}
+
+#new:SpecialFormation $DarkReplicationFormation
+{
+$DarkReplication	  $VoidPos 00000009 00000000 00000000 00000000 00000000 
+}
+
+#new:Vector3D $VoidPos
+{
+0` -1000` 0` 
+}
+
+#new:Actor $DarkReplication
+{
+% stats
+[Index]        D2b 
+[Level]         0`b %prevent you from infinitely farming SP (but you're probably level 27 if you're fighting these bosses)
+[MaxHP]        20`b 
+[Coins]         0`b 
+[Flags]       00000000 
+[StatusTable] $StatusTable_DarkReplicator
+% ai
+[PartsCount]   1`s 
+[PartsTable] $PartsTable_DarkReplication
+[Script]      $Script_Init_DarkReplication
+% move effectiveness
+[Escape]        0`b 
+[Item]          0`b 
+[AirLift]       0`b 
+[Hurricane]     0`b % Bow's "Spook" as well
+[UpAndAway]     0`b 
+[PowerBounce]   3`b 
+[SpinSmash]     0`b % weight (0-4)
+% ui positions
+[Size]         36`b  36`b % width height
+[HealthBar]     0`b   0`b % dx dy
+[StatusTurn]  -10`b  20`b % dx dy
+[StatusIcon]   10`b  20`b % dx dy
+}
+
+#new:DefenseTable $DefenseTable_DarkReplicator
+{
+.Element:Normal 00000063
+.Element:End
+}
+
+#new:DefenseTable $DefenseTable_DarkReplication
+{
+.Element:Normal 00000000
+.Element:End
+}
+
+#new:StatusTable $StatusTable_DarkReplicator %low statuses
+{
+.Status:Normal      0`
+.Status:Default     0`
+.Status:Sleep       0`
+.Status:Poison      0`
+.Status:Frozen      0`
+.Status:Dizzy       0`
+.Status:Fear        0`
+.Status:Static      0`
+.Status:Paralyze    0`
+.Status:Shrink      0`
+.Status:Stop        0`
+.Status:DefaultTurnMod    0`
+.Status:SleepTurnMod     -1`
+.Status:PoisonTurnMod     0`
+.Status:FrozenTurnMod     0`
+.Status:DizzyTurnMod     -1`
+.Status:FearTurnMod       0`
+.Status:StaticTurnMod    -1`
+.Status:ParalyzeTurnMod  -1`
+.Status:ShrinkTurnMod     0`
+.Status:StopTurnMod      -2`
+.Status:End
+}
+
+#new:PartsTable $PartsTable_DarkReplicator
+{
+00800000 01000000 001400FF $IdleAnimations_DarkReplicator $DefenseTable_DarkReplicator 00000000 00000000 00F60000 00000000 
+}
+
+#new:PartsTable $PartsTable_DarkReplication
+{
+00800000 01000000 001400FF $IdleAnimations_DarkReplication $DefenseTable_DarkReplication 00000000 00000000 00F60000 00000000 
+}
+
+#new:IdleAnimations $IdleAnimations_DarkReplicator
+{
+.Status:Normal    .AnimIdleRtor
+.Status:Stone     .AnimStopRtor
+.Status:Sleep     .AnimSleepRtor
+.Status:Poison    .AnimPoisonRtor
+.Status:Stop      .AnimStopRtor
+.Status:Static    .AnimIdleRtor
+.Status:Paralyze  .AnimStopRtor
+.Status:Dizzy     .AnimDizzyRtor
+.Status:Fear      .AnimDizzyRtor
+.Status:End
+}
+
+#new:IdleAnimations $IdleAnimations_DarkReplication
+{
+.Status:Normal    .AnimIdleRtion
+.Status:Stone     .AnimStopRtion
+.Status:Sleep     .AnimSleepRtion
+.Status:Poison    .AnimPoisonRtion
+.Status:Stop      .AnimStopRtion
+.Status:Static    .AnimIdleRtion
+.Status:Paralyze  .AnimStopRtion
+.Status:Dizzy     .AnimDizzyRtion
+.Status:Fear      .AnimDizzyRtion
+.Status:End
+}
+
+#new:Script $Script_Init_DarkReplicator
+{
+	Call     BindTakeTurn 	( .Actor:Self $Script_TakeTurn_DarkReplicator )
+	Call     BindIdle    	( .Actor:Self $Script_Idle_DarkReplicator )
+    Call     BindHandleEvent 	( .Actor:Self $Script_HandleEvent_DarkReplicator )
+	Call	 BindNextTurn	( .Actor:Self $Script_NextTurn_DarkReplicator )
+	Call	 SetActorVar 	( .Actor:Self 00000002 00000001 ) %1st turn clone
+	Call	 $SetAuraToDark ( )
+	Call     AddActorDecoration 	( .Actor:Self 00000001 00000000 00000001 )	%dark fire now (was gold but I used special functions)
+	Call     ModifyActorDecoration 	( .Actor:Self 00000001 00000000 45` 45` 00000000 00000000 )	 
+    Return
+    End
+}
+
+#new:Script $Script_Init_DarkReplication 
+{
+	Call     BindTakeTurn 	( .Actor:Self $Script_TakeTurn_DarkReplication )
+	Call     BindIdle    	( .Actor:Self $Script_Idle_DarkReplicator )
+    Call     BindHandleEvent 	( .Actor:Self $Script_HandleEvent_DarkReplication )
+    Return
+    End
+}
+
+#new:Script $Script_NextTurn_DarkReplicator
+{
+	Call	GetActorVar ( .Actor:Self 00000002 *Var[0] )
+	If *Var[0] == 0
+		Return
+	EndIf
+	Call     GetBattlePhase ( *Var[0] )
+	Switch   *Var[0] 
+		Case == .Phase:PlayerBegin
+			ExecWait $Script_GetOpenPosition
+			If *Var[A] == FFFFFFFF
+				Return
+			EndIf
+			ExecWait $Script_MakeClones
+	EndSwitch
+	Call	 SetActorVar 	( .Actor:Self 00000002 00000000 )
+	Return
+	End
+}
+
+
+%returns index of open position
+#new:Script $Script_GetOpenPosition %try checking 0,1,2,3
+{
+	Set *Flag[00] .False
+	Set *Flag[01] .False
+	Set *Flag[02] .False
+	Set *Flag[03] .False
+	Call     EnemyCreateTargetList 	( 00008002 )
+	Call     InitTargetIterator 	( )
+	Label    00000000 
+	Call     GetOwnerTarget ( *Var[0] *Var[1] )
+	Call     GetIndexFromHome 	( *Var[0] *Var[1] )
+	Mod  *Var[1]  00000004 
+	Switch  *Var[1] 
+		Case  ==  00000000
+			Set  *Flag[00]  00000001 
+		Case  ==  00000001 
+			Set  *Flag[01]  00000001 
+		Case  ==  00000002 
+			Set  *Flag[02]  00000001 
+		Case  ==  00000003 
+			Set  *Flag[03]  00000001 
+	EndSwitch
+	Call     ChooseNextTarget 	( .Iter:Next *Var[0] )
+	If  *Var[0]  !=  FFFFFFFF 
+		Goto     00000000 
+	EndIf
+	If  *Flag[03]  ==  00000000 
+		Set  *Var[A]  00000003 
+		Return
+	EndIf
+	If  *Flag[02]  ==  00000000 
+		Set  *Var[A]  00000002 
+		Return
+	EndIf
+	If  *Flag[01]  ==  00000000 
+		Set  *Var[A]  00000001
+		Return
+	EndIf
+	If  *Flag[00]  ==  00000000 
+		Set  *Var[A]  00000000
+		Return
+	EndIf
+	Set  *Var[A]  FFFFFFFF 
+	Return
+	End
+}
+
+#new:Script $Script_Idle_DarkReplicator
+{
+  Return
+  End
+}
+
+#new:Script $Script_MakeClones %if there's space, make some clones
+{
+	Call     UseIdleAnimation 	( .Actor:Self .False )
+	Call     EnableIdleScript 	( .Actor:Self 00000000 )
+	Call     UseBattleCamPreset 	( 0000000E )
+	Call     BattleCamTargetActor ( .Actor:Self )
+	Wait     0000000F 
+	Call     PlaySoundAtActor 	( .Actor:Self 000020B8 )
+	Call     SetAnimation 	( .Actor:Self 00000001 00F40506 )
+	Call     GetActorPos 	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+	Call     GetStatusFlags ( .Actor:Self *Var[A] )
+	If  *Var[A]  &  00080000 
+		Add  *Var[1]  00000008 
+		SetF  *Var[3]  *Fixed[0.40039062] 
+	Else
+		Add  *Var[1]  00000014 
+		SetF  *Var[3]  *Fixed[1.0] 
+	EndIf
+	Call     PlayEffect  	( 00000013 00000001 *Var[0] *Var[1] *Var[2] *Var[3] 00000028 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+	Label 0
+	ExecWait $Script_GetOpenPosition %find where to summon clones
+	If *Var[A] == FFFFFFFF
+		Call    SetAnimation 		( .Actor:Self 00000001 .AnimIdleRtor )
+		Call	EnableIdleScript 	( .Actor:Self .True )
+		Call	UseIdleAnimation 	( .Actor:Self .True )
+		Return %no more space, we're done summoning
+	EndIf
+	ExecWait $Script_MakeClones_B
+	%Lose HP and maybe die
+	Call	 GetActorHP     ( .Actor:Self *VarE )
+	Sub *VarE 1
+	If *VarE > -1`
+		Call     SetEnemyHP  	( .Actor:Self *VarE )	
+	EndIf
+	Call	GetActorPos ( .Actor:Self *Var[0] *Var[1] *Var[2] )
+	Add	*Var[1] 25
+	Set *Var[C] -1
+	Call	PlayEffect ( 00000040 00000000 *Var[0] *Var[1] *Var[2] *Var[C] 00000000 00000000 00000000 00000000 00000000 00000000 )
+	If *VarE < 1
+		SetConst  *Var[0]  00000001 
+		SetConst  *Var[1]  .AnimDeadRtor 
+		ExecWait DoDeath 
+	EndIf
+	Goto 0
+	Return
+	End
+}
+
+#new:Script $Script_MakeClones_B
+{
+	Call	SummonEnemy      	( $DarkReplicationFormation 00000000 ) %drops enemy ID into *Var[0]
+	Call	GetOwnerID 			( *Var[9] )
+	If *Var[9] > *Var[0] %new pos is left of self
+		Set		*Var[E]  450`
+		Set		*Var[F]  -15`
+	Else
+		Set		*Var[E]  -450`
+		Set		*Var[F]  15`		
+	EndIf
+	%Call	GetActorHP		 	( .Actor:Self *Var[C] )
+	%Call	SetEnemyHP  		( *Var[0] *Var[C] )
+	Call	SetActorRotation 	( *Var[0] 00000000 90` 00000000 )
+	Call	GetActorPos       	( .Actor:Self *Var[1] *Var[2] *Var[3] )
+	Call	SetActorPos       	( *Var[0] *Var[1] *Var[2] *Var[3] )
+	Thread
+		Set		*Var[B]	*Var[E]
+		Loop		30`
+			Add		*Var[B] *Var[F]
+			Call	SetActorRotation 	( *Var[0] 00000000 *Var[B] 00000000 )
+			Wait	1
+		EndLoop
+	EndThread
+	Call	SetAnimation 		( *Var[0] 00000001 004E0507 )
+	Call	SetGoalToIndex  	( *Var[0] *Var[A] )	
+	Call	SetActorJumpGravity	( *Var[0] *Fixed[0.5] )
+	Call	JumpToGoal			( *Var[0] 10` 00000000 00000001 00000000 )
+	Call	SetAnimation 		( *Var[0] 00000001 004E0502 )
+	Call	GetActorPos       	( *Var[0] *Var[1] *Var[2] *Var[3] )
+	Call	ForceHomePos 		( *Var[0] *Var[1] *Var[2] *Var[3] )
+	Call	GetActorVar 		( .Actor:Self 00000001 *Var[8] )
+	Call	SetActorVar 		( *Var[0] 00000001 *Var[8] )
+	Call	HPBarToHome    		( *Var[0] )
+	Return
+	End
+}
+
+#new:Script $Script_HandleEvent_DarkReplicator %to do: figure out how to stop sound glitches
+{
+    0:  Call     UseIdleAnimation 	( .Actor:Self .False )
+   14:  Call     EnableIdleScript 	( .Actor:Self 00000000 )
+   28:  Call     SetActorScale 	( .Actor:Self *Fixed[1.0] *Fixed[1.0] *Fixed[1.0] )
+   44:  Call     GetLastEvent 	( .Actor:Self *Var[0] )
+   58:  Switch  *Var[0] 
+   64:  	CaseOR  ==  .Event:HitCombo
+   70:  	CaseOR  ==  .Event:Hit
+   7C:  		SetConst  *Var[0]  00000001 
+   8C:  		SetConst  *Var[1]  .AnimPainRtor 
+   9C:  		ExecWait DoNormalHit 
+   A8:  	EndCaseGroup
+   B0:  	Case  ==  .Event:BurnHit
+   BC:  		SetConst  *Var[0]  00000001 
+   CC:  		SetConst  *Var[1]  .AnimBurnRtor 
+   DC:  		SetConst  *Var[2]  .AnimBurnRtor2 
+   EC:  		ExecWait DoBurnHit 
+   F8:  	Case  ==  .Event:BurnDeath
+  104:  		SetConst  *Var[0]  00000001 
+  114:  		SetConst  *Var[1]  .AnimBurnRtor 
+  124:  		SetConst  *Var[2]  .AnimBurnRtor2 
+  134:  		ExecWait DoBurnHit 
+  140:  		SetConst  *Var[0]  00000001 
+  150:  		SetConst  *Var[1]  .AnimBurnRtor2 
+  160:  		ExecWait DoDeath 
+  16C:  		Return
+  174:  	Case  ==  .Event:SpinSmashHit
+  180:  		SetConst  *Var[0]  00000001 
+  190:  		SetConst  *Var[1]  .AnimPainRtor 
+  1A0:  		ExecWait 8029B998 
+  1AC:  	Case  ==  .Event:SpinSmashDeath
+  1B8:  		SetConst  *Var[0]  00000001 
+  1C8:  		SetConst  *Var[1]  .AnimPainRtor 
+  1D8:  		ExecWait 8029B998 
+  1E4:  		SetConst  *Var[0]  00000001 
+  1F4:  		SetConst  *Var[1]  .AnimDeadRtor 
+  204:  		ExecWait DoDeath 
+  210:  		Return
+  218:  	Case  ==  .Event:ShockHit
+				Call     8026F6EC ( FFFFFF81 )
+  218:  		SetConst  *Var[0]  00000001 
+  228:  		SetConst  *Var[1]  .AnimPainRtor
+  238:  		ExecWait DoShockHit 
+  244:  		SetConst  *Var[0]  00000001 
+  254:  		SetConst  *Var[1]  .AnimPainRtor 
+  264:  		ExecWait DoJumpBack 
+				SetConst  *Var[0]  00000001 
+				SetConst  *Var[1]  00F40504 
+				ExecWait DoReturnHome 
+  378:  	Case  ==  .Event:ShockDeath
+  384:  		SetConst  *Var[0]  00000001 
+  394:  		SetConst  *Var[1]  .AnimPainRtor 
+  3A4:  		ExecWait DoShockHit 
+  3B0:  		SetConst  *Var[0]  00000001 
+  3C0:  		SetConst  *Var[1]  .AnimDeadRtor 
+  3D0:  		ExecWait DoDeath 
+  3DC:  		Return
+  3E4:  	Case  ==  .Event:StarBeam
+  3F0:  	CaseOR  ==  00000017
+  3FC:  	CaseOR  ==  .Event:Immune
+  408:  	CaseOR  ==  .Event:AirLiftFailed
+  414:  		SetConst  *Var[0]  00000001 
+  424:  		SetConst  *Var[1]  .AnimIdleRtor 
+  434:  		ExecWait DoImmune 
+  440:  	EndCaseGroup
+  448:  	Case  ==  .Event:Death
+  454:  		SetConst  *Var[0]  00000001 
+  464:  		SetConst  *Var[1]  .AnimPainRtor 
+  474:  		ExecWait DoNormalHit 
+  480:  		Wait     0000000A 
+  48C:  		SetConst  *Var[0]  00000001 
+  49C:  		SetConst  *Var[1]  .AnimDeadRtor 
+  4AC:  		ExecWait DoDeath 
+  4B8:  		Return
+  4C0:  	Case  ==  .Event:EndFirstStrike
+  4CC:  		Call     SetAnimationRate 	( .Actor:Self 00000001 *Fixed[2.0] )
+  4E4:  		Call     SetAnimation 	( .Actor:Self 00000001 .AnimRunRtor )
+  4FC:  		Call     SetGoalToHome 	( .Actor:Self )
+  50C:  		Call     SetActorSpeed 	( .Actor:Self *Fixed[4.0] )
+  520:  		Call     RunToGoal   	( .Actor:Self 00000000 .False )
+  538:  		Call     SetAnimationRate 	( .Actor:Self 00000001 *Fixed[1.0] )
+  550:  		Call     HPBarToHome 	( .Actor:Self )
+  560:  	Case  ==  .Event:RecoverStatus
+  56C:  		SetConst  *Var[0]  00000001 
+  57C:  		SetConst  *Var[1]  .AnimIdleRtor 
+  58C:  		ExecWait DoRecover 
+  598:  	Case  ==  .Event:ScareAway
+  5A4:  		SetConst  *Var[0]  00000001 
+  5B4:  		SetConst  *Var[1]  .AnimRunRtor 
+  5C4:  		SetConst  *Var[2]  .AnimPainRtor 
+  5D4:  		ExecWait DoScareAway 
+  5E0:  		Return
+  5E8:  	Case  ==  .Event:BeginAirLift
+  5F4:  		SetConst  *Var[0]  00000001 
+  604:  		SetConst  *Var[1]  .AnimRunRtor 
+  614:  		ExecWait DoAirLift 
+  620:  	Case  ==  .Event:BlowAway
+  62C:  		SetConst  *Var[0]  00000001 
+  63C:  		SetConst  *Var[1]  .AnimPainRtor 
+  64C:  		ExecWait DoBlowAway 
+  658:  		Return
+  660:  	Default
+  668:  EndSwitch
+  670:  Call     SetAnimation 	( .Actor:Self 00000001 .AnimIdleRtor )
+  688:  Call     EnableIdleScript 	( .Actor:Self 00000001 )
+  69C:  Call     UseIdleAnimation 	( .Actor:Self .True )
+  6B0:  Return
+  6B8:  End
+}
+
+#new:Script $Script_HandleEvent_DarkReplication
+{
+    0:  Call     UseIdleAnimation 	( .Actor:Self .False )
+   14:  Call     EnableIdleScript 	( .Actor:Self 00000000 )
+   28:  Call     SetActorScale 	( .Actor:Self *Fixed[1.0] *Fixed[1.0] *Fixed[1.0] )
+   44:  Call     GetLastEvent 	( .Actor:Self *Var[0] )
+   58:  Switch  *Var[0] 
+   64:  	CaseOR  ==  .Event:HitCombo
+   70:  	CaseOR  ==  .Event:Hit
+   7C:  		SetConst  *Var[0]  00000001 
+   8C:  		SetConst  *Var[1]  .AnimPainRtion
+   9C:  		ExecWait DoNormalHit 
+   A8:  	EndCaseGroup
+   B0:  	Case  ==  .Event:BurnHit
+   BC:  		SetConst  *Var[0]  00000001 
+   CC:  		SetConst  *Var[1]  .AnimBurnRtion
+   DC:  		SetConst  *Var[2]  .AnimBurnRtion2 
+   EC:  		ExecWait DoBurnHit 
+   F8:  	Case  ==  .Event:BurnDeath
+  104:  		SetConst  *Var[0]  00000001 
+  114:  		SetConst  *Var[1]  .AnimBurnRtion
+  124:  		SetConst  *Var[2]  .AnimBurnRtion2 
+  134:  		ExecWait DoBurnHit 
+  140:  		SetConst  *Var[0]  00000001 
+  150:  		SetConst  *Var[1]  .AnimBurnRtion2 
+  160:  		ExecWait DoDeath 
+  16C:  		Return
+  174:  	Case  ==  .Event:SpinSmashHit
+  180:  		SetConst  *Var[0]  00000001 
+  190:  		SetConst  *Var[1]  .AnimPainRtion
+  1A0:  		ExecWait 8029B998 
+  1AC:  	Case  ==  .Event:SpinSmashDeath
+  1B8:  		SetConst  *Var[0]  00000001 
+  1C8:  		SetConst  *Var[1]  .AnimPainRtion
+  1D8:  		ExecWait 8029B998 
+  1E4:  		SetConst  *Var[0]  00000001 
+  1F4:  		SetConst  *Var[1]  .AnimDeadRtion
+  204:  		ExecWait DoDeath 
+  210:  		Return
+  218:  	Case  ==  .Event:ShockHit
+				Call     8026F6EC ( FFFFFF81 )
+  218:  		SetConst  *Var[0]  00000001 
+  228:  		SetConst  *Var[1]  .AnimPainRtion
+  238:  		ExecWait DoShockHit 
+  244:  		SetConst  *Var[0]  00000001 
+  254:  		SetConst  *Var[1]  .AnimPainRtion
+  264:  		ExecWait DoJumpBack 
+				SetConst  *Var[0]  00000001 
+				SetConst  *Var[1]  00F40504 
+				ExecWait DoReturnHome 
+  378:  	Case  ==  .Event:ShockDeath
+  384:  		SetConst  *Var[0]  00000001 
+  394:  		SetConst  *Var[1]  .AnimPainRtion
+  3A4:  		ExecWait DoShockHit 
+  3B0:  		SetConst  *Var[0]  00000001 
+  3C0:  		SetConst  *Var[1]  .AnimDeadRtion
+  3D0:  		ExecWait DoDeath 
+  3DC:  		Return
+  3E4:  	Case  ==  .Event:StarBeam
+  3F0:  	CaseOR  ==  00000017
+  3FC:  	CaseOR  ==  .Event:Immune
+  408:  	CaseOR  ==  .Event:AirLiftFailed
+  414:  		SetConst  *Var[0]  00000001 
+  424:  		SetConst  *Var[1]  .AnimIdleRtion
+  434:  		ExecWait DoImmune 
+  440:  	EndCaseGroup
+  448:  	Case  ==  .Event:Death
+  454:  		SetConst  *Var[0]  00000001 
+  464:  		SetConst  *Var[1]  .AnimPainRtion
+  474:  		ExecWait DoNormalHit 
+  480:  		Wait     0000000A 
+  48C:  		SetConst  *Var[0]  00000001 
+  49C:  		SetConst  *Var[1]  .AnimDeadRtion
+  4AC:  		ExecWait DoDeath 
+  4B8:  		Return
+  4C0:  	Case  ==  .Event:EndFirstStrike
+  4CC:  		Call     SetAnimationRate 	( .Actor:Self 00000001 *Fixed[2.0] )
+  4E4:  		Call     SetAnimation 	( .Actor:Self 00000001 .AnimRunRtion )
+  4FC:  		Call     SetGoalToHome 	( .Actor:Self )
+  50C:  		Call     SetActorSpeed 	( .Actor:Self *Fixed[4.0] )
+  520:  		Call     RunToGoal   	( .Actor:Self 00000000 .False )
+  538:  		Call     SetAnimationRate 	( .Actor:Self 00000001 *Fixed[1.0] )
+  550:  		Call     HPBarToHome 	( .Actor:Self )
+  560:  	Case  ==  .Event:RecoverStatus
+  56C:  		SetConst  *Var[0]  00000001 
+  57C:  		SetConst  *Var[1]  .AnimIdleRtion
+  58C:  		ExecWait DoRecover 
+  598:  	Case  ==  .Event:ScareAway
+  5A4:  		SetConst  *Var[0]  00000001 
+  5B4:  		SetConst  *Var[1]  .AnimRunRtion
+  5C4:  		SetConst  *Var[2]  .AnimPainRtion
+  5D4:  		ExecWait DoScareAway 
+  5E0:  		Return
+  5E8:  	Case  ==  .Event:BeginAirLift
+  5F4:  		SetConst  *Var[0]  00000001 
+  604:  		SetConst  *Var[1]  .AnimRunRtion
+  614:  		ExecWait DoAirLift 
+  620:  	Case  ==  .Event:BlowAway
+  62C:  		SetConst  *Var[0]  00000001 
+  63C:  		SetConst  *Var[1]  .AnimPainRtion
+  64C:  		ExecWait DoBlowAway 
+  658:  		Return
+  660:  	Default
+  668:  EndSwitch
+  670:  Call     SetAnimation 	( .Actor:Self 00000001 .AnimIdleRtion )
+  688:  Call     EnableIdleScript 	( .Actor:Self 00000001 )
+  69C:  Call     UseIdleAnimation 	( .Actor:Self .True )
+  6B0:  Return
+  6B8:  End
+}
+
+#new:Script $Script_TakeTurn_DarkReplicator
+{
+	%Die if you have 0 hp
+	Call GetActorHP ( .Actor:Self *VarE )
+	If *VarE < 1
+		%Guess I'll die
+		SetConst  *Var[0]  00000001 
+		SetConst  *Var[1]  .AnimDeadRtor 
+		ExecWait DoDeath 
+		Return
+	EndIf
+	ExecWait $Script_GetOpenPosition
+	If *Var[A] == FFFFFFFF
+		ExecWait $Script_CastSpell
+		Return
+	EndIf
+	ExecWait $Script_MakeClones
+	Return
+	End
+}
+
+#new:Script $Script_TakeTurn_DarkReplication
+{
+	ExecWait $Script_LungeAttack_DarkReplication
+	Return
+	End
+}
+
+#new:Script $Script_CastSpell
+{
+	Call	SetActorVar ( .Actor:Self 00000001 00000001 )
+	Set *VarE 0
+	ExecWait $Script_CastSpellB
+	Return
+	End
+}
+
+#new:Script $Script_CastSpellB %actual animations n stuff
+{
+	Call     UseIdleAnimation 	( .Actor:Self .False )
+	Call     EnableIdleScript 	( .Actor:Self 00000000 )
+	Call     UseBattleCamPreset 	( 0000000E )
+	Call     BattleCamTargetActor ( .Actor:Self )
+	Wait     0000000F 
+	Call     PlaySoundAtActor 	( .Actor:Self 000020B8 )
+	Call     SetAnimation 	( .Actor:Self 00000001 00F40506 )
+	Call     GetActorPos 	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+	Call     GetStatusFlags ( .Actor:Self *Var[A] )
+	If  *Var[A]  &  00080000 
+		Add  *Var[1]  00000008 
+		SetF  *Var[3]  *Fixed[0.40039062] 
+	Else
+		Add  *Var[1]  00000014 
+		SetF  *Var[3]  *Fixed[1.0] 
+	EndIf
+	Call     PlayEffect  	( 00000013 00000001 *Var[0] *Var[1] *Var[2] *Var[3] 00000028 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+	Call     EnemyCreateTargetList 	( 00008002 )
+	Call     InitTargetIterator	( )
+	Label    00000000 
+	Call     GetOwnerTarget 	( *Var[0] *Var[1] )
+	Call	 GetOwnerID 		( *VarE )
+	If *Var0 == *VarE 
+		Goto 2
+	EndIf
+	Thread
+		Wait     00000005 
+		Call     PlaySoundAtActor    ( *Var[0] 0000206D )
+		Call     PlaySoundAtActor    ( *Var[0] 00000214 )
+		Wait     30` 
+		Call     PlaySoundAtActor    ( *Var[0] 0000025C )
+	EndThread
+	Thread
+		Call	8026BF48	( 00000001 )
+		Call     HealActor  ( *Var[0] 00000008 00000001 ) %8 hp each
+		Call	8026BF48	( 00000000 )
+	EndThread
+	Label 2
+	Call     ChooseNextTarget    	( .Iter:Next *Var[0] )
+	If       *Var[0]  !=  FFFFFFFF
+		Goto     00000000 
+	EndIf
+	Call     8027114C 	( )
+	Wait     1` 
+	Call     UseBattleCamPreset 	( 00000002 )
+	Wait     10` 
+	Label 3
+	Wait	 15`
+	Call     SetAnimation 	( .Actor:Self 00000001 .AnimIdleRtor )
+	Call     UseIdleAnimation 	( .Actor:Self .True )
+	Call     EnableIdleScript 	( .Actor:Self .True )	
+	Return
+	End
+}
+
+#new:Script $Script_LungeAttack_DarkReplication
+{
+    0:  Call     UseIdleAnimation 	( .Actor:Self .False )
+   14:  Call     EnableIdleScript 	( .Actor:Self 00000000 )
+   28:  Call     SetTargetActor ( .Actor:Self .Actor:Player )
+   3C:  Call     UseBattleCamPreset 	( 0000003F )
+   4C:  Call     BattleCamTargetActor ( .Actor:Self )
+   5C:  Call     8024ECF8 ( FFFFFFFF 00000001 00000000 )
+   74:  Call     SetAnimation 	( .Actor:Self 00000001 004E0507 )
+   8C:  Wait     00000014 
+   98:  Call     SetActorSounds ( FFFFFF81 00000002 000002CB 00000000 )
+   B4:  Call     EnemyTestTarget ( .Actor:Self *Var[0] 00000000 00000000 00000001 00000010 )
+   D8:  Switch  *Var[0] 
+   E4:  	CaseOR  ==  .HitResult:Miss % 6
+   F0:  	CaseOR  ==  .HitResult:Lucky % 5
+   FC:  		Set  *Var[A]  *Var[0] 
+  10C:  		Call     UseBattleCamPreset 	( 00000002 )
+  11C:  		Call     SetAnimation 	( .Actor:Self 00000001 004E0508 )
+  134:  		Call     SetGoalToTarget 	( .Actor:Self )
+  144:  		Call     AddGoalPos 	( .Actor:Self FFFFFF9C 00000000 00000000 )
+  160:  		Call     SetActorJumpGravity 	( .Actor:Self *Fixed[0.30078125] )
+  174:  		Call     JumpToGoal  	( .Actor:Self 00000011 00000000 00000001 00000000 )
+  194:  		If  *Var[A]  ==  00000005 
+  1A4:  			Call     EnemyTestTarget ( .Actor:Self *Var[0] 80000000 00000000 00000000 00000000 )
+  1C8:  		EndIf
+  1D0:  		Wait     0000000A 
+  1DC:  		Call     GetActorPos 	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+  1F8:  		Call     SetActorPos 	( .Actor:Self *Var[0] 00000000 *Var[2] )
+  214:  		Call     SetAnimation 	( .Actor:Self 00000001 004E0502 )
+  22C:  		Call     8026F838 ( FFFFFF81 00000002 )
+  240:  		Wait     0000000F 
+  24C:  		Call     YieldTurn   	( )
+  258:  		Call     SetActorYaw 	( .Actor:Self 000000B4 )
+  26C:  		Call     AddActorDecoration 	( .Actor:Self 00000001 00000000 .Decoration:Sweat )
+				SetConst  *Var[0]  00000001 
+				SetConst  *Var[1]  004E0504 
+				ExecWait DoReturnHome 
+  294:  		Call     RemoveActorDecoration 	( .Actor:Self 00000001 00000000 )
+  2AC:  		Call     SetActorYaw 	( .Actor:Self 00000000 )
+  2C0:  		Call     EnableIdleScript 	( .Actor:Self 00000001 )
+  2D4:  		Call     UseIdleAnimation 	( .Actor:Self .True )
+  2E8:  		Return
+  2F0:  	EndCaseGroup
+  2F8:  EndSwitch
+  300:  Call     SetAnimation 	( .Actor:Self 00000001 004E0508 )
+  318:  Call     SetGoalToTarget 	( .Actor:Self )
+  328:  Call     GetStatusFlags ( .Actor:Self *Var[A] )
+  33C:  If  *Var[A]  &  00080000 
+  34C:  	Call     AddGoalPos 	( .Actor:Self *Fixed[4.0] *Fixed[-6.0] 00000000 )
+  368:  Else
+  370:  	Call     AddGoalPos 	( .Actor:Self 0000000A FFFFFFF1 00000000 )
+  38C:  EndIf
+  394:  Call     SetActorJumpGravity 	( .Actor:Self *Fixed[0.30078125] )
+  3A8:  Call     JumpToGoal  	( .Actor:Self 0000000C 00000000 00000001 00000000 )
+  3C8:  Wait     00000002 
+  3D4:  Call     SetGoalToTarget 	( .Actor:Self )
+		%Goes from 1x to 2x based on own HP
+		Call	 GetActorHP ( .Actor:Self *Var1 )
+		Call	 GetEnemyMaxHP ( .Actor:Self *Var2 )
+		Sub *Var1 *Var2
+		Mul *Var1 -1`
+		Add *Var1 *Var2
+		%(2 x Var2 - Var1)
+		Mul *Var1 6`			%Base attack power
+		Div *Var1 *Var2		
+  3E4:  Call     EnemyDamageTarget 	( .Actor:Self *Var[0] 00000000 00000000 00000000 *Var1 00000020 )
+  40C:  Switch  *Var[0] 
+  418:  	CaseOR  ==  00000000 
+  424:  	CaseOR  ==  00000002 
+  430:  		Call     UseBattleCamPreset 	( 00000002 )
+  440:  		Call     8026F838 ( FFFFFF81 00000002 )
+  454:  		Call     SetAnimation 	( .Actor:Self 00000001 004E0509 )
+  46C:  		Call     GetActorPos 	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+  488:  		Call     SetActorJumpGravity 	( .Actor:Self *Fixed[0.5] )
+  49C:  		Add  *Var[0]  0000001E 
+  4AC:  		Call     SetGoalPos 	( .Actor:Self *Var[0] 00000000 *Var[2] )
+  4C8:  		Call     JumpToGoal  	( .Actor:Self 00000014 00000000 00000001 00000000 )
+  4E8:  		Add  *Var[0]  00000014 
+  4F8:  		Call     SetGoalPos 	( .Actor:Self *Var[0] 00000000 *Var[2] )
+  514:  		Call     JumpToGoal  	( .Actor:Self 0000000A 00000000 00000001 00000000 )
+  534:  		Wait     0000000A 
+  540:  		Call     YieldTurn   	( )
+				SetConst  *Var[0]  00000001 
+				SetConst  *Var[1]  004E0504 
+				ExecWait DoReturnHome 
+  558:  	EndCaseGroup
+  560:  EndSwitch
+  568:  Call     EnableIdleScript 	( .Actor:Self 00000001 )
+  57C:  Call     UseIdleAnimation 	( .Actor:Self .True )
+  590:  Return
+  598:  End
+}

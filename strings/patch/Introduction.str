@@ -1,0 +1,53 @@
+#message:00:000
+{
+	[Color:12]This should not appear[Color:0A][End]
+}
+
+#message:00:050
+{
+	[Style Right]
+	[Voice Bowser][PrintRising]Gwaa ha ha ha ha ha![BR]
+	[/fx][Pause 5]Long time no see, Princess[BR]
+	Peach! [BR]How do you like my new look?[wait][End]
+}
+
+#message:00:058
+{
+	[Style Right]
+	[Voice Bowser]Good old Mario...always fighting.[BR]
+	[Pause 10]You're a thorn in my side.[BR]
+	[wait][Next]
+	But today, your pathetic little[BR]
+	attacks won't beat me![wait][End]
+}
+
+#message:00:05B
+{
+	[Style Right]
+	[Voice Bowser][PrintRising]Gwa ha ha ha ha ha![BR]
+	[/fx][Pause 5]Is that all you've got? How sad![BR]
+	I don't even need the Star Rod[BR]
+	to beat you now![wait][End]
+}
+
+#message:00:05C
+{
+	[Style Right]
+	[Voice Bowser]Yup, just as I expected. Mario's[BR]
+	no match for the new me.[BR]
+	[wait][Next]
+	It's not even worth my time to[BR]
+	toy with you anymore, Mario.[BR]
+	[Pause 10]It's time to end this![BR]
+	[wait][Next]
+	Here we go, Mario![BR]
+	[PrintRising]Good night![wait][End]
+}
+
+#message:00:060
+{
+	[Style Right]
+	[Voice Bowser]With the powers of the Star Rod[BR]
+	and the Dark Star combined,[BR]
+	I can do anything![wait][End]
+}

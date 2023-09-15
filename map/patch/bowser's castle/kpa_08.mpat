@@ -1,0 +1,35 @@
+@ $NpcGroup_80242110
+{
+	00000000 $NpcSettings_80241ED0 ~Vec3f:NPC_80242110 % -210 0 25
+	00000C00 00000000 00000000 00000000 0000010E
+	~İtems:5:SuperShroom:5:MapleSyrup:5:ThunderRage:5:StopWatch:5
+	~HP:Standard:2 ~FP:Standard:5 ~CoinBonus:1:3
+	~Movement:NPC_80242110
+	00560501 00560501 00560501 00560501 00560501 00560501 00560504 00560504
+	00560502 00560503 00560501 00560501 00560501 00560501 00560501 00560501
+	00000003 00000000 $ExtraAnimationList_80241EFC 00000000 % no tattle string
+	%
+	% $NpcGroup_80242110[1F0]
+	00000001 $NpcSettings_802420B8 ~Vec3f:NPC_80242300 % 0 -1000 0
+	00800D00 00000000 00000000 00000000 0000005A
+	~NoDrops
+	~Movement:NPC_80242300
+	00560500 00560500 00560500 00560500 00560500 00560500 00560500 00560500
+	00560500 00560500 00560500 00560500 00560500 00560500 00560500 00560500
+	00000000 00000000 00000000 00000000 % no tattle string
+}
+
+@ $Script_MakeEntities
+{
+    0:  Set   *AreaFlag[003]  .False
+   10:  Call  MakeEntity    ( .Entity:RedSwitch ~Vec4d:Entity80241C28 80000000 )
+   34:  Call  AssignScript  ( $Script_80241830 )
+   44:  Call  ParentColliderToModel ( ~Collider:o19 ~Model:m_yuka )
+   58:  Call  TranslateGroup        ( ~Model:move 00000000 FFFFFFCE 00000000 )
+   74:  Call  UpdateColliderTransform   ( ~Collider:o19 )
+   84:  Call  ParentColliderToModel ( ~Collider:o90 ~Model:m2_yuka )
+   98:  Call  TranslateGroup        ( ~Model:move2 00000000 FFFFFF9D FFFFFFFF )
+   B4:  Call  UpdateColliderTransform   ( ~Collider:o90 )
+   C4:  Return
+   CC:  End
+}

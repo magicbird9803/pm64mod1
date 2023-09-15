@@ -1,0 +1,131 @@
+%Freebies
+
+#export:Data $FreebieCounter
+{
+	00000000
+}
+
+#export:Data $WasLastItemAFreebie
+{
+	00000000
+}
+
+@Hook 196814
+{
+	PUSH	RA, S1, S2, S3, A0, A1, A2, A3, T0, T1, T2, T3		%no idea how messy the message function is
+	JAL 	$IsBadgeEquipped
+	ORI		A0, R0, .Item:ItemSaver	
+	BEQ		A0, R0, .notfreebie
+	NOP
+	LB      A0, 1B4 (V0)
+	LI		A1, .Item:ObsidianShroom
+	BEQ		A0, A1, .notfreebie
+	NOP
+	LAW 	S1, $FreebieCounter
+	ADDI	S1, S1, 1
+	SAW 	S1, $FreebieCounter
+	SAW		R0, $WasLastItemAFreebie
+	LI		S2, 3
+	BLT		S1, S2	.notfreebie
+	NOP
+	.freebie
+	LI		A0, 002F00E3
+	LI		A1, 5A
+	JAL		$ShowCustomMessage_ASM
+	NOP
+	LI		S1, 1`
+	SAW		S1, $WasLastItemAFreebie
+	POP		RA, S1, S2, S3, A0, A1, A2, A3, T0, T1, T2, T3		%no idea how messy the message function is
+	SAW 	R0, $FreebieCounter
+	JAL		~Func:sort_items
+	NOP
+	%SB      R0, 1B4 (V0)			get rid of this!
+	J		80267F3C
+	NOP	
+	.notfreebie
+	POP		RA, S1, S2, S3, A0, A1, A2, A3, T0, T1, T2, T3
+	JAL		~Func:sort_items
+	SB      R0, 1B4 (V0)
+	J		80267F3C
+	NOP
+}
+
+%Item icon is replaced with item saver icon
+@Hook 41B0E4
+{
+	PUSH	RA, A0, S0, S1, S2
+	JAL 	$IsBadgeEquipped
+	ORI		A0, R0, .Item:ItemSaver	
+	BEQ		A0, R0, .notfreebie
+	NOP
+	LAW 	S1, $FreebieCounter
+	ADDI	S1, S1, 1
+	LI		S2, 3
+	BLT		S1, S2	.notfreebie
+	NOP
+	.freebie
+	POP		RA, A0, S0, S1, S2
+	ADDIU	V0, R0, 16F
+	J		802A635C
+	SH		V0, 1AE (S6)
+	.notfreebie
+	POP		RA, A0, S0, S1, S2
+	ADDIU	V0, R0, 16C
+	J		802A635C
+	SH		V0, 1AE (S6)
+}
+
+/%
+@Function 41B0E4	%802A6354
+{
+	LI		V0, 16C
+}
+%/
+
+#new:Data $Icon_MenuItem_Free
+{ ~RasterFile:CI-4:menu_items_free.png }
+
+#new:Data $Palette_MenuItem_Free
+{ ~PaletteFile:CI-4:menu_items_free.png }
+
+#new:HudElementScript $HudScript_MenuItem_Free
+{
+	SetVisible
+	SetTileSize ( .IconSize:32x32 )
+	Loop
+		SetCI       ( 60` $Icon_MenuItem_Free $Palette_MenuItem_Free )
+	Restart
+	End
+}
+
+#new:Data $???_NewItemSet
+{
+	$HudScript_MenuItem_Free 8010894C
+}
+
+%Second patch
+%41A718 --> 802A5988
+%  430:  LA        A3, $???_802AB388
+@Hook 41AB48
+{
+	PUSH	RA, A0, S0, S1, S2
+	JAL 	$IsBadgeEquipped
+	ORI		A0, R0, .Item:ItemSaver	
+	BEQ		A0, R0, .notfreebie
+	NOP
+	LAW 	S1, $FreebieCounter
+	ADDI	S1, S1, 1
+	LI		S2, 3
+	BLT		S1, S2	.notfreebie
+	NOP
+	.freebie
+	POP		RA, A0, S0, S1, S2
+	LA      A3, $???_NewItemSet
+	J		802A5DC0
+	NOP
+	.notfreebie
+	POP		RA, A0, S0, S1, S2
+	LA      A3, 802AB388
+	J		802A5DC0
+	NOP
+}

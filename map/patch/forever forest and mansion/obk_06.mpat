@@ -1,0 +1,4 @@
+@ $Script_MakeEntities
+{
+   [10]  	Call  MakeItemEntity    ( .Item:BooPortraitB ~Vec3d:Item80240450 .ItemSpawnMode:Fixed_NeverVanish *GF_OBK06_Item_BoosPortrait )
+}

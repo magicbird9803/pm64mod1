@@ -1,0 +1,99 @@
+/%
+	All light partner fight
+	Not sure how possible this is
+%/
+
+#new:Script $Script_80234100
+{
+		Call	EnableModel		( 00000007 .False )
+		Call	EnableModel		( 00000008 .False )
+		Call	EnableModel		( 00000009 .False )
+		Call	EnableModel		( 0000000A .False )
+		Call	EnableModel		( 0000000B .False )		
+		Call	EnableModel		( 0000000C .False )		
+		Switch *PitFloor
+			Case == 1`
+				Call	EnableModel		( 00000007 .True )		
+			Case == 2`
+				Call	EnableModel		( 00000008 .True )		
+			Case == 3`
+				Call	EnableModel		( 00000009 .True )		
+			Case == 4`
+				Call	EnableModel		( 0000000A .True )		
+			Case == 5`
+				Call	EnableModel		( 0000000B .True )		
+			Case == 6`
+				Call	EnableModel		( 0000000C .True )		
+		EndSwitch		
+    0:  Set   *VarA  *Var0
+   10:  Call  SetTexPanner  ( *VarA 00000001 )
+   24:  Set   *Var0  00000000
+   34:  Set   *Var1  00000000
+   44:  Loop
+   50:  	Call  SetTexPanOffset   ( 00000001 00000000 *Var0 *Var1 )
+			Mul   *Var1 -1`
+			Call  SetTexPanOffset   ( 00000001 00000000 *Var0 *Var1 )
+			Mul   *Var1 -1`
+   6C:  	Add   *Var0  000001C0
+   7C:  	Add   *Var1  000001C0
+   8C:  	Wait  5`
+   98:  EndLoop
+   A0:  Return
+   A8:  End
+}
+
+#new:Stage $Stage_LightRush
+{
+"hos_tex"
+"hal_b01_shape"
+"hal_b01_hit"
+$Script_BeforeBattle_Hall
+$Script_AfterBattle_Hall
+00000000 
+00000000 
+00000000 
+00000000 
+00000000 
+}
+
+#new:Script $Script_BeforeBattle_Hall
+{
+	Thread
+		Set   *Var0  00000005
+		Exec  $Script_80234100
+	EndThread
+	Return
+	End
+}
+
+#new:Script $Script_AfterBattle_Hall
+{
+	Return
+	End
+}
+
+#new:StageTable $StageTable
+{
+"hal_01" $Stage_LightRush
+00000000 00000000 
+}
+
+#new:FormationTable $FormationTable
+{
+00000000 00000008 $Formation_00 $Stage_LightRush 00000000
+00000000 00000000 00000000 00000000 00000000 % unused
+}
+
+#import newenemy/LightPartners.bpat
+
+#new:Formation $Formation_00
+{
+$DarkGoombario 00000000 00000010 00000000 00000000 00000000 00000000
+$DarkKooper 00000001 0000000F 00000000 00000000 00000000 00000000
+$DarkBombette 00000002 0000000E 00000000 00000000 00000000 00000000
+$DarkSushie 00000003 0000000D 00000000 00000000 00000000 00000000
+$DarkParakarry 00000004 0000000C 00000000 00000000 00000000 00000000
+$DarkBow 00000005 0000000B 00000000 00000000 00000000 00000000
+$DarkWatt 00000006 0000000A 00000000 00000000 00000000 00000000
+$DarkLakilester 00000007 00000009 00000000 00000000 00000000 00000000
+}

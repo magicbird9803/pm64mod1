@@ -1,0 +1,333 @@
+@ $DefenseTable_8023A1F8 %he gets the standard -1 to throw
+{
+.Element:Normal 00000000
+.Element:Throw	FFFFFFFF
+.Element:End
+}
+
+@ $Script_8023AB84
+{
+[7C4]  		Call     PartnerDamageEnemy 	( *Var[0] 10050000 00000000 00000000 *Var[E] 00000070 )
+%change it to throw damage (40000), but theres also the random lakilester flag in there
+}
+
+%i think this is the multi hit
+%since it iterates over all enemies and does damage
+
+@ $Script_8023B45C
+{
+[79C]  		Call     PartnerDamageEnemy 	( *Var[0] 30050000 00000000 00000000 *Var[F] 00000070 )
+[7C8]  		Call     PartnerDamageEnemy 	( *Var[0] 30050000 00000000 00000000 *Var[F] 00000030 )
+}
+
+
+%Avoid division by 0
+@ $Function_80238D8C
+{
+    0:  ADDIU     SP, SP, FFC8
+    4:  SW        S5, 24 (SP)
+    8:  LAW       S5, 800DC14C
+   10:  SW        RA, 34 (SP)
+   14:  SW        S8, 30 (SP)
+   18:  SW        S7, 2C (SP)
+   1C:  SW        S6, 28 (SP)
+   20:  SW        S4, 20 (SP)
+   24:  SW        S3, 1C (SP)
+   28:  SW        S2, 18 (SP)
+   2C:  SW        S1, 14 (SP)
+   30:  SW        S0, 10 (SP)
+   34:  SW        A0, 38 (SP)
+   38:  SAW       R0, $End[150]
+   40:  SAW       R0, $End[154]
+   48:  LB        V0, 40C (S5)
+   4C:  BLEZ      V0, .o74
+   50:  CLEAR     S3
+   54:  LA        V1, $End[F0]
+        .o5C
+   5C:  SW        R0, 0 (V1)
+   60:  LB        V0, 40C (S5)
+   64:  ADDIU     S3, S3, 1
+   68:  SLT       V0, S3, V0
+   6C:  BNE       V0, R0, .o5C
+   70:  ADDIU     V1, V1, 4
+        .o74
+   74:  CLEAR     S6
+   78:  COPY      S2, S6
+   7C:  LB        V0, 40C (S5)
+   80:  BLEZ      V0, .o1DC
+   84:  COPY      S3, S6
+   88:  LI        S7, 51EB851F
+   90:  LA        S8, $End[F0]
+        .o98
+   98:  ADDU      V0, S5, S3
+   9C:  LB        S4, 40D (V0)
+   A0:  SLL       V0, S4, 2
+   A4:  ADDU      V0, V0, S4
+   A8:  SLL       V0, V0, 2
+   AC:  ADDIU     V0, V0, 22C
+   B0:  ADDU      S0, S5, V0
+   B4:  JAL       ~Func:get_actor
+   B8:  LH        A0, 0 (S0)
+   BC:  COPY      S1, V0
+   C0:  LH        A1, 2 (S0)
+   C4:  JAL       ~Func:get_actor_part
+   C8:  COPY      A0, S1
+   CC:  LHU       A0, 1B8 (S1)		%2 byte hp fix
+   D0:  SLL       V1, A0, 1
+   D4:  ADDU      V1, V1, A0
+   D8:  SLL       V1, V1, 3
+   DC:  ADDU      V1, V1, A0
+   E0:  LHU        A0, 1BA (S1)		%2 byte hp fix
+   E4:  SLL       V1, V1, 2
+   E8:  BNE       A0, R0, .oF4
+   EC:  DIV       V1, A0
+   F0:  BREAK     1C00
+        .oF4
+   F4:  LI        AT, FFFF
+   F8:  BNE       A0, AT, .o10C
+   FC:  LUI       AT, 8000
+  100:  BNE       V1, AT, .o10C
+  104:  NOP
+  108:  BREAK     1800
+        .o10C
+  10C:  MFLO      V1
+  110:  COPY      A1, V0
+  114:  LW        A0, 8 (S1)
+  118:  LI        V0, 64
+  11C:  LBU       A0, 1A (A0)
+  120:  BLEZ      A0, .o1BC
+  124:  SUBU      V0, V0, V1
+  128:  MULT      A0, V0
+  12C:  MFLO      V1
+  130:  NOP
+  134:  NOP
+  138:  MULT      V1, S7
+  13C:  SRA       V1, V1, 1F
+  140:  MFHI      A3
+  144:  SRA       V0, A3, 5
+  148:  SUBU      V0, V0, V1
+  14C:  ADDU      A0, A0, V0
+  150:  SLTI      V0, A0, 65
+  154:  BEQL      V0, R0, .o15C
+  158:  LI        A0, 64
+        .o15C
+  15C:  LB        V0, 210 (S1)
+  160:  BEQ       V0, R0, .o198
+  164:  SLL       V1, A0, 2
+  168:  ADDU      V1, V1, A0
+  16C:  SLL       V0, V1, 4
+  170:  SUBU      V0, V0, V1
+  174:  SLL       V0, V0, 1
+  178:  MULT      V0, S7
+  17C:  SRA       V0, V0, 1F
+  180:  MFHI      A2
+  184:  SRA       V1, A2, 5
+  188:  SUBU      A0, V1, V0
+  18C:  SLTI      V0, A0, 97
+  190:  BEQL      V0, R0, .o198
+  194:  LI        A0, 96
+        .o198
+  198:  LB        V1, 218 (S1)
+  19C:  LI        V0, E
+  1A0:  BEQL      V1, V0, .o1A8
+  1A4:  CLEAR     A0
+        .o1A8
+  1A8:  LW        V0, 7C (A1)
+  1AC:  ANDI      V0, V0, 20
+  1B0:  BNEL      V0, R0, .o1B8
+  1B4:  CLEAR     A0
+        .o1B8
+  1B8:  ADDIU     S2, S2, 1
+        .o1BC
+  1BC:  SLL       V0, S4, 2
+  1C0:  ADDU      V0, V0, S8
+  1C4:  SW        A0, 0 (V0)
+  1C8:  LB        V0, 40C (S5)
+  1CC:  ADDIU     S3, S3, 1
+  1D0:  SLT       V0, S3, V0
+  1D4:  BNE       V0, R0, .o98
+  1D8:  ADDU      S6, S6, A0
+        .o1DC
+  1DC:  BEQL      S2, R0, .o20C
+  1E0:  CLEAR     S6
+  1E4:  BNE       S2, R0, .o1F0
+  1E8:  DIV       S6, S2
+		NOP
+  %1EC:  BREAK     1C00
+        .o1F0
+  1F0:  LI        AT, FFFF
+  1F4:  BNE       S2, AT, .o208
+  1F8:  LUI       AT, 8000
+  1FC:  BNE       S6, AT, .o208
+  200:  NOP
+  204:  BREAK     1800
+        .o208
+  208:  MFLO      S6
+        .o20C
+  20C:  LW        A2, 38 (SP)
+  210:  SW        S6, 84 (A2)
+  214:  LB        V0, 40C (S5)
+  218:  BLEZ      V0, .o2AC
+  21C:  CLEAR     S3
+  220:  LA        S7, $End[F0]
+  228:  LI        S8, FFFF
+  22C:  ADDU      V0, S5, S3
+        .o230
+  230:  LB        S4, 40D (V0)
+  234:  SLL       S2, S4, 2
+  238:  ADDU      V0, S2, S4
+  23C:  SLL       V0, V0, 2
+  240:  ADDIU     V0, V0, 22C
+  244:  ADDU      S0, S5, V0
+  248:  JAL       ~Func:get_actor
+  24C:  LH        A0, 0 (S0)
+  250:  COPY      S1, V0
+  254:  LH        A1, 2 (S0)
+  258:  JAL       ~Func:get_actor_part
+  25C:  COPY      A0, S1
+  260:  LB        V1, 218 (S1)
+  264:  LI        A2, E
+  268:  BEQ       V1, A2, .o280
+  26C:  COPY      A1, V0
+  270:  LW        V0, 7C (A1)
+  274:  ANDI      V0, V0, 20
+  278:  BEQ       V0, R0, .o28C
+  27C:  ADDU      V1, S2, S7
+        .o280
+  280:  ADDU      V0, S2, S7
+  284:  BEQ       R0, R0, .o298
+  288:  SW        S8, 0 (V0)
+        .o28C
+  28C:  LW        V0, 0 (V1)
+  290:  BNEL      V0, R0, .o298
+  294:  SW        S6, 0 (V1)
+        .o298
+  298:  LB        V0, 40C (S5)
+  29C:  ADDIU     S3, S3, 1
+  2A0:  SLT       V0, S3, V0
+  2A4:  BNE       V0, R0, .o230
+  2A8:  ADDU      V0, S5, S3
+        .o2AC
+  2AC:  LW        RA, 34 (SP)
+  2B0:  LW        S8, 30 (SP)
+  2B4:  LW        S7, 2C (SP)
+  2B8:  LW        S6, 28 (SP)
+  2BC:  LW        S5, 24 (SP)
+  2C0:  LW        S4, 20 (SP)
+  2C4:  LW        S3, 1C (SP)
+  2C8:  LW        S2, 18 (SP)
+  2CC:  LW        S1, 14 (SP)
+  2D0:  LW        S0, 10 (SP)
+  2D4:  LI        V0, 2
+  2D8:  JR        RA
+  2DC:  ADDIU     SP, SP, 38
+}
+
+
+
+%Hurricane is now a piercing multihit (it used to just be a clone of spook)
+%Anything that would be vulnerable to hurricane now gets a bonus +3 damage
+%version 2: damage is constant now, action command has constant difficulty, success does 4 damage while fail does 2 damage
+
+%minor problem: it makes the front enemy one dimensional
+@ $Script_8023CCC4
+{
+    0:  Call     LoadActionCommand 	( 00000014 )
+   10:  Call     802A9000 ( )
+   1C:  Call     802691C8 ( 00000001 00000064 00000000 00000000 00000000 00000000 )
+   40:  Call     80269344 ( 0000000F )
+   50:  Call     80269EAC ( 00000014 )
+   60:  Call     UseBattleCamPreset 	( 00000013 )
+   70:  Call     SetBattleCamTarget 	( FFFFFFD3 00000036 00000000 )
+   88:  Call     SetBattleCamOffsetZ 	( 00000000 )
+   98:  Call     SetBattleCamZoom  	( 00000118 )
+   A8:  Call     MoveBattleCamOver 	( 00000028 )
+   B8:  Call     InitTargetIterator 	( )
+   C4:  Call     SetGoalToHome 	( .Actor:Partner )
+   D4:  Call     SetAnimation 	( .Actor:Partner FFFFFFFF 00100003 )
+   EC:  Call     AddGoalPos 	( .Actor:Partner 00000028 00000014 00000000 )
+  108:  Call     FlyToGoal  	( .Actor:Partner 0000001E 00000000 .Easing:CosInOut )
+  124:  Call     SetAnimation 	( .Actor:Partner FFFFFFFF 00100001 )
+  13C:  Wait     0000000F 
+  148:  Call     $Function_80238D8C ( )
+		Set 	 *Var0  100`	%action command doesn't really matter anymore
+  154:  Call     802A91A0 ( 00000000 00000093 00000003 *Var[0] )
+  170:  Call     SetBattleFlagBits 	( 00004000 .False )
+  184:  Call     SetActorRotationOffset 	( .Actor:Partner 00000000 00000014 00000000 )
+  1A0:  Call     UseBattleCamPreset 	( 00000013 )
+  1B0:  Call     SetBattleCamTarget 	( 00000023 00000036 00000000 )
+  1C8:  Call     SetBattleCamOffsetZ 	( 00000000 )
+  1D8:  Call     SetBattleCamZoom  	( 000001AE )
+  1E8:  Call     MoveBattleCamOver 	( 00000096 )
+  1F8:  Call     8024ECF8 ( 00000000 00000000 00000001 )
+  210:  Call     PlaySoundAtActor 	( .Actor:Partner 00000288 )
+  224:  Thread
+  22C:  	Call     $Function_80239140 ( )
+  238:  EndThread
+  240:  Wait     00000002 
+  24C:  Loop     00000096 
+  258:  	Call     $Function_8023A1B0 ( )
+  264:  	If  *Var[0]  ==  00000000 
+  274:  		BreakLoop
+  27C:  	EndIf
+  284:  	Call     802694F8 ( *Var[0] )
+  294:  	If  *Var[0]  ==  00000064 
+  2A4:  		BreakLoop
+  2AC:  	EndIf
+  2B4:  	Wait     00000001 
+  2C0:  EndLoop
+  2C8:  Wait     0000000F 
+  2D4:  Call     802694F8 ( *Var[0] )
+  2E4:  Switch  *Var[0] 
+  2F0:  	Case  >  00000063 
+  2FC:  		Call     UseBattleCamPreset 	( 00000004 )
+  30C:  	Default
+  314:  		Call     UseBattleCamPreset 	( 00000033 )
+  324:  EndSwitch
+  32C:  Call     InitTargetIterator 	( )
+  338:  Label    0000000A 
+  344:  Call     SetGoalToTarget 	( .Actor:Self )
+		%
+  720: 	Call     PartnerTestEnemy 	( *Var[0] 00000000 00000014 00000000 00000002 00000010 ) %uncomment to prevent invis hits
+  744: 	If  *Var[0]  ==  00000006 
+  754: 		Goto     0000000B
+  760: 	EndIf
+		%
+		/%
+  354:  Call     $Function_8023906C ( ) %determine the chance
+  360:  If  *Var[0]  >  00000000 
+  370:  	Set  *Var[A]  *Var[0] % the stuff below controls the removal of enemies 
+  380:  	Thread
+  388:  		Call     $Function_80239F84 ( )
+  394:  		Call     SetBattleFlagBits 	( 01000000 .True )
+  3A8:  		Call     RemoveActor 	( *Var[A] )
+  3B8:  	EndThread
+  3D8:  	Call     PartnerDamageEnemy 	( *Var[2] 18000004 00000000 00000000 00000003 00000030 ) %6 piercing water damage (Change flags from 820 to 30?)
+  3C0:  Else
+  3C8:  	If  *Var[0]  ==  00000000 
+  3D8:  		Call     PartnerDamageEnemy 	( *Var[2] 18000004 00000000 00000000 00000003 00000030 ) %3 piercing water damage
+  3FC:  	EndIf
+  404:  EndIf
+		%/
+		Call  GetActionCommandResult    ( *VarF )
+		If *VarF == 64
+			Call     PartnerDamageEnemy 	( *Var[2] 18000004 00000000 00000000 00000005 00000070 ) %5 piercing water damage
+		Else
+			Call     PartnerDamageEnemy 	( *Var[2] 18000004 00000000 00000000 00000003 00000030 ) %3 piercing water damage
+		EndIf
+		Wait	 00000006 %prevent bugged damage indicators
+  40C:  Label    0000000B 
+  418:  Call     ChooseNextTarget 	( .Iter:Next *Var[0] )
+  42C:  If  *Var[0]  !=  FFFFFFFF 
+  43C:  	Goto     0000000A 
+  448:  EndIf
+  450:  Wait     00000022 
+  45C:  Call     SetActorRotation 	( .Actor:Partner 00000000 00000000 00000000 )
+  478:  Call     SetActorRotationOffset 	( .Actor:Partner 00000000 00000000 00000000 )
+  494:  ExecWait $Script_8023AAF8 
+  4A0:  Call     SetAnimation 	( .Actor:Partner FFFFFFFF 00100002 )
+  4B8:  Call     $Function_8023A19C ( )
+  4C4:  Call     80280818 ( )
+  4D0:  Return
+  4D8:  End
+}

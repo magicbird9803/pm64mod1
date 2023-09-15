@@ -1,0 +1,519 @@
+% Auto-generated script for hal_01
+
+#new:Header $Header
+{
+	[MainScript] $Script_Main
+	[Background] 80200000
+	[EntryList] $EntryList
+	[EntryCount] 1
+	[MapTattle] $Function_GetTattle
+}
+
+#new:EntryList $EntryList
+{
+	~Vec4f:Entry0
+}
+
+#new:Function $Function_GetTattle
+{
+	ADDIU     SP, SP, FFE8
+	LIO       V0, $MapTattle
+	JR        RA
+	ADDIU     SP, SP, 18
+}
+
+#string $MapTattle
+{
+[STYLE:TATTLE][EnableCDownNext]
+We're finally here. The final[BR]
+room. We can't turn back now![BR]
+[Wait][END]
+}
+
+#new:Script $Script_TexturePan_Update
+{
+    SetGroup  00000000
+    If  *Var[5]  ==  00000001
+        If  *Var[6]  ==  00000001
+            If  *Var[7]  ==  00000001
+                If  *Var[8]  ==  00000001
+                    Call  $Function_TexturePan_Simple ( )
+                    Return
+                EndIf
+            EndIf
+        EndIf
+    EndIf
+    Call  $Function_TexturePan_Complex ( )
+    Return
+    End
+}
+
+#new:Function $Function_TexturePan_Simple
+{
+    ADDIU       SP, SP, FFE8
+    SW          S0, 10 (SP)
+    COPY        S0, A0
+    SW          RA, 14 (SP)
+    LW          V1, A8 (S0)
+    LW          V0, 88 (S0)
+    ADDU        V1, V1, V0
+    BGEZ        V1, .o30
+    SW          V1, A8 (S0)
+    LUI         V0, 2
+    BEQ         R0, R0, .o40
+    ADDU        V0, V1, V0
+    .o30
+    LUI         A0, 2
+    SLT         V0, A0, V1
+    BEQ         V0, R0, .o44
+    SUBU        V0, V1, A0
+    .o40
+    SW          V0, A8 (S0)
+    .o44
+    LW          V1, AC (S0)
+    LW          V0, 8C (S0)
+    ADDU        V1, V1, V0
+    BGEZ        V1, .o64
+    SW          V1, AC (S0)
+    LUI         V0, 2
+    BEQ         R0, R0, .o74
+    ADDU        V0, V1, V0
+    .o64
+    LUI         A0, 2
+    SLT         V0, A0, V1
+    BEQ         V0, R0, .o78
+    SUBU        V0, V1, A0
+    .o74
+    SW          V0, AC (S0)
+    .o78
+    LW          V1, B0 (S0)
+    LW          V0, 90 (S0)
+    ADDU        V1, V1, V0
+    BGEZ        V1, .o98
+    SW          V1, B0 (S0)
+    LUI         V0, 2
+    BEQ         R0, R0, .oA8
+    ADDU        V0, V1, V0
+    .o98
+    LUI         A0, 2
+    SLT         V0, A0, V1
+    BEQ         V0, R0, .oAC
+    SUBU        V0, V1, A0
+    .oA8
+    SW          V0, B0 (S0)
+    .oAC
+    LW          V1, B4 (S0)
+    LW          V0, 94 (S0)
+    ADDU        V1, V1, V0
+    BGEZ        V1, .oCC
+    SW          V1, B4 (S0)
+    LUI         V0, 2
+    BEQ         R0, R0, .oDC
+    ADDU        V0, V1, V0
+    .oCC
+    LUI         A0, 2
+    SLT         V0, A0, V1
+    BEQ         V0, R0, .oE0
+    SUBU        V0, V1, A0
+    .oDC
+    SW          V0, B4 (S0)
+    .oE0
+    LW          A0, 84 (S0)
+    JAL         8011BC1C
+    LW          A1, A8 (S0)
+    LW          A0, 84 (S0)
+    JAL         8011BC34
+    LW          A1, AC (S0)
+    LW          A0, 84 (S0)
+    JAL         8011BC4C
+    LW          A1, B0 (S0)
+    LW          A0, 84 (S0)
+    JAL         8011BC64
+    LW          A1, B4 (S0)
+    LW          RA, 14 (SP)
+    LW          S0, 10 (SP)
+    CLEAR       V0
+    JR          RA
+    ADDIU       SP, SP, 18
+}
+
+#new:Function $Function_TexturePan_Complex
+{
+    ADDIU       SP, SP, FFE8
+    SW          S0, 10 (SP)
+    COPY        S0, A0
+    BEQ         A1, R0, .o24
+    SW          RA, 14 (SP)
+    SW          R0, 70 (S0)
+    SW          R0, 74 (S0)
+    SW          R0, 78 (S0)
+    SW          R0, 7C (S0)
+    .o24
+    LW          V0, 70 (S0)
+    BNE         V0, R0, .o64
+    NOP
+    LW          V1, A8 (S0)
+    LW          V0, 88 (S0)
+    ADDU        V1, V1, V0
+    BGEZ        V1, .o50
+    SW          V1, A8 (S0)
+    LUI         V0, 2
+    BEQ         R0, R0, .o60
+    ADDU        V0, V1, V0
+    .o50
+    LUI         A0, 2
+    SLT         V0, A0, V1
+    BEQ         V0, R0, .o64
+    SUBU        V0, V1, A0
+    .o60
+    SW          V0, A8 (S0)
+    .o64
+    LW          V0, 74 (S0)
+    BNE         V0, R0, .oA4
+    NOP
+    LW          V1, AC (S0)
+    LW          V0, 8C (S0)
+    ADDU        V1, V1, V0
+    BGEZ        V1, .o90
+    SW          V1, AC (S0)
+    LUI         V0, 2
+    BEQ         R0, R0, .oA0
+    ADDU        V0, V1, V0
+    .o90
+    LUI         A0, 2
+    SLT         V0, A0, V1
+    BEQ         V0, R0, .oA4
+    SUBU        V0, V1, A0
+    .oA0
+    SW          V0, AC (S0)
+    .oA4
+    LW          V0, 78 (S0)
+    BNE         V0, R0, .oE4
+    NOP
+    LW          V1, B0 (S0)
+    LW          V0, 90 (S0)
+    ADDU        V1, V1, V0
+    BGEZ        V1, .oD0
+    SW          V1, B0 (S0)
+    LUI         V0, 2
+    BEQ         R0, R0, .oE0
+    ADDU        V0, V1, V0
+    .oD0
+    LUI         A0, 2
+    SLT         V0, A0, V1
+    BEQ         V0, R0, .oE4
+    SUBU        V0, V1, A0
+    .oE0
+    SW          V0, B0 (S0)
+    .oE4
+    LW          V0, 7C (S0)
+    BNE         V0, R0, .o124
+    NOP
+    LW          V1, B4 (S0)
+    LW          V0, 94 (S0)
+    ADDU        V1, V1, V0
+    BGEZ        V1, .o110
+    SW          V1, B4 (S0)
+    LUI         V0, 2
+    BEQ         R0, R0, .o120
+    ADDU        V0, V1, V0
+    .o110
+    LUI         A0, 2
+    SLT         V0, A0, V1
+    BEQ         V0, R0, .o124
+    SUBU        V0, V1, A0
+    .o120
+    SW          V0, B4 (S0)
+    .o124
+    LW          A0, 84 (S0)
+    JAL         8011BC1C
+    LW          A1, A8 (S0)
+    LW          A0, 84 (S0)
+    JAL         8011BC34
+    LW          A1, AC (S0)
+    LW          A0, 84 (S0)
+    JAL         8011BC4C
+    LW          A1, B0 (S0)
+    LW          A0, 84 (S0)
+    JAL         8011BC64
+    LW          A1, B4 (S0)
+    LW          V0, 70 (S0)
+    LW          V1, 78 (S0)
+    LW          A0, 98 (S0)
+    ADDIU       V0, V0, 1
+    SW          V0, 70 (S0)
+    LW          V0, 74 (S0)
+    ADDIU       V1, V1, 1
+    SW          V1, 78 (S0)
+    LW          V1, 70 (S0)
+    ADDIU       V0, V0, 1
+    SW          V0, 74 (S0)
+    LW          V0, 7C (S0)
+    SLT         V1, V1, A0
+    ADDIU       V0, V0, 1
+    BNE         V1, R0, .o198
+    SW          V0, 7C (S0)
+    SW          R0, 70 (S0)
+    .o198
+    LW          V0, 74 (S0)
+    LW          V1, 9C (S0)
+    SLT         V0, V0, V1
+    BEQL        V0, R0, .o1AC
+    SW          R0, 74 (S0)
+    .o1AC
+    LW          V0, 78 (S0)
+    LW          V1, A0 (S0)
+    SLT         V0, V0, V1
+    BEQL        V0, R0, .o1C0
+    SW          R0, 78 (S0)
+    .o1C0
+    LW          V0, 7C (S0)
+    LW          V1, A4 (S0)
+    SLT         V0, V0, V1
+    BEQL        V0, R0, .o1D4
+    SW          R0, 7C (S0)
+    .o1D4
+    LW          RA, 14 (SP)
+    LW          S0, 10 (SP)
+    CLEAR       V0
+    JR          RA
+    ADDIU       SP, SP, 18
+}
+
+#new:Script_Main $Script_Main
+{
+	Set   *GB_WorldLocation  .Location:ShootingStarSummit
+	Set   *MapFlag[0] .False
+	Call  SetCamPerspective  ( .Cam:Default 00000003 00000019 00000010 00001000 )
+	Call  SetCamBGColor      ( .Cam:Default 00000000 00000000 00000000 )
+	Call  SetCamEnabled      ( .Cam:Default .True
+	Call  SetCamLeadPlayer   ( .Cam:Default .False )
+	Exec  $FlipCheatFlag
+	Exec  $Script_SetupMusic
+	Exec  $Script_SetupTexturePan
+	Call  $Function_SetupFog
+	Exec  $Script_EnterMap	
+	Add		*PitFloor 00000001
+	Call     MakeNpcs           ( 00000001 $NpcGroupList_1 )
+	Call $Reset_Enemy_Flag ( )	
+	Return
+	End
+}
+
+#new:Function_Init $Function_Init
+{
+	PUSH    RA
+	LIA     A0, 800B0CF0
+	LIA     A1, "hos_tex"
+	JAL     800654F0 % sprintf
+	RESERVED
+	CLEAR  V0
+	JPOP   RA
+}
+
+#new:Script $Script_SetupMusic
+{
+	Call  SetMusicTrack ( 00000000 .Song:CrystalHall 00000000 00000008 )
+	Call  ClearAmbientSounds ( 250` )
+	Return
+	End
+}
+
+#new:Script $Script_SetupTexturePan
+{
+	Call     802C9000 	( ~Model:backgroundcover 0 )
+	Thread
+		Set  *Var[0] 0
+		Set  *Var[1] C8
+		Set  *Var[2] C8
+		Set  *Var[3] C8
+		Set  *Var[4] FFFFFF38
+		Set  *Var[5] 0
+		Set  *Var[6] 0
+		Set  *Var[7] 0
+		Set  *Var[8] 0
+		Set  *Var[9] 0
+		Set  *Var[A] 0
+		Set  *Var[B] 0
+		Set  *Var[C] 0
+		Exec $Script_TexturePan_Update
+	EndThread
+	Return
+	End
+}
+
+#new:Function $Function_SetupFog
+{
+	PUSH RA
+	JAL       8011BB50
+	NOP
+	ADDIU     A0, R0, 3B6
+	JAL       8011BB74
+	ADDIU     A1, R0, 3E8
+	ADDIU     A0, R0, FF
+	ADDIU     A1, R0, FF
+	ADDIU     A2, R0, FF
+	JAL       8011BB88
+	ADDIU     A3, R0, FF
+	ADDIU     V0, R0, 2
+	JPOP RA
+}
+
+#new:Script $Script_EnterMap
+{
+	Call  GetEntryID    ( *Var[0] )
+	Switch  *Var[0]
+		CaseOR  ==  ~Entry:Entry0
+			Set   *Var[0] $Script_CreateExitTriggers
+			Exec  EnterWalk
+		EndCaseGroup
+		Default
+			Exec  $Script_CreateExitTriggers
+	EndSwitch
+	Return
+	End
+}
+
+#new:Script $Script_Exit0
+{
+	%do exit?	
+	If *Flag_GotCrystalHallReward == .True
+		SetGroup 0000001B
+		Call     UseExitHeading ( 60` ~Entry:Entry0 )
+		Exec     ExitWalk	
+		Call  GotoMap   ( "hal_00" 00000001 )
+		Call 	 $Reset_Enemy_Flag	
+		Wait  100`
+	EndIf
+	If *MapFlag[0] == .False
+		Set   *MapFlag[0] .True
+		Call  DisablePlayerInput ( .True )
+		Call  ShowMessageAtScreenPos    ( $ExitWarning 000000A0 00000028 )
+		Call  SetPlayerSpeed    ( *Fixed[2.0] )
+		Call  PlayerMoveTo      ( 0` 426` 00000000 )  %x, z, ?
+		Call  DisablePlayerInput ( .False )
+	Else
+		SetGroup 0000001B
+		Call     UseExitHeading ( 60` ~Entry:Entry0 )
+		Exec     ExitWalk	
+		Call  GotoMap   ( "hal_00" 00000001 )
+		Call 	 $Reset_Enemy_Flag	
+		Wait  100`
+	EndIf
+	Return
+	End
+}
+
+#new:String $ExitWarning
+{
+	[STYLE:INSPECT]Warning! If you leave you will[BR]
+	have to do all fights over again![BR]
+	[Wait][END]
+}
+
+
+#new:Script $Script_CreateExitTriggers
+{
+	Bind  $Script_Exit0 .Trigger:FloorAbove ~Collider:LZLeft 00000001 00000000
+	Return
+	End
+}
+
+
+%Generic room code (shared for all 5 fights)
+#new:Script $Script_Init_Enemy
+{
+    Call     BindNpcDefeat 	( .Npc:Self $Script_Outcome )	%set stuff
+    Call     BindNpcIdle 	( .Npc:Self $Script_Idle )		%listen for player movement
+    Return
+    End
+}
+
+#new:Script $Script_Outcome
+{
+	Call     GetBattleOutcome 	( *Var[0] )
+	Switch  *Var[0] 
+		Case  ==  00000000 
+			If *Flag_GotCrystalHallReward == .False
+				Call     MakeItemEntity ( .Item:RainbowStone ~Vec3d:enemyMoveTemplate 0000000D *Flag_GotCrystalHallReward )
+			EndIf
+			Call     DoNpcDefeat 	( )
+	EndSwitch
+	Return
+	End
+}
+
+#new:Script $Script_Idle
+{
+	Label 0
+	Wait 1`
+	Call	GetPlayerPos 		( *Var[0] *Var[1] *Var[2] )
+	If *Var2 < -40`
+		Call	StartBossBattle 	( .Song:InTheFinal )
+	EndIf
+	Goto 0
+	Return
+	End
+}
+
+#new:Function $Reset_Enemy_Flag
+{
+	PUSH	RA
+	SAB 	R0, 800B0FC3
+	POP 	RA
+	JR 		RA
+	NOP
+}
+
+
+#new:NpcSettings $NpcSettings_Boss 
+{
+00000000 00180018 00000000 00000000 00000000 00000000 00000000 00000000 
+00000000 00000000 00630000 
+}
+
+%Room specific stuff
+#new:NpcGroup $QueenOfLight
+{
+00000000 $NpcSettings_Boss ~Vec3f:enemyMoveTemplate
+00000401 $Script_Init_Enemy 00000000 00000000 000000B4
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus ~NoMovement
+00D6091A 00D6091A 00D6091A 00D6091A 00D6091A 00D6091A 00D60906 00D60906
+00D6091A 00D6091A 00D6091A 00D6091A 00D6091A 00D6091A 00D6091A 00D6091A
+00000000 00000000 00000000 00000000 % no tattle string	
+}
+
+#new:NpcGroupList $NpcGroupList_1
+{
+00000001 $QueenOfLight 4B000000
+00000000 00000000 00000000
+}
+
+%Spawn enemies
+
+
+
+%flip cheat flag
+#new:Script $FlipCheatFlag
+{
+	Loop
+		Call	HasKeyItem ( .Item:RainbowStone *Var[1] )
+		If *Var[1] == 1
+			Call $Function_SetCheatFlag ( )
+		EndIf
+		Wait 1
+	EndLoop
+	Return
+	End
+}
+
+#new:Function $Function_SetCheatFlag
+{
+	PUSH	A0, RA
+	ORI		A0, R0, 1
+	SAB		A0, 8010F2A8
+	POP		A0, RA
+	JR		RA
+	ORI 	V0, R0, 2
+}
+

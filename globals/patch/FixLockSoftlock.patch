@@ -1,0 +1,18 @@
+%fix problem related to locks in cav_06
+
+%could be related to the problem with calling DisablePlayerInput too many times
+
+% 000795F0 --> 800E0140
+%    C:  ADDIU     V0, V0, FFFF
+%   10:  SB        V0, 14 (A0)
+
+@Hook 795FC
+{
+	SLTI		A1, V0, 1
+	BNE			A1, R0, .end
+	NOP
+	ADDIU     	V0, V0, FFFF
+	.end
+	J			800E0154
+	SB        	V0, 14 (A0)
+}

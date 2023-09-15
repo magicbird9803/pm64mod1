@@ -1,0 +1,4 @@
+@ $Script_UseItem %change to quake damage
+{
+[618]  Call     ItemDamageEnemy 	( *Var[0] 38000800 00000000 *Var[3] 00000020 )
+}

@@ -1,0 +1,2269 @@
+#message:2F:000
+{
+Crazy Heart[END]
+}
+
+#message:2F:001
+{
+Restores HP automatically during[BR]
+battle at a faster rate.[END]
+}
+
+#message:2F:002
+{
+Flower Fanatic[END]
+}
+
+#message:2F:003
+{
+During battle, saves 2 FP every[BR]
+time you attack.[END]
+}
+
+#message:2F:004
+{
+Mega HP Drain[END]
+}
+
+#message:2F:005
+{
+Decreases Mario's attack power[BR]
+by 2. Restores 2 HP per attack...[END]
+}
+
+#message:2F:006
+{
+Frigid Stomp[END]
+}
+
+#message:2F:007
+{
+Lets you perform a Frigid Stomp,[BR]
+which can chill enemies. Uses 7 FP.[END]
+}
+
+#message:2F:008
+{
+Flame Smash[END]
+}
+
+#message:2F:009
+{
+Lets you perform a Flame Smash.[BR]
+Uses 4 FP.[END]
+}
+
+#message:2F:00A
+{
+Lets you perform a Flame Smash.[BR]
+Uses 4 FP.[END]
+}
+
+#message:2F:00B
+{
+Lets you perform a Frigid Stomp,[BR]
+which can chill enemies. Uses 7 FP.[BR]
+This also allows you to jump[BR]
+onto fiery enemies.[BR]
+-2 attack power for 3 turns.[BR]
+Won't work if already chilled.[END]
+}
+
+#message:2F:00C
+{
+Berserker[END]
+}
+
+#message:2F:00D
+{
+Increases Mario's attack power[BR]
+by 2, but makes him uncontrollable.[END]
+}
+
+#message:2F:012
+{
+Hustle Drink[END]
+}
+
+#message:2F:013
+{
+A special drink that gives Mario[BR]
+an extra action next turn.[END]
+}
+
+#message:2F:014
+{
+U. Smash Chg.[END]
+}
+
+#message:2F:015
+{
+Charge your Hammer power[BR]
+to the maximum using 10 FP.[END]
+}
+
+#message:2F:020
+{
+U. Jump Chg.[END]
+}
+
+#message:2F:021
+{
+Charge your Jump power[BR]
+to the maximum using 12 FP.[END]
+}
+
+#message:2F:022
+{
+Greed Stone[END]
+}
+
+#message:2F:023
+{
+A magical, golden stone that[BR]
+gives you unlimited money![END]
+}
+
+#message:2F:024
+{
+A magical, golden stone that[BR]
+gives you unlimited money,[BR]
+but reduces your max HP to 5.[END]
+}
+
+#message:2F:025
+{
+The hot desert drains your FP.[BR]
+(1 per 2 turns.)[END]
+}
+
+#message:2F:026
+{
+The cursed tomb drains your FP.[BR]
+(2 per 3 turns.)[END]
+}
+
+#message:2F:027
+{
+The volcano lowers your defense.[BR]
+(1 per 2 turns.)[END]
+}
+
+#message:2F:028
+{
+The cold temperatures lower[BR]
+your attack power.[END]
+}
+
+#message:2F:029
+{
+The dark caverns drain your[BR]
+Star Power.[END]
+}
+
+#message:2F:02A
+{
+There was no effect![END]
+}
+
+#message:2F:02B
+{
+Your Max HP has gone down![END]
+}
+
+#message:2F:02C
+{
+13 turns remain.[END]
+}
+
+#message:2F:02D
+{
+8 turns remain.[END]
+}
+
+#message:2F:02E
+{
+5 turns remain.[END]
+}
+
+#message:2F:02F
+{
+3 turns remain.[END]
+}
+
+#message:2F:030
+{
+Final turn![END]
+}
+
+#message:2F:031
+{
+The intense cold will permanently[BR]
+freeze you in 21 turns.[END]
+}
+
+#message:2F:032
+{
+S. Shroom Cake[END]
+}
+
+#message:2F:033
+{
+A delicious cake that will restore[BR]
+30 HP and 30 FP over 3 turns.[END]
+}
+
+#message:2F:034
+{
+A delicious cake that will restore[BR]
+30 HP and 30 FP over 3 turns.[BR]
+(10 HP and 10 FP per turn.)[END]
+}
+
+#message:2F:035
+{
+Thunder Throw[END]
+}
+
+#message:2F:036
+{
+Lets you do a Thunder Throw.[BR]
+Uses 5 FP.[BR]
+Hits any enemy and summons[BR]
+a lightning bolt that can[BR]
+paralyze enemies.[END]
+}
+
+#message:2F:037
+{
+Hits any enemy and summons[BR]
+a lightning bolt.[END]
+}
+
+#message:2F:038
+{
+Perfect Rush[END]
+}
+
+#message:2F:039
+{
+Increases attack power by[BR]
+2 when at full health.[END]
+}
+
+#message:2F:03A
+{
+Quake Jump[END]
+}
+
+#message:2F:03B
+{
+The ultimate move. Destroys all[BR]
+grounded enemies using 16 FP.[BR]
+Power falloff works the same[BR]
+as Power Bounce.[END]
+}
+
+#message:2F:03C
+{
+The ultimate move, combining[BR]
+Power Bounce and Mega Quake.[END]
+}
+
+#message:2F:03D
+{
+Dual Smash[END]
+}
+
+#message:2F:03E
+{
+Hammer a single enemy twice.[BR]
+Second hit is stronger.[END]
+}
+
+#message:2F:03F
+{
+Hammer a single enemy twice.[BR]
+Second hit is stronger. Uses 8 FP.[END]
+}
+
+#message:2F:040
+{
+Decreases Mario's attack power [BR]
+by 2. Restores 2 HP per attack.[BR]
+Mario's HP can recover by a[BR]
+maximum of 5 per turn.[BR]
+Does not work if Mario's max HP[BR]
+is 5 or below.[END]
+}
+
+#message:2F:041
+{
+The intense cold will permanently[BR]
+freeze you in 6 turns.[END]
+}
+
+#message:2F:042
+{
+Golden Melon[END]
+}
+
+#message:2F:043
+{
+A delicious, gold-covered melon.[BR]
+Restores 25 HP and 8 FP...[END]
+}
+
+#message:2F:044
+{
+A delicious, gold-covered melon.[BR]
+Restores 25 HP, 8 FP and cures[BR]
+debuffs, including attack and [BR]
+defense reductions.[END]
+}
+
+#message:2F:045
+{
+The haunting song foretells your[BR]
+doom. You can no longer run away![END]
+}
+
+#message:2F:046
+{
+Shield Stone[END]
+}
+
+#message:2F:047
+{
+A magical stone that allows you[BR]
+to perform Superguards.[END]
+}
+
+#message:2F:048
+{
+A magical stone that allows you[BR]
+to perform Superguards.[BR]
+To superguard, press B immediately[BR]
+before taking damage.[BR]
+Superguarding will reduce incoming[BR]
+damage by half.[BR]
+Dodge Master will not affect the[BR]
+superguarding window.[BR]
+Partners cannot Superguard.[END]
+}
+
+#message:2F:049
+{
+Smart Stomp[END]
+}
+
+#message:2F:04A
+{
+Stomp on an enemy and inflict[BR]
+the status they are weakest to.[END]
+}
+
+#message:2F:04B
+{
+Stomp and inflict a status [BR]
+on enemies. Uses 7 FP.[BR]
+Possible statuses: Stop, Dizzy,[BR]
+Paralyze, Shrink, Sleep.[BR]
+This move prioritizes high[BR]
+status chances.[BR]
+Statuses last longer at higher[BR]
+boot levels. (1/2/3)[END]
+}
+
+#message:2F:04C
+{
+U. Shroom Cake[END]
+}
+
+#message:2F:04D
+{
+A delicious cake that will restore[BR]
+45 HP and 45 FP over 3 turns.[END]
+}
+
+#message:2F:04E
+{
+A delicious cake that will restore[BR]
+45 HP and 45 FP over 3 turns.[BR]
+(15 HP and 15 FP per turn)[END]
+}
+
+#message:2F:04F
+{
+Mega Bounce[END]
+}
+
+#message:2F:050
+{
+A stronger version of[BR]
+Power Bounce that uses 10 FP.[END]
+}
+
+#message:2F:051
+{
+A stronger version of[BR]
+Power Bounce that uses 10 FP.[BR]
+Allows unlimited bounces, but[BR]
+each bounce is more difficult.[BR]
+Each bounce is 2/3 as strong as[BR]
+the last bounce rounded down.[END]
+}
+
+#message:2F:052
+{
+Badge Stone[END]
+}
+
+#message:2F:053
+{
+Sets your BP to 16 and makes[BR]
+most badges cost 1 BP each.[END]
+}
+
+#message:2F:054
+{
+Sets your BP to 16 and makes[BR]
+most badges cost 1 BP each.[BR]
+Also negates Star Point gain.[BR]
+With Greed Stone, gives 20 BP[BR]
+instead.[END]
+}
+
+#message:2F:055
+{
+Void Stone[END]
+}
+
+#message:2F:056
+{
+Doubles the size of your[BR]
+item inventory.[END]
+}
+
+#message:2F:057
+{
+Doubles the size of your[BR]
+item inventory.[END]
+}
+
+#message:2F:058
+{
+Warp Stone[END]
+}
+
+#message:2F:059
+{
+Allows you to warp to a variety[BR]
+of locations around the world.[END]
+}
+
+#message:2F:05A
+{
+Allows you to warp to a variety[BR]
+of locations around the world.[BR]
+Use the R button in the overworld[BR]
+to open the warp menu.[BR]
+Use the D Pad to choose a location,[BR]
+L to warp (Press R again to cancel).[END]
+}
+
+
+#message:2F:05B
+{
+	Perfect Stand[End]
+}
+
+#message:2F:05C
+{
+	Halves incoming damage when at[BR]
+	maximum health.[END]
+}
+
+#message:2F:05D
+{
+	Halves incoming damage when at[BR]
+	maximum health.[BR]
+	Applied after Last Stand.[END]
+}
+
+#message:2F:05E
+{
+	Power Shroom[End]
+}
+
+#message:2F:05F
+{
+	A powerful mushroom. Restores[BR]
+	20 HP and boosts attack.[END]
+}
+
+#message:2F:060
+{
+	A powerful mushroom. Restores[BR]
+	20 HP and boosts attack[BR]
+	by 2 for 3 turns.[END]
+}
+
+#message:2F:061
+{
+	Shield Shroom[End]
+}
+
+#message:2F:062
+{
+	A powerful mushroom. Restores[BR]
+	20 HP and boosts defense.[END]
+}
+
+#message:2F:063
+{
+	A powerful mushroom. Restores[BR]
+	20 HP and boosts defense[BR]
+	by 2 for 3 turns.[END]
+}
+
+#message:2F:064
+{
+	Booster Shroom[End]
+}
+
+#message:2F:065
+{
+	A powerful mushroom. Restores[BR]
+	30 HP and boosts atk and def.[END]
+}
+
+#message:2F:066
+{
+	A powerful mushroom. Restores[BR]
+	30 HP and boosts attack[BR]
+	and defense by 2 for 2 turns.[END]
+}
+
+#message:2F:067
+{
+Golden Shroom[End]
+}
+
+#message:2F:068
+{
+	A regal mushroom. Restores 99 HP[BR]
+	and cures statuses.[END]
+}
+
+#message:2F:069
+{
+	A gold-covered mushroom.[BR]
+	Restores 99 HP and negates[BR]
+	debuffs, including attack[BR]
+	and defense reductions.[END]
+}
+
+#message:2F:06A
+{
+Super Curse[END]
+}
+
+#message:2F:06B
+{
+Enemy damage, enemy HP and[BR]
+star point gain are x1.5.[END]
+}
+
+#message:2F:06C
+{
+Enemy damage, enemy HP, coin[BR]
+and star point gain are x1.5.[BR]
+This may make some encounters[BR]
+unwinnable. For experts only.[END]
+}
+
+#message:2F:06D
+{
+Flower Shield[END]
+}
+
+#message:2F:06E
+{
+Reduces incoming damage by[BR]
+half, but lose FP when hit.[END]
+}
+
+#message:2F:06F
+{
+Reduces incoming damage by[BR]
+half, but lose FP when hit.[BR]
+This reduction occurs before[BR]
+Last Stand.[BR]
+If Last Stand is active, this[BR]
+badge instead reduces by 1/3.[BR]
+FP lost is equal to 2x damage[BR]
+negated.[BR]
+If you do not have enough FP,[BR]
+this badge will stop working.[END]
+}
+
+#message:2F:070
+{
+Flower Burst[END]
+}
+
+#message:2F:071
+{
+Move costs are reduced by[BR]
+3 when at max FP.[END]
+}
+
+#message:2F:072
+{
+Move costs are reduced by[BR]
+3 when at max FP.[BR]
+With Flower Health equipped,[BR]
+this takes effect at max HP.[END]
+}
+
+#message:2F:073
+{
+EX Trophy[END]
+}
+
+#message:2F:074
+{
+A trophy for defeating the[BR]
+EX Boss Rush.[END]
+}
+
+#message:2F:075
+{
+A trophy for defeating the[BR]
+EX Boss Rush.[BR]
+This item does absolutely[BR]
+nothing.[END]
+}
+
+#message:2F:076
+{
+Ultra Charge[END]
+}
+
+#message:2F:077
+{
+The fog poisons you. (-3 HP/turn)[END]
+}
+
+#message:2F:078
+{
+The Star Spirits cannot help you[BR]
+in this place.[END]
+}
+
+#message:2F:079
+{
+Dark Key[END]
+}
+
+#message:2F:07A
+{
+A key to open the path to[BR]
+the Temple of Darkness.[END]
+}
+
+#message:2F:07B
+{
+Stellar Power[END]
+}
+
+#message:2F:07C
+{
+Increases your attack power[BR]
+by 1 at the cost of Star Power.[BR]
+Each boosted attack costs 0.375[BR]
+Star Power.[BR]
+Not having enough will cause[BR]
+your attack power to be reduced.[BR][END]
+}
+
+#message:2F:07D
+{
+Increases your attack power[BR]
+by 1 at the cost of Star Power.[END]
+}
+
+#message:2F:07E
+{
+Stellar Shield[END]
+}
+
+#message:2F:07F
+{
+Reduces damage by up to 1/3[BR]
+at the cost of Star Power.[BR]
+Damage reduction is proportional[BR]
+to the amount of SP you have.[BR]
+SP lost is a number of bars[BR]
+equal to 1/4 the damage reduced.[BR]
+Applies after Flower Shield.[END]
+}
+
+#message:2F:080
+{
+Reduces damage by up to 1/3[BR]
+at the cost of Star Power.[END]
+}
+
+#message:2F:081
+{
+Stellar Burst[END]
+}
+
+#message:2F:082
+{
+At max SP, the costs of all[BR]
+Star Powers are reduced by 1.[END]
+}
+
+#message:2F:083
+{
+At max SP, the costs of all[BR]
+Star Powers are reduced by 1.[BR]
+Incompatible with Stellar[BR]
+Flowers.[END]
+}
+
+#message:2F:084
+{
+Dark Power[END]
+}
+
+#message:2F:085
+{
+Increases attack power by 1[BR]
+at or below 1/4 SP.[BR]
+At 1/2 SP or above, your attack[BR]
+power will go down by 1.[END]
+}
+
+#message:2F:086
+{
+Increases attack power by 1[BR]
+at low SP, backfires at high SP.[END]
+}
+
+#message:2F:087
+{
+Dark Shield[END]
+}
+
+#message:2F:088
+{
+Reduces damage by 1/3 at or[BR]
+below 1/4 SP.[BR]
+At 1/2 SP or above, damage will[BR]
+be increased by 1/2 instead.[END]
+}
+
+#message:2F:089
+{
+Reduces damage by up to 1/3[BR]
+at low SP, backfires at high SP.[END]
+}
+
+#message:2F:08A
+{
+Dark Saver[END]
+}
+
+#message:2F:08B
+{
+Decreases move costs by 1,[BR]
+but the cost of Star Powers[BR]
+is doubled.[END]
+}
+
+#message:2F:08C
+{
+Decreases move costs by 1,[BR]
+but SP costs are doubled.[END]
+}
+
+#message:2F:08D
+{
+Stellar Flowers[END]
+}
+
+#message:2F:08E
+{
+Allows Star Powers to be used[BR]
+with FP.[BR]
+FP costs of moves are equal to[BR]
+4 times the Star Power cost.[BR]
+These costs are unaffected by[BR]
+anything that affects FP costs.[BR]
+Refresh does not recover FP[BR]
+while this badge is active.[END]
+}
+
+#message:2F:08F
+{
+Allows Star Powers to be used[BR]
+with FP at 4x the SP cost.[END]
+}
+
+#message:2F:090
+{
+The enemy gets an extra turn![END]
+}
+
+#message:2F:091
+{
+The air fills you with dread...[BR]
+Your HP is going down![END]
+}
+
+#message:2F:092
+{
+A sinister energy fills the air...[BR]
+Partner switching is disabled.[END]
+}
+
+#message:2F:093
+{
+The air is stifling here...[BR]
+Items cannot be used.[END]
+}
+
+#message:2F:093
+{
+Reality is tearing apart...[BR]
+You can no longer press [B]![END]
+}
+
+#message:2F:094
+{
+Reality is tearing apart...[BR]
+You can no longer press [Z]![END]
+}
+
+#message:2F:095
+{
+Reality is tearing apart...[BR]
+You feel a lot weaker...[END]
+}
+
+#message:2F:096
+{
+Reality is tearing apart...[BR]
+You can no longer use items![END]
+}
+
+
+
+#message:2F:0A0
+{
+Knowledge Stone[END]
+}
+
+#message:2F:0A1
+{
+A stone that gives you knowledge.[BR]
+Read the menu desc. for more.[END]
+}
+
+#message:2F:0A2
+{
+A stone that gives you knowledge.[BR]
+The link to the source code is...[BR]
+mediafire.com/file/a463r49dbq30[BR]
+rur/dse_source_v1.5.3.zip/file[END]
+}
+
+
+#message:2F:0A3
+{
+Mega Saver[END]
+}
+
+#message:2F:0A4
+{
+Move costs are reduced by[BR]
+3 when in Peril.[END]
+}
+
+#message:2F:0A5
+{
+Move costs are reduced by[BR]
+3 when in Peril.[BR]
+Overrides Danger Saver.[END]
+}
+
+
+#message:2F:0A6
+{
+Last Chance[END]
+}
+
+#message:2F:0A7
+{
+Survive a lethal hit once per[BR]
+battle.[END]
+}
+
+#message:2F:0A8
+{
+Survive a lethal hit once per[BR]
+battle.[BR]
+Effect is distinct from Miracle[BR]
+effects.[END]
+}
+
+#message:2F:0A9
+{
+Big Mistake[END]
+}
+
+#message:2F:0AA
+{
+Why would you let this happen?[BR]
+Don't eat it![END]
+}
+
+#message:2F:0AB
+{
+Why would you let this happen?[BR]
+Don't eat it![END]
+}
+
+#message:2F:0AC
+{
+Dark Shroom[END]
+}
+
+#message:2F:0AD
+{
+A mushroom of dark energy.[BR]
+Restores 99 HP at a price...[END]
+}
+
+#message:2F:0AE
+{
+A mushroom of dark energy.[BR]
+Restores 99 HP at a price...[BR]
+Increases attack by 3 but [BR]
+reduces defense by 3 for 3 turns.[END]
+}
+
+#message:2F:0AF
+{
+Dark Leaf[END]
+}
+
+#message:2F:0B0
+{
+A leaf of dark energy.[BR]
+Restores 99 FP at a price...[END]
+}
+
+#message:2F:0B1
+{
+A leaf of dark energy.[BR]
+Restores 99 FP at a price...[BR]
+Increases defense by 3 but [BR]
+reduces attack by 3 for 3 turns.[END]
+}
+
+#message:2F:0B2
+{
+Leaf Shroom[END]
+}
+
+#message:2F:0B3
+{
+Dark food with weaker drawbacks.[BR]
+Restores 99 HP and 99 FP...[END]
+}
+
+#message:2F:0B4
+{
+Dark food with weaker drawbacks.[BR]
+Restores 99 HP and 99 FP...[BR]
+Gives you a +4 attack and[BR]
+defense boost for 2 turns but...[BR]
+...you also get a long lasting[BR]
+-2 attack and defense boost.[BR]
+Both effects are applied[BR]
+simultaneously.[END]
+}
+
+#message:2F:0B5
+{
+	Mega Curse[End]
+}
+
+#message:2F:0B6
+{
+[Color:20]Triples[Color:0A] enemy damage, enemy[BR]
+HP and star point gain.[END]
+}
+
+#message:2F:0B7
+{
+[Color:20]Triples[Color:0A] enemy damage, enemy[BR]
+HP, coin and star point gain.[BR]
+Many encounters will not be[BR]
+possible. For the best of the best.[END]
+}
+
+#message:2F:0B8
+{
+	Super Bless[End]
+}
+
+#message:2F:0B9
+{
+Reduces enemy health, damage,[BR]
+and Star Point gain by 1/3.[BR]
+Incompatible with Curse badges.[END]
+}
+
+#message:2F:0BA
+{
+Reduces enemy health, damage,[BR]
+and Star Point gain by 1/3.[END]
+}
+
+#message:2F:0BB
+{
+	Def Spotter[End]
+}
+
+#message:2F:0BC
+{
+Displays enemy Defense when[BR]
+health bars are displayed.[END]
+}
+
+#message:2F:0BD
+{
+	Star Cake[End]
+}
+
+#message:2F:0BE
+{
+Special cake that restores[BR]
+4 bars of Star Power.[END]
+}
+
+#message:2F:0BF
+{
+Health Focus[END]
+}
+
+#message:2F:0C0
+{
+Focusing will give you +1 HP.[BR]
+Does not work on Turn 1.[END]
+}
+
+#message:2F:0C1
+{
+Flower Focus[END]
+}
+
+#message:2F:0C2
+{
+Focusing will give you +1 FP.[BR]
+Does not work on Turn 1.[END]
+}
+
+#message:2F:0C3
+{
+Power Focus[END]
+}
+
+#message:2F:0C4
+{
+Focusing will give you +1 attack[BR]
+for 3 turns.[BR]
+Each Deep Focus adds 1 turn to[BR]
+the effect.[END]
+}
+
+#message:2F:0C5
+{
+Focusing will give you +1 attack[BR]
+for 3 turns...[END]
+}
+
+#message:2F:0C6
+{
+Defense Focus[END]
+}
+
+#message:2F:0C7
+{
+Focusing will give you +1 defense[BR]
+for 3 turns.[BR]
+Each Deep Focus adds 1 turn to[BR]
+the effect.[END]
+}
+
+#message:2F:0C8
+{
+Focusing will give you +1 defense[BR]
+for 3 turns...[END]
+}
+
+#message:2F:0C9
+{
+The blizzard will permanently[BR]
+freeze you in 2 turns.[END]
+}
+
+
+#message:2F:0CA
+{
+Rainbow Stone[END]
+}
+
+#message:2F:0CB
+{
+A special stone that grants[BR]
+access to cheats.[END]
+}
+
+#message:2F:0CC
+{
+A special stone that grants[BR]
+access to cheats.[BR]
+OW: Hold L and A to jump[BR]
+infinitely.[BR]
+OW: Hold L and Z for super[BR]
+speedy spins.[BR]
+Battle: Hold L to make your[BR]
+attacks deal 99 damage.[BR]
+Battle: Hold L to negate all[BR]
+damage to you.[BR]
+Battle: Press L during Mario's[BR]
+turn to give yourself 255 turns.[BR]
+Try to complete challenges[BR]
+legitimately before using this![BR]
+ShadeBlade is not responsible[BR]
+for bugs caused by cheating.[BR]
+Use code "[COLOR:20]Cheater[COLOR:0A]" to get these[BR]
+effects from the beginning.[BR]
+[END]
+}
+
+#message:2F:0CD
+{
+	Dual Shroom[END]
+}
+
+#message:2F:0CE
+{
+	A special double mushroom.[BR]
+	Restores 40 HP then 25 HP...[END]
+}
+
+#message:2F:0CF
+{
+	A special double mushroom.[BR]
+	Restores 40 HP then 25 HP...[BR]
+	When you consume this, it[BR]
+	becomes a Half Shroom.[END]
+}
+
+#message:2F:0D0
+{
+	Half Shroom[END]
+}
+
+#message:2F:0D1
+{
+	Half of a Dual Shroom.[BR]
+	Restores 20 HP.[END]
+}
+
+#message:2F:0D2
+{
+	Dual Jelly[END]
+}
+
+#message:2F:0D3
+{
+	A special double mushroom.[BR]
+	Restores 40 HP and 40 FP...[END]
+}
+
+#message:2F:0D4
+{
+	A special double mushroom.[BR]
+	Restores 40 HP and 40 FP...[BR]
+	When you consume this, it[BR]
+	becomes a Half Jelly.[END]
+}
+
+#message:2F:0D5
+{
+	Half Jelly[END]
+}
+
+#message:2F:0D6
+{
+	Half of a Dual Jelly.[BR]
+	Restores 20 HP and 20 FP.[END]
+}
+
+#message:2F:0D7
+{
+	Yoshi Biscuit[END]
+}
+
+#message:2F:0D8
+{
+A cookie baked by Tayce T.[BR]
+Restores 15 HP and 15 FP...[END]
+}
+
+#message:2F:0D9
+{
+A cookie baked by Tayce T.[BR]
+Restores 15 HP and 15 FP...[BR]
+Next food / drink item is 2.0x[BR]
+more effective.[BR]
+Affects healing and duration of[BR]
+buffs.[BR]
+For recovery over time items,[BR]
+only turn count is boosted.[BR]
+Does not work with Hustle Drink[BR]
+or other similar effects.[END]
+}
+
+#message:2F:0DA
+{
+	Pity Flower[END]
+}
+
+#message:2F:0DB
+{
+	Each hit gives you FP equal[BR]
+	to half the damage taken.[END]
+}
+
+#message:2F:0DC
+{
+	Item Saver[END]
+}
+
+#message:2F:0DD
+{
+	Every third item used in battle[BR]
+	is a freebie.[END]
+}
+
+#message:2F:0DE
+{
+	Flower Coins[END]
+}
+
+#message:2F:0DF
+{
+	Allows you to pay for moves[BR]
+	with coins at 5x the FP cost.[END]
+}
+
+#message:2F:0E0
+{
+	Allows you to pay for moves[BR]
+	with coins at 5x the FP cost.[BR]
+	This badge negates Flower Burst[BR]
+	and Flower Health.[BR]
+	Flower Power activates based[BR]
+	on whether you have 999 coins.[BR]
+	If you have Greed Stone, move[BR]
+	costs start at 640x normal,[BR]
+	costs go down by 1/2 every turn,[BR]
+	but reset when you pay coins.[BR]
+	Also, this badge has a higher[BR]
+	BP cost with Greed Stone.[END]
+}
+
+#message:2F:0E1
+{
+	FP Plus?[END]
+}
+
+#message:2F:0E2
+{
+	Increases maximum FP by 5.[BR]
+	This was originally HP Plus.[END]
+}
+
+#message:2F:0E3
+{
+	Get a freebie![END]
+}
+
+#message:2F:0E4
+{
+	Static Stomp[End]
+}
+
+#message:2F:0E5
+{
+	If it works, the enemy Mario[BR]
+	jumps on becomes paralyzed.[End]
+}
+
+#message:2F:0E6
+{
+Lets you do a Paralyzing Stomp.[BR]
+Uses 5 FP.[BR]
+If it works, the enemy Mario [BR]
+jumps on becomes paralyzed.[BR]
+That enemy can't move and takes[BR]
+1 less damage than normal.[END]
+}
+
+#message:2F:0E7
+{
+	Stop Smash[End]
+}
+
+#message:2F:0E8
+{
+	If it works, the enemy becomes[BR]
+	stopped and can't move.[End]
+}
+
+#message:2F:0E9
+{
+	Lets you do a Stop Smash.[BR]
+	Uses 5 FP.[BR]
+	If it works, the enemy Mario hits[BR]
+	becomes stopped and can't move.[End]
+}
+
+
+#message:2F:0EA
+{
+	Dual Charge[End]
+}
+
+#message:2F:0EB
+{
+	When charged, Hammer and[BR]
+	Jump power goes up by 2.[End]
+}
+
+#message:2F:0EC
+{
+	Lets you charge both Hammer and[BR]
+	Jump power. Uses 4 FP.[BR]
+	When charged, Hammer and[BR]
+	Jump power goes up by 2.
+	Lets you charge up to +6,[BR]
+	but power fades after attack.[End]
+}
+
+#message:2F:0ED
+{
+	Super Charge[End]
+}
+
+#message:2F:0EE
+{
+	When charged, Hammer and[BR]
+	Jump power goes up by 3.[End]
+}
+
+#message:2F:0EF
+{
+	Lets you charge both Hammer and[BR]
+	Jump power. Uses 7 FP.[BR]
+	When charged, Hammer and[BR]
+	Jump power goes up by 3.[BR]
+	Lets you charge up to +6,[BR]
+	but power fades after attack.[End]
+}
+
+#message:2F:0F0
+{
+	Ultra Charge[End]
+}
+
+#message:2F:0F1
+{
+	When charged, Hammer and[BR]
+	Jump power goes up by 6.[End]
+}
+
+#message:2F:0F2
+{
+	Lets you charge both Hammer and[BR]
+	Jump power. Uses 18 FP.[BR]
+	When charged, Hammer and[BR]
+	Jump power goes up by 6.[BR]
+	Lets you charge up to +6,[BR]
+	but power fades after attack.[End]
+}
+
+#message:2F:0F3
+{
+	Stellar Nova[End]
+}
+
+#message:2F:0F4
+{
+	Boost the power of the next[BR]
+	Star Power you use (0 turns).[End]
+}
+
+#message:2F:0F5
+{
+	Boost the power of the next[BR]
+	Star Power you use (0 turns).[BR]
+	Boosting causes Star Powers[BR]
+	to have 2x cost and power.[BR]
+	The boost only lasts 1 turn,[BR]
+	and you cannot stack boosts.[BR]
+	You can use this move from[BR]
+	the Star Power menu for 1 SP.[END]
+}
+
+#message:2F:0F6
+{
+	Truth Stomp[End]
+}
+
+#message:2F:0F7
+{
+	Stomp on any enemy. Stronger[BR]
+	on invisible/buffed targets.[End]
+}
+
+#message:2F:0F8
+{
+	Stomp on any enemy. Stronger[BR]
+	on buffed targets. Uses 3 FP.[BR]
+	Each point of attack or defense[BR]
+	boost increases damage by 1.[BR]
+	Invisible enemies also take +1.[BR]
+	Maximum boost of +6.[End]
+}
+
+#message:2F:0F9
+{
+	Dark Smash[End]
+}
+
+#message:2F:0FA
+{
+	Hammers an enemy with increasing[BR]
+	power based on enemy HP.[End]
+}
+
+#message:2F:0FB
+{
+	Lets you do a Dark Smash.[BR]
+	Uses 6 FP.[BR]
+	Base power goes from 1x to 3x as[BR]
+	enemy HP goes down.[BR]
+	Base power = Hammer power + 1.[End]
+}
+
+#message:2F:0FC
+{
+	Weather Shield[End]
+}
+
+#message:2F:0FD
+{
+	Protects you from most[BR]
+	environmental effects.[End]
+}
+
+#message:2F:0FE
+{
+	It didn't work![End]
+}
+
+#message:2F:0FF
+{
+	SP Plus[End]
+}
+
+%! 2F-100 is already used for fortune stuff!
+#message:2F:1A0
+{
+	Increases max SP by 1.[End]
+}
+
+#message:2F:1A1
+{
+Focusing will give you +1 HP.[BR]
+Does not work on Turn 1.[BR]
+Each Deep Focus adds 0.5 HP[BR]
+recovered.[BR]
+Rounding is dependent on whether[BR]
+turn count is odd or even.[END]
+}
+
+#message:2F:1A2
+{
+Focusing will give you +1 FP.[BR]
+Does not work on Turn 1.[BR]
+Each Deep Focus adds 0.5 FP[BR]
+recovered.[BR]
+Rounding is dependent on whether[BR]
+turn count is odd or even.[END]
+}
+
+#message:2F:1A3
+{
+	FP Drain?[END]
+}
+
+#message:2F:1A4
+{
+	Mega FP Drain?[END]
+}
+
+#message:2F:1A5
+{
+Decreases Mario's attack power[BR]
+by 1. Restores 1 FP per hit.[END]
+}
+
+#message:2F:1A6
+{
+Decreases Mario's attack power[BR]
+by 2. Restores 2 FP per hit.[END]
+}
+
+#message:2F:1A7
+{
+Decreases Mario's attack power[BR]
+by 1. Restores 1 FP per hit.[BR]
+Mario's FP can recover by a[BR]
+maximum of 5 per turn.[END]
+}
+
+#message:2F:1A8
+{
+Decreases Mario's attack power[BR]
+by 2. Restores 2 FP per hit.[BR]
+Mario's FP can recover by a[BR]
+maximum of 5 per turn.[END]
+}
+
+#message:2F:1A9
+{
+	Item Finder[END]
+}
+
+#message:2F:1AA
+{
+Quadruples the probability that[BR]
+items drop from enemies.[END]
+}
+
+#message:2F:1AB
+{
+	2 Shroom Cake[END]
+}
+
+#message:2F:1AC
+{
+	A special double cake. Restores[BR]
+	36 HP and 36 FP over 3 turns...[END]
+}
+
+#message:2F:1AD
+{
+	A special double cake. Restores[BR]
+	36 HP and 36 FP over 3 turns...[BR]
+	When you consume this, it[BR]
+	becomes a Half Shroom Cake.[END]
+}
+
+#message:2F:1AE
+{
+	H. Shroom Cake[END]
+}
+
+#message:2F:1AF
+{
+	Half of a 2 Shroom Cake. Gives[BR]
+	18 HP and 18 FP over 3 turns...[END]
+}
+
+#message:2F:1B0
+{
+	Dark Tea[END]
+}
+
+#message:2F:1B1
+{
+	Lose up to 50 HP to gain a[BR]
+	defense boost for 3 turns.[END]
+}
+
+#message:2F:1B2
+{
+	Lose up to 50 HP to gain a[BR]
+	defense boost for 3 turns.[BR]
+	Defense boost is equal to[BR]
+	HP lost / 10 rounded up.[END]
+}
+
+
+#message:2F:1B3
+{
+	Obsidian Shroom[END]
+}
+
+#message:2F:1B4
+{
+	A hardened shroom that must[BR]
+	be used twice for its effect...[END]
+}
+
+#message:2F:1B5
+{
+	A hardened shroom that must[BR]
+	be used twice for its effect...[BR]
+	Once you use this item in battle,[BR]
+	it becomes a Molten Shroom.[BR]
+	Lose up to 50 FP to gain an[BR]
+	attack boost for 3 turns.[BR]
+	Attack boost is equal to[BR]
+	FP lost / 10 rounded up.[BR]
+	Molten Shroom reverts to[BR]
+	Obsidian Shroom out of battle.[END]
+}
+
+#message:2F:1B6
+{
+	Molten Shroom[END]
+}
+
+#message:2F:1B7
+{
+	Lose up to 50 FP to gain an[BR]
+	attack boost for 3 turns.[END]
+}
+
+#message:2F:1B8
+{
+	D. Shroom Cake[END]
+}
+
+#message:2F:1B9
+{
+	A cake that will restore[BR]
+	60 HP and 60 FP over 3 turns...[END]
+}
+
+#message:2F:1BA
+{
+	A cake that will restore[BR]
+	60 HP and 60 FP over 3 turns...[BR]
+	Lose 15 HP and 15 FP upon using[BR]
+	the cake.[END]
+}
+
+#message:2F:1BB
+{
+	Dark Pop[END]
+}
+
+#message:2F:1BC
+{
+	Halves your FP to give you[BR]
+	an FP saver effect for 4 turns.[END]
+}
+
+#message:2F:1BD
+{
+	Halves your FP to give you[BR]
+	an FP saver effect for 4 turns...[BR]
+	FP Saver effect is equal to[BR]
+	FP lost / 10 rounded up.[END]
+}
+
+
+#message:2F:1BE
+{
+	G. Shroom Cake[END]
+}
+
+#message:2F:1BF
+{
+	A one of a kind cake. Restores[BR]
+	75 HP and 75 FP over 3 turns...[END]
+}
+
+#message:2F:1C0
+{
+	A one of a kind cake. Restores[BR]
+	75 HP and 75 FP over 3 turns...[BR]
+	...removes all statuses.[BR]
+	Using it will [COLOR:20]remove all other[BR]
+	copies[COLOR:0A] from your inventory.[END]
+}
+
+#message:2F:1C1
+{
+	Golden Meal[END]
+}
+
+#message:2F:1C2
+{
+	A delicious feast. Restores[BR]
+	99 HP, 25 FP, cures statuses...[END]
+}
+
+#message:2F:1C3
+{
+	A delicious feast. Restores[BR]
+	99 HP, 25 FP, cures statuses...[BR]
+	...gives -2 costs for 5 turns.[BR]
+	Using it will [COLOR:20]remove all other[BR]
+	copies[COLOR:0A] from your inventory.[END]
+}
+
+#message:2F:1C4
+{
+	Duality Shake[END]
+}
+
+#message:2F:1C5
+{
+	A strange shake that inverts[BR]
+	your current item boosts.[END]
+}
+
+#message:2F:1C6
+{
+	A strange shake that inverts[BR]
+	your current item boosts.[BR]
+	Power of atk, def, fp saver and[BR]
+	recovery is multiplied by -1.[BR]
+	Other statuses can be inverted.[END]
+}
+
+#message:2F:1C7
+{
+	Strawberry Pop[END]
+}
+
+#message:2F:1C8
+{
+	A special lollipop made by[BR]
+	Tayce T. Restores 15 FP...[END]
+}
+
+#message:2F:1C9
+{
+	A special lollipop made by[BR]
+	Tayce T. Restores 15 FP...[BR]
+	Move costs are reduced by 3[BR]
+	for 3 turns.[END]
+}
+
+#message:2F:1CA
+{
+	Dry Juice[END]
+}
+
+#message:2F:1CB
+{
+	Juice from a Dried Fruit.[BR]
+	Restores 5 HP, 4 FP...[END]
+}
+
+#message:2F:1CC
+{
+	Juice from a Dried Fruit.[BR]
+	Restores 5 HP, 4 FP...[BR]
+	Move costs are reduced by 1[BR]
+	for 3 turns.[END]
+}
+
+#message:2F:1CD
+{
+	Strange Tea[END]
+}
+
+#message:2F:1CE
+{
+	Strange, green tea. HP and[BR]
+	FP are either halved or doubled.[END]
+}
+
+#message:2F:1CF
+{
+	Strange, green tea. HP and[BR]
+	FP are either halved or doubled.[BR]
+	If HP or FP is even, that stat is[BR]
+	halved, otherwise it's doubled.[END]
+}
+
+
+#message:2F:1D0
+{
+	Bomb Fruit[END]
+}
+
+#message:2F:1D1
+{
+	Very explosive fruit that hurts[BR]
+	enemies. Attack Power: 8...[END]
+}
+
+#message:2F:1D2
+{
+	Very explosive fruit that hurts[BR]
+	enemies. Attack Power: 8...[BR]
+	Does explosive damage to[BR]
+	all enemies then hurts Mario.[END]
+}
+
+#message:2F:1D3
+{
+	Super Bunch[END]
+}
+
+#message:2F:1D4
+{
+	Two Super Shrooms in one.[BR]
+	Restores 20 HP...[END]
+}
+
+#message:2F:1D5
+{
+	Two Super Shrooms in one.[BR]
+	Restores 20 HP...[BR]
+	Becomes a Super Shroom when[BR]
+	used.[END]
+}
+
+#message:2F:1D6
+{
+	Quick Flee[END]
+}
+
+#message:2F:1D7
+{
+	Fleeing is now guaranteed,[BR]
+	but you lose 2 FP when you flee.[END]
+}
+
+#message:2F:1D8
+{
+	Star Token[END]
+}
+
+#message:2F:1D9
+{
+	Star Token x 2[END]
+}
+
+#message:2F:1DA
+{
+	Star Token x 3[END]
+}
+
+#message:2F:1DB
+{
+	Star Token x 4[END]
+}
+
+#message:2F:1DC
+{
+	Star Token x 5[END]
+}
+
+#message:2F:1DD
+{
+	Star Token x 6[END]
+}
+
+#message:2F:1DE
+{
+	Star Token x 7[END]
+}
+
+#message:2F:1DF
+{
+	Star Token x 8[END]
+}
+
+#message:2F:1E0
+{
+	Star Token x 9[END]
+}
+
+#message:2F:1E1
+{
+	Star Token x 10[END]
+}
+
+#message:2F:1E2
+{
+	Star Token x 11[END]
+}
+
+#message:2F:1E3
+{
+	Star Token x 12[END]
+}
+
+#message:2F:1E4
+{
+	Star Token x 13[END]
+}
+
+#message:2F:1E5
+{
+	Star Token x 14[END]
+}
+
+#message:2F:1E6
+{
+	Star Token x 15[END]
+}
+
+#message:2F:1E7
+{
+	Star Token x 16[END]
+}
+
+#message:2F:1E8
+{
+	Star Token x 17[END]
+}
+
+#message:2F:1E9
+{
+	Star Token x 18[END]
+}
+
+#message:2F:1EA
+{
+	Star Token x 19[END]
+}
+
+#message:2F:1EB
+{
+	Star Token x 20[END]
+}
+
+#message:2F:1EC
+{
+	Star Token x 21[END]
+}
+
+#message:2F:1ED
+{
+	Star Token x 22[END]
+}
+
+#message:2F:1EE
+{
+	Star Token x 23[END]
+}
+
+#message:2F:1EF
+{
+	Star Token x 24[END]
+}
+
+#message:2F:1F0
+{
+	Star Token x 25[END]
+}
+
+#message:2F:1F1
+{
+	Star Token x 26[END]
+}
+
+#message:2F:1F2
+{
+	Star Token x 27[END]
+}
+
+#message:2F:1F3
+{
+	Star Token x 28[END]
+}
+
+#message:2F:1F4
+{
+	Star Token x 29[END]
+}
+
+#message:2F:1F5
+{
+	Star Token x 30[END]
+}
+
+#message:2F:1F6
+{
+	A strange, star shaped token...[END]
+}
+
+#message:2F:1F7
+{
+	A strange, star shaped token...[BR]
+	[BR]
+	Certain characters can convert[BR]
+	these to level ups.[END]
+}
+
+#message:2F:1F8
+{
+	Miracle Jelly[END]
+}
+
+#message:2F:1F9
+{
+	Extremely rare, miraculous jelly[BR]
+	that restores 99 FP and more...[END]
+}
+
+#message:2F:1FA
+{
+	Extremely rare, miraculous jelly[BR]
+	that restores 99 FP and more...[BR]
+	Gives you 1 turn of surviving[BR]
+	a lethal hit.[BR]
+	You can only survive a lethal[BR]
+	hit once per battle, and this[BR]
+	is shared with Smooch and other[BR]
+	items with this effect.[BR]
+	Using it will [COLOR:20]remove all other[BR]
+	copies[COLOR:0A] from your inventory.[END]
+}
+
+#message:2F:1FB
+{
+	Miracle Golden[END]
+}
+
+#message:2F:1FC
+{
+	A one of a kind item. Restores[BR]
+	99 HP, 99 FP, and more...[END]
+}
+
+#message:2F:1FD
+{
+	A one of a kind item. Restores[BR]
+	99 HP, 99 FP, and more...[BR]
+	Cures statuses and gives you 1[BR]
+	turn of surviving a lethal hit[BR]
+	You can only survive a lethal[BR]
+	hit once per battle, and this[BR]
+	is shared with Smooch and other[BR]
+	items with this effect.[BR]
+	Using it will [COLOR:20]remove all other[BR]
+	copies[COLOR:0A] from your inventory.[END]
+}
+
+#message:2F:1FE
+{
+	Tradeoff Shake[END]
+}
+
+#message:2F:1FF
+{
+	A special shake that boosts[BR]
+	the potency of item buffs.[END]
+}
+
+#message:2F:200
+{
+	A special shake that boosts[BR]
+	the potency of item buffs...[BR]
+	Currently active buffs (atk,[BR]
+	def, fpsaver) will have their[BR]
+	potency raised by 1 but their[BR]
+	turn count will be reduced by 1.[END]
+}
+
+#message:2F:201
+{
+	Bomb Juice[END]
+}
+
+#message:2F:202
+{
+	Explosively powerful juice![BR]
+	Gain attack but take damage...[END]
+}
+
+#message:2F:203
+{
+	Explosively powerful juice![BR]
+	Gain 4 attack for 2 turns...[BR]
+	...but take 8 damage.[END]
+}
+
+#message:2F:204
+{
+	Shroom Bunch[END]
+}
+
+#message:2F:205
+{
+	Two Mushrooms in one.[BR]
+	Restores 10 HP...[END]
+}
+
+#message:2F:206
+{
+	Two Mushrooms in one.[BR]
+	Restores 10 HP...[BR]
+	Becomes a Mushroom when[BR]
+	used.[END]
+}
+
+#message:2F:207
+{
+	Shroom Trio[END]
+}
+
+#message:2F:208
+{
+	Three Mushrooms in one.[BR]
+	Restores 15 HP...[END]
+}
+
+#message:2F:209
+{
+	Three Mushrooms in one.[BR]
+	Restores 15 HP...[BR]
+	Becomes a Shroom Bunch when[BR]
+	used.[END]
+}
+
+#message:2F:20A
+{
+	Super Trio[END]
+}
+
+#message:2F:20B
+{
+	Three Super Shrooms in one.[BR]
+	Restores 30 HP...[END]
+}
+
+#message:2F:20C
+{
+	Three Super Shrooms in one.[BR]
+	Restores 30 HP...[BR]
+	Becomes a Super Bunch when[BR]
+	used.[END]
+}
+
+
+#message:2F:20D
+{
+	Every third item used in battle[BR]
+	is a freebie.[BR]
+	Items that produce other items[BR]
+	won't if they are a freebie.[BR]
+	Obsidian Shroom does not count[BR]
+	towards getting a freebie.[BR]
+	This does not work with Life[BR]
+	Shroom automatic activation.[END]
+}
+
+#message:2F:20E
+{
+	Boo Leaf[END]
+}
+
+#message:2F:20F
+{
+	A rare leaf found inside Boo's[BR]
+	Mansion. Makes you invisible...[END]
+}
+
+#message:2F:210
+{
+	A rare leaf found inside Boo's[BR]
+	Mansion...[BR]
+	Makes you invisible for 1 turn,[BR]
+	but dizzy for 2 turns.[BR]
+	The dizziness can't be stopped[BR]
+	by Feeling Fine.[BR]
+	Move costs get increased by 1[BR]
+	until you cure statuses.[End]
+}
+
+#message:2F:211
+{
+	Mini Soda[END]
+}
+
+#message:2F:212
+{
+	Shrinks you, but lets you move[BR]
+	twice next turn.[END]
+}
+
+#message:2F:213
+{
+	Shrinks you, but lets you move[BR]
+	twice next turn.[BR]
+	The shrink lasts 2 turns and[BR]
+	can't be stopped by Feeling Fine.[END]
+}
+
+#message:2F:214
+{
+	Stellar Coins[END]
+}
+
+#message:2F:215
+{
+	Pay for Star Powers with Coins.[BR]
+	Costs go down every turn.[END]
+}
+
+#message:2F:216
+{
+	Pay for Star Powers with Coins.[BR]
+	Costs go down every turn.[BR]
+	This badge negates Stellar Burst.[BR]
+	Costs start at 3200x normal,[BR]
+	costs go down by 1/2 every turn,[BR]
+	but reset when you pay coins.[BR]
+	Stellar Nova will not reset the[BR]
+	costs of moves.[END]
+}
+
+#message:2F:217
+{
+	Crazy Flower[END]
+}
+
+#message:2F:218
+{
+	Restores FP automatically during[BR]
+	battle at a faster rate.[END]
+}
+#message:2F:219
+{
+DarkBeam[END]
+}
+

@@ -1,0 +1,357 @@
+%Pit of 100 trials
+%This map is used for the floors 1-9
+
+%#import EnterViaPipe.mpat
+#import Pit_AI.mpat
+
+#new:Header $Header
+{
+[MainScript] $Script_Main
+[Background] 80200000
+[EntryList] $EntryList
+[EntryCount] 2
+[MapTattle] $Function_GetTattle
+}
+
+%no pit_tex function so I have to do this
+#new:Function_Init $Function_Init
+{
+    PUSH      RA
+    LIA       A0, 800B0CF0
+    LIA       A1, "kpa_tex"
+    JAL       ~Func:sprintf
+    RESERVED
+    DADDU     V0, R0, R0
+    JPOP      RA
+}
+
+
+#new:Function $Function_GetTattle
+{
+	ADDIU     SP, SP, FFE8
+	LIO       V0, $MapTattle
+	JR        RA
+	ADDIU     SP, SP, 18
+}
+
+#string $MapTattle
+{
+[Style Tattle][EnableCDownNext]This is a room in the Pit[BR]
+of 100 Trials.[BR]
+[Wait][NEXT]The enemies up here are pretty[BR]
+easy. If all the rooms are this[BR]
+easy, we'll get through this pit[BR]
+in no time!
+[Wait][END]
+}
+
+#new:EntryList $EntryList
+{
+~Vec4f:Entry0	%top
+~Vec4f:Entry1	%bottom
+}
+
+#new:Script $Script_RaisePipe
+{
+	Wait     0000000A 
+	Call     PlaySound  ( .PipeRaiseSound )
+	Set      .PipeBool 	00000001
+	Unbind
+	Return
+	End
+}
+
+#new:Script $Script_UseBluePipe
+{
+	Call     GotoMap    ( "pit_01" 0 )
+	Call 	 $Reset_Enemy_Flag
+	Wait     00000064 
+	Return
+	End
+}
+	
+#new:Function $Reset_Enemy_Flag
+{
+	PUSH	RA
+	SAB 	R0, 800B0FC3
+	POP 	RA
+	JR 		RA
+	NOP
+}
+	
+
+#new:Script $Script_GetPipeWorking
+{
+	Bind     $Script_RaisePipe .Trigger:GameFlagSet .PipeBool 00000001 00000000
+	Call     MakeEntity  ( .Entity:BlueWarpPipe ~Vec4d:Entry1 00000001 $Script_UseBluePipe ~İndex:*GF_PitPipeFlag 80000000 )
+	Return
+	End
+}
+
+#define .PipeBool *GF_PitPipeFlag
+#define .PipeRaiseSound 0000208E
+
+#new:Script $Script_Outcome
+{
+Call     GetBattleOutcome 	( *Var[0] )
+Switch  *Var[0] 
+	Case  ==  00000000 
+		Set  .PipeBool  00000001 %pipe is up
+		ExecWait	 $Script_RaisePipe
+		Call     DoNpcDefeat 	( )
+EndSwitch
+Return
+End
+}
+   
+%GetBattleOutcome :   int args: *out (0 = player won, 1 = player lost, 2 = player ran, 3 = enemy ran)  
+
+#new:Script $Script_Init_Enemy
+{
+    Call     BindNpcDefeat 	( .Npc:Self $Script_Outcome )
+    Return
+    End
+}
+
+#new:NpcGroup $Goomba
+{
+00000000 $NpcSettings_Goomba ~Vec3f:ground_enemy
+00000400 $Script_Init_Enemy 00000000 00000000 0000005A 
+~İtems:8:Mushroom:A
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:2:6
+~Movement:ground_enemy
+00260001 00260002 00260003 00260003 00260001 00260001 00260005 00260005 
+00260003 00260003 00260003 00260003 00260003 00260003 00260003 00260003  
+00000000 00000000 00000000 00000000 % no tattle string	
+}
+	
+#new:NpcGroup $SpikedGoomba
+{
+00000001 $NpcSettings_Goomba ~Vec3f:ground_enemy
+00000400 $Script_Init_Enemy 00000000 00000000 0000005A 
+~İtems:8:Mushroom:A
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:2:6
+~Movement:ground_enemy
+00270001 00270002 00270003 00270003 00270001 00270001 00270005 00270005 
+00270003 00270003 00270003 00270003 00270003 00270003 00270003 00270003  
+00000000 00000000 00000000 00000000 % no tattle string	
+}
+	
+#new:NpcGroup $Koopa
+{
+00000002 $NpcSettings_Koopa ~Vec3f:ground_enemy % -350 0 -30
+00002C00 $Script_Init_Enemy 00000000 00000000 0000005A 
+~İtems:5:Mushroom:3:KoopaLeaf:7
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:1:1
+~Movement:ground_enemy
+00290101 00290103 00290104 00290104 00290101 00290101 0029010B 0029010B 
+00290107 00290106 00290108 00290104 00290104 00290104 00290104 00290104 
+00000000 00000000 00000000 00000000 % no tattle string
+}
+
+
+#new:NpcGroup $Bobomb
+{
+00000003 $NpcSettings_Goomba ~Vec3f:ground_enemy % -350 0 -30
+00002C00 $Script_Init_Enemy 00000000 00000000 0000005A 
+~İtems:5:Mushroom:3:HoneySyrup:7
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:1:1
+~Movement:ground_enemy
+002C0002 002C0004 002C0006 002C0006 002C0002 002C0002 002C000E 002C000E 
+002C0006 002C0006 002C0006 002C0006 002C0006 002C0006 002C0006 002C0006 
+00000000 00000000 00000000 00000000 % no tattle string
+}
+
+							  %its an npcgroup LIST but it's named "NpcGroup_1"
+#new:NpcGroupList $NpcGroup_1 %yay misleading names
+{
+00000001 $Goomba 05190000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_2
+{
+00000001 $Goomba 051A0000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_3
+{
+00000001 $Goomba 051B0000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_4
+{
+00000001 $SpikedGoomba 051C0000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_5
+{
+00000001 $SpikedGoomba 051D0000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_6
+{
+00000001 $Koopa 051E0000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_7
+{
+00000001 $Koopa 061B0000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_8
+{
+00000001 $Bobomb 061C0000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_9
+{
+00000001 $Bobomb 061D0000
+00000000 00000000 00000000
+}
+
+
+
+#new:Script_Main $Script_Main
+{
+	Add		*PitFloor 00000001
+	Set 	.PipeBool 00000000
+	Switch 	*PitFloor
+		Case == 00000001
+			Call     MakeNpcs           ( 00000001 $NpcGroup_1)
+		Case == 00000002
+			Call     MakeNpcs           ( 00000001 $NpcGroup_2)
+		Case == 00000003
+			Call     MakeNpcs           ( 00000001 $NpcGroup_3)
+		Case == 00000004
+			Call     MakeNpcs           ( 00000001 $NpcGroup_4)
+		Case == 00000005
+			Call     MakeNpcs           ( 00000001 $NpcGroup_5)
+		Case == 00000006
+			Call     MakeNpcs           ( 00000001 $NpcGroup_6)
+		Case == 00000007
+			Call     MakeNpcs           ( 00000001 $NpcGroup_7)
+		Case == 00000008
+			Call     MakeNpcs           ( 00000001 $NpcGroup_8)
+		Case == 00000009
+			Call     MakeNpcs           ( 00000001 $NpcGroup_9)
+		Case == 0000000A
+			Call     GotoMap    ( "pit_11" 0 )
+	EndSwitch
+	Call     MakeEntity  	( .Entity:Signpost ~Vec4d:sign 80000000 )
+	Call	 AssignScript ( $Script_SignPost )
+	Exec	 $Script_GetPipeWorking
+	Call     SetSpriteShading 	( 00080000 )
+	Call     SetCamPerspective 	( .Cam:Default 00000003 00000019 00000010 00001000 )
+	Call     SetCamBGColor 	( .Cam:Default 00000000 00000000 00000000 )
+	Call	 SetCamEnabled 	 	( .Cam:Default  .True )				% enabled?
+	Call	 SetCamLeadPlayer 	( .Cam:Default  .False )			% lead player motion?
+	Call     SetMusicTrack    	( 00000000 .Song:DryDryRuins 00000000 00000008 )
+	Return
+	End
+}
+	
+#new:Script $Script_SignPost
+{
+	0:  Call     DisablePlayerInput 	( .True )
+		Switch *PitFloor
+			Case == 00000001
+				Call     ShowMessageAtScreenPos 	( $Floor1 000000A0 00000028 )  
+			Case == 00000002
+				Call     ShowMessageAtScreenPos 	( $Floor2 000000A0 00000028 )
+			Case == 00000003
+				Call     ShowMessageAtScreenPos 	( $Floor3 000000A0 00000028 )
+			Case == 00000004
+				Call     ShowMessageAtScreenPos 	( $Floor4 000000A0 00000028 )
+			Case == 00000005
+				Call     ShowMessageAtScreenPos 	( $Floor5 000000A0 00000028 )
+			Case == 00000006
+				Call     ShowMessageAtScreenPos 	( $Floor6 000000A0 00000028 )
+			Case == 00000007
+				Call     ShowMessageAtScreenPos 	( $Floor7 000000A0 00000028 )
+			Case == 00000008
+				Call     ShowMessageAtScreenPos 	( $Floor8 000000A0 00000028 )
+			Case == 00000009
+				Call     ShowMessageAtScreenPos 	( $Floor9 000000A0 00000028 )
+			Default
+				Call     ShowMessageAtScreenPos 	( $Error 000000A0 00000028 )
+		EndSwitch
+   28:  Call     DisablePlayerInput 	( .False )
+   38:  Return
+   40: End
+}
+      
+#string $Floor1
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 1[BR]
+[BR][DelayOn][Wait][END] 
+}
+
+#string $Floor2
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 2[BR]
+[BR][DelayOn][Wait][END] 
+}
+
+#string $Floor3
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 3[BR]
+[BR][DelayOn][Wait][END] 
+}
+
+#string $Floor4
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 4[BR]
+[BR][DelayOn][Wait][END] 
+}
+
+#string $Floor5
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 5[BR]
+[BR][DelayOn][Wait][END] 
+}
+
+#string $Floor6
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 6[BR]
+[BR][DelayOn][Wait][END] 
+}
+
+#string $Floor7
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 7[BR]
+[BR][DelayOn][Wait][END] 
+}
+
+#string $Floor8
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 8[BR]
+[BR][DelayOn][Wait][END] 
+}
+
+#string $Floor9
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 9[BR]
+[BR][DelayOn][Wait][END] 
+}
+
+#string $Error
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Signpost error.[BR]
+(floor number is not within 1-10)[BR][DelayOn][Wait][END] 
+}

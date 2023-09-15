@@ -1,0 +1,43 @@
+#new:Function $AntiHustleDrink
+{
+PUSH 	RA, S0
+LIO 	A0, 800DC070
+SB		R0, 8B (A0) %hustle drink value
+%but also...
+LAB		S0, $EternalCostIncreases
+ADDI	S0, S0, 1
+SAB		S0, $EternalCostIncreases
+POP 	RA, S0
+JR 		RA
+ORI 	V0, R0, 2
+}
+
+%normally:
+%	doing repel gel then hustle drink -> hustle drink negates invisibility
+%	the reverse -> you get both effects (overpowered)
+%		with 5 hustle drinks and 5 repel gels, you get basically 10 free turns where enemies have no chance of hitting you
+%		A lot of bosses can be completely destroyed in those ten turns, even though you have limited FP reserves
+
+%	now, using hustle then repel will now result in the invisibility negating the hustle
+@ $Script_UseItem %forces no hustle drink
+{
+    0:  SetConst  *Var[A]  00000097 
+   10:  ExecWait $Script_802A12A0 
+   1C:  Call     PlaySoundAtActor 	( .Actor:Player 00000375 )
+   30:  Call     SetAnimation 	( .Actor:Player 00000000 00030008 )
+   48:  Wait     0000002D 
+   54:  Call     SetAnimation 	( .Actor:Player 00000000 00010002 )
+   6C:  Call     GetActorPos 	( .Actor:Player *Var[0] *Var[1] *Var[2] )
+   88:  Add  *Var[1]  00000014 
+   98:  Call     PlayEffect  	( ~FX:RadialFlowIn:WhiteWaves *Var[0] *Var[1] *Var[2] *Fixed[1.0] 0000001E 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+   DC:  Call     PlaySoundAtActor 	( .Actor:Player 00000376 )
+   F0:  Call     GetItemPower 	( .Item:RepelGel *Var[0] *Var[1] )
+  108:  Call     $Function_802A123C ( )
+  114:  Wait     00000014 
+  120:  Call     ShowMessageBox ( 00000011 0000003C )
+  134:  Call     802513CC ( )
+  140:  ExecWait $Script_802A16D0
+		Call	 $AntiHustleDrink ()
+  14C:  Return
+  154:  End
+}

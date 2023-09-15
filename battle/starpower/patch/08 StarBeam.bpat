@@ -1,0 +1,46 @@
+@ $Script_UsePower
+{
+    0:  ExecWait $Script_802A2888 
+    C:  Call     AddBattleCamZoom  	( 00000064 )
+   1C:  Call     MoveBattleCamOver 	( 00000014 )
+		If *GameByte[00A] == 5
+			Call $ShowCustomMessage	( 002F002A 0000005A )
+			Call     UseBattleCamPreset 	( 00000002 )
+			ExecWait $Script_802A327C 
+			Return
+		EndIf
+   2C:  Call     InitTargetIterator 	( )
+   38:  Call     SetGoalToTarget 	( .Actor:Self )
+   48:  Thread
+   50:  	Call     $Function_802A1518 ( 00000000 )
+   60:  EndThread
+   68:  Wait     0000000A 
+   74:  Loop     
+   80:  	Wait     00000001 
+   8C:  	Call     $Function_802A2468 ( )
+   98:  	If  *Var[0]  ==  00000001 
+   A8:  		BreakLoop
+   B0:  	EndIf
+   B8:  EndLoop
+   C0:  Call     InitTargetIterator 	( )
+   CC:  Label    00000000 
+   D8:  Call     SetGoalToTarget 	( .Actor:Self )
+   E8:  Call     ItemDamageEnemy 	( *Var[0] 40400000 00000000 00000000 00000020 )
+  108:  Call     ChooseNextTarget 	( .Iter:Next *Var[0] )
+  11C:  If  *Var[0]  !=  FFFFFFFF 
+  12C:  	Goto     00000000 
+  138:  EndIf
+  140:  Loop     
+  14C:  	Wait     00000001 
+  158:  	Call     $Function_802A2468 ( )
+  164:  	If  *Var[0]  ==  00000002 
+  174:  		BreakLoop
+  17C:  	EndIf
+  184:  EndLoop
+  18C:  Call     UseBattleCamPreset 	( 00000002 )
+  19C:  Call     $Function_802A247C ( )
+  1A8:  Call     80276EFC ( )
+  1B4:  ExecWait $Script_802A327C 
+  1C0:  Return
+  1C8:  End
+}

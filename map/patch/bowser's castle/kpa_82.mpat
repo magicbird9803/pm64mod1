@@ -1,0 +1,484 @@
+%so here's whats gonna happen
+%if you get the questions Right, you fight 3 dark koopatrols
+%get them wrong, you fight 15 dark koopatrols!
+
+@ $NpcGroupList_80248EF4
+{
+00000004 $NpcGroup_80244364 24000001 
+00000005 $NpcGroup_80244B24 24000001 
+00000005 $NpcGroup_802454D4 24000001 
+00000005 $NpcGroup_80245E84 24000001 
+00000005 $NpcGroup_80246834 24000001 
+00000005 $NpcGroup_802471E4 24000001 
+00000005 $NpcGroup_80247B94 24000001 
+00000005 $NpcGroup_80248544 24000001 
+00000006 $NpcGroup_RipMario 24010001 %koopa corp, a group of 10 dark koopatrols!
+00000000 00000000 00000000 			 %was 15, but that was unstable
+}
+
+#new:Script $Script_Init_BossFight
+{
+	0:  Call     BindNpcIdle 	( .Npc:Self $Script_BossFight )
+		Call     BindNpcDefeat  ( .Npc:Self $Script_Defeat )
+   14:  Call     SetNpcFlagBits ( .Npc:Self 00000100 .True )
+   2C:  Call     SetNpcFlagBits ( .Npc:Self 00000200 .False )
+   44:  Return
+   4C:  End
+}
+
+#new:Script $Script_Defeat %get rid of everyone
+{
+	Call GetBattleOutcome (*Var[0])
+	Switch *Var[0]
+		Case == 00000000
+			Set *VarF 2D
+			Loop 10`
+				Call	RemoveNpc   	( *Var[F] )
+				Add *VarF 1
+			EndLoop
+	EndSwitch
+	Return
+	End
+}
+
+#new:Script $Script_BossFight %hope this works
+{
+Loop
+	If *AreaByte[F] == 1
+		Call     StartBossBattle 	( .Song:FinalBowserBattle ) %;)
+	EndIf
+	Wait	00000001
+EndLoop
+Return
+End
+}
+
+
+@ $NpcGroup_80244364 %replace anti guys with dark koopatrols
+{
+00000000 $NpcSettings_80240A80 ~Vec3f:NPC_80244364 % 0 -1000 0
+03F44F0C $Script_Init_8024416C 00000000 00000000 00000000 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus
+~Movement:NPC_80244364
+00580201 00580204 00580206 00580206 00580201 00580201 00580210 00580210
+0058020C 0058020B 0058020D 00580201 00580201 00580201 00580201 00580201 %
+00000000 00000000 00000000 00000000 % no tattle string
+% 
+% $NpcGroup_80244364[1F0]
+00000001 $NpcSettings_80240A80 ~Vec3f:NPC_80244554 % 0 -1000 0
+03D40F08 $Script_Init_80244354 00000000 00000000 00000000 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus
+~Movement:NPC_80244554
+00580201 00580204 00580206 00580206 00580201 00580201 00580210 00580210
+0058020C 0058020B 0058020D 00580201 00580201 00580201 00580201 00580201 %
+00000000 00000000 00000000 00000000 % no tattle string
+% 
+% $NpcGroup_80244364[3E0]
+00000002 $NpcSettings_80240A80 ~Vec3f:NPC_80244744 % 0 -1000 0
+03D40F08 $Script_Init_80244354 00000000 00000000 00000000 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus
+~Movement:NPC_80244744
+00580201 00580204 00580206 00580206 00580201 00580201 00580210 00580210
+0058020C 0058020B 0058020D 00580201 00580201 00580201 00580201 00580201 %
+00000000 00000000 00000000 00000000 % no tattle string
+% 
+% $NpcGroup_80244364[5D0]
+00000003 $NpcSettings_80240A80 ~Vec3f:NPC_80244934 % 0 -1000 0
+03D40F08 $Script_Init_80244354 00000000 00000000 00000000 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus
+~Movement:NPC_80244934
+00580201 00580204 00580206 00580206 00580201 00580201 00580210 00580210
+0058020C 0058020B 0058020D 00580201 00580201 00580201 00580201 00580201 %
+00000000 00000000 00000000 00000000 % no tattle string
+}
+
+%a lot of their data will just be reused
+#new:NpcGroup $NpcGroup_RipMario
+{
+0000002D $NpcSettings_80240A80 ~Vec3f:NPC_80248544 % 0 -1000 0
+03F40F08 $Script_Init_BossFight 00000000 00000000 00000000 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus
+~Movement:NPC_80244364
+00580201 00580204 00580206 00580206 00580201 00580201 00580210 00580210
+0058020C 0058020B 0058020D 00580201 00580201 00580201 00580201 00580201 %
+00000000 00000000 00000000 00000000 % no tattle string
+% 
+0000002E $NpcSettings_80240A80 ~Vec3f:NPC_80248544 % 0 -1000 0
+03F40F08 $Script_Init_80244300 00000000 00000000 00000000 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus
+~Movement:NPC_80244364
+00580201 00580204 00580206 00580206 00580201 00580201 00580210 00580210
+0058020C 0058020B 0058020D 00580201 00580201 00580201 00580201 00580201 %
+00000000 00000000 00000000 00000000 % no tattle string
+% 
+0000002F $NpcSettings_80240A80 ~Vec3f:NPC_80248544 % 0 -1000 0
+03F40F08 $Script_Init_80244300 00000000 00000000 00000000 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus
+~Movement:NPC_80244364
+00580201 00580204 00580206 00580206 00580201 00580201 00580210 00580210
+0058020C 0058020B 0058020D 00580201 00580201 00580201 00580201 00580201 %
+00000000 00000000 00000000 00000000 % no tattle string
+% 
+00000030 $NpcSettings_80240A80 ~Vec3f:NPC_80248544 % 0 -1000 0
+03F40F08 $Script_Init_80244300 00000000 00000000 00000000 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus
+~Movement:NPC_80244364
+00580201 00580204 00580206 00580206 00580201 00580201 00580210 00580210
+0058020C 0058020B 0058020D 00580201 00580201 00580201 00580201 00580201 %
+00000000 00000000 00000000 00000000 % no tattle string
+% 
+00000031 $NpcSettings_80240A80 ~Vec3f:NPC_80248544 % 0 -1000 0
+03F40F08 $Script_Init_80244300 00000000 00000000 00000000 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus
+~Movement:NPC_80244364
+00580201 00580204 00580206 00580206 00580201 00580201 00580210 00580210
+0058020C 0058020B 0058020D 00580201 00580201 00580201 00580201 00580201 %
+00000000 00000000 00000000 00000000 % no tattle string
+% 
+00000032 $NpcSettings_80240A80 ~Vec3f:NPC_80248544 % 0 -1000 0
+03F40F08 $Script_Init_80244300 00000000 00000000 00000000 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus
+~Movement:NPC_80244364
+00580201 00580204 00580206 00580206 00580201 00580201 00580210 00580210
+0058020C 0058020B 0058020D 00580201 00580201 00580201 00580201 00580201 %
+00000000 00000000 00000000 00000000 % no tattle string
+% 
+/%
+00000033 $NpcSettings_80240A80 ~Vec3f:NPC_80248544 % 0 -1000 0
+03F40F08 $Script_Init_80244300 00000000 00000000 00000000 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus
+~Movement:NPC_80244364
+00580201 00580204 00580206 00580206 00580201 00580201 00580210 00580210
+0058020C 0058020B 0058020D 00580201 00580201 00580201 00580201 00580201 %
+00000000 00000000 00000000 00000000 % no tattle string
+% 
+00000034 $NpcSettings_80240A80 ~Vec3f:NPC_80248544 % 0 -1000 0
+03F40F08 $Script_Init_80244300 00000000 00000000 00000000 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus
+~Movement:NPC_80244364
+00580201 00580204 00580206 00580206 00580201 00580201 00580210 00580210
+0058020C 0058020B 0058020D 00580201 00580201 00580201 00580201 00580201 %
+00000000 00000000 00000000 00000000 % no tattle string
+% 
+00000035 $NpcSettings_80240A80 ~Vec3f:NPC_80248544 % 0 -1000 0
+03F40F08 $Script_Init_80244300 00000000 00000000 00000000 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus
+~Movement:NPC_80244364
+00580201 00580204 00580206 00580206 00580201 00580201 00580210 00580210
+0058020C 0058020B 0058020D 00580201 00580201 00580201 00580201 00580201 %
+00000000 00000000 00000000 00000000 % no tattle string
+% 
+00000036 $NpcSettings_80240A80 ~Vec3f:NPC_80248544 % 0 -1000 0
+03F40F08 $Script_Init_80244300 00000000 00000000 00000000 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus
+~Movement:NPC_80244364
+00580201 00580204 00580206 00580206 00580201 00580201 00580210 00580210
+0058020C 0058020B 0058020D 00580201 00580201 00580201 00580201 00580201 %
+00000000 00000000 00000000 00000000 % no tattle string
+% 
+00000037 $NpcSettings_80240A80 ~Vec3f:NPC_80248544 % 0 -1000 0
+03F40F08 $Script_Init_80244300 00000000 00000000 00000000 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus
+~Movement:NPC_80244364
+00580201 00580204 00580206 00580206 00580201 00580201 00580210 00580210
+0058020C 0058020B 0058020D 00580201 00580201 00580201 00580201 00580201 %
+00000000 00000000 00000000 00000000 % no tattle string
+% 
+00000038 $NpcSettings_80240A80 ~Vec3f:NPC_80248544 % 0 -1000 0
+03F40F08 $Script_Init_80244300 00000000 00000000 00000000 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus
+~Movement:NPC_80244364
+00580201 00580204 00580206 00580206 00580201 00580201 00580210 00580210
+0058020C 0058020B 0058020D 00580201 00580201 00580201 00580201 00580201 %
+00000000 00000000 00000000 00000000 % no tattle string
+% 
+00000039 $NpcSettings_80240A80 ~Vec3f:NPC_80248544 % 0 -1000 0
+03F40F08 $Script_Init_80244300 00000000 00000000 00000000 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus
+~Movement:NPC_80244364
+00580201 00580204 00580206 00580206 00580201 00580201 00580210 00580210
+0058020C 0058020B 0058020D 00580201 00580201 00580201 00580201 00580201 %
+00000000 00000000 00000000 00000000 % no tattle string
+% 
+0000003A $NpcSettings_80240A80 ~Vec3f:NPC_80248544 % 0 -1000 0
+03F40F08 $Script_Init_80244300 00000000 00000000 00000000 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus
+~Movement:NPC_80244364
+00580201 00580204 00580206 00580206 00580201 00580201 00580210 00580210
+0058020C 0058020B 0058020D 00580201 00580201 00580201 00580201 00580201 %
+00000000 00000000 00000000 00000000 % no tattle string
+% 
+0000003B $NpcSettings_80240A80 ~Vec3f:NPC_80248544 % 0 -1000 0
+03F40F08 $Script_Init_80244300 00000000 00000000 00000000 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus
+~Movement:NPC_80244364
+00580201 00580204 00580206 00580206 00580201 00580201 00580210 00580210
+0058020C 0058020B 0058020D 00580201 00580201 00580201 00580201 00580201 %
+00000000 00000000 00000000 00000000 % no tattle string
+%/
+% 
+}
+
+
+@ $Script_Idle_80243460
+{
+	0:  Label    00000001 
+    C:  Wait     00000001 
+   18:  If  *Flag_KPA_1A  ==  00000000 
+   28:  	Goto     00000001 
+   34:  EndIf
+   3C:  Set  *Flag_KPA_1A  00000000 
+   4C:  Call     DisablePlayerInput 	( .True )
+   5C:  ExecWait $Script_80240F40 
+   68:  Set  *MapFlag[00]  00000000 
+   78:  Thread
+   80:  	Call     SetMusicTrack 	( 00000000 .Song:FinalBowserBattle 00000001 00000008 )
+   9C:  	Wait     00000096 
+   A8:  	If  *MapFlag[00]  !=  00000000 
+   B8:  		Goto     00000005 
+   C4:  	EndIf
+   CC:  	Call     FadeOutMusic 	( 00000000 000000FA )
+   E0:  	Wait     0000000F 
+   EC:  	If  *MapFlag[00]  !=  00000000 
+   FC:  		Goto     00000005 
+  108:  	EndIf
+  110:  	Exec     $Script_802404A0 
+  11C:  	Label    00000005 
+  128:  EndThread
+  130:  If  *Flag_KPA_1B  ==  00000000 
+  140:  	Call     SpeakToPlayer 	( .Npc:Self 003B0501 003B0501 00000000 0013002E ) % Grooaaahhhhh!!! Who would've thought you could mak ...
+  160:  	Set  *Flag_KPA_1B  00000001 
+  170:  Else
+  178:  	Call     SpeakToPlayer 	( .Npc:Self 003B0501 003B0501 00000000 0013002F ) % Huh? Why're you still here? Did you change your mi ...
+  198:  EndIf
+  1A0:  Call     ShowChoice  	( 001E0013 ) % Yes No 
+  1B0:  If  *Var[0]  ==  00000000 
+  1C0:  	Call     ContinueSpeech 	( .Npc:Self 003B0501 003B0501 00000000 00130031 ) % Grrooaaa ha ha ha ha ha!! This is completely point ...
+  1E0:  Else
+  1E8:  	Call     ContinueSpeech 	( .Npc:Self 003B0501 003B0501 00000000 00130030 ) % I see... Not up to it... That's a smart Choice, be ...
+  208:  	Call     ResetCam    	( .Cam:Default *Fixed[4.0] )
+  21C:  	Call     PanToTarget 	( .Cam:Default 00000000 00000000 )
+  234:  	Set  *Flag_KPA_1A  00000000 
+  244:  	Call     DisablePlayerInput 	( .False )
+  254:  	Goto     00000001 
+  260:  EndIf
+  268:  Call     ShowChoice  	( 001E0013 ) % Yes No 
+  278:  If  *Var[0]  ==  00000000 
+  288:  	Call     ContinueSpeech 	( .Npc:Self 003B0501 003B0501 00000000 00130032 ) % Now for a little quiz. Several of my followers wil ...
+  2A8:  Else
+  2B0:  	Call     ContinueSpeech 	( .Npc:Self 003B0501 003B0501 00000000 00130033 ) % OK, smart guy, let's get going!
+  2D0:  EndIf
+  2D8:  Call     DisablePartnerAI 	( 00000000 )
+  2E8:  Thread
+  2F0:  	Call     ModifyColliderFlags 	( 00000000 00000010 7FFFFE00 )
+  308:  	Call     DisablePlayerPhysics 	( .True )
+  318:  	Call     SetPlayerSpeed ( *Fixed[2.0] )
+  328:  	Call     PlayerMoveTo 	( 000000AF 000000EC 00000014 )
+  340:  	Call     InterpPlayerYaw 	( 0000010E 00000000 )
+  354:  	Call     DisablePlayerPhysics 	( .False )
+  364:  	Call     ModifyColliderFlags 	( 00000001 00000010 7FFFFE00 )
+  37C:  EndThread
+  384:  Thread
+  38C:  	Call     SetNpcAnimation 	( .Npc:Partner 00000102 )
+  3A0:  	Call     SetNpcSpeed 	( .Npc:Partner *Fixed[2.5] )
+  3B4:  	Call     InterpNpcYaw 	( .Npc:Partner 0000010E 00000000 )
+  3CC:  	Call     NpcMoveTo   	( .Npc:Partner 000000CD 000000EC 00000014 )
+  3E8:  	Call     SetNpcAnimation 	( .Npc:Partner 00000106 )
+  3FC:  	Call     NpcFaceNpc  	( .Npc:Partner .Npc:Self 00000000 )
+  414:  EndThread
+  41C:  Set  *AreaByte[C]  00000000 
+  42C:  Set  *AreaByte[D]  00000000 
+  43C:  Set  *AreaByte[E]  00000000 
+  44C:  Label    0000000A 
+  458:  Set  *Var[6]  *Fixed[2.0] 
+  468:  ExecWait $Script_8024129C 
+  474:  Set  *MapFlag[00]  00000001 
+  484:  Wait     00000002 
+  490:  Call     SetMusicTrack 	( 00000000 .Song:NormalBattle 00000000 00000008 )
+  4AC:  ExecWait $Script_80241454 
+  4B8:  ExecWait $Script_80242564 
+  4C4:  Wait     000000C8 
+  4D0:  Thread
+  4D8:  	Call     ShowMessageAtScreenPos	( 00130034 0000012C 000000C8 ) % Time's up! 
+  4F0:  	Set  *MapVar[1]  00000001 
+  500:  EndThread
+  508:  Wait     0000003C 
+  514:  ExecWait $Script_802426B4 
+  520:  Wait     00000023 
+  52C:  ExecWait $Script_80241590 
+  538:  Exec     $Script_802404A0 
+  544:  Wait     0000001E 
+  550:  Label    0000000C 
+  55C:  Wait     00000001 
+  568:  If  *MapVar[1]  ==  00000000 
+  578:  	Goto     0000000C 
+  584:  EndIf
+  58C:  Set  *MapVar[1]  00000000 
+  59C:  ExecWait $Script_80242804 
+  5A8:  ExecWait $Script_802432AC 
+  5B4:  If  *MapVar[0]  ==  00000000 
+  5C4:  	Add  *AreaByte[D]  00000001 
+  5D4:  	If  *AreaByte[D]  ==  00000005 
+  5E4:  		Goto     0000001E 
+  5F0:  	EndIf
+  5F8:  	If  *AreaByte[D]  ==  00000004 
+  608:  		Call     SpeakToPlayer 	( .Npc:Self 003B0501 003B0501 00000000 0013003D ) % Grrrrr...... Right answer! Aaaarghhhhhhh!!!!!!! I  ...
+  628:  	Else
+  630:  		Call     SpeakToPlayer 	( .Npc:Self 003B0501 003B0501 00000000 0013003C ) % Grrrr...... You're Right! That question must've be ...
+  650:  	EndIf
+  658:  Else
+  660:  	Add  *AreaByte[E]  00000001 
+  670:  	If  *AreaByte[E]  ==  00000003 
+  680:  		Goto     00000014 
+  68C:  	EndIf
+  694:  	If  *AreaByte[E]  ==  00000001 
+  6A4:  		Call     SpeakToPlayer 	( .Npc:Self 003B0501 003B0501 00000000 0013003E ) % Groooaaa ha ha ha ha!! Bzzzz! Wrong! What an idiot ...
+  6C4:  	EndIf
+  6CC:  	If  *AreaByte[E]  ==  00000002 
+  6DC:  		Call     SpeakToPlayer 	( .Npc:Self 003B0501 003B0501 00000000 00130040 ) % Bzzzzz! Pinhead! Wrong again, worm!! Something hor ...
+  6FC:  	EndIf
+  704:  EndIf
+  70C:  Add  *AreaByte[C]  00000001 
+  71C:  Goto     0000000A 
+  728:  Label    00000014 
+  734:  Call     SpeakToPlayer 	( .Npc:Self 003B0501 003B0501 00000000 00130041 ) % Gah ha ha ha ha ha ha ha!!!! Nope, that's wrong, i ...
+		%
+  754:  Set  *Var[6]  *Fixed[2.0] 
+  764:  ExecWait $Script_8024129C 
+  770:  Call     SetNpcPos   	( 0000002D FFFFFF9C 00000000 00000000 )
+  78C:  Call     SetNpcPos   	( 0000002E 00000000 00000000 00000000 )
+  7A8:  Call     SetNpcPos   	( 0000002F 00000064 00000000 00000000 )
+  7C4:  Call     InterpPlayerYaw 	( 0000013B 00000000 )
+  7D8:  Call     InterpNpcYaw 	( .Npc:Partner 0000013B 00000000 )
+		%so the other 7 are just gonna jump out of nowhere since I have nowhere else to put them :p
+		%Reduce this to 3 additional ones to give you a tiny change of winning		
+		Call     SetNpcPos   	( 00000030  -70` 200` 100` )
+		Call     SetNpcPos   	( 00000031 -100` 200` 140` )
+		Call     SetNpcPos   	( 00000032 -130` 200` 180` )
+		%
+		%Call     SetNpcPos   	( 00000030  -70` 200` 100` )
+		%Call     SetNpcPos   	( 00000031  -85` 200` 120` )
+		%Call     SetNpcPos   	( 00000032 -100` 200` 140` )
+		%Call     SetNpcPos   	( 00000033 -115` 200` 160` )
+		%Call     SetNpcPos   	( 00000034 -130` 200` 180` )
+		%Call     SetNpcPos   	( 00000035 -145` 200` 200` )
+		%Call     SetNpcPos   	( 00000036 -160` 200` 220` )
+		%
+		%Call     SetNpcPos   	( 00000037  -70` 200` 240` )
+		%Call     SetNpcPos   	( 00000038  -50` 200` 250` )
+		%Call     SetNpcPos   	( 00000039  -30` 200` 260` )
+		%Call     SetNpcPos   	( 0000003A  -10` 200` 260` )
+		%Call     SetNpcPos   	( 0000003B   10` 200` 260` )
+  7F0:  ExecWait $Script_80241454 %open the door
+		Set *VarF 00000030
+		Loop 12`
+			Thread
+				Call	GetNpcPos ( *VarF *Var0 *Var1 *Var[2] )
+				Call 	NpcJump1  ( *Var[F]  *Var[0]  00000000 *Var[2] 0000001C ) 
+				Call    InterpNpcYaw 	( *Var[F] 000000B4 00000000 )
+			EndThread
+			Wait 5`
+			Add *VarF 1
+		EndLoop
+  7FC:  Call     SpeakToPlayer 	( .Npc:Self 003B0501 003B0501 00000000 00130042 ) % I'll let you go through if you manage to beat them ...
+  81C:  Call     PlayerFaceNpc 	( 0000002E 00000005 )
+  830:  Call     GetPlayerPos 	( *Var[3] *Var[4] *Var[5] )
+  848:  Set  *Var[6]  *Fixed[3.0] 
+  858:  ExecWait $Script_80241378 %camera stuff
+  864:  Call     GetPlayerPos 	( *Var[0] *Var[1] *Var[2] )
+		Set *VarF 0000002D
+		Loop 10`
+			Thread
+				Call     SetNpcAnimation 	( *Var[F] 0058020A )
+				Call     NpcMoveTo   	( *Var[F] *Var[0] *Var[2] 0000001E )
+			EndThread
+			Add *VarF 1
+		EndLoop
+  93C:  Call     GetPlayerPos 	( *Var[0] *Var[1] *Var[2] )
+  954:  Call     SetNpcPos   	( .Npc:Self *Var[0] *Var[1] *Var[2] )
+  %970:  Call     StartBossBattle 	( .Song:SpecialBattle )
+		Set *AreaByte[F] 1
+  980:  ExecWait $Script_8024101C 
+		Call     SetNpcPos   	( 0000002D -0` -1000` 0` )
+		Call     SetNpcPos   	( 0000002E -0` -1000` 0` )
+		Call     SetNpcPos   	( 0000002F -0` -1000` 0` )
+		Call     SetNpcPos   	( 00000030 -0` -1000` 0` )
+		Call     SetNpcPos   	( 00000031 -0` -1000` 0` )
+		Call     SetNpcPos   	( 00000032 -0` -1000` 0` )
+  98C:  Call     SpeakToPlayer 	( .Npc:Self 003B0501 003B0501 00000000 00130043 ) % Oh, but...no! NO!! You beat the Anti Guys Unit?!!  ...		this is if you somehow kill all 15 dark koopatrols
+		%
+  9AC:  Goto     00000028 
+  9B8:  Label    0000001E 
+  9C4:  Thread
+  9CC:  	Call     ModifyColliderFlags 	( 00000000 00000010 7FFFFE00 )
+  9E4:  	Call     DisablePlayerPhysics 	( .True )
+  9F4:  	Call     SetPlayerSpeed ( *Fixed[3.0] )
+  A04:  	Call     PlayerMoveTo 	( 00000078 00000091 00000000 )
+  A1C:  	Call     InterpPlayerYaw 	( 0000005A 00000000 )
+  A30:  	Call     DisablePlayerPhysics 	( .False )
+  A40:  	Call     ModifyColliderFlags 	( 00000001 00000010 7FFFFE00 )
+  A58:  EndThread
+  A60:  Thread
+  A68:  	Call     DisablePartnerAI 	( 00000000 )
+  A78:  	Call     SetNpcSpeed 	( .Npc:Partner *Fixed[3.5] )
+  A8C:  	Call     InterpNpcYaw 	( .Npc:Partner 0000005A 00000000 )
+  AA4:  	Call     NpcMoveTo   	( .Npc:Partner 00000050 00000091 00000000 )
+  AC0:  	Call     EnablePartnerAI 	( )
+  ACC:  EndThread
+  AD4:  Call     SpeakToPlayer 	( .Npc:Self 003B0501 003B0501 00000000 0013003F ) % Grrrraaaaaaaaghhhhhhh!!!! Cor.... Correct!!! I can ...
+		%
+		Set  *Var[6]  *Fixed[2.0] 
+		ExecWait $Script_8024129C 
+		Call     SetNpcPos   	( 00000001 FFFFFF9C 00000000 00000000 )
+		Call     SetNpcPos   	( 00000002 00000000 00000000 00000000 )
+		Call     SetNpcPos   	( 00000003 00000064 00000000 00000000 )
+		Call     InterpPlayerYaw 	( 0000013B 00000000 )
+		Call     InterpNpcYaw 	( .Npc:Partner 0000013B 00000000 )
+		ExecWait $Script_80241454 
+		Call     SpeakToPlayer 	( .Npc:Self 003B0501 003B0501 00000000 00130042 ) % I'll let you go through if you manage to beat them ...
+		Call     PlayerFaceNpc 	( 00000002 00000005 )
+		Call     GetPlayerPos 	( *Var[3] *Var[4] *Var[5] )
+		Set  *Var[6]  *Fixed[3.0] 
+		ExecWait $Script_80241378 
+		Call     GetPlayerPos 	( *Var[0] *Var[1] *Var[2] )
+		Thread
+			Call     SetNpcAnimation 	( 00000001 0058020A )
+			Call     NpcMoveTo   	( 00000001 *Var[0] *Var[2] 0000001E )
+		EndThread
+		Thread
+			Call     SetNpcAnimation 	( 00000002 0058020A )
+			Call     NpcMoveTo   	( 00000002 *Var[0] *Var[2] 0000001E )
+		EndThread
+		Thread
+			Call     SetNpcAnimation 	( 00000003 0058020A )
+			Call     NpcMoveTo   	( 00000003 *Var[0] *Var[2] 0000001E )
+		EndThread
+		Call     GetPlayerPos 	( *Var[0] *Var[1] *Var[2] )
+		Call     SetNpcPos   	( .Npc:Self *Var[0] *Var[1] *Var[2] )
+		Call     StartBossBattle 	( .Song:SpecialBattle )
+		ExecWait $Script_8024101C 
+		Call     SpeakToPlayer 	( .Npc:Self 003B0501 003B0501 00000000 $ThreeKilled ) % Oh, but...no! NO!! You beat the Anti Guys Unit?!!  ...		slightly different message
+		%
+  AF4:  Label    00000028 
+  B00:  Call     EnablePartnerAI 	( )
+  B0C:  Call     PanToTarget 	( .Cam:Default 00000000 00000000 )
+  B24:  Set  *Byte_KPA_02  00000001 
+  B34:  Call     DisablePlayerInput 	( .False )
+  B44:  Bind     $Script_802405EC .Trigger:WallPressA 00000010 00000001 00000000 
+  B60:  Return
+  B68:  End
+}
+
+#string $ThreeKilled
+{
+[STYLE:Right] 
+Oh, but...no! NO!![PAUSE:0A][BR]
+You beat the Koopinator Unit?[PAUSE:0A][BR]
+You must have been cheating![BR]
+[Wait][NEXT]
+[Down:08][Size:20:20][Shake]Groahhhhhhh!!!![PAUSE:0A][SizeReset][/fx][BR][BR]
+[Wait][NEXT]
+I'll let you through, but[BR]
+don't expect things to[BR]
+get any easier![Wait][END]
+}

@@ -1,0 +1,141 @@
+%if you kill the amazy dayzee, the formation gets harder
+
+#define .AmazyFightCount *GameByte[0FF]
+
+/%
+@ $NpcGroupList_80244EC4
+00000001 $NpcGroup_80243C48 00000000 
+00000001 $NpcGroup_80243E38 18140001 
+00000001 $NpcGroup_80244028 180F0001 
+00000001 $NpcGroup_80244218 180F0002 
+00000001 $NpcGroup_80244408 180F0002 
+00000001 $NpcGroup_802445F8 180F0002 
+00000001 $NpcGroup_802447E8 180F0002 
+00000001 $NpcGroup_802449D8 18120002 
+00000001 $NpcGroup_80244CD4 181C0001 
+00000000 00000000 00000000 
+%/
+
+#new:NpcGroupList $NpcGroupList_OneKill
+{
+00000001 $NpcGroup_80243C48 00000000 
+00000001 $NpcGroup_80243E38 18140001 
+00000001 $NpcGroup_80244028 180F0001 
+00000001 $NpcGroup_80244218 180F0002 
+00000001 $NpcGroup_80244408 180F0002 
+00000001 $NpcGroup_802445F8 180F0002 
+00000001 $NpcGroup_802447E8 180F0002 
+00000001 $NpcGroup_802449D8 18120002 
+00000001 $NpcGroup_80244CD4 181E0001 
+00000000 00000000 00000000 
+}
+
+#new:NpcGroupList $NpcGroupList_TwoKills
+{
+00000001 $NpcGroup_80243C48 00000000 
+00000001 $NpcGroup_80243E38 18140001 
+00000001 $NpcGroup_80244028 180F0001 
+00000001 $NpcGroup_80244218 180F0002 
+00000001 $NpcGroup_80244408 180F0002 
+00000001 $NpcGroup_802445F8 180F0002 
+00000001 $NpcGroup_802447E8 180F0002 
+00000001 $NpcGroup_802449D8 18120002 
+00000001 $NpcGroup_80244CD4 181D0001 
+00000000 00000000 00000000 
+}
+
+@ $Script_Main_EnterWalk
+{
+	0:  Set  *GB_WorldLocation  .Location:FlowerFields
+   10:  Call     SetSpriteShading 	( FFFFFFFF )
+   20:  Call     SetCamLeadPlayer 	( .Cam:Default .False )
+   34:  Call     SetCamPerspective 	( .Cam:Default 00000003 00000019 00000010 00001000 )
+   54:  Call     SetCamBGColor 	( .Cam:Default 00000000 00000000 00000000 )
+   70:  Call     SetCamEnabled 	( .Cam:Default .True )
+		Switch .AmazyFightCount
+			Case == 00000000
+   84: 	 		Call     MakeNpcs    	( 00000000 $NpcGroupList_80244EC4 )
+			Case == 00000001
+				Call     MakeNpcs    	( 00000000 $NpcGroupList_OneKill )
+			Default
+				Call     MakeNpcs    	( 00000000 $NpcGroupList_TwoKills )
+		EndSwitch
+   98:  ExecWait $Script_MakeEntities 
+   A4:  Exec     $Script_80245F5C 
+   B0:  Call     ModifyColliderFlags 	( 00000003 ~Collider:o114 00000002 )
+   C8:  Thread
+   D0:  	Call     ResetFromLava 	( $LavaResetList_80242A2C )
+   E0:  EndThread
+   E8:  Call     EnableTexPanning 	( ~Model:o25 .True )
+   FC:  Call     EnableTexPanning 	( ~Model:o27 .True )
+  110:  Call     EnableTexPanning 	( ~Model:o31 .True )
+  124:  Call     EnableTexPanning 	( ~Model:o33 .True )
+  138:  Call     EnableTexPanning 	( ~Model:o35 .True )
+  14C:  Call     EnableTexPanning 	( ~Model:o37 .True )
+  160:  Call     EnableTexPanning 	( ~Model:o55 .True )
+  174:  Call     EnableTexPanning 	( ~Model:o28 .True )
+  188:  Call     EnableTexPanning 	( ~Model:o32 .True )
+  19C:  Call     EnableTexPanning 	( ~Model:o34 .True )
+  1B0:  Call     EnableTexPanning 	( ~Model:o36 .True )
+  1C4:  Call     EnableTexPanning 	( ~Model:o38 .True )
+  1D8:  Thread
+  1E0:  	Set  *Var[0]  00000000 
+  1F0:  	Set  *Var[1]  00000000 
+  200:  	Label    00000000 
+  20C:  	Add  *Var[0]  0000008C 
+  21C:  	If  *Var[0]  >  00010000 
+  22C:  		Add  *Var[0]  FFFF0000 
+  23C:  	EndIf
+  244:  	Call     SetTexPanOffset 	( 00000001 00000000 *Var[0] 00000000 )
+  260:  	Add  *Var[1]  FFFFFF38 
+  270:  	If  *Var[1]  <  00000000 
+  280:  		Add  *Var[1]  00010000 
+  290:  	EndIf
+  298:  	Call     SetTexPanOffset 	( 00000002 00000000 *Var[1] 00000000 )
+  2B4:  	Wait     00000001 
+  2C0:  	Goto     00000000 
+  2CC:  EndThread
+  2D4:  Call     ModifyColliderFlags 	( 00000003 ~Collider:o129 00000006 )
+  2EC:  Set  *Var[0]  0000008C 
+  2FC:  Set  *Var[1]  FFFFFF77 
+  30C:  Set  *Var[2]  00000154 
+  31C:  Set  *Var[3]  FFFFFFC4 
+  32C:  Set  *Var[4]  00000000 
+  33C:  Exec     $Script_80242680 
+  348:  Set  *Var[0]  000001C2 
+  358:  Set  *Var[1]  FFFFFF77 
+  368:  Set  *Var[2]  0000024E 
+  378:  Set  *Var[3]  FFFFFFC4 
+  388:  Set  *Var[4]  00000000 
+  398:  Exec     $Script_80242680 
+  3A4:  Exec     $Script_80245914 
+  3B0:  Call     ModifyColliderFlags 	( 00000000 ~Collider:deilitw 7FFFFE00 )
+  3C8:  Call     ModifyColliderFlags 	( 00000000 ~Collider:deilite 7FFFFE00 )
+  3E0:  Set  *Var[0]  $Script_802429E4 
+  3F0:  Exec     EnterWalk 
+  3FC:  ExecWait $Script_80241F40 
+  408:  If  *GB_StoryProgress  >=  00000035 
+  418:  	Call     $Function_80240D40 ( )
+  424:  EndIf
+  42C:  Return
+  434:  End
+}
+
+%Super block stuff
+@ $Function_802401CC
+{
+   [40]   LI        A0, 396					%330 -> 396
+   [14C]  SLTI      V0, S2, 9				%8 -> 9
+}
+
+@ $???_80241FB8
+{
+	00010002 00030004 00090006 00070008 000A0000
+}
+
+@ $???_80241FC8
+{
+	001D00E0 001D00E1 001D00E2 001D00E3 001D00E4 001D00E5 001D00E6 001D00E7
+	001D00E8 001D00E9 001D00EA 001D00EB 001D00EC 001D00ED 001D00EE 001D00EF
+	001D01AD 001D01AE
+}

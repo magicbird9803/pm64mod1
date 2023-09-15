@@ -1,0 +1,63 @@
+%More pit minibosses
+%Floors 40, 50, 60
+
+#new:StageTable $StageTable
+{
+"pit_11" $Stage_Pit1
+00000000 00000000 
+}
+
+#new:Stage $Stage_Pit1
+{
+"kpa_tex"
+"pit_b01_shape"
+"pit_b01_hit"
+$Script_BeforeBattle_Normal
+$Script_AfterBattle_Normal
+00000000 
+00000000 
+00000000 
+00000000 
+00000000 
+}
+
+%got rid of the anti-SE stuff
+%to make it not a total pain to get through the pit
+#new:Script $Script_BeforeBattle_Normal
+{
+	Return
+	End
+}
+
+#new:Script $Script_AfterBattle_Normal
+{
+	Return
+	End
+}
+
+#import newenemy/SparkQueen.bpat
+#import newenemy/LavaCheep.bpat
+#import newenemy/Beedazzle.bpat
+
+#new:Formation $Formation_00
+{
+$SparkQueen 00000006 0000000A 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_01
+{
+$LavaCheep 00000002 0000000A 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_02
+{
+$Beedazzle 00000006 0000000A 00000000 00000000 00000000 00000000
+}
+
+#new:FormationTable $FormationTable
+{
+00000000 00000001 $Formation_00 $Stage_Pit1 00000000
+00000000 00000001 $Formation_01 $Stage_Pit1 00000000
+00000000 00000001 $Formation_02 $Stage_Pit1 00000000
+00000000 00000000 00000000 00000000 00000000 % unused
+}

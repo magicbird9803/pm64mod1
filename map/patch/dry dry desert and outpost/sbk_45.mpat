@@ -1,0 +1,18 @@
+@ $Script_MakeEntities
+{
+	0:  Call     MakeEntity  	( .Entity:BrickBlock ~Vec4d:Entity80240440 80000000 )
+   24:  Call     MakeEntity  	( .Entity:BrickBlock ~Vec4d:Entity80240464 80000000 )
+   48:  Call     MakeItemEntity ( .Item:StopWatch ~Vec3d:Item80240488 0000000D *Flag_SBK_35 )
+   6C:  Call     MakeItemEntity ( .Item:LifeShroom ~Vec3d:Item802404AC 00000011 *Flag_SBK_34 ) %spin attack removed for now, but I might replace it with a cool new badge that isn't here
+   90:  Return
+   98:  End
+}
+
+@ $EntryList
+{
+	~Vec4f:Entry0 % -475.0    0.0    0.0   90.0
+	~Vec4f:Entry1 %  475.0    0.0    0.0  270.0
+	~Vec4f:Entry2 %    0.0    0.0 -475.0  180.0
+	~Vec4f:Entry3 %    0.0    0.0  475.0    0.0
+	~Vec4f:Entry4 %  157.0  200.0 -338.0   90.0
+}

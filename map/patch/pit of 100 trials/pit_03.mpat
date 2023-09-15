@@ -1,0 +1,514 @@
+%Pit of 100 trials
+%This map is used for the floors 21-29
+
+%#import EnterViaPipe.mpat
+#import Pit_AI.mpat
+
+#new:Header $Header
+{
+[MainScript] $Script_Main
+[Background] 80200000
+[EntryList] $EntryList
+[EntryCount] 2
+[MapTattle] $Function_GetTattle
+}
+
+#new:Function $Function_GetTattle
+{
+	ADDIU     SP, SP, FFE8
+	LIO       V0, $MapTattle
+	JR        RA
+	ADDIU     SP, SP, 18
+}
+
+%no pit_tex function so I have to do this
+#new:Function_Init $Function_Init
+{
+    PUSH      RA
+    LIA       A0, 800B0CF0
+    LIA       A1, "kpa_tex"
+    JAL       ~Func:sprintf
+    RESERVED
+    DADDU     V0, R0, R0
+    JPOP      RA
+}
+
+#string $MapTattle
+{
+[Style Tattle][EnableCDownNext]This pit just keeps going on and[BR]
+on. I know there's an end[BR]
+but it doesn't feel like it![BR]
+[Wait][NEXT]And it's just going to keep[BR]
+getting darker. Can't we just[BR]
+go back home?
+[Wait][END]
+}
+
+#new:EntryList $EntryList
+{
+~Vec4f:Entry0	%top
+~Vec4f:Entry1	%bottom
+}
+
+#new:Script $Script_RaisePipe
+{
+	Wait     0000000A 
+	Call     PlaySound  ( .PipeRaiseSound )
+	Set      .PipeBool 	00000001
+	Unbind
+	Return
+	End
+}
+
+#new:Script $Script_UseBluePipe
+{
+	Call     GotoMap    ( "pit_03" 0 )
+	Call 	 $Reset_Enemy_Flag
+	Wait     00000064 
+	Return
+	End
+}
+	
+#new:Function $Reset_Enemy_Flag
+{
+	PUSH	RA
+	SAB 	R0, 800B1023 
+	POP 	RA
+	JR 		RA
+	NOP
+}	
+
+#new:Script $Script_GetPipeWorking
+{
+	Bind     $Script_RaisePipe .Trigger:GameFlagSet .PipeBool 00000001 00000000
+	Call     MakeEntity  ( .Entity:BlueWarpPipe ~Vec4d:Entry1 00000001 $Script_UseBluePipe ~İndex:*GF_PitPipeFlag 80000000 )
+	Return
+	End
+}
+
+#define .PipeBool *GF_PitPipeFlag
+#define .PipeRaiseSound 0000208E
+
+#new:Script $Script_Outcome
+{
+Call     GetBattleOutcome 	( *Var[0] )
+Switch  *Var[0] 
+	Case  ==  00000000 
+		Set  .PipeBool  00000001 %pipe is up
+		ExecWait	 $Script_RaisePipe
+		Call     DoNpcDefeat 	( )
+EndSwitch
+Return
+End
+}
+   
+%GetBattleOutcome :   int args: *out (0 = player won, 1 = player lost, 2 = player ran, 3 = enemy ran)  
+
+#new:Script $Script_Init_Enemy
+{
+    Call     BindNpcDefeat 	( .Npc:Self $Script_Outcome )
+    Return
+    End
+}
+
+/%
+	AI:
+		fuzzy (*in shared file)
+		piranha plant
+		boo
+		goomba (*in shared file)
+		cleft
+		clubba
+%/
+
+#import NPC_PiranhaPlant.mpat
+#import NPC_Boo.mpat
+#import NPC_Cleft.mpat
+#import NPC_Clubba.mpat
+
+#new:NpcGroup $NpcGroup_ForestFuzzy
+{
+00000000 $NpcSettings_Fuzzy ~Vec3f:ground_enemy % -388 100 -107
+00400400 $Script_Init_Enemy 00000000 00000000 00000000 
+~İtems:0:DriedShroom:A
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:40:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:0:1
+~Movement:ground_enemy
+002B0102 002B0102 002B0103 002B0103 002B0101 002B0101 002B0108 002B0108 
+002B0103 002B0103 002B0103 002B0103 002B0103 002B0103 002B0103 002B0103 
+00000001 00000000 00000000 00000000 % no tattle string
+}
+
+	
+#new:NpcGroup $NpcGroup_Boo
+{
+00000001 $NpcSettings_BooEnemy ~Vec3f:air_enemy
+00000D00 $Script_Init_Enemy 00000000 00000000 0000005A 
+~İtems:8:SuperShroom:F:RepelGel:1
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:0:3
+~Movement:air_enemy
+00950001 00950002 00950003 00950003 00950001 00950001 00950006 00950006 
+00950012 00950001 00950001 00950001 00950001 00950001 00950001 00950001 
+00000002 00000000 00000000 00000000 
+}
+	
+#new:NpcGroup $NpcGroup_Goomba
+{
+00000002 $NpcSettings_Goomba ~Vec3f:ground_enemy
+00000400 $Script_Init_Enemy 00000000 00000000 0000005A 
+~İtems:8:Mushroom:A
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:2:6
+~Movement:ground_enemy
+00260201 00260202 00260203 00260203 00260201 00260201 00260205 00260205 
+00260203 00260203 00260203 00260203 00260203 00260203 00260203 00260203  
+00000000 00000000 00000000 00000000 % no tattle string	
+}
+
+#new:NpcGroup $NpcGroup_Cleft
+{
+00000003 $NpcSettings_Cleft ~Vec3f:ground_enemy
+00002400 $Script_Init_Enemy 00000000 00000000 00000000 
+~İtems:0:DriedShroom:A
+~HP:20:70:3:50 ~HP:30:60:3:50 ~HP:50:50:3:40 ~HP:80:40:3:40 ~HP:100:30:3:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:1:3
+~Movement:ground_enemy
+00300102 00300106 00300107 00300107 00300102 00300102 00300108 00300108 
+00300114 00300117 00300113 00300115 00300110 00300111 00300116 00300100 % .Sprite:Cleft
+00000001 00000000 00000000 00000000 % no tattle string
+}
+
+
+#new:NpcGroup $NpcGroup_PiranhaPlant
+{
+00000004 $NpcSettings_PiranhaPlant ~Vec3f:ground_enemy % -240 0 240
+00002D00 $Script_Init_Enemy 00000000 00000000 00000000 
+~İtems:5:FireFlower:A
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:3:40 ~FP:30:40:3:40 ~FP:50:40:3:40 ~FP:80:40:3:40 ~FP:100:30:3:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:0:2
+~Movement:ground_enemy
+00370001 00370001 00370001 00370001 00370001 00370001 00370009 00370009
+00370004 00370003 00370007 00370007 00370008 00370001 00370001 00370001 % .Sprite:PiranhaPlant
+00000001 00000000 00000000 00000000 % no tattle string
+}
+
+
+%clubba NPCs don't like to work here
+%but they work now! :D
+
+#new:NpcGroup $NpcGroup_Clubba
+{
+00000005 $NpcSettings_ClubbaA ~Vec3f:ground_enemy % -200 0 180
+00000C00 00000000 00000000 00000000 0000010E 
+~İtems:5:SuperShroom:A
+~HP:20:70:3:50 ~HP:30:60:3:50 ~HP:50:50:3:40 ~HP:80:40:3:40 ~HP:100:30:3:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:2:3
+~Movement:ground_enemy
+00390002 00390003 00390004 00390004 00390002 00390002 0039000C 0039000C
+00390011 00390012 00390007 00390008 00390001 00390002 00390002 00390002 % .Sprite:WorldClubba
+00000002 00000000 $ExtraAnimationList_ClubbaA 00000000 % no tattle string
+% 
+% $NpcGroup_80241E08[1F0]
+00000006 $NpcSettings_ClubbaB ~Vec3f:ground_enemy % 0 -1000 0
+00800D00 00000000 00000000 00000000 00000000 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus
+~Movement:ground_enemy
+00390002 00390003 00390004 00390004 00390002 00390002 0039000C 0039000C
+00390011 00390012 00390007 00390008 00390001 00390002 00390002 00390002  % .Sprite:WorldClubba
+00000000 00000000 $ExtraAnimationList_ClubbaB 00000000 % no tattle string
+}
+
+
+#new:NpcGroup $NpcGroup_RedClubba
+{
+00000007 $NpcSettings_RedClubba ~Vec3f:ground_enemy % -200 0 180
+00000C00 00000000 00000000 00000000 0000010E 
+~İtems:5:SuperShroom:A
+~HP:20:70:3:50 ~HP:30:60:3:50 ~HP:50:50:3:40 ~HP:80:40:3:40 ~HP:100:30:3:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:2:3
+~Movement:ground_enemy
+00390202 00390203 00390204 00390204 00390202 00390202 0039020C 0039020C
+00390211 00390212 00390207 00390208 00390201 00390202 00390202 00390202 % .Sprite:WorldClubba
+00000002 00000000 $ExtraAnimationList_ClubbaA 00000000 % no tattle string
+% 
+% $NpcGroup_80241E08[1F0]
+00000008 $NpcSettings_ClubbaB ~Vec3f:ground_enemy % 0 -1000 0
+00800D00 00000000 00000000 00000000 00000000 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus
+~Movement:ground_enemy
+00390202 00390203 00390204 00390204 00390202 00390202 0039020C 0039020C
+00390211 00390212 00390207 00390208 00390201 00390202 00390202 00390202  % .Sprite:WorldClubba
+00000000 00000000 $ExtraAnimationList_ClubbaB 00000000 % no tattle string
+}
+
+
+#new:AISettings $AISettings_RedClubba
+{
+    3.0 % move speed
+    120` % move time
+    30` % Wait time
+   85.0 % alert radius
+   65.0
+    5`
+    5.0 % chase speed
+    90`
+    12`
+  110.0 % chase radius
+   90.0
+    3`
+}
+
+%change some parameters
+%this should make them harder to deal with
+#new:Script $Script_NpcAI_RedClubba
+{
+	0:  Call     SetSelfVar 	( 00000000 00000000 )
+   14:  Call     SetSelfVar 	( 00000001 00000004 )
+   28:  Call     SetSelfVar 	( 00000002 00000007 )
+   3C:  Call     SetSelfVar 	( 00000003 00000006 )
+   50:  Call     $Function_8024061C_Clubba ( $AISettings_RedClubba )
+   60:  Return
+   68:  End
+}
+
+@ $Script_NpcAI_Cleft
+{
+	0:  Call     $Function_DoAI_Cleft ( $AISettings_Cleft 00000008 ) 
+   14:  Return
+   1C:  End
+}
+
+@ $NpcSettings_ClubbaA
+{
+00000000 00240022 00000000 00000000 $Script_NpcAI_ClubbaA 80077F70 00000000 $ClubbaDefeat
+00000000 00000000 000D0000 
+}
+  
+#new:Script $ClubbaDefeat %normal defeat script with extra stuff
+{
+	0:  Call     SetNpcRotation ( FFFFFFFF 00000000 00000000 00000000 )
+   1C:  Call     GetBattleOutcome 	( *Var[0] )
+   2C:  Switch  *Var[0] 
+   38:  	Case  ==  .Outcome:PlayerWon % 0
+				Set  .PipeBool  00000001 %pipe is up
+				ExecWait	 $Script_RaisePipe
+   44:  		Call     DoNpcDefeat 	( )
+   50:  	Case  ==  .Outcome:PlayerFled % 2
+   5C:  		Call     80045900 ( 00000000 )
+   6C:  	Case  ==  .Outcome:EnemyFled % 3
+   78:  		Call     SetEnemyFlagBits 	( FFFFFFFF 00000010 00000001 )
+   90:  		Call     RemoveNpc   	( FFFFFFFF )
+   A0:  EndSwitch
+   A8:  Return
+   B0:  End
+}
+
+  
+#new:NpcSettings $NpcSettings_RedClubba
+{
+00000000 00240022 00000000 00000000 $Script_NpcAI_ClubbaA 80077F70 00000000 $ClubbaDefeat
+00000000 00000000 000D0000 
+}
+
+#new:NpcGroupList $NpcGroup_1
+{
+00000001 $NpcGroup_ForestFuzzy 0D120000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_2
+{
+00000001 $NpcGroup_ForestFuzzy 0D130000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_3
+{
+00000001 $NpcGroup_PiranhaPlant 0D140000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_4
+{
+00000001 $NpcGroup_PiranhaPlant 0D150000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_5
+{
+00000001 $NpcGroup_Boo 0D160000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_6
+{
+00000001 $NpcGroup_Goomba 0E110000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_7
+{
+00000001 $NpcGroup_Cleft 0E120000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_8
+{
+00000002 $NpcGroup_Clubba 0F090000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_9
+{
+00000002 $NpcGroup_RedClubba 0F0A0000
+00000000 00000000 00000000
+}
+
+
+
+#new:Script_Main $Script_Main
+{
+	Add		*PitFloor 00000001
+	Set 	.PipeBool 00000000
+	Switch 	*PitFloor
+		Case == 00000015
+			Call     MakeNpcs           ( 00000001 $NpcGroup_1)
+		Case == 00000016
+			Call     MakeNpcs           ( 00000001 $NpcGroup_2)
+		Case == 00000017
+			Call     MakeNpcs           ( 00000001 $NpcGroup_3)
+		Case == 00000018
+			Call     MakeNpcs           ( 00000001 $NpcGroup_4)
+		Case == 00000019
+			Call     MakeNpcs           ( 00000001 $NpcGroup_5)
+		Case == 0000001A
+			Call     MakeNpcs           ( 00000001 $NpcGroup_6)
+		Case == 0000001B
+			Call     MakeNpcs           ( 00000001 $NpcGroup_7)
+		Case == 0000001C
+			Call     MakeNpcs           ( 00000001 $NpcGroup_8)
+		Case == 0000001D
+			Call     MakeNpcs           ( 00000001 $NpcGroup_9)
+		Case == 0000001E
+			Call     GotoMap    ( "pit_11" 0 )
+	EndSwitch
+	Call     MakeEntity  	( .Entity:Signpost ~Vec4d:sign 80000000 )
+	Call	 AssignScript ( $Script_SignPost )
+	Exec	 $Script_GetPipeWorking
+	Call     SetSpriteShading 	( 00080000 )
+	Call     SetCamPerspective 	( .Cam:Default 00000003 00000019 00000010 00001000 )
+	Call     SetCamBGColor 	( .Cam:Default 00000000 00000000 00000000 )
+	Call	 SetCamEnabled 	 	( .Cam:Default  .True )				% enabled?
+	Call	 SetCamLeadPlayer 	( .Cam:Default  .False )			% lead player motion?
+	Call     SetMusicTrack    	( 00000000 .Song:DryDryRuins 00000000 00000008 )
+	Return
+	End
+}
+
+#new:Script $Script_SignPost
+{
+	0:  Call     DisablePlayerInput 	( .True )
+		Switch *PitFloor
+			Case == 00000015
+				Call     ShowMessageAtScreenPos 	( $Floor1 000000A0 00000028 )  
+			Case == 00000016
+				Call     ShowMessageAtScreenPos 	( $Floor2 000000A0 00000028 )
+			Case == 00000017
+				Call     ShowMessageAtScreenPos 	( $Floor3 000000A0 00000028 )
+			Case == 00000018
+				Call     ShowMessageAtScreenPos 	( $Floor4 000000A0 00000028 )
+			Case == 00000019
+				Call     ShowMessageAtScreenPos 	( $Floor5 000000A0 00000028 )
+			Case == 0000001A
+				Call     ShowMessageAtScreenPos 	( $Floor6 000000A0 00000028 )
+			Case == 0000001B
+				Call     ShowMessageAtScreenPos 	( $Floor7 000000A0 00000028 )
+			Case == 0000001C
+				Call     ShowMessageAtScreenPos 	( $Floor8 000000A0 00000028 )
+			Case == 0000001D
+				Call     ShowMessageAtScreenPos 	( $Floor9 000000A0 00000028 )
+			Default
+				Call     ShowMessageAtScreenPos 	( $Error 000000A0 00000028 )
+		EndSwitch
+   28:  Call     DisablePlayerInput 	( .False )
+   38:  Return
+   40: End
+}
+   
+#string $Floor1
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 21
+
+[DelayOn][Wait][END] 
+}
+
+#string $Floor2
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 22
+
+[DelayOn][Wait][END] 
+}
+
+#string $Floor3
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 23
+
+[DelayOn][Wait][END] 
+}
+
+#string $Floor4
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 24
+
+[DelayOn][Wait][END] 
+}
+
+#string $Floor5
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 25
+
+[DelayOn][Wait][END] 
+}
+
+#string $Floor6
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 26
+
+[DelayOn][Wait][END] 
+}
+
+#string $Floor7
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 27
+
+[DelayOn][Wait][END] 
+}
+
+#string $Floor8
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 28
+
+[DelayOn][Wait][END] 
+}
+
+#string $Floor9
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 29
+
+[DelayOn][Wait][END] 
+}
+
+#string $Error
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Signpost error.
+(floor number is not within 21-30)
+[DelayOn][Wait][END] 
+}

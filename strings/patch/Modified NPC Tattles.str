@@ -1,0 +1,65 @@
+#string:1A:00F
+{
+	[Style Tattle]
+	[EnableCDownNext]He's The Master of the Dojo.[BR]
+	[Pause 10]He's been training students at[BR]
+	the Dojo for years.[BR]
+	[wait][Next]
+	My grandpa told me he's[BR]
+	incredibly strong.[BR]
+	[Pause 10]He doesn't look like it, though.[BR]
+	[wait][Next]
+	He just got back from a[BR]
+	long journey where he trained[BR]
+	with fighters stronger than[BR]
+	he is. Some sort of Master Quest.[BR]
+	[wait][NEXT]
+	Man, it would be cool to do[BR]
+	something like that, but[BR]
+	I'm not sure I'm strong enough[BR]
+	for that.[BR]
+	[wait][End]
+}
+
+#string:1A:122
+{
+[STYLE:TATTLE][EnableCDownNext]He's a Yoshi who used[BR]
+to be the Village Leader's[BR]
+friend.[BR]
+[wait][NEXT]He was banished from Lavalava[BR]
+island after making the volcano[BR]
+erupt by stealing its treasure.[BR]
+[wait][NEXT]Legend has it that the volcano's[BR]
+treasure gives the bearer[BR]
+infinite money.[BR]
+[wait][NEXT]I don't believe it.[BR]
+[PAUSE:0A]Besides, something that good[BR]
+would probably have a horrible[BR]
+curse on it.[wait][END]
+}
+
+#string:1A:123
+{
+[STYLE:TATTLE][EnableCDownNext]That's Covert Guy.[BR]
+He's hiding in the maze[BR]
+for some reason.[BR]
+[wait][NEXT]I bet he's the one who[BR]
+stole the Magical Bean.[wait][END]
+}
+
+#string:1A:124
+{
+[STYLE:TATTLE][EnableCDownNext]This Boo is blocking[BR]
+the way down the mountain.[BR]
+He won't budge.[BR]
+[wait][NEXT]
+Still, I thought we were in[BR]
+a gulch. How are we going[BR]
+down this gulch?[BR]
+[wait][NEXT]
+Oh well, lets just come[BR]
+back later. The path will[BR]
+be cleared eventually.[BR]
+[wait][END]
+}
+

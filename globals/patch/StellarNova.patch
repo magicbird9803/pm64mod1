@@ -1,0 +1,284 @@
+%Add stellar nova to the star power menu
+%Very hard, star power menu is pretty hardcoded unlike the jump and hammer menu
+%However the menu is still somewhat dynamic, so adding a new move should work
+
+%800DC070 + 20E = menu count
+
+%hook that goes to 802A6530 is around where the menu count is set
+
+%802A6558 = place where star power is read from to set up part of the menu (check which star powers)
+%802A656C = place where star beam / peach beam val is checked (= 1)
+%802A658C = around place where move ID is placed in table
+
+%802A6608 = place where star beam / peach beam val is checked
+
+%load star power script in function 80280950
+
+
+%17C = move selected (used to check the table to find script)
+%17A = special ID thing (used sometimes)
+%	Somehow set to 9 when you use peach beam and 8 with star beam
+%	ok theres a thing that converts 8 to 9
+
+%49 = true index?
+
+
+
+%Set the move ID correctly
+%(used to determine which star power script to execute)
+%9 -> A
+
+%New version: check that V0 == 80000000
+
+%Sidenote for future reference: there is a better way to access the actual move ID slightly earlier in the code
+%Right above this is a move table access which determines the move flags (that are checked here :P)
+
+/%
+	Table access (may want to hook here to access the real table value)
+ 1C28:  LTW       V0, V0 (8008F064)
+
+	Hooked over with below hook
+ 1C38:  SRA       A0, V1, 18
+ 1C3C:  SH        A0, 17A (S6)
+%/
+
+@Hook 41C350	%802A75C0
+{
+	SRA		A0, V1, 18 	%24
+	PUSH	T0
+	LI		T0, 1
+	BLT		A0, T0 .no
+	NOP
+	LI		T0, 80000000
+	BNE		V0, T0, .no
+	NOP
+	LI		A0, A
+	.no
+	POP		T0
+	J		802A75C8
+	SH		A0, 17A (S6)
+}
+
+
+%Probably the best way to make this work is to duplicate the star beam / peach beam option code
+
+/%
+  BE4:  LB        S1, 292 (S5)				%Check star beam val to see if need to make star beam option
+  BE8:  LI        V0, 1
+%/
+
+/%
+  C80:  LB        V1, 292 (S5)			%check if peach beam
+  C84:  LI        V0, 2
+%/
+
+/%
+% 0041A718 --> 802A5988
+#new:Function $Function_btl_state_update_player_menu
+  D28:  LB        S0, 48 (S6)
+  D2C:  LI        V0, 8
+%/
+/%
+peach beam code block
+  C80:  LB        V1, 292 (S5)			%check if peach beam
+  C84:  LI        V0, 2
+  C88:  BNEL      V1, V0, .oD28
+  C8C:  SB        S4, 20E (S6)
+  C90:  LA        S2, 8008FA60
+  C98:  ADDU      S0, S6, S4
+  C9C:  LI        V0, 80
+  CA0:  SB        V0, 1DE (S0)
+  CA4:  SLL       V0, S4, 1
+  CA8:  ADDU      V0, S6, V0
+  CAC:  SH        R0, 1AE (V0)
+  CB0:  LI        V0, 8
+  CB4:  SB        V0, 178 (S6)
+  CB8:  ADDIU     V0, S3, 78
+  CBC:  SH        V0, 17A (S6)
+  CC0:  LW        V0, 4 (S2)
+  CC4:  COPY      A0, S7
+  CC8:  JAL       ~Func:player_create_target_list
+  CCC:  SW        V0, 184 (S6)
+  CD0:  LI        V0, 1
+  CD4:  SB        V0, 1F6 (S0)
+  CD8:  LB        V0, 40C (S7)
+  CDC:  BNE       V0, R0, .oCE8
+  CE0:  LI        V0, FFFE
+  CE4:  SB        V0, 1F6 (S0)
+        .oCE8
+  CE8:  LH        V0, 290 (S5)
+  CEC:  BLTZL     V0, .oCF4
+  CF0:  ADDIU     V0, V0, FF
+        .oCF4
+  CF4:  LB        V1, 11 (S2)
+  CF8:  SRA       V0, V0, 8
+  CFC:  SLT       V0, V0, V1
+  D00:  BNEL      V0, R0, .oD08
+  D04:  SB        R0, 1F6 (S0)
+        .oD08
+  D08:  LAW       V0, 800DC074
+  D10:  ANDI      V0, V0, 1000
+  D14:  BEQ       V0, R0, .oD20
+  D18:  LI        V0, FFFF
+  D1C:  SB        V0, 1F6 (S0)
+        .oD20
+  D20:  ADDIU     S4, S4, 1
+  D24:  SB        S4, 20E (S6)
+        .oD28						%post peach beam check
+%/
+
+#new:Data $StellarNovaTemp
+{
+	00000000
+}
+
+@Hook 41B2FC
+{
+	PUSH	T0
+	LI		T0, 1
+	SAW		T0, $StellarNovaTemp
+	POP		T0
+	LB      S1, 292 (S5)				%Check star beam val to see if star beam should be an option
+	J		802A6574
+	LI      V0, 1
+}
+
+@Hook 41B398
+{
+	PUSH	T0
+	LI		T0, 1
+	SAW		T0, $StellarNovaTemp
+	POP		T0
+	LB      V1, 292 (S5)			%check if peach beam
+	J		802A6610
+	LI      V0, 2
+}
+
+@Hook 41B440
+{
+	PUSH	RA, A0, A1
+	LAW		A1, $StellarNovaTemp
+	SAW		R0, $StellarNovaTemp
+	BEQ		A1, R0, .nostellarnova
+	NOP
+	JAL		$IsBadgeEquipped
+	LI		A0, .Item:StellarNova
+	BEQ		A0, R0, .nostellarnova
+	NOP
+	%oh boy this is not going to be fun
+  C8C:  SB        S4, 20E (S6)
+  C90:  LA        S2, 8008FA60
+  C98:  ADDU      S0, S6, S4
+  C9C:  LI        V0, 81			%Move id	(Causes problems later if you try to use an ID outside of usable star power moves, but peach focus is allowed)
+  CA0:  SB        V0, 1DE (S0)
+  CA4:  SLL       V0, S4, 1
+  CA8:  ADDU      V0, S6, V0
+  CAC:  SH        R0, 1AE (V0)
+  CB0:  LI        V0, 8
+  CB4:  SB        V0, 178 (S6)
+  CB8:  ADDIU     V0, S3, 78		%?
+  CBC:  SH        V0, 17A (S6)
+  CC0:  LW        V0, 4 (S2)
+  CC4:  COPY      A0, S7
+  CC8:  JAL       8026302C				%~Func:player_create_target_list
+  CCC:  SW        V0, 184 (S6)
+  CD0:  LI        V0, 1
+  CD4:  SB        V0, 1F6 (S0)			%can use?
+  CD8:  LB        V0, 40C (S7)
+  CDC:  BNE       V0, R0, .oCE8
+  CE0:  LI        V0, FFFE
+  CE4:  SB        V0, 1F6 (S0)
+        .oCE8
+  CE8:  LH        V0, 290 (S5)
+  CEC:  BLTZL     V0, .oCF4
+  CF0:  ADDIU     V0, V0, FF
+        .oCF4
+		%Implement checks		
+		%can use V1, V0, T3, A0, A1			
+  CF4:  LB        V1, 11 (S2)
+		LI		  V1, 1`
+		%Cost = 1
+		JAL		$IsBadgeEquipped		%Dark saver
+		ORI		A0, R0, 142
+		BEQ		A0, R0, .noDS
+		NOP
+		SLL		V1, V1, 1
+		.noDS		
+		JAL		$HasGreedStone
+		NOP		
+		BEQ		V0, R0, .noSC
+		NOP
+		JAL		$IsBadgeEquipped		%Stellar coins
+		ORI		A0, R0, .Item:FlowerHealth
+		BEQ		A0, R0, .noSC
+		NOP
+		%
+		%modify SP (now Coins) costs in V0
+		ORI		T3, V1, 0
+		ORI		A0, V1, 0	
+		SLL		A0, A0, 4		%need to shift by 10 to equal 1024
+		SLL		T3, T3, 3		%*512
+		ADD		V1, V1, A0		%
+		ADD		V1, V1, T3		%multiply V0 by 1600 	(V0 * (1024 + 512 + 64))
+		%
+		LAW		A0, $Data_TurnsSinceUsedCoins
+		SUB		A0, R0, A0
+		ADDI	A0, A0, 7`		%2 ^ 6 = 64
+		BLT		A0, R0, .nomult	%not sure if SLLV works with negative values
+		NOP
+		SLLV	V1, V1, A0
+		.nomult				
+		BEQ		R0, R0, .checkwithCoins
+		NOP		
+		.noSC
+		JAL		$IsBadgeEquipped		%Stellar flowers
+		ORI		A0, R0, 14F		
+		BEQ		A0, R0, .noSF
+		NOP
+		SLL		A1, V1, 2				%a1 = 4 * v1
+		%ADD	V1, A1, V1				%a1 = 4 * v1 + v1
+		BEQ		R0, R0, .checkwithFP
+		NOP
+		.noSF
+		BEQ		R0, R0, .checkwithSP
+		NOP		
+		.checkwithFP
+		LB        V0, 5 (S5)		
+  CFC:  SLT       V0, V0, V1  
+		BEQ		  R0, R0, .postcheck
+		NOP
+		.checkwithCoins
+		LI		  V0, 999`		%well, stellar coins is only usable with greed stone		
+  CFC:  SLT       V0, V0, V1  
+		BEQ		  R0, R0, .postcheck
+		NOP
+		.checkwithSP
+		LH        V0, 290 (S5)		
+  CF8:  SRA       V0, V0, 8
+  CFC:  SLT       V0, V0, V1  
+		.postcheck
+  D00:  BNEL      V0, R0, .oD08
+  D04:  SB        R0, 1F6 (S0)
+        .oD08
+		%add a bonus check
+		LAB		  T3, $StellarNovaBoolean
+		BEQ		  T3, R0, .no
+		NOP
+		SB        R0, 1F6 (S0)
+		.no
+		%
+  D08:  LAW       V0, 800DC074
+  D10:  ANDI      V0, V0, 1000
+  D14:  BEQ       V0, R0, .oD20
+  D18:  LI        V0, FFFF
+  D1C:  SB        V0, 1F6 (S0)
+        .oD20
+  D20:  ADDIU     S4, S4, 1
+  D24:  SB        S4, 20E (S6)	
+	%
+	.nostellarnova
+	POP		RA, A0, A1
+	LB      S0, 48 (S6)
+	J		802A66B8
+	LI      V0, 8	
+}

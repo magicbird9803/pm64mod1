@@ -1,0 +1,443 @@
+%Pit of 100 trials
+%This map is used for the floors 41-49
+
+%#import EnterViaPipe.mpat
+#import Pit_AI.mpat
+%#import NPC_BuzzyBeetle.mpat
+#import NPC_PutridPiranha.mpat
+#import NPC_SpearGuy.mpat
+
+
+#new:Header $Header
+{
+[MainScript] $Script_Main
+[Background] 80200000
+[EntryList] $EntryList
+[EntryCount] 2
+[MapTattle] $Function_GetTattle
+}
+
+#new:Function $Function_GetTattle
+{
+	ADDIU     SP, SP, FFE8
+	LIO       V0, $MapTattle
+	JR        RA
+	ADDIU     SP, SP, 18
+}
+
+%no pit_tex function so I have to do this
+#new:Function_Init $Function_Init
+{
+    PUSH      RA
+    LIA       A0, 800B0CF0
+    LIA       A1, "kpa_tex"
+    JAL       ~Func:sprintf
+    RESERVED
+    DADDU     V0, R0, R0
+    JPOP      RA
+}
+
+#string $MapTattle
+{
+[Style Tattle][EnableCDownNext]I don't get it.[BR]
+Why would someone go through[BR]
+the trouble of making a massive[BR]
+dungeon?[BR]
+[Wait][NEXT]And why would they just keep[BR]
+building the same room over and[BR]
+over?
+[Wait][END]
+}
+
+
+#new:EntryList $EntryList
+{
+~Vec4f:Entry0	%top
+~Vec4f:Entry1	%bottom
+}
+
+#new:Script $Script_RaisePipe
+{
+	Wait     0000000A 
+	Call     PlaySound  ( .PipeRaiseSound )
+	Set      .PipeBool 	00000001
+	Unbind
+	Return
+	End
+}
+
+#new:Script $Script_UseBluePipe
+{
+	Call     GotoMap    ( "pit_05" 0 )
+	Call 	 $Reset_Enemy_Flag
+	Wait     00000064 
+	Return
+	End
+}
+	
+#new:Function $Reset_Enemy_Flag
+{
+	PUSH	RA
+	SAB 	R0, 800B1083
+	POP 	RA
+	JR 		RA
+	NOP
+}	
+
+#new:Script $Script_GetPipeWorking
+{
+	Bind     $Script_RaisePipe .Trigger:GameFlagSet .PipeBool 00000001 00000000
+	Call     MakeEntity  ( .Entity:BlueWarpPipe ~Vec4d:Entry1 00000001 $Script_UseBluePipe ~İndex:*GF_PitPipeFlag 80000000 )
+	Return
+	End
+}
+
+#define .PipeBool *GF_PitPipeFlag
+#define .PipeRaiseSound 0000208E
+
+#new:Script $Script_Outcome
+{
+Call     GetBattleOutcome 	( *Var[0] )
+Switch  *Var[0] 
+	Case  ==  00000000 
+			Set  .PipeBool  00000001 %pipe is up
+			ExecWait	 $Script_RaisePipe
+			Call     DoNpcDefeat 	( )
+EndSwitch
+Return
+End
+}
+   
+%GetBattleOutcome :   int args: *out (0 = player won, 1 = player lost, 2 = player ran, 3 = enemy ran)  
+
+#new:Script $Script_Init_Enemy
+{
+    Call     BindNpcDefeat 	( .Npc:Self $Script_Outcome )
+    Return
+    End
+}
+
+/%
+	koopa (shared file)
+	fuzzy (shared file)
+	spear guy
+	putrid piranha
+	bubble (shared file)
+	spike top (re-use buzzy beetle)
+%/
+	
+#new:NpcGroup $NpcGroup_DarkKoopa
+{
+00000000 $NpcSettings_Koopa ~Vec3f:ground_enemy % -350 0 -30
+00002C00 $Script_Init_Enemy 00000000 00000000 0000005A 
+~İtems:5:Mushroom:3:KoopaLeaf:7
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:1:1
+~Movement:ground_enemy
+00290001 00290003 00290004 00290004 00290001 00290001 0029000B 0029000B 
+00290007 00290006 00290008 00290004 00290004 00290004 00290004 00290004 
+00000000 00000000 00000000 00000000 % no tattle string
+}
+
+
+#new:NpcGroup $NpcGroup_JungleFuzzy
+{
+00000001 $NpcSettings_Fuzzy ~Vec3f:ground_enemy % -388 100 -107
+00400400 $Script_Init_Enemy 00000000 00000000 00000000 
+~İtems:0:DriedShroom:A
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:40:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:0:1
+~Movement:ground_enemy
+002B0302 002B0302 002B0303 002B0303 002B0301 002B0301 002B0308 002B0308 
+002B0303 002B0303 002B0303 002B0303 002B0303 002B0303 002B0303 002B0303 
+00000001 00000000 00000000 00000000 % no tattle string
+}
+
+
+#new:NpcGroup $NpcGroup_SpearGuy
+{
+00000002 $NpcSettings_SpearGuyA ~Vec3f:ground_enemy % 0 0 0
+00000C00 $Script_Init_Enemy 00000000 00000000 0000005A 
+~İtems:5:SleepySheep:A
+~HP:20:70:3:50 ~HP:30:60:3:50 ~HP:50:50:3:40 ~HP:80:40:3:40 ~HP:100:30:3:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:0:3
+~Movement:ground_enemy
+00420003 00420005 00420006 00420006 00420003 00420003 00420007 00420007
+0042001A 0042001B 00420003 00420003 00420003 00420003 00420003 00420003 % .Sprite:JungleShyGuy
+00000003 00000000 $ExtraAnimationList_SpearGuyA 00000000 % no tattle string
+% 
+% $NpcGroup_80246378[1F0]
+00000003 $NpcSettings_SpearGuyB 0.0 -1000.0 0.0 %~Vec3f:ground_enemy % 0 -1000 0
+00800D00 $Script_Init_Enemy 00000000 00000000 00000000 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus
+~Movement:ground_enemy
+00420003 00420005 00420006 00420006 00420003 00420003 00420007 00420007
+0042001A 0042001B 00420003 00420003 00420003 00420003 00420003 00420003 % .Sprite:JungleShyGuy
+00000000 00000000 $ExtraAnimationList_SpearGuyB 00000000 % no tattle string
+}
+
+
+#new:NpcGroup $NpcGroup_PutridPiranha
+{
+00000004 $NpcSettings_PutridPiranhaA ~Vec3f:ground_enemy % -325 0 150
+00000C00 $Script_Init_Enemy 00000000 00000000 0000010E 
+~İtems:5:SuperShroom:A
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:0:3
+~Movement:ground_enemy
+00360001 00360002 00360003 00360003 00360001 00360001 0036000E 0036000E
+00360018 00360017 00360005 00360006 00360007 00360001 00360001 00360001 % .Sprite:PutridPiranha
+00000003 00000000 00000000 00000000 % no tattle string
+% 
+% $NpcGroup_80245240[1F0]
+00000005 $NpcSettings_PutridPiranhaB 0.0 -1000.0 0.0 %(this second NPC is weird but it's probably required for the piranhas to work) %~Vec3f:ground_enemy % 0 -1000 0
+00800D00 $Script_Init_Enemy 00000000 00000000 00000000 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus
+~Movement:ground_enemy
+00360001 00360002 00360003 00360003 00360001 00360001 0036000E 0036000E
+00360018 00360017 00360005 00360006 00360007 00360001 00360001 00360001 % .Sprite:PutridPiranha
+00000000 00000000 00000000 00000000 % no tattle string
+}
+
+
+#new:NpcGroup $NpcGroup_LavaBubble
+{
+00000006 $NpcSettings_Bubble ~Vec3f:air_enemy
+00000D00 $Script_Init_Enemy 00000000 00000000 0000005A 
+~İtems:5:ShootingStar:A
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:1:4
+~Movement:air_enemy
+00460001 00460002 00460003 00460003 00460001 00460001 00460007 00460007 
+00460004 00460001 00460001 00460001 00460001 00460001 00460001 00460001 
+00000002 00000000 00000000 00000000 % no tattle string
+}
+
+
+#new:NpcGroup $NpcGroup_SpikeTop
+{
+00000007 $NpcSettings_BuzzyBeetle ~Vec3f:ground_enemy % 561 25 47
+00000400 $Script_Init_Enemy 00000000 00000000 00000163 
+~İtems:0:DriedShroom:A
+~HP:20:80:2:50 ~HP:30:70:2:50 ~HP:50:60:2:40 ~HP:80:50:2:40 ~HP:100:40:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:1:2
+~Movement:ground_enemy
+004D0003 004D0006 004D0008 004D0008 004D0003 004D0003 004D0013 004D0013
+004D000B 004D000A 004D000C 004D0003 004D0003 004D0003 004D0003 004D0003
+00000003 00000000 00000000 00000000 % no tattle string
+}
+
+
+/%
+		41: 2 dark koopas + gloomba 							1A-19
+		42: 1 dark koopa, 2 dark parakoopas + 1 paragloomba		1A-1A
+		43: 2 jungle fuzzies, 1 spear guy, 1 hurt plant			14-11
+		44: 2 spear guys, 1 hurt plant, 1 remedy guy			14-12
+		45: 1 putrid piranha, 2 m bushes						15-04
+		46: 3 lava bubbles										16-15
+		47: 1 lava bubble, 1 spike top, 1 putrid				16-16
+		48: 1 spike top, 2 fire									16-17
+		49: 1 spike top, 1 putrid, 1 fire, 1 remedy				16-18
+%/
+
+%these names are misleading but if it works it works
+#new:NpcGroupList $NpcGroup_1
+{
+00000001 $NpcGroup_DarkKoopa 1A190000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_2
+{
+00000001 $NpcGroup_DarkKoopa 1A1A0000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_3
+{
+00000001 $NpcGroup_JungleFuzzy 14110000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_4
+{
+00000002 $NpcGroup_SpearGuy 14120000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_5
+{
+00000002 $NpcGroup_PutridPiranha 15040000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_6
+{
+00000001 $NpcGroup_LavaBubble 16150000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_7
+{
+00000001 $NpcGroup_LavaBubble 16160000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_8
+{
+00000001 $NpcGroup_SpikeTop 16170000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_9
+{
+00000001 $NpcGroup_SpikeTop 16180000
+00000000 00000000 00000000
+}
+
+
+
+#new:Script_Main $Script_Main
+{
+	Add		*PitFloor 00000001
+	Set 	.PipeBool 00000000
+	Switch 	*PitFloor
+		Case == 00000029
+			Call     MakeNpcs           ( 00000001 $NpcGroup_1)
+		Case == 0000002A
+			Call     MakeNpcs           ( 00000001 $NpcGroup_2)
+		Case == 0000002B
+			Call     MakeNpcs           ( 00000001 $NpcGroup_3)
+		Case == 0000002C
+			Call     MakeNpcs           ( 00000001 $NpcGroup_4)
+		Case == 0000002D
+			Call     MakeNpcs           ( 00000001 $NpcGroup_5)
+		Case == 0000002E
+			Call     MakeNpcs           ( 00000001 $NpcGroup_6)
+		Case == 0000002F
+			Call     MakeNpcs           ( 00000001 $NpcGroup_7)
+		Case == 00000030
+			Call     MakeNpcs           ( 00000001 $NpcGroup_8)
+		Case == 00000031
+			Call     MakeNpcs           ( 00000001 $NpcGroup_9)
+		Case == 00000032
+			Call     GotoMap    ( "pit_11" 0 )
+	EndSwitch
+	Call     MakeEntity  	( .Entity:Signpost ~Vec4d:sign 80000000 )
+	Call	 AssignScript ( $Script_SignPost )
+	Exec	 $Script_GetPipeWorking
+	Call     SetSpriteShading 	( 00080000 )
+	Call     SetCamPerspective 	( .Cam:Default 00000003 00000019 00000010 00001000 )
+	Call     SetCamBGColor 	( .Cam:Default 00000000 00000000 00000000 )
+	Call	 SetCamEnabled 	 	( .Cam:Default  .True )				% enabled?
+	Call	 SetCamLeadPlayer 	( .Cam:Default  .False )			% lead player motion?
+	Call     SetMusicTrack    	( 00000000 .Song:DryDryRuins 00000000 00000008 )
+	Return
+	End
+}
+
+#new:Script $Script_SignPost
+{
+	0:  Call     DisablePlayerInput 	( .True )
+		Switch *PitFloor
+			Case == 00000029
+				Call     ShowMessageAtScreenPos 	( $Floor1 000000A0 00000028 )  
+			Case == 0000002A
+				Call     ShowMessageAtScreenPos 	( $Floor2 000000A0 00000028 )
+			Case == 0000002B
+				Call     ShowMessageAtScreenPos 	( $Floor3 000000A0 00000028 )
+			Case == 0000002C
+				Call     ShowMessageAtScreenPos 	( $Floor4 000000A0 00000028 )
+			Case == 0000002D
+				Call     ShowMessageAtScreenPos 	( $Floor5 000000A0 00000028 )
+			Case == 0000002E
+				Call     ShowMessageAtScreenPos 	( $Floor6 000000A0 00000028 )
+			Case == 0000002F
+				Call     ShowMessageAtScreenPos 	( $Floor7 000000A0 00000028 )
+			Case == 00000030
+				Call     ShowMessageAtScreenPos 	( $Floor8 000000A0 00000028 )
+			Case == 00000031
+				Call     ShowMessageAtScreenPos 	( $Floor9 000000A0 00000028 )
+			Default
+				Call     ShowMessageAtScreenPos 	( $Error 000000A0 00000028 )
+		EndSwitch
+   28:  Call     DisablePlayerInput 	( .False )
+   38:  Return
+   40: End
+}
+   
+#string $Floor1
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 41
+
+[DelayOn][Wait][END] 
+}
+
+#string $Floor2
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 42
+
+[DelayOn][Wait][END] 
+}
+
+#string $Floor3
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 43
+
+[DelayOn][Wait][END] 
+}
+
+#string $Floor4
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 44
+
+[DelayOn][Wait][END] 
+}
+
+#string $Floor5
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 45
+
+[DelayOn][Wait][END] 
+}
+
+#string $Floor6
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 46
+
+[DelayOn][Wait][END] 
+}
+
+#string $Floor7
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 47
+
+[DelayOn][Wait][END] 
+}
+
+#string $Floor8
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 48
+
+[DelayOn][Wait][END] 
+}
+
+#string $Floor9
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 49
+
+[DelayOn][Wait][END] 
+}
+
+#string $Error
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Signpost error.[BR]
+(floor no. not between 41-50)
+[DelayOn][Wait][END] 
+}

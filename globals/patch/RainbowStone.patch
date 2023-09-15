@@ -1,0 +1,115 @@
+%Jump
+
+%With conditions
+@Hook 7C3CC %hooked over: setting mario's state to 8
+{
+PUSH	RA, S0, S1
+LAB		S0, 8010F2A8
+BEQ		S0, R0, .normal
+NOP
+LAW 	S0, 8010F0B8
+ANDI	S0, S0, 0020
+BEQ		S0, R0, .normal
+NOP
+JAL 	800E5DA4 	
+ADDIU 	A0, R0, 3 	%action 3 = starting a jump
+BEQ 	R0, R0 	.end
+NOP
+.normal
+JAL 	800E5DA4 	%hooked over
+ADDIU 	A0, R0, 8 	%hooked over
+.end
+POP 	RA, S0, S1
+J 800E2F24
+NOP
+}
+
+
+/%
+@Hook 7C3CC %hooked over: setting mario's state to 8
+PUSH	RA, S0, S1
+LAW 	S0, 8010F0B8
+ANDI	S0, S0, 0020
+BEQ		S0, R0, .normal
+NOP
+JAL 	800E5DA4 	
+ADDIU 	A0, R0, 3 %infi jump
+BEQ 	R0, R0 	.end
+NOP
+.normal
+JAL 	800E5DA4 	%hooked over
+ADDIU 	A0, R0, 8 	%hooked over
+.end
+POP 	RA, S0, S1
+J 800E2F24
+NOP
+%/
+
+
+%infinite range hammer is hard to make (no easily modify-able functions)
+%  800:  LWC1      F0, 5C (S1)
+%  804:  MUL.S     F0, F0, F24
+
+%Spin velocity stuff
+@Hook E26560
+{
+	PUSH	RA, S0, S2
+	LAB		S0, 8010F2A8
+	BEQ		S0, R0, .normal
+	NOP
+	LAW 	S0, 8010F0B8
+	ANDI	S0, S0, 0020
+	BEQ		S0, R0, .normal
+	NOP
+	BEQ		R0, R0, .fast
+	NOP
+	.normal
+	LWC1	F0, 5C (S1)
+	MUL.S	F0, F0, F24
+	NOP
+	POP		RA, S0, S2
+	J		802B6808
+	NOP
+	.fast
+	LIF		F24, 8.0
+	LWC1	F0, 5C (S1)	
+	MUL.S	F0, F0, F24
+	NOP
+	POP		RA, S0, S2
+	J		802B6808
+	NOP
+}
+
+
+%jump velocity addresses
+%800F7B5C? (ascending?)
+%800F7B6C? (falling?)
+
+
+%800DC070 find 2 byte
+%Change 8B byte to 255
+
+%800DC280 word
+%	See 20 end byte
+
+#export:Function $RainbowStoneCheats
+{
+	PUSH	RA, S0, S1, S2
+	LAB		S0, 8010F2A8
+	BEQ		S0, R0, .normal
+	NOP
+	LAW 	S0, 800DC280
+	ANDI	S0, S0, 0020
+	BEQ		S0, R0, .normal
+	NOP
+	LAW 	S0, 800DC070
+	ANDI	S0, S0, 0002
+	BEQ		S0, R0, .normal
+	NOP
+	ORI		S2, R0, FF
+	SAB		S2, 800DC0FB
+	.normal
+	POP		RA, S0, S1, S2
+	JR		RA
+	NOP
+}

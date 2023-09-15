@@ -1,0 +1,433 @@
+%Pit of 100 trials
+%This map is used for the floors 31-39
+
+%#import EnterViaPipe.mpat
+%#import Pit_AI.mpat
+
+#new:Header $Header
+{
+[MainScript] $Script_Main
+[Background] 80200000
+[EntryList] $EntryList
+[EntryCount] 2
+[MapTattle] $Function_GetTattle
+}
+
+#new:Function $Function_GetTattle
+{
+	ADDIU     SP, SP, FFE8
+	LIO       V0, $MapTattle
+	JR        RA
+	ADDIU     SP, SP, 18
+}
+
+%no pit_tex function so I have to do this
+#new:Function_Init $Function_Init
+{
+    PUSH      RA
+    LIA       A0, 800B0CF0
+    LIA       A1, "kpa_tex"
+    JAL       ~Func:sprintf
+    RESERVED
+    DADDU     V0, R0, R0
+    JPOP      RA
+}
+
+#string $MapTattle
+{
+[Style Tattle][EnableCDownNext]All these rooms look the same.[BR]
+I can't tell how far down we've[BR]
+gone.[BR]
+[Wait][NEXT]Maybe that sign on the wall can[BR]
+tell us where we are.
+[Wait][END]
+}
+
+#new:EntryList $EntryList
+{
+~Vec4f:Entry0	%top
+~Vec4f:Entry1	%bottom
+}
+
+#new:Script $Script_RaisePipe
+{
+	Wait     0000000A 
+	Call     PlaySound  ( .PipeRaiseSound )
+	Set      .PipeBool 	00000001
+	Unbind
+	Return
+	End
+}
+
+#new:Script $Script_UseBluePipe
+{
+	Call     GotoMap    ( "pit_04" 0 )
+	Call 	 $Reset_Enemy_Flag
+	Wait     00000064 
+	Return
+	End
+}
+	
+#new:Function $Reset_Enemy_Flag
+{
+	PUSH	RA
+	SAB 	R0, 800B1053
+	POP 	RA
+	JR 		RA
+	NOP
+}	
+
+#new:Script $Script_GetPipeWorking
+{
+	Bind     $Script_RaisePipe .Trigger:GameFlagSet .PipeBool 00000001 00000000
+	Call     MakeEntity  ( .Entity:BlueWarpPipe ~Vec4d:Entry1 00000001 $Script_UseBluePipe ~İndex:*GF_PitPipeFlag 80000000 )
+	Return
+	End
+}
+
+#define .PipeBool *GF_PitPipeFlag
+#define .PipeRaiseSound 0000208E
+
+#new:Script $Script_Outcome
+{
+Call     GetBattleOutcome 	( *Var[0] )
+Switch  *Var[0] 
+	Case  ==  00000000 
+		Set  .PipeBool  00000001 %pipe is up
+		ExecWait	 $Script_RaisePipe
+		Call     DoNpcDefeat 	( )
+EndSwitch
+Return
+End
+}
+   
+%GetBattleOutcome :   int args: *out (0 = player won, 1 = player lost, 2 = player ran, 3 = enemy ran)  
+
+#new:Script $Script_Init_Enemy
+{
+    Call     BindNpcDefeat 	( .Npc:Self $Script_Outcome )
+    Return
+    End
+}
+
+/%
+	AI:
+		shy guy
+		sky guy
+		pyro guy (re-use shy guy AI)
+%/
+
+#import NPC_ShyGuy.mpat
+#import NPC_SkyGuy.mpat
+
+#new:NpcGroup $NpcGroup_RedShyGuy
+{
+00000000 $NpcSettings_ShyGuy ~Vec3f:ground_enemy % -770 0 0
+00000800 $Script_Init_Enemy 00000000 00000000 0000010E 
+~İtems:5:DizzyDial:2:SuperShroom:2:ThunderBolt:2:DriedShroom:2:SleepySheep:2:POWBlock:2:FrightJar:2
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:0:2
+~Movement:ground_enemy
+003B0001 003B0002 003B0004 003B0004 003B0001 003B0001 003B000C 003B000C
+003B0015 003B0012 003B0011 003B0010 003B0005 003B0001 003B0001 003B0001 % .Sprite:ShyGuy
+00000001 00000000 00000000 00000000 % no tattle string
+}
+
+
+#new:NpcGroup $NpcGroup_BlueShyGuy
+{
+00000001 $NpcSettings_ShyGuy ~Vec3f:ground_enemy % -770 0 0
+00000800 $Script_Init_Enemy 00000000 00000000 0000010E 
+~İtems:5:DizzyDial:2:SuperShroom:2:ThunderBolt:2:DriedShroom:2:SleepySheep:2:POWBlock:2:FrightJar:2
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:0:2
+~Movement:ground_enemy
+003B0101 003B0102 003B0104 003B0104 003B0101 003B0101 003B010C 003B010C
+003B0115 003B0112 003B0111 003B0110 003B0105 003B0101 003B0101 003B0101 % .Sprite:ShyGuy
+00000001 00000000 00000000 00000000 % no tattle string
+}
+
+
+#new:NpcGroup $NpcGroup_GreenShyGuy
+{
+00000002 $NpcSettings_ShyGuy ~Vec3f:ground_enemy % -770 0 0
+00000800 $Script_Init_Enemy 00000000 00000000 0000010E 
+~İtems:5:DizzyDial:2:SuperShroom:2:ThunderBolt:2:DriedShroom:2:SleepySheep:2:POWBlock:2:FrightJar:2
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:0:2
+~Movement:ground_enemy
+003B0201 003B0202 003B0204 003B0204 003B0201 003B0201 003B020C 003B020C
+003B0215 003B0212 003B0211 003B0210 003B0205 003B0201 003B0201 003B0201 % .Sprite:ShyGuy
+00000001 00000000 00000000 00000000 % no tattle string
+}
+
+
+#new:NpcGroup $NpcGroup_PinkShyGuy
+{
+00000003 $NpcSettings_ShyGuy ~Vec3f:ground_enemy % -770 0 0
+00000800 $Script_Init_Enemy 00000000 00000000 0000010E 
+~İtems:5:DizzyDial:2:SuperShroom:2:ThunderBolt:2:DriedShroom:2:SleepySheep:2:POWBlock:2:FrightJar:2
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:0:2
+~Movement:ground_enemy
+003B0301 003B0302 003B0304 003B0304 003B0301 003B0301 003B030C 003B030C
+003B0315 003B0312 003B0311 003B0310 003B0305 003B0301 003B0301 003B0301 % .Sprite:ShyGuy
+00000001 00000000 00000000 00000000 % no tattle string
+}
+
+
+#new:NpcGroup $NpcGroup_YellowShyGuy
+{
+00000004 $NpcSettings_ShyGuy ~Vec3f:ground_enemy % -770 0 0
+00000800 $Script_Init_Enemy 00000000 00000000 0000010E 
+~İtems:5:DizzyDial:2:SuperShroom:2:ThunderBolt:2:DriedShroom:2:SleepySheep:2:POWBlock:2:FrightJar:2
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:0:2
+~Movement:ground_enemy
+003B0401 003B0402 003B0404 003B0404 003B0401 003B0401 003B040C 003B040C
+003B0415 003B0412 003B0411 003B0410 003B0405 003B0401 003B0401 003B0401 % .Sprite:ShyGuy
+00000001 00000000 00000000 00000000 % no tattle string
+}
+
+
+#new:NpcGroup $NpcGroup_PyroGuy
+{
+00000005 $NpcSettings_ShyGuy ~Vec3f:ground_enemy % -770 0 0
+00000800 $Script_Init_Enemy 00000000 00000000 0000010E 
+~İtems:5:DizzyDial:2:SuperShroom:2:ThunderBolt:2:DriedShroom:2:SleepySheep:2:POWBlock:2:FrightJar:2
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:0:2
+~Movement:ground_enemy
+003E0001 003E0002 003E0003 003E0002 003E0001 003E0001 003E0006 003E0006
+003E0001 003E0001 003E0001 003E0001 003E0001 003E0001 003E0001 003E0001
+00000001 00000000 00000000 00000000 % no tattle string
+}
+
+
+#new:NpcGroup $NpcGroup_SkyGuy
+{
+00000006 $NpcSettings_SkyGuy ~Vec3f:air_enemy % -170 60 30
+00000800 $Script_Init_Enemy 00000000 00000000 0000010E 
+~İtems:5:Mushroom:5:SuperShroom:5
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:0:2
+~Movement:air_enemy
+003D0034 003D0034 003D0038 003D0038 003D0033 003D0033 003D0039 003D0039
+003D0038 003D0038 003D0001 003D0001 003D0001 003D0001 003D0001 003D0001 % .Sprite:SkyShyGuy
+00000001 00000000 00000000 00000000 % no tattle string
+}
+
+
+/%
+		31: 2 red shy guys										10-2E
+		32: 2 blue, 1 medi guy									10-2F
+		33: 4 shy guys (yellow green red blue)					10-30
+		34: 1 green, 1 yellow, 1 spy							10-31
+		35: 3 sky guys, red bobomb								10-32
+		36: 1 pink, 1 groove, 2 red bobombs						10-33
+		37: 3 pyro guys, red bobomb								10-34
+		38: 2 sky, 2 medi										10-35
+		39: 1 blue, 2 cryo										10-36
+%/
+
+#new:NpcGroupList $NpcGroup_1
+{
+00000001 $NpcGroup_RedShyGuy 102E0000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_2
+{
+00000001 $NpcGroup_BlueShyGuy 102F0000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_3
+{
+00000001 $NpcGroup_YellowShyGuy 10300000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_4
+{
+00000001 $NpcGroup_GreenShyGuy 10310000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_5
+{
+00000001 $NpcGroup_SkyGuy 10320000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_6
+{
+00000001 $NpcGroup_PinkShyGuy 10330000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_7
+{
+00000001 $NpcGroup_PyroGuy 10340000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_8
+{
+00000001 $NpcGroup_SkyGuy 10350000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_9
+{
+00000001 $NpcGroup_BlueShyGuy 10360000
+00000000 00000000 00000000
+}
+
+
+
+#new:Script_Main $Script_Main
+{
+	Add		*PitFloor 00000001
+	Set 	.PipeBool 00000000
+	Switch 	*PitFloor
+		Case == 0000001F
+			Call     MakeNpcs           ( 00000001 $NpcGroup_1)
+		Case == 00000020
+			Call     MakeNpcs           ( 00000001 $NpcGroup_2)
+		Case == 00000021
+			Call     MakeNpcs           ( 00000001 $NpcGroup_3)
+		Case == 00000022
+			Call     MakeNpcs           ( 00000001 $NpcGroup_4)
+		Case == 00000023
+			Call     MakeNpcs           ( 00000001 $NpcGroup_5)
+		Case == 00000024
+			Call     MakeNpcs           ( 00000001 $NpcGroup_6)
+		Case == 00000025
+			Call     MakeNpcs           ( 00000001 $NpcGroup_7)
+		Case == 00000026
+			Call     MakeNpcs           ( 00000001 $NpcGroup_8)
+		Case == 00000027
+			Call     MakeNpcs           ( 00000001 $NpcGroup_9)
+		Case == 00000028
+			Call     GotoMap    ( "pit_11" 0 )
+	EndSwitch
+	Call     MakeEntity  	( .Entity:Signpost ~Vec4d:sign 80000000 )
+	Call	 AssignScript ( $Script_SignPost )
+	Exec	 $Script_GetPipeWorking
+	Call     SetSpriteShading 	( 00080000 )
+	Call     SetCamPerspective 	( .Cam:Default 00000003 00000019 00000010 00001000 )
+	Call     SetCamBGColor 	( .Cam:Default 00000000 00000000 00000000 )
+	Call	 SetCamEnabled 	 	( .Cam:Default  .True )				% enabled?
+	Call	 SetCamLeadPlayer 	( .Cam:Default  .False )			% lead player motion?
+	Call     SetMusicTrack    	( 00000000 .Song:DryDryRuins 00000000 00000008 )
+	Return
+	End
+}
+
+#new:Script $Script_SignPost
+{
+	0:  Call     DisablePlayerInput 	( .True )
+		Switch *PitFloor
+			Case == 0000001F
+				Call     ShowMessageAtScreenPos 	( $Floor1 000000A0 00000028 )  
+			Case == 00000020
+				Call     ShowMessageAtScreenPos 	( $Floor2 000000A0 00000028 )
+			Case == 00000021
+				Call     ShowMessageAtScreenPos 	( $Floor3 000000A0 00000028 )
+			Case == 00000022
+				Call     ShowMessageAtScreenPos 	( $Floor4 000000A0 00000028 )
+			Case == 00000023
+				Call     ShowMessageAtScreenPos 	( $Floor5 000000A0 00000028 )
+			Case == 00000024
+				Call     ShowMessageAtScreenPos 	( $Floor6 000000A0 00000028 )
+			Case == 00000025
+				Call     ShowMessageAtScreenPos 	( $Floor7 000000A0 00000028 )
+			Case == 00000026
+				Call     ShowMessageAtScreenPos 	( $Floor8 000000A0 00000028 )
+			Case == 00000027
+				Call     ShowMessageAtScreenPos 	( $Floor9 000000A0 00000028 )
+			Default
+				Call     ShowMessageAtScreenPos 	( $Error 000000A0 00000028 )
+		EndSwitch
+   28:  Call     DisablePlayerInput 	( .False )
+   38:  Return
+   40: End
+}
+   
+#string $Floor1
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 31
+
+[DelayOn][Wait][END] 
+}
+
+#string $Floor2
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 32
+
+[DelayOn][Wait][END] 
+}
+
+#string $Floor3
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 33
+
+[DelayOn][Wait][END] 
+}
+
+#string $Floor4
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 34
+
+[DelayOn][Wait][END] 
+}
+
+#string $Floor5
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 35
+
+[DelayOn][Wait][END] 
+}
+
+#string $Floor6
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 36
+
+[DelayOn][Wait][END] 
+}
+
+#string $Floor7
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 37
+
+[DelayOn][Wait][END] 
+}
+
+#string $Floor8
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 38
+
+[DelayOn][Wait][END] 
+}
+
+#string $Floor9
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 39
+
+[DelayOn][Wait][END] 
+}
+
+#string $Error
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Signpost error.[BR]
+(floor no. not between 31-40)
+[DelayOn][Wait][END] 
+}

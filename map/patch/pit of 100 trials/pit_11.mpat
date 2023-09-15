@@ -1,0 +1,576 @@
+%Pit of 100 trials
+%This map is used for the miniboss floors
+
+%this floor has a pipe to the surface and 2 blocks freely accessible
+%however, the treasure and pipe down are unlocked by the miniboss
+%the badge drops out of the top pipe and lands on the bottom pipe
+%need to make sure there's no way to accidentally enter the pipe without getting the badge
+
+%#import EnterViaPipe.mpat
+#import ExitViaPipe.mpat
+%#import Pit_AI.mpat
+
+#new:Header $Header
+{
+[MainScript] $Script_Main
+[Background] 80200000
+[EntryList] $EntryList
+[EntryCount] 3
+[MapTattle] $Function_GetTattle
+}
+
+%no pit_tex function so I have to do this
+#new:Function_Init $Function_Init
+{
+    PUSH      RA
+    LIA       A0, 800B0CF0
+    LIA       A1, "kpa_tex"
+    JAL       ~Func:sprintf
+    RESERVED
+    DADDU     V0, R0, R0
+    JPOP      RA
+}
+	
+
+#new:Function $Function_GetTattle
+{
+	ADDIU     SP, SP, FFE8
+	LIO       V0, $MapTattle
+	JR        RA
+	ADDIU     SP, SP, 18
+}
+
+#string $MapTattle
+{
+[Style Tattle][EnableCDownNext]
+This is a special floor[BR]
+of the Pit of 100 trials.[BR]
+[Wait][NEXT]It looks like there's a pipe to [BR]
+the surface, but if we go through [BR]
+it, we'll have to start over from [BR]
+the very beginning![BR]
+[Wait][NEXT]If we want to keep going though,[BR]
+we still have to beat the enemy[BR]
+on this floor.[BR]
+[Wait][END]
+}
+
+%could give each room a separate tattle to give clues on defeating minibosses
+%but I don't feel like writing 9 tattles for a single room
+
+#new:EntryList $EntryList
+{
+~Vec4f:Entry0	%top
+~Vec4f:Entry1	%side pipe (*there's no way to enter through this pipe, but we still need the position for the pipe script)
+~Vec4f:pipepos %bottom pipe
+}
+
+#new:Script $Script_RaisePipe
+{
+	Wait     0000000A 
+	Call     PlaySound  ( .PipeRaiseSound )
+	Set      .PipeBool 	00000001
+	Unbind
+	Return
+	End
+}
+
+#new:Function $Reset_Enemy_Flag
+{
+	PUSH	RA
+	SAB 	R0, 800B11A3
+	POP 	RA
+	JR 		RA
+	NOP	
+}
+
+#new:Script $Script_UseBluePipe
+{
+	%Call     GotoMap    ( "pit_01" 0 )
+	Set *GF_PitDummyFlag .False
+	Set *GF_PitDummyFlag2 .False
+	Switch *PitFloor
+		Case == 10`
+			Call     GotoMap    ( "pit_02" 0 )
+		Case == 20`
+			Call     GotoMap    ( "pit_03" 0 )
+		Case == 30`
+			Call     GotoMap    ( "pit_04" 0 )
+		Case == 40`
+			Call     GotoMap    ( "pit_05" 0 )
+		Case == 50`
+			Call     GotoMap    ( "pit_06" 0 )
+		Case == 60`
+			Call     GotoMap    ( "pit_07" 0 )
+		Case == 70`
+			Call     GotoMap    ( "pit_08" 0 )
+		Case == 80`
+			Call     GotoMap    ( "pit_09" 0 )
+		Case == 90`
+			Call     GotoMap    ( "pit_10" 0 )
+	EndSwitch
+	Call 	 $Reset_Enemy_Flag
+	Wait     00000064 
+	Return
+	End
+}
+
+
+#new:Script $Script_GetPipesWorking
+{
+	Bind     $Script_RaisePipe .Trigger:GameFlagSet .PipeBool 00000001 00000000
+	Call     MakeEntity  ( .Entity:BlueWarpPipe ~Vec4d:pipepos 00000002 $Script_UseBluePipe ~İndex:*GF_PitPipeFlag 80000000 )
+	Bind     ($Script_ExitViaPipe .Trigger:WallPush ~Collider:o89 00000001 00000000 ) %~Collider:o89 is pipe side
+	Return
+	End
+}
+
+#new:Script $Script_Entry2
+{
+	0:  Call     GotoMap     	( "cav_03" 00000001 ) 
+   14:  Wait     00000064 
+   20:  Return
+   28:  End
+}
+	
+#new:Script $Script_ExitViaPipe
+{
+	0:  SetGroup 0000001B 
+		Set *Var[A] 00000001 		%entry id
+		Set *Var[B] ~Collider:o89	%collider id
+		Set *Var[C]	$Script_Entry2 	%script
+   3C:  ExecWait $Script_HorizontalPipe 
+   48:  Return
+   50:  End
+}
+
+#define .PipeBool *GF_PitPipeFlag
+#define .PipeRaiseSound 0000208E
+
+%To do: find out where to put the ultra charges
+
+#new:Script $Script_Outcome
+{
+Call     GetBattleOutcome 	( *Var[0] )
+Switch  *Var[0] 
+	Case  ==  00000000 
+			Set  .PipeBool  00000001 %pipe is up
+			Switch *PitFloor
+				Case == 90`
+					If *GF_Floor90Reward == .False
+						Call     MakeItemEntity ( .Item:HeadStart ~Vec3d:ItemSpawnPos 0000000D *GF_Floor90Reward )	%Head start is here because it has the most potential to break the pit
+					EndIf
+				Case == 80`
+					If *GF_Floor80Reward == .False
+						Call     MakeItemEntity ( .Item:PerfectStand ~Vec3d:ItemSpawnPos 0000000D *GF_Floor80Reward )	%Perfect stand is actually really good so down here it goes
+					EndIf
+				Case == 70`
+					If *GF_Floor70Reward == .False
+						Call     MakeItemEntity ( .Item:FeelingFine ~Vec3d:ItemSpawnPos 0000000D *GF_Floor70Reward )
+					EndIf
+				Case == 60`
+					If *GF_Floor60Reward == .False
+						Call     MakeItemEntity ( .Item:PerfectRush ~Vec3d:ItemSpawnPos 0000000D *GF_Floor60Reward )	%Perfect rush is pretty good but it gets less useful once enemies can actually hit you
+					EndIf
+				Case == 50`
+					If *GF_Floor50Reward == .False
+						Call     MakeItemEntity ( .Item:SmartStomp ~Vec3d:ItemSpawnPos 0000000D *GF_Floor50Reward )
+					EndIf
+				Case == 40`
+					If *GF_Floor40Reward == .False
+						Call     MakeItemEntity ( .Item:ThunderThrow ~Vec3d:ItemSpawnPos 0000000D *GF_Floor40Reward )
+					EndIf
+				Case == 30`
+					If *GF_Floor30Reward == .False
+						Call     MakeItemEntity ( .Item:PerfectSaver ~Vec3d:ItemSpawnPos 0000000D *GF_Floor30Reward )			%Perfect saver is not that great but it does help in the pit
+					EndIf
+				Case == 20`
+					If *GF_Floor20Reward == .False
+						Call     MakeItemEntity ( .Item:HasteStep ~Vec3d:ItemSpawnPos 0000000D *GF_Floor20Reward )
+					EndIf
+				Case == 10`
+					If *GF_Floor10Reward == .False %haven't collected reward yet
+						Call     MakeItemEntity ( .Item:Peekaboo ~Vec3d:ItemSpawnPos 0000000D *GF_Floor10Reward ) %these are the same item flags as happy flower B (the one in flower fields)
+					EndIf
+			EndSwitch
+			ExecWait	 $Script_RaisePipe
+			Set *AreaFlag[F] .False %prevent retriggering it
+			Call     DoNpcDefeat 	( )
+EndSwitch
+Return
+End
+}
+   
+%GetBattleOutcome :   int args: *out (0 = player won, 1 = player lost, 2 = player ran, 3 = enemy ran)  
+
+#new:Script $Script_Init_Enemy
+{
+    Call     BindNpcDefeat 	( .Npc:Self $Script_Outcome )
+	Call	 BindNpcIdle 	( .Npc:Self $Script_CheckBattle )
+	Call     SetNpcRotation ( FFFFFFFF 00000000 000000B4 00000000 )
+    Return
+    End
+}
+
+#new:NpcGroupList $NpcGroupList_10
+{
+00000001 $NpcGroup_1 36000000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroupList_20
+{
+00000001 $NpcGroup_2 36010000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroupList_30
+{
+00000001 $NpcGroup_3 36020000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroupList_40
+{
+00000001 $NpcGroup_4 37000000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroupList_50
+{
+00000001 $NpcGroup_5 37010000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroupList_60
+{
+00000001 $NpcGroup_6 37020000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroupList_70
+{
+00000001 $NpcGroup_7 38000000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroupList_80
+{
+00000001 $NpcGroup_8 38010000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroupList_90
+{
+00000001 $NpcGroup_9 38020000
+00000000 00000000 00000000
+}
+
+#new:NpcGroup $NpcGroup_1 %blue ninjakoopa
+{
+00000000 $NpcSettings_Boss ~Vec3f:npc_statue
+00002C01 $Script_Init_Enemy 00000000 00000000 0000005A 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus ~NoMovement %no direct drops since they might get stuck on the pedestal
+00660400 00660400 00660400 00660400 00660400 00660400 0066040B 0066040B
+00660400 00660400 00660400 00660400 00660400 00660400 00660400 00660400
+00000000 00000000 00000000 00000000 % no tattle string
+}
+
+
+#new:NpcGroup $NpcGroup_2 %dark bones
+{
+00000000 $NpcSettings_Boss ~Vec3f:npc_statue
+00002C01 $Script_Init_Enemy 00000000 00000000 0000005A 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus ~NoMovement %no direct drops since they might get stuck on the pedestal
+00530300 00530300 00530300 00530300 00530300 00530300 0053030B 0053030B
+00530300 00530300 00530300 00530300 00530300 00530300 00530300 00530300
+00000000 00000000 00000000 00000000 % no tattle strin
+}
+
+#new:NpcGroup $NpcGroup_3 %atomic boo
+{
+00000000 $NpcSettings_Boss ~Vec3f:npc_statue
+00002C01 $Script_Init_Enemy 00000000 00000000 0000005A 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus ~NoMovement %no direct drops since they might get stuck on the pedestal
+00EF0005 00EF0005 00EF0005 00EF0005 00EF0005 00EF0005 00EF0001 00EF0001
+00EF0005 00EF0005 00EF0005 00EF0005 00EF0005 00EF0005 00EF0005 00EF0005
+00000000 00000000 00000000 00000000 % no tattle strin
+}
+
+#new:NpcGroup $NpcGroup_4 %spark queen
+{
+00000000 $NpcSettings_Boss ~Vec3f:npc_statue
+00002C01 $Script_Init_Enemy 00000000 00000000 0000005A 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus ~NoMovement %no direct drops since they might get stuck on the pedestal
+00F10000 00F10000 00F10000 00F10000 00F10000 00F10000 00F1000C 00F1000C
+00F10000 00F10000 00F10000 00F10000 00F10000 00F10000 00F10000 00F10000
+00000000 00000000 00000000 00000000 % no tattle strin
+}
+
+#new:NpcGroup $NpcGroup_5 %lava cheep
+{
+00000000 $NpcSettings_Boss ~Vec3f:npc_statue
+00002C01 $Script_Init_Enemy 00000000 00000000 0000005A 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus ~NoMovement %no direct drops since they might get stuck on the pedestal
+00F30000 00F30000 00F30000 00F30000 00F30000 00F30000 00F3000D 00F3000E
+00F30000 00F30000 00F30000 00F30000 00F30000 00F30000 00F30000 00F30000
+00000000 00000000 00000000 00000000 % no tattle strin
+}
+
+#new:NpcGroup $NpcGroup_6 %beedazzle
+{
+00000000 $NpcSettings_Boss ~Vec3f:npc_statue
+00002C01 $Script_Init_Enemy 00000000 00000000 0000005A 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus ~NoMovement %no direct drops since they might get stuck on the pedestal
+004B0200 004B0200 004B0200 004B0200 004B0200 004B0200 004B0206 004B0206
+004B0200 004B0200 004B0200 004B0200 004B0200 004B0200 004B0200 004B0200 
+00000000 00000000 00000000 00000000 % no tattle strin
+}
+
+#new:NpcGroup $NpcGroup_7 %doople
+{
+00000000 $NpcSettings_Boss ~Vec3f:npc_statue
+00002C01 $Script_Init_Enemy 00000000 00000000 0000005A 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus ~NoMovement %no direct drops since they might get stuck on the pedestal
+00F40000 00F40000 00F40000 00F40000 00F40000 00F40000 00F4000A 00F4000A
+00F40000 00F40000 00F40000 00F40000 00F40000 00F40000 00F40000 00F40000
+00000000 00000000 00000000 00000000 % no tattle strin
+}
+
+#new:NpcGroup $NpcGroup_8 %magic bro
+{
+00000000 $NpcSettings_Boss ~Vec3f:npc_statue
+00002C01 $Script_Init_Enemy 00000000 00000000 0000005A 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus ~NoMovement %no direct drops since they might get stuck on the pedestal
+00F50001 00F50001 00F50001 00F50001 00F50001 00F50001 00F5000E 00F5000E
+00F50001 00F50001 00F50001 00F50001 00F50001 00F50001 00F50001 00F50001
+00000000 00000000 00000000 00000000 % no tattle strin
+}
+
+#new:NpcGroup $NpcGroup_9 %emperor beetle
+{
+00000000 $NpcSettings_Boss ~Vec3f:npc_statue
+00002C01 $Script_Init_Enemy 00000000 00000000 0000005A 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus ~NoMovement %no direct drops since they might get stuck on the pedestal
+00F60000 00F60000 00F60000 00F60000 00F60000 00F60000 00F60006 00F60006
+00F60000 00F60000 00F60000 00F60000 00F60000 00F60000 00F60000 00F60000
+00000000 00000000 00000000 00000000 % no tattle strin
+}
+
+%(the pedestal also doesn't have top collision)
+
+#new:NpcSettings $NpcSettings_Boss 
+{
+00000000 00180018 00000000 00000000 00000000 00000000 00000000 00000000 
+00000000 00000000 00630000 
+}
+
+#new:Script $Script_FightWall %interact with wall to activate the miniboss fight
+{
+Set *AreaFlag[F] 00000001
+%Call     DisablePlayerInput 	( .True )
+%Call     ShowMessageAtScreenPos     	( $Placeholder 000000A0 00000028 )
+%Call     DisablePlayerInput 	( .False )
+Return
+End
+}
+
+/%
+#string $Placeholder
+{DelayOff}[STYLE:INSPECT]Placeholder text
+The miniboss fight should start
+after this
+[DelayOn][Wait][END]
+%/
+
+#new:Script $Script_CheckBattle
+{
+Loop
+	If *AreaFlag[F] == 00000001
+		Set 	*AreaFlag[F]  00000000
+		Call     StartBossBattle 	( .Song:SpecialBattle )
+	EndIf
+	Wait	00000001
+EndLoop
+Return
+End
+}
+
+
+
+#new:Script_Main $Script_Main
+{
+	Set *GF_PitDummyFlag .False
+	Set *GF_PitDummyFlag2 .False
+	Set 	*AreaFlag[F]  00000000		%Fix problem with interacting with the fighting walls
+	Bind     $Script_FightWall  .Trigger:WallPressA ~Collider:interactwall  00000001 00000000 
+	Set 	.PipeBool 00000000
+	Switch 	*PitFloor
+		Case == 0000000A
+			Call     MakeNpcs           ( 00000001 $NpcGroupList_10)
+		Case == 00000014
+			Call     MakeNpcs           ( 00000001 $NpcGroupList_20)
+		Case == 0000001E
+			Call     MakeNpcs           ( 00000001 $NpcGroupList_30)
+		Case == 00000028
+			Call     MakeNpcs           ( 00000001 $NpcGroupList_40)
+		Case == 00000032
+			Call     MakeNpcs           ( 00000001 $NpcGroupList_50)
+		Case == 0000003C
+			Call     MakeNpcs           ( 00000001 $NpcGroupList_60)
+		Case == 00000046
+			Call     MakeNpcs           ( 00000001 $NpcGroupList_70)
+		Case == 00000050
+			Call     MakeNpcs           ( 00000001 $NpcGroupList_80)
+		Case == 0000005A
+			Call     MakeNpcs           ( 00000001 $NpcGroupList_90)
+		Case == 00000064
+			Call     GotoMap    ( "pit_12" 0 ) %Floor 100 is a separate map; pit_10 should send you there directly
+	EndSwitch
+	Call     MakeEntity  	( .Entity:Signpost ~Vec4d:sign 80000000 )
+	Call	 AssignScript ( $Script_SignPost )
+	Exec	 $Script_GetPipesWorking
+	ExecWait $Script_MakeEntities
+	Call     SetSpriteShading 	( 00080000 )
+	Call     SetCamPerspective 	( .Cam:Default 00000003 00000019 00000010 00001000 )
+	Call     SetCamBGColor 	( .Cam:Default 00000000 00000000 00000000 )
+	Call	 SetCamEnabled 	 	( .Cam:Default  .True )				% enabled?
+	Call	 SetCamLeadPlayer 	( .Cam:Default  .False )			% lead player motion?
+	Call     SetMusicTrack    	( 00000000 .Song:DryDryRuins 00000000 00000008 )
+	Return
+	End
+}
+
+#new:Script $Script_MakeEntities
+{
+		Switch *PitFloor
+			Case == A
+				Call     MakeEntity  	( .Entity:YellowBlock ~Vec4d:LeftBlock .Item:POWBlock 80000000 )
+				Call     AssignBlockFlag 	( *GF_PitDummyFlag )
+				Call     MakeEntity  	( .Entity:YellowBlock ~Vec4d:RightBlock .Item:Mushroom 80000000 )
+				Call     AssignBlockFlag 	( *GF_PitDummyFlag2 )
+			Case == 14
+				Call     MakeEntity  	( .Entity:YellowBlock ~Vec4d:LeftBlock .Item:HoneySyrup 80000000 )
+				Call     AssignBlockFlag 	( *GF_PitDummyFlag )
+				Call     MakeEntity  	( .Entity:YellowBlock ~Vec4d:RightBlock .Item:FireFlower 80000000 )
+				Call     AssignBlockFlag 	( *GF_PitDummyFlag2 )
+			Case == 1E
+				Call     MakeEntity  	( .Entity:YellowBlock ~Vec4d:LeftBlock .Item:DizzyDial 80000000 )
+				Call     AssignBlockFlag 	( *GF_PitDummyFlag )
+				Call     MakeEntity  	( .Entity:YellowBlock ~Vec4d:RightBlock .Item:SuperShroom 80000000 )
+				Call     AssignBlockFlag 	( *GF_PitDummyFlag2 )
+			Case == 28
+				Call     MakeEntity  	( .Entity:YellowBlock ~Vec4d:LeftBlock .Item:MapleSyrup 80000000 )
+				Call     AssignBlockFlag 	( *GF_PitDummyFlag )
+				Call     MakeEntity  	( .Entity:YellowBlock ~Vec4d:RightBlock .Item:SnowmanDoll 80000000 )
+				Call     AssignBlockFlag 	( *GF_PitDummyFlag2 )
+			Case == 32
+				Call     MakeEntity  	( .Entity:YellowBlock ~Vec4d:LeftBlock .Item:StopWatch 80000000 )
+				Call     AssignBlockFlag 	( *GF_PitDummyFlag )
+				Call     MakeEntity  	( .Entity:YellowBlock ~Vec4d:RightBlock .Item:ThunderRage 80000000 )
+				Call     AssignBlockFlag 	( *GF_PitDummyFlag2 )
+			Case == 3C
+				Call     MakeEntity  	( .Entity:YellowBlock ~Vec4d:LeftBlock .Item:StoneCap 80000000 )
+				Call     AssignBlockFlag 	( *GF_PitDummyFlag )
+				Call     MakeEntity  	( .Entity:YellowBlock ~Vec4d:RightBlock .Item:SleepySheep 80000000 )
+				Call     AssignBlockFlag 	( *GF_PitDummyFlag2 )
+			Case == 46
+				Call     MakeEntity  	( .Entity:YellowBlock ~Vec4d:LeftBlock .Item:ShootingStar 80000000 )
+				Call     AssignBlockFlag 	( *GF_PitDummyFlag )
+				Call     MakeEntity  	( .Entity:YellowBlock ~Vec4d:RightBlock .Item:JamminJelly 80000000 )
+				Call     AssignBlockFlag 	( *GF_PitDummyFlag2 )
+			Case == 50
+				Call     MakeEntity  	( .Entity:YellowBlock ~Vec4d:LeftBlock .Item:UltraShroom 80000000 )
+				Call     AssignBlockFlag 	( *GF_PitDummyFlag )
+				Call     MakeEntity  	( .Entity:YellowBlock ~Vec4d:RightBlock .Item:HustleDrink 80000000 )
+				Call     AssignBlockFlag 	( *GF_PitDummyFlag2 )
+			Case == 5A
+				Call     MakeEntity  	( .Entity:YellowBlock ~Vec4d:LeftBlock .Item:LifeShroom 80000000 )
+				Call     AssignBlockFlag 	( *GF_PitDummyFlag )
+				Call     MakeEntity  	( .Entity:YellowBlock ~Vec4d:RightBlock .Item:RepelGel 80000000 )
+				Call     AssignBlockFlag 	( *GF_PitDummyFlag2 )
+		EndSwitch
+		Return
+		End	
+}
+	
+#new:Script $Script_SignPost
+{
+	0:  Call     DisablePlayerInput 	( .True )
+		Switch *PitFloor
+			Case == 0000000A
+				Call     ShowMessageAtScreenPos 	( $Floor1 000000A0 00000028 )  
+			Case == 00000014
+				Call     ShowMessageAtScreenPos 	( $Floor2 000000A0 00000028 )
+			Case == 0000001E
+				Call     ShowMessageAtScreenPos 	( $Floor3 000000A0 00000028 )
+			Case == 00000028
+				Call     ShowMessageAtScreenPos 	( $Floor4 000000A0 00000028 )
+			Case == 00000032
+				Call     ShowMessageAtScreenPos 	( $Floor5 000000A0 00000028 )
+			Case == 0000003C
+				Call     ShowMessageAtScreenPos 	( $Floor6 000000A0 00000028 )
+			Case == 00000046
+				Call     ShowMessageAtScreenPos 	( $Floor7 000000A0 00000028 )
+			Case == 00000050
+				Call     ShowMessageAtScreenPos 	( $Floor8 000000A0 00000028 )
+			Case == 0000005A
+				Call     ShowMessageAtScreenPos 	( $Floor9 000000A0 00000028 )
+			Default
+				Call     ShowMessageAtScreenPos 	( $Error 000000A0 00000028 )
+		EndSwitch
+   28:  Call     DisablePlayerInput 	( .False )
+   38:  Return
+   40: End
+}
+   
+#string $Floor1
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 10[DelayOn][Wait][END] 
+}
+
+#string $Floor2
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 20[DelayOn][Wait][END] 
+}
+
+#string $Floor3
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 30[DelayOn][Wait][END] 
+}
+
+#string $Floor4
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 40[DelayOn][Wait][END] 
+}
+
+#string $Floor5
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 50[DelayOn][Wait][END] 
+}
+
+#string $Floor6
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 60[DelayOn][Wait][END] 
+}
+
+#string $Floor7
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 70[DelayOn][Wait][END] 
+}
+
+#string $Floor8
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 80[DelayOn][Wait][END] 
+}
+
+#string $Floor9
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 90[DelayOn][Wait][END] 
+}
+
+#string $Error
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Signpost Error[BR]
+Floor No not divisible by 10[DelayOn][Wait][END]
+}

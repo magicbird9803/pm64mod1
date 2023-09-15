@@ -1,0 +1,416 @@
+%Pit of 100 trials
+%This map is used for floor 100
+
+#import ExitViaPipe.mpat
+
+#new:Header $Header
+{
+[MainScript] $Script_Main
+[Background] 80200000
+[EntryList] $EntryList
+[EntryCount] 2
+[MapTattle] $Function_GetTattle
+}
+
+#new:Function $Function_GetTattle
+{
+	ADDIU     SP, SP, FFE8
+	LIO       V0, $MapTattle
+	JR        RA
+	ADDIU     SP, SP, 18
+}
+
+%no pit_tex function so I have to do this
+#new:Function_Init $Function_Init
+{
+    PUSH      RA
+    LIA       A0, 800B0CF0
+    LIA       A1, "kpa_tex"
+    JAL       ~Func:sprintf
+    RESERVED
+    DADDU     V0, R0, R0
+    JPOP      RA
+}
+
+#string $MapTattle
+{
+[Style Tattle][EnableCDownNext]This is it. Floor 100.[BR]
+[Wait][NEXT]Hmm... [PAUSE:0A]I don't see any enemies down[BR]
+here. [PAUSE:0A]That doesn't seem Right [BR]
+though...[BR]
+[Wait][NEXT]Maybe whoever made this pit thought[BR]
+that nobody could get this far.
+[Wait][END]
+}
+
+#new:EntryList $EntryList
+{
+~Vec4f:Entry0	%top
+~Vec4f:Entry1	%side pipe
+}
+
+#new:Script $Script_Entry1
+{
+	0:  Call     GotoMap     	( "cav_03" 00000001 ) 
+   14:  Wait     00000064 
+   20:  Return
+   28:  End
+}
+	
+#new:Script $Script_ExitViaPipe
+{
+	0:  SetGroup 0000001B 
+		Set *Var[A] 00000001 		%entry id
+		Set *Var[B] ~Collider:o89	%collider id
+		Set *Var[C]	$Script_Entry1 	%script
+   3C:  ExecWait $Script_HorizontalPipe 
+   48:  Return
+   50:  End
+}
+
+#new:Script $Script_GetPipeWorking
+{
+	Bind     ($Script_ExitViaPipe .Trigger:WallPush ~Collider:o89 00000001 00000000 ) %~Collider:o89 is pipe side
+	Return
+	End
+}
+
+#define .PipeBool *GF_PitPipeFlag
+#define .PipeRaiseSound 0000208E
+
+#new:Script $Script_Outcome
+{
+Call     GetBattleOutcome 	( *Var[0] )
+Switch  *Var[0] 
+	Case  ==  00000000 
+		If *GF_Floor100Reward == .False
+			Call     MakeItemEntity ( 00000043 ~Vec3d:ItemSpawnPos 0000000D *GF_Floor100Reward )
+		EndIf
+		Call     DoNpcDefeat 	( )
+EndSwitch
+Return
+End
+}
+   
+%GetBattleOutcome :   int args: *out (0 = player won, 1 = player lost, 2 = player ran, 3 = enemy ran)  
+
+#new:Script $Script_Init_Enemy
+{
+    Call     BindNpcDefeat 	( .Npc:Self $Script_Outcome )
+	Call	 BindNpcIdle 	( .Npc:Self $Script_CheckBattle )
+    Return
+    End
+}
+
+#new:NpcSettings $NpcSettings_Boss 
+{
+00000000 00180018 00000000 00000000 00000000 00000000 00000000 00000000 
+00000000 00000000 00630000 
+}
+
+#new:NpcGroup $DarkMario
+{
+00000000 $NpcSettings_Boss ~Vec3f:boss
+00000401 $Script_Init_Enemy 00000000 00000000 0000005A %battle is triggered through script, so prevent ability to initiate battle through contact 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus ~NoMovement %no drops
+00F70000 00F70001 00F70002 00F70002 00F70000 00F70000 00F70010 00F7000F
+00F70000 00F70000 00F70000 00F70000 00F70000 00F70000 00F70000 00F70000
+00000000 00000000 00000000 00000000 % no tattle string	
+}
+	
+#new:NpcGroupList $NpcGroupList_Boss
+{
+00000001 $DarkMario 39000000
+00000000 00000000 00000000
+}
+
+/%
+#new:Function $Function_ConvertIntToFloat
+{
+	PUSH 	  RA
+	LW        V0, C (A0)
+	JAL       ~Func:get_variable
+	LW        A1, 0 (V0)
+	MTC1	  V0, F0
+	CVT.S.W	  F0, F0
+	MFC1	  A2, F0
+	LW        V0, C (A0)
+	JAL       ~Func:set_float_variable
+	LW        A1, 0 (V0)
+	POP		  RA
+	JR		  RA
+	ORI 	  V0, R0, 2
+}
+%/
+
+#new:Function $Function_GetMarioAnim %arg 1 = output
+{
+	PUSH	RA
+	LAW		V0, 8010F080 %Mario animation value (but the value is a mario animation not an npc animation)
+	ADDI	A2, V0, 0
+	LW		V0, C (A0)
+	JAL		~Func:set_variable
+	LW		A1, 0 (V0)
+	POP		RA
+	JR		RA
+	ADDIU	V0, R0, 2
+}
+
+#new:Function $Function_GetMarioRot %arg 1 = output
+{
+	PUSH	RA
+	LAW		V0, 8010F070 %Mario sprite y rotation (float)		(True y rot = 8010F048)	
+	MTC1	V0, F0
+	cvt.w.s	F0, F0
+	MFC1	A2, F0	
+	LW		V0, C (A0)
+	JAL		~Func:set_variable
+	LW		A1, 0 (V0)
+	POP		RA
+	JR		RA
+	ADDIU	V0, R0, 2
+}
+
+
+#new:Function $Function_ChooseAlpha
+{
+	PUSH	RA, S0
+	DADDU	S0, A0, R0
+	LWC1	F12, A8 (S0) % load *Var[9]
+	JAL		~Func:sin_deg
+	CVT.S.W	F12, F12
+	LIF		F2, 32.0
+	MUL.S	F12, F0, F2
+	% calculate distance to player
+	LW		A1, 9C (S0) % load *Var[6]
+	JAL		~Func:get_variable
+	DADDU	A0, S0, R0
+	MTC1	V0, F0
+	CVT.S.W	F0, F0
+	LIF		F4, 150.0
+	C.LT.S	F0, F4
+	BC1FL	.Done
+	MOV.S	F0, F12
+	DIV.S	F0, F0, F4
+	LIF		F6, 1.0
+	SUB.S	F0, F6, F0 % (1 - d/L)
+	MUL.S	F0, F0, F0 % squared
+	LIF		F6, 255.0
+	MUL.S	F0, F0, F6
+	% compare values, keep the greater
+	C.LT.S	F12, F0
+	BC1FL	.Done
+	MOV.S	F0, F12
+	.Done
+	CVT.W.S	F0, F0
+	SWC1	F0, A0 (S0) % save to *Var[7]
+	POP		RA, S0
+	JR		RA
+	ADDIU	V0, R0, 2
+}
+
+#new:Function $Function_SetBattle % ( $BattleTable, index )
+{
+	% push stack
+	PUSH      RA, S0, S1, S2
+	% read script args
+	DADDU     S1, A0, R0
+	LW        S0, C (A0)
+	LW        A1, 0 (S0)
+	JAL       ~Func:get_variable % get battle table
+	ADDIU     S0, S0, 4
+	LW        A1, 0 (S0)
+	JAL       ~Func:get_variable % get battle index
+	DADDU     S2, V0, R0
+	% get encounter struct
+	LW        S0, 148 (S1)
+	LB        V1, 4 (S0)
+	SLL       V1, V1, 2
+	LTW       A0, V1 (800B0F38)
+	% get battle from table
+	SLL       V0, V0, 2
+	DADDU     V0, V0, S2
+	LW        V0, 0 (V0)
+	% set battle ID
+	SW        V0, 44 (A0)
+	% pop stack and return 2
+	POP       RA, S0, S1, S2
+	JR        RA
+	ADDIU V0, R0, 2
+}
+
+%Boss pos gets mirrored around Z = -120
+%	new Z = -240 - z
+%Trigger fight if Z < -110
+#new:Script $Script_CheckBattle
+{
+Loop
+	%copy player animations that I can
+	Call	$Function_GetMarioAnim ( *VarF )
+	Switch *VarF		
+		Case == 00010004 %walk
+			Call	SetNpcAnimation ( .Npc:Self 00F70001 )
+		Case == 00010005 %run
+			Call	SetNpcAnimation ( .Npc:Self 00F70002 )
+		Case == 00060018 %hammer
+			Call	SetNpcAnimation ( .Npc:Self 00F7000D )
+		Case == 00010007 %jump
+			Call	SetNpcAnimation ( .Npc:Self 00F70004 )
+		Case == 00010008 %falling
+			Call	SetNpcAnimation ( .Npc:Self 00F70005 )
+		CaseOR == 00010011 %spin
+		CaseOR == 00080000 %ultra jump
+			Call	SetNpcAnimation ( .Npc:Self 00F70011 )
+		EndCaseGroup	
+		Case == 00010002 %same as default (idle)
+			Call	SetNpcAnimation ( .Npc:Self 00F70000 )
+		Default
+			Call	SetNpcAnimation ( .Npc:Self 00F70000 )
+	EndSwitch
+	Call	$Function_GetMarioRot ( *VarE )
+	Add *VarE 180`
+	If *VarE > 360`
+		Sub *VarE 360`
+	EndIf
+	Call	SetNpcRotation ( .Npc:Self 0` *VarE 0` )
+	Call	GetSelfNpcID	( *Var[8] )
+	Call	GetPlayerPos 		( *Var[0] *Var[1] *Var[2] )
+	Mul *Var[2] -1`
+	Sub *Var[2] 240`
+	Call	SetNpcPos			( .Npc:Self *Var[0] *Var[1] *Var[2] )
+	%Call	GetNpcPos		( *Var[8] *Var[0] *Var[1] *Var[2] )
+	Call	GetPlayerPos	( *Var[3] *Var[4] *Var[5] )
+	Call	GetDist2D		( *Var[6] *Var[0] *Var[2] *Var[3] *Var[5] )
+	%calculate alpha
+	DivF *Var6 2
+	Call	$Function_ChooseAlpha ()	%Re use this from boo functions
+	Call	802CFD30 ( *Var[8] 00000007 *Var[7] 00000000 00000000 00000000 )	
+	Call	SetNpcPos			( .Npc:Self *Var[0] *Var[1] *Var[2] )
+	If *Var[2] > FFFFFF7E %-130 -> -82 (hex) -> FFFFFF7E
+		ExecWait $StartBattle
+	EndIf
+	Wait	00000001
+EndLoop
+Return
+End
+}
+
+
+
+#new:IntTable $Battles
+{
+3900FFFF % Battle 0 = no partner / default
+3901FFFF % 1
+3902FFFF % 2
+3903FFFF % 3
+3904FFFF % 4
+3900FFFF % Goompa causes default battle	(dark goompa would be too powerful lol)
+3906FFFF % 6
+3907FFFF % 7
+3908FFFF % 8
+3905FFFF % 9
+3909FFFF % A
+}
+%the last 2 bytes are used for finding the stage I think
+%setting it to FFFF probably makes it default to something
+
+#new:Script $StartBattle
+{
+	Set *Var2 $Battles
+	Call  GetCurrentPartnerID   ( *Var0 )
+	%Set *Var0 00000000
+	Call	$Function_SetBattle ( *Var[2] *Var[0] )
+	Call	StartBossBattle 	( .Song:BowserTheme )
+	Return
+	End 
+}
+
+#new:Script_Main $Script_Main
+{
+	Set 	.PipeBool 00000000
+	Switch 	*PitFloor
+		Case == 00000064
+			Call     MakeNpcs           ( 00000001 $NpcGroupList_Boss )
+	EndSwitch
+	Call     MakeEntity  	( .Entity:Signpost ~Vec4d:sign 80000000 )
+	Call	 AssignScript ( $Script_SignPost )
+	Exec	 $Script_GetPipeWorking
+	Exec	 $FlipRetrievalFlag
+	Call     SetSpriteShading 	( 00080000 )
+	Call     SetCamPerspective 	( .Cam:Default 00000003 00000019 00000010 00001000 )
+	Call     SetCamBGColor 	( .Cam:Default 00000000 00000000 00000000 )
+	Call	 SetCamEnabled 	 	( .Cam:Default  .True )				% enabled?
+	Call	 SetCamLeadPlayer 	( .Cam:Default  .False )			% lead player motion?
+	Call     SetMusicTrack    	( 00000000 .Song:DryDryRuins 00000000 00000008 )
+	Return
+	End
+}
+
+%Shield stone is now the boss rush reward
+/%
+#new:Script $FlipSuperguardFlag
+{
+	Loop
+		Call	HasKeyItem ( .Item:ShieldStone *Var[1] )
+		If *Var[1] == 1
+			Call $Function_FlipSuperguardFlag
+		EndIf
+		Wait 1
+	EndLoop
+	Return
+	End
+}
+
+#new:Function $Function_FlipSuperguardFlag
+{
+	PUSH 	RA
+	ORI 	A0, R0, 1
+	SAB		A0, 8010F2A9 %superguard flag loc
+	POP 	RA
+	JR		RA
+	ORI 	V0, R0, 2
+}
+%/
+
+%now the pit gives you the pink stone that gives you more items
+#new:Script $FlipRetrievalFlag
+{
+	Loop
+		Call	HasKeyItem ( 00000043 *Var[1] )
+		If *Var[1] == 1
+			If  (*StoneUnlock !& 00000008)
+				Add *StoneUnlock 8 %set flag		
+			EndIf
+		EndIf
+		Wait 1
+	EndLoop
+	Return
+	End
+}
+	
+#new:Script $Script_SignPost
+{
+	0:  Call     DisablePlayerInput 	( .True )
+		Switch *PitFloor
+			Case == 00000064
+				Call     ShowMessageAtScreenPos 	( $Floor 000000A0 00000028 )  
+			Default
+				Call     ShowMessageAtScreenPos 	( $Error 000000A0 00000028 )
+		EndSwitch
+   28:  Call     DisablePlayerInput 	( .False )
+   38:  Return
+   40: End
+}
+   
+#string $Floor
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 100[BR]
+[DelayOn][Wait][END] 
+}
+
+#string $Error
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Signpost error.[BR]
+(Floor No. not equal to 100)
+[DelayOn][Wait][END] 
+}

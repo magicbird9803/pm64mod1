@@ -1,0 +1,770 @@
+%Add cool new icons
+%Loading save files is tricky, but I need access to the flags at some point to draw this correctly
+%Hopefully hooking into something close to what determines which star spirits to draw will be acceptible
+
+
+
+%Draw when story progress >= 0000005F
+#new:Data $Icon_BowserStencil
+{ ~RasterFile:CI-4:a_bowserstencil.png }
+
+#new:Data $Palette_BowserStencil
+{ ~PaletteFile:CI-4:a_bowserstencil.png }
+
+#new:Data $IconScript_BowserStencil {
+	00000008 
+	00000013 00000028 00000010
+	00000004 
+	00000002 0000003C $Icon_BowserStencil $Palette_BowserStencil
+	00000003 
+	00000000
+}
+
+
+%Draw when *GF_CAV06_LockLeft is true
+#new:Data $Icon_Emperor
+{ ~RasterFile:CI-4:a_emperorstencil.png }
+
+#new:Data $Palette_Emperor
+{ ~PaletteFile:CI-4:a_emperorstencil.png }
+
+#new:Data $IconScript_Emperor {
+	00000008 
+	00000013 00000028 00000010
+	00000004 
+	00000002 0000003C $Icon_Emperor $Palette_Emperor
+	00000003 
+	00000000
+}
+
+
+%Draw when *GF_TEM_FinalBoss is true
+#new:Data $Icon_DarkStar
+{ ~RasterFile:CI-4:a_darkstar.png }
+
+#new:Data $Palette_DarkStar
+{ ~PaletteFile:CI-4:a_darkstar.png }
+
+#new:Data $IconScript_DarkStar {
+	00000008 
+	00000013 00000028 00000010
+	00000004 
+	00000002 0000003C $Icon_DarkStar $Palette_DarkStar
+	00000003 
+	00000000
+}
+
+
+%Draw when *Flag_GotCrystalHallReward is true
+#new:Data $Icon_QueenOfLight
+{ ~RasterFile:CI-4:a_QOLstencil.png }
+
+#new:Data $Palette_QueenOfLight
+{ ~PaletteFile:CI-4:a_QOLstencil.png }
+
+#new:Data $IconScript_QueenOfLight {
+	00000008 
+	00000013 00000028 00000010
+	00000004 
+	00000002 0000003C $Icon_QueenOfLight $Palette_QueenOfLight
+	00000003 
+	00000000
+}
+
+
+%I don't think I can draw new hud elements though :(
+
+
+%can't find it, have to resort to weird measures
+
+
+
+%File header struct (used to determine file info)
+%Slot Header Struct:
+%[00036EB2] [03][00][01][21 F7F7F7F7  F7F7F7][00]
+%00036EB2 03000121 F7F7F7F7  F7F7F700
+%[Total Time][Star Spirits][Unused?][Level][Slot Name][Unused byte]
+%Now use the byte as a story progress thingy
+
+
+#export:Function $Function_GetEndgameProgress %Parameter is a variable
+{
+PUSH	RA
+JAL		$Function_CalculateEndgameProgress
+NOP
+ADDI	A2, V0, 0
+LW		V0, C (A0)
+JAL		~Func:set_variable
+LW		A1, 0 (V0)
+POP		RA
+JR		RA
+ADDIU	V0, R0, 2
+}
+
+
+%step 1: save some stuff to the file header
+#new:Function $Function_CalculateEndgameProgress
+{
+	PUSH	RA, A0, A1, A2, T0, T1, T2, S0
+	LI		S0, 0
+	LI		A1, *GF_CAV06_LockLeft
+	JAL		~Func:get_variable
+	NOP	
+	BEQ		V0, R0, .darktemplecheck
+	NOP
+	LI		S0, 2
+	.darktemplecheck
+	LI		A1, *GF_TEM_FinalBoss
+	JAL		~Func:get_variable
+	NOP	
+	BEQ		V0, R0, .rainbowcheck
+	NOP
+	LI		S0, 3	
+	.rainbowcheck
+	LI		A1, *Flag_GotCrystalHallReward
+	JAL		~Func:get_variable
+	NOP	
+	BEQ		V0, R0, .dostoryprogresscheck		%if you do not have rainbow stone, you can't have 100%
+	NOP
+	LI		S0, 4	
+	%100% the game check
+	JAL		$CheckFullCompletion
+	NOP
+	BEQ		V0, R0, .dostoryprogresscheck
+	NOP
+	LI		S0, 5	
+	.dostoryprogresscheck	%if the other checks fail
+	BNE		S0, R0, .end
+	NOP
+	LAB		A0, 800DBD70
+	SLTI	A1, A0, 5F
+	BNE		A1, R0, .end
+	LI		S0, 0
+	LI		S0, 1
+	.end
+	COPY	V0, S0
+	POP		RA, A0, A1, A2, T0, T1, T2, S0
+	JR		RA
+	NOP
+}
+
+
+#new:Function $CheckFullCompletion
+{
+	PUSH	RA, A0, A1, A2, T0, T1, T2, S0
+	%128 badges
+	JAL		$Has128Badges
+	NOP
+	BEQ		V0, R0, .end
+	NOP
+	%has all 5 non-prologue stones
+	JAL		$HasKeyItem
+	LI		A0, .Item:UltraStone
+	BEQ		V0, R0, .end
+	NOP	
+	JAL		$HasKeyItem
+	LI		A0, .Item:KnowledgeStone
+	BEQ		V0, R0, .end
+	NOP	
+	JAL		$HasKeyItem
+	LI		A0, .Item:VoidStone
+	BEQ		V0, R0, .end
+	NOP	
+	JAL		$HasKeyItem
+	LI		A0, .Item:ShieldStone
+	BEQ		V0, R0, .end
+	NOP	
+	JAL		$HasKeyItem
+	LI		A0, .Item:WarpStone
+	BEQ		V0, R0, .end
+	NOP	
+	%has EX trophy
+	JAL		$HasKeyItem
+	LI		A0, .Item:EXTrophy
+	BEQ		V0, R0, .end
+	NOP	
+	.end
+	POP		RA, A0, A1, A2, T0, T1, T2, S0
+	JR		RA
+	NOP
+}
+
+#export:Function $Has128Badges
+{
+	PUSH	RA, A0, A1, A2, A3
+	LI		A0, 8010F290
+	COPY	A1, A0
+	COPY	A3, R0
+	.looptop
+	LHU		A2, B4 (A1)
+	BEQ		A2, R0, .no
+	NOP
+	ADDI	A3, A3, 1
+	SLTI	A2, A3, 80
+	BNE		A2, R0, .looptop
+	ADDI	A1, A1, 2
+	LI		V0, 2
+	BEQ		R0, R0, .end
+	NOP
+	.no
+	COPY	V0, R0
+	BEQ		R0, R0, .end
+	NOP
+	.end
+	POP		RA, A0, A1, A2, A3
+	JR		RA
+	NOP
+}
+
+#new:Function $HasKeyItem
+{
+	PUSH	RA, S0, A1, A2, A3
+	LI		S0, 8010F290
+	COPY	A1, S0
+	COPY	A3, R0
+	.looptop
+	LHU		A2, 74 (A1)
+	BEQ		A2, A0, .yes
+	NOP
+	ADDI	A3, A3, 1
+	SLTI	A2, A3, 20
+	BNE		A3, R0, .looptop
+	ADDI	A1, A1, 2
+	LI		V0, 0
+	BEQ		R0, R0, .end
+	NOP
+	.yes
+	LI		V0, 1
+	BEQ		R0, R0, .end
+	NOP
+	.end	
+	POP		RA, S0, A1, A2, A3
+	JR		RA
+	NOP
+}
+
+%step 2: apply it to header with the file save function
+%original pointer = 6A30 / 8002B630
+
+@Hook 6BA0
+{
+	PUSH	RA, S0, S1, S2, A0, A1, A2
+	JAL		$Function_CalculateEndgameProgress
+	NOP
+	COPY	S1, V0
+	LW      A0, 0 (S0)
+	LBU     V1, 166 (A0)
+	SLL     V0, V1, 1
+	ADDU    V0, V0, V1
+	%LW      V1, 2BC (S1)
+	SLL     V0, V0, 3
+	ADDI	V0, V0, F						%now do final byte
+	STB     S1, V0 (800779C4)				%apply time to header
+	POP		RA, S0, S1, S2, A0, A1, A2
+	LW      A0, 0 (S0)
+	J 		8002B7A8
+	LBU     V1, 166 (A0)
+}
+
+
+%Now time to do stuff to your files
+%(ripped from black pit)
+@Hook 8E8B4 % 800F5404
+{
+% Copying a save file
+% Check if the game has been cleared in the slot
+% about to be copied.
+LABU    T6, 80074094 % game state
+BNE     T6, R0, .End
+NOP
+LABU    T6, 8024A09C % Current Mode
+ORI     V0, R0, 4 % Copying a save file
+BNE     T6, V0, .CheckCursorPos
+NOP
+LABU    T6, 8024C097 % File about to be copied
+BEQ     R0, R0, .UseFileAboutToBeCopied
+RESERVED
+% Check if the game has been cleared in the current slot
+% the cursor is in.
+.CheckCursorPos
+LABU    T6, 8024A09B % Cursor Pos
+.UseFileAboutToBeCopied
+BNE     T6, R0, .CheckSlot2
+NOP
+LABU    T6, 800779D3 % Slot 1 - Game Beated Byte
+ORI     V0, R0, 01
+BEQ     T6, V0, .RecolorBoxesBlue
+NOP
+ORI     V0, R0, 02
+BEQ     T6, V0, .RecolorBoxesBlack
+NOP
+ORI     V0, R0, 03
+BEQ     T6, V0, .RecolorBoxesGray
+NOP
+ORI     V0, R0, 04
+BEQ     T6, V0, .RecolorBoxesWhite
+NOP
+ORI     V0, R0, 05
+BEQ     T6, V0, .RecolorBoxesGold
+NOP
+BEQ     R0, R0, .LoadDefaultColors
+NOP
+.CheckSlot2
+ORI     V0, R0, 1
+BNE     T6, V0, .CheckSlot3
+NOP
+LABU    T6, 800779EB % Slot 2 - Game Beated Byte
+ORI     V0, R0, 01
+BEQ     T6, V0, .RecolorBoxesBlue
+NOP
+ORI     V0, R0, 02
+BEQ     T6, V0, .RecolorBoxesBlack
+NOP
+ORI     V0, R0, 03
+BEQ     T6, V0, .RecolorBoxesGray
+NOP
+ORI     V0, R0, 04
+BEQ     T6, V0, .RecolorBoxesWhite
+NOP
+ORI     V0, R0, 05
+BEQ     T6, V0, .RecolorBoxesGold
+NOP
+.CheckSlot3
+ORI     V0, R0, 2
+BNE     T6, V0, .CheckSlot4
+NOP
+LABU    T6, 80077A03 % Slot 3 - Game Beated Byte
+ORI     V0, R0, 01
+BEQ     T6, V0, .RecolorBoxesBlue
+NOP
+ORI     V0, R0, 02
+BEQ     T6, V0, .RecolorBoxesBlack
+NOP
+ORI     V0, R0, 03
+BEQ     T6, V0, .RecolorBoxesGray
+NOP
+ORI     V0, R0, 04
+BEQ     T6, V0, .RecolorBoxesWhite
+NOP
+ORI     V0, R0, 05
+BEQ     T6, V0, .RecolorBoxesGold
+NOP
+.CheckSlot4
+ORI     V0, R0, 3
+BNE     T6, V0, .LoadDefaultColors
+NOP
+LABU    T6, 80077A1B % Slot 4 - Game Beated Byte
+ORI     V0, R0, 01
+BEQ     T6, V0, .RecolorBoxesBlue
+NOP
+ORI     V0, R0, 02
+BEQ     T6, V0, .RecolorBoxesBlack
+NOP
+ORI     V0, R0, 03
+BEQ     T6, V0, .RecolorBoxesGray
+NOP
+ORI     V0, R0, 04
+BEQ     T6, V0, .RecolorBoxesWhite
+NOP
+ORI     V0, R0, 05
+BEQ     T6, V0, .RecolorBoxesGold
+NOP
+BEQ		R0, R0, .LoadDefaultColors
+NOP
+.RecolorBoxesBlue
+ % Box 1
+LIO     T6, FFFFFFFF % Color 1 - RGBAlpha
+SAW     T6, 8024BE10
+LIO     T6, ACA9C7FF % Color 2 - RGBAlpha
+SAW     T6, 8024BE14
+% Box 2
+LIO     T6, 806CFFFF % Color 1 - RGBAlpha
+SAW     T6, 8024BE80
+LIO     T6, 1A4292FF % Color 2 - RGBAlpha
+SAW     T6, 8024BE84
+BEQ     R0, R0, .End
+NOP
+.RecolorBoxesGray
+ % Box 1
+LIO     T6, 909090FF % Color 1 - RGBAlpha
+SAW     T6, 8024BE10
+LIO     T6, 787878FF % Color 2 - RGBAlpha
+SAW     T6, 8024BE14
+% Box 2
+LIO     T6, 606060FF % Color 1 - RGBAlpha
+SAW     T6, 8024BE80
+LIO     T6, 303030FF % Color 2 - RGBAlpha
+SAW     T6, 8024BE84
+BEQ     R0, R0, .End
+NOP
+.RecolorBoxesBlack
+ % Box 1
+LIO     T6, D0D0D0FF % Color 1 - RGBAlpha
+SAW     T6, 8024BE10
+LIO     T6, B8B8B8FF % Color 2 - RGBAlpha
+SAW     T6, 8024BE14
+% Box 2
+LIO     T6, 909090FF % Color 1 - RGBAlpha
+SAW     T6, 8024BE80
+LIO     T6, 707070FF % Color 2 - RGBAlpha
+SAW     T6, 8024BE84
+BEQ     R0, R0, .End
+NOP
+.RecolorBoxesWhite
+ % Box 1
+LIO     T6, FFFFFFFF % Color 1 - RGBAlpha
+SAW     T6, 8024BE10
+LIO     T6, D8D8D8FF % Color 2 - RGBAlpha
+SAW     T6, 8024BE14
+% Box 2
+LIO     T6, FFFFFFFF % Color 1 - RGBAlpha
+SAW     T6, 8024BE80
+LIO     T6, A2A2A2FF % Color 2 - RGBAlpha
+SAW     T6, 8024BE84
+BEQ     R0, R0, .End
+NOP
+.RecolorBoxesGold
+PUSH	RA
+JAL		$RainbowBox
+NOP
+POP		RA
+/%
+ % Box 1
+LIO     T6, FFFFD8FF % Color 1 - RGBAlpha
+SAW     T6, 8024BE10
+LIO     T6, CCC8A8FF % Color 2 - RGBAlpha
+SAW     T6, 8024BE14
+% Box 2
+LIO     T6, FFE0C0FF % Color 1 - RGBAlpha
+SAW     T6, 8024BE80
+LIO     T6, B09C50FF % Color 2 - RGBAlpha
+SAW     T6, 8024BE84
+%/
+BEQ     R0, R0, .End
+NOP
+.LoadDefaultColors
+ % Box 1
+LIO     T6, FFFFFFFF % Color 1 - RGBAlpha
+SAW     T6, 8024BE10
+LIO     T6, C8C8AAFF % Color 2 - RGBAlpha
+SAW     T6, 8024BE14
+% Box 2
+LIO     T6, FFEE6AFF % Color 1 - RGBAlpha
+SAW     T6, 8024BE80
+LIO     T6, 92641AFF % Color 2 - RGBAlpha
+SAW     T6, 8024BE84
+.End
+LBU	    T6, 0030 (S4)
+J       800F540C
+LBU	    V0, 0033 (S4)
+}
+
+
+#new:Function $RainbowBox
+{
+	PUSH	RA, A0, A1, A2, A3
+	LAHU	A2, 80074158
+	SRL		A2, A2, 1				
+	%Making it a 15 loop makes the math nicer
+	%but hard to do mod 15 in asm
+	LI		A1, 15`
+	DIV		A2, A1
+	NOP
+	NOP
+	MFHI	A1
+	SLL		A1, A1, 2			%4 align
+	%
+	LI		A3,	$Color1ATable
+	ADD		A3, A3, A1
+	LW		A2, 0 (A3)
+	SAW		A2, 8024BE10
+	%
+	LI		A3,	$Color1BTable
+	ADD		A3, A3, A1
+	LW		A2, 0 (A3)
+	SAW		A2, 8024BE14
+	%
+	LI		A3,	$Color2ATable
+	ADD		A3, A3, A1
+	LW		A2, 0 (A3)
+	SAW		A2, 8024BE80
+	%
+	LI		A3,	$Color2BTable
+	ADD		A3, A3, A1
+	LW		A2, 0 (A3)
+	SAW		A2, 8024BE84
+	%
+	POP		RA, A0, A1, A2, A3
+	JR		RA
+	NOP
+}
+
+#new:Data $RainbowCounter
+{
+	00000000
+}
+
+%FF, E0, E0
+%30, 0, 0
+%12 per step
+
+%All 15
+%FF,E0,E0
+%FF,EC,E0
+%FF,F9,E0
+%F9,FF,E0
+%EC,FF,E0
+%E0,FF,E0
+%E0,FF,EC
+%E0,FF,F9
+%E0,F9,FF
+%E0,EC,FF
+%E0,E0,FF
+%EC,E0,FF
+%F9,E0,FF
+%FF,E0,F9
+%FF,E0,EC
+
+#new:Data $Color1ATable
+{
+	FFE0E0FF FFECE0FF FFF9E0FF F9FFE0FF ECFFE0FF E0FFE0FF E0FFECFF E0FFF9FF
+	E0F9FFFF E0ECFFFF E0E0FFFF ECE0FFFF F9E0FFFF FFE0F9FF FFE0ECFF
+}
+
+%B0,50,50
+%90*,0,0
+%36 per step
+%= +26*
+
+%All 15
+%B0,50,50
+%B0,76,50
+%B0,9C,50
+%9C,B0,50
+%76,B0,50
+%50,B0,50
+%50,B0,76
+%50,B0,9C
+%50,9C,B0
+%50,76,B0
+%50,50,B0
+%76,50,B0
+%9C,50,B0
+%B0,50,9C
+%B0,50,76
+
+#new:Data $Color1BTable
+{
+	B05050FF B07650FF B09C50FF 9CB050FF 76B050FF 50B050FF 50B076FF 50B09CFF
+	509CB0FF 5076B0FF 5050B0FF 7650B0FF 9C50B0FF B0509CFF B05076FF
+}
+
+%FF,90,90
+
+%All 15
+%FF,90,90
+%FF,BA,90
+%FF,E5,90
+%E5,FF,90
+%BA,FF,90
+%90,FF,90
+%90,FF,BA
+%90,FF,E5
+%90,E5,FF
+%90,BA,FF
+%90,90,FF
+%BA,90,FF
+%E5,90,FF
+%FF,90,E5
+%FF,90,BA
+
+
+#new:Data $Color2ATable
+{
+	FF9090FF FFBA90FF FFE590FF E5FF90FF BAFF90FF 90FF90FF 90FFBAFF 90FFE5FF
+	90E5FFFF 90BAFFFF 9090FFFF BA90FFFF E590FFFF FF90E5FF FF90BAFF
+}
+
+%All 15
+%90,30,30
+%90,54,30
+%90,78,30
+%78,90,30
+%54,90,30
+%30,90,30
+%30,90,54
+%30,90,78
+%30,78,90
+%30,54,90
+%30,30,90
+%54,30,90
+%78,30,90
+%90,30,78
+%90,30,54
+
+#new:Data $Color2BTable
+{
+	903030FF 905430FF 907830FF 789030FF 549030FF 309030FF 309054FF 309078FF 
+	307890FF 305490FF 303090FF 543090FF 783090FF 903078FF 903054FF
+}
+
+
+/%
+170:  LW        A0, 0 (S0)
+  174:  LBU       V1, 166 (A0)
+  178:  SLL       V0, V1, 1
+  17C:  ADDU      V0, V0, V1
+  180:  LW        V1, 2BC (S1)
+  184:  SLL       V0, V0, 3
+  188:  STW       V1, V0 ($IntTable_800779C4)			%apply time to header
+%/
+
+/%
+% 00166068 --> 80245808
+#new:Function $Function_filemenu_main_init
+{
+    0:  ADDIU     SP, SP, FFD8
+    4:  SW        S3, 1C (SP)
+    8:  COPY      S3, A0
+    C:  SW        S0, 10 (SP)
+   10:  CLEAR     S0
+   14:  SW        S2, 18 (SP)
+   18:  LA        S2, 8024C0B0
+   20:  SW        S1, 14 (SP)
+   24:  LA        S1, $???_80249E20
+   2C:  SW        RA, 20 (SP)
+        .o30
+   30:  LW        A0, 0 (S1)
+   34:  ADDIU     S1, S1, 4
+   38:  JAL       ~Func:create_hud_element
+   3C:  ADDIU     S0, S0, 1
+   40:  COPY      A0, V0
+   44:  LI        A1, 80
+   48:  JAL       ~Func:set_hud_element_flags
+   4C:  SW        A0, 0 (S2)
+   50:  SLTI      V0, S0, 14
+   54:  BNE       V0, R0, .o30
+   58:  ADDIU     S2, S2, 4
+   5C:  LI        S0, D
+   60:  LA        V0, $???_8024A074
+        .o68
+   68:  SW        S3, 10 (V0)
+   6C:  ADDIU     S0, S0, FFFF
+   70:  BGEZ      S0, .o68
+   74:  ADDIU     V0, V0, FFDC
+   78:  LA        A0, $???_80249EA0
+   80:  JAL       ~Func:setup_pause_menu_tab
+   84:  LI        A1, E
+   88:  LB        V0, 4 (S3)
+   8C:  LB        V1, 5 (S3)
+   90:  MULT      V0, V1
+   94:  MFLO      A2
+   98:  LB        V0, 6 (S3)
+   9C:  NOP
+   A0:  MULT      A2, V0
+   A4:  MFLO      A0
+   A8:  LB        V0, 2 (S3)
+   AC:  NOP
+   B0:  MULT      V1, V0
+   B4:  MFLO      V1
+   B8:  ADDU      V1, A0, V1
+   BC:  LB        A0, 1 (S3)
+   C0:  LW        V0, 8 (S3)
+   C4:  ADDU      V1, V1, A0
+   C8:  ADDU      V0, V0, V1
+   CC:  LBU       V0, 0 (V0)
+   D0:  LB        V1, 4 (S3)
+   D4:  SB        V0, 3 (S3)
+   D8:  LI        V0, 2
+   DC:  BNE       V1, V0, .oF8
+   E0:  LI        V0, 1
+   E4:  LA        V1, 80159D50
+   EC:  SH        V0, 5AE (V1)
+   F0:  BEQ       R0, R0, .o108
+   F4:  LI        V0, D3
+        .oF8
+   F8:  LA        V1, 80159D50
+  100:  SH        V0, 5AE (V1)
+  104:  LI        V0, A2
+        .o108
+  108:  SH        V0, 5B0 (V1)
+  10C:  LI        V0, 19
+  110:  SH        V0, 5B2 (V1)
+  114:  LA        A0, 80159D50
+  11C:  LHU       V0, 5B0 (A0)
+  120:  SLL       V0, V0, 10
+  124:  SRA       V1, V0, 10
+  128:  SRL       V0, V0, 1F
+  12C:  ADDU      V1, V1, V0
+  130:  SRA       A1, V1, 1
+  134:  LB        V1, 5A3 (A0)
+  138:  LI        V0, FFFF
+  13C:  BEQ       V1, V0, .o16C
+  140:  ADDIU     A2, A0, 5AC
+  144:  SLL       V0, V1, 5
+  148:  ADDU      V0, V0, A0
+  14C:  LHU       V0, 10 (V0)
+  150:  SLL       V0, V0, 10
+  154:  SRA       V1, V0, 10
+  158:  SRL       V0, V0, 1F
+  15C:  ADDU      V1, V1, V0
+  160:  SRA       V1, V1, 1
+  164:  BEQ       R0, R0, .o17C
+  168:  SUBU      V0, V1, A1
+        .o16C
+  16C:  LI        V0, A0
+  170:  SUBU      V0, V0, A1
+  174:  LA        A0, 80159D50
+        .o17C
+  17C:  SH        V0, 0 (A2)
+  180:  LHU       V0, 6D0 (A0)
+  184:  SLL       V0, V0, 10
+  188:  SRA       V1, V0, 10
+  18C:  SRL       V0, V0, 1F
+  190:  ADDU      V1, V1, V0
+  194:  SRA       A1, V1, 1
+  198:  LB        V1, 6C3 (A0)
+  19C:  LI        V0, FFFF
+  1A0:  BEQ       V1, V0, .o1D0
+  1A4:  ADDIU     A2, A0, 6CC
+  1A8:  SLL       V0, V1, 5
+  1AC:  ADDU      V0, V0, A0
+  1B0:  LHU       V0, 10 (V0)
+  1B4:  SLL       V0, V0, 10
+  1B8:  SRA       V1, V0, 10
+  1BC:  SRL       V0, V0, 1F
+  1C0:  ADDU      V1, V1, V0
+  1C4:  SRA       V1, V1, 1
+  1C8:  BEQ       R0, R0, .o1D8
+  1CC:  SUBU      V0, V1, A1
+        .o1D0
+  1D0:  LI        V0, A0
+  1D4:  SUBU      V0, V0, A1
+        .o1D8
+  1D8:  SH        V0, 0 (A2)
+  1DC:  LB        V0, 4 (S3)
+  1E0:  BEQ       V0, R0, .o214
+  1E4:  LI        A0, 35
+  1E8:  JAL       ~Func:set_window_update
+  1EC:  LI        A1, 2
+  1F0:  LI        A0, 37
+  1F4:  JAL       ~Func:set_window_update
+  1F8:  LI        A1, 2
+  1FC:  LI        A0, 33
+  200:  JAL       ~Func:set_window_update
+  204:  LI        A1, 2
+  208:  LI        A0, 34
+  20C:  JAL       ~Func:set_window_update
+  210:  LI        A1, 2
+        .o214
+  214:  LI        V0, 1
+  218:  SB        V0, 0 (S3)
+  21C:  LW        RA, 20 (SP)
+  220:  LW        S3, 1C (SP)
+  224:  LW        S2, 18 (SP)
+  228:  LW        S1, 14 (SP)
+  22C:  LW        S0, 10 (SP)
+  230:  JR        RA
+  234:  ADDIU     SP, SP, 28
+}
+%/

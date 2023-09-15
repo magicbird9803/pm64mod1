@@ -1,0 +1,46 @@
+@Hook 7C3C4 %hooked over: setting mario's state to 8
+{
+PUSH	RA, S0, S1
+LAB		S0, 8010F2A8
+BEQ		S0, R0, .normal
+NOP
+LAW 	S0, 8010F0B8
+ANDI	S0, S0, 0020
+BEQ		S0, R0, .normal
+NOP
+JAL 	800E5DA4 	
+ADDIU 	A0, R0, 3 	%action 3 = starting a jump
+BEQ 	R0, R0 	.end
+NOP
+.normal
+JAL 	800E5DA4 	%hooked over
+ADDIU 	A0, R0, 8 	%hooked over
+.end
+POP 	RA, S0, S1
+J 800E2F24
+NOP
+}
+
+/%
+@Hook 7C3CC %hooked over: setting mario's state to 8
+PUSH	RA, S0, S1
+LAW 	S0, 8010F0B8
+ANDI	S0, S0, 0020
+BEQ		S0, R0, .normal
+NOP
+JAL 	800E5DA4 	
+ADDIU 	A0, R0, 3 %infi jump
+BEQ 	R0, R0 	.end
+NOP
+.normal
+JAL 	800E5DA4 	%hooked over
+ADDIU 	A0, R0, 8 	%hooked over
+.end
+POP 	RA, S0, S1
+J 800E2F24
+NOP
+%/
+
+%jump velocity addresses
+%800F7B5C? (ascending?)
+%800F7B6C? (falling?)

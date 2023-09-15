@@ -1,0 +1,359 @@
+@ $Script_MakeEntities %so apparently the save point doesn't appear if you're in the epilogue, but can you even get here in that state?
+{
+	0:  If  *GB_StoryProgress  <  00000060 %actually, the lakilester cutscene happens here
+   10:  	Call     MakeEntity  	( .Entity:SavePoint ~Vec4d:Entity80249140 80000000 )
+			Call     MakeEntity  	( .Entity:HealingBlock ~Vec4d:HeartBlock 80000000 )
+   34:  EndIf
+   3C:  Return
+   44:  End
+}
+
+@ $Script_80242FCC %add dialogue for if you don't have bean (though wise wisterwood uses completely unique functions for messages)
+{
+	0:  Call     DisablePlayerInput 	( .True )
+   10:  Wait     00000002 
+   1C:  Call     GetPlayerActionState 	( *Var[3] )
+   2C:  Set  *Var[4]  00000000 
+   3C:  If  *Var[3]  ==  00000000 
+   4C:  	Add  *Var[4]  00000001 
+   5C:  EndIf
+   64:  If  *Var[3]  ==  00000001 
+   74:  	Add  *Var[4]  00000001 
+   84:  EndIf
+   8C:  If  *Var[3]  ==  00000002 
+   9C:  	Add  *Var[4]  00000001 
+   AC:  EndIf
+   B4:  If  *Var[4]  ==  00000000 
+   C4:  	Call     DisablePlayerInput 	( .False )
+   D4:  	Return
+   DC:  EndIf
+   E4:  If  *GB_StoryProgress  ==  00000035 
+			If *GameFlag[586] == 00000001
+   F4:  		Call     802D095C ( 00110006 00000000 00000032 FFFFFF38 ) %he suggests you plant the bean
+			Else
+				Call     802D095C ( $NeedTheBean1 00000000 00000032 FFFFFF38 ) %he tells you to get the bean
+			EndIf
+  110:  	Set  *GB_StoryProgress  00000036 
+  120:  	Call     DisablePlayerInput 	( .False )
+  130:  	Return
+  138:  EndIf
+  140:  If  *GB_StoryProgress  <  0000003C 
+  150:  	Call     802D095C ( 0011000D 00000000 00000032 FFFFFF38 )
+  16C:  	Call     ShowChoice  	( 001E001F ) % Talk Go back to Toad Town Stop 
+  17C:  	Wait     0000000A 
+  188:  	Switch  *Var[0] 
+  194:  		Case  ==  00000000 
+  1A0:  			Switch  *GB_StoryProgress 
+  1AC:  				Case  <  0000002D 
+  1B8:  					Call     802D0AFC ( 0011000E )
+  1C8:  				Case  <  0000002E 
+  1D4:  					Call     802D0AFC ( 0011000F )
+  1E4:  				Case  <  00000031 
+  1F0:  					Call     802D0AFC ( 00110010 )
+  200:  				Case  <  00000035 
+  20C:  					Call     802D0AFC ( 00110011 )
+  21C:  				Case  <  00000037 
+							If *GameFlag[586] == 00000001
+  228:  						Call     802D0AFC ( 00110007 )
+							Else
+								Call     802D0AFC ( $NeedTheBean2 )
+							EndIf
+  238:  				Case  <  0000003A 
+  244:  					Call     802D0AFC ( 00110012 )
+  254:  				Default
+  25C:  					Call     802D0AFC ( 00110013 )
+  26C:  			EndSwitch
+  274:  		Case  ==  00000001 
+  280:  			Call     802D0A98 ( )
+  28C:  			Exec     $Script_8024196C 
+  298:  			Return
+  2A0:  		Case  ==  00000002 
+  2AC:  			Call     802D0A98 ( )
+  2B8:  	EndSwitch
+  2C0:  Else
+  2C8:  	Call     802D095C ( 00110014 00000000 00000032 FFFFFF38 )
+  2E4:  	Call     ShowChoice  	( 001E001F ) % Talk Go back to Toad Town Stop 
+  2F4:  	Wait     0000000A 
+  300:  	Switch  *Var[0] 
+  30C:  		Case  ==  00000000 
+  318:  			Call     802D0AFC ( 00110015 )
+  328:  		Case  ==  00000001 
+  334:  			Call     802D0A98 ( )
+  340:  			Exec     $Script_8024196C 
+  34C:  			Return
+  354:  		Case  ==  00000002 
+  360:  			Call     802D0A98 ( )
+  36C:  	EndSwitch
+  374:  EndIf
+  37C:  Call     DisablePlayerInput 	( .False )
+  38C:  Return
+  394:  End
+}
+
+%actually, this can go unchanged
+%since you can't progress without using the bean
+/%  
+@ $Script_802485A8
+{
+	0:  Call     DisablePlayerInput 	( .True )
+   10:  Call     802D2884 ( FFFFFFAB 00000055 00000000 )
+   28:  Call     802CF56C ( 00000002 )
+   38:  Call     DisablePlayerInput 	( .False )
+   48:  If  *Flag_FLO_09  ==  00000000 
+   58:  	SetGroup 00000000 
+   64:  	Call     802D5830 ( 00000001 )
+   74:  	Label    0000000A 
+   80:  	Call     802D6420 ( )
+   8C:  	Set  *Var[2]  *Var[0] 
+   9C:  	Switch  *Var[2] 
+   A8:  		Case  <=  00000000 
+   B4:  			Call     802D6954 ( )
+   C0:  			Call     802D5830 ( 00000000 )
+   D0:  			Call     AWaitPlayerLeave 	( FFFFFFAB 00000055 0000001C )
+   E8:  			Return
+   F0:  		Case  ==  00000059 
+   FC:  			Call     SetPlayerAnimation 	( 00060006 )
+  10C:  			Wait     00000005 
+  118:  			Call     RemoveKeyItemAt 	( *Var[1] )
+  128:  			Call     MakeItemEntity ( .Item:FertileSoil ~Vec3d:Item802486D0 00000001 00000000 )
+  14C:  			Set  *MapVar[B]  *Var[0] 
+  15C:  			Call     SetPlayerAnimation 	( .PlayerAnim:StandStill )
+  16C:  			Wait     00000014 
+  178:  		Default
+  180:  			Switch  *AreaFlag[011] 
+  18C:  				Case  ==  00000000 
+  198:  					Call     802D095C ( 00110008 00000000 0000000A FFFFFF38 )
+  1B4:  					Set  *AreaFlag[011]  00000001 
+  1C4:  				Default
+  1CC:  					Call     802D095C ( 00110009 00000000 0000000A FFFFFF38 )
+  1E8:  			EndSwitch
+  1F0:  	EndSwitch
+  1F8:  	Call     DisablePlayerInput 	( .False )
+  208:  	Call     DisablePlayerPhysics 	( .False )
+  218:  	If  *Var[2]  !=  00000059 
+  228:  		Goto     0000000A 
+  234:  	EndIf
+  23C:  	Set  *Flag_FLO_09  00000001 
+  24C:  EndIf
+  254:  If  *Flag_FLO_0A  ==  00000000 
+  264:  	SetGroup 00000000 
+  270:  	Call     802D5830 ( 00000001 )
+  280:  	Label    00000014 
+  28C:  	Call     802D6420 ( )
+  298:  	Set  *Var[2]  *Var[0] 
+  2A8:  	Switch  *Var[2] 
+  2B4:  		Case  <=  00000000 
+  2C0:  			Call     802D6954 ( )
+  2CC:  			Call     802D5830 ( 00000000 )
+  2DC:  			Call     AWaitPlayerLeave 	( FFFFFFAB 00000055 0000001C )
+  2F4:  			Return
+  2FC:  		Case  ==  00000058 
+  308:  			Call     RemoveItemEntity 	( *MapVar[B] )
+  318:  			Wait     00000005 
+  324:  			Call     SetPlayerAnimation 	( 00060006 )
+  334:  			Wait     00000005 
+  340:  			Call     RemoveKeyItemAt 	( *Var[1] )
+  350:  			Call     MakeItemEntity ( .Item:MagicalBean ~Vec3d:Item802488F8 00000001 00000000 )
+  374:  			Set  *MapVar[B]  *Var[0] 
+  384:  			Call     SetPlayerAnimation 	( .PlayerAnim:StandStill )
+  394:  			Wait     00000014 
+  3A0:  		Default
+  3A8:  			Switch  *AreaFlag[011] 
+  3B4:  				Case  ==  00000000 
+  3C0:  					Call     802D095C ( 00110008 00000000 0000000A FFFFFF38 )
+  3DC:  					Set  *AreaFlag[011]  00000001 
+  3EC:  				Default
+  3F4:  					Call     802D095C ( 00110009 00000000 0000000A FFFFFF38 )
+  410:  			EndSwitch
+  418:  	EndSwitch
+  420:  	Call     DisablePlayerInput 	( .False )
+  430:  	Call     DisablePlayerPhysics 	( .False )
+  440:  	If  *Var[2]  !=  00000058 
+  450:  		Goto     00000014 
+  45C:  	EndIf
+  464:  	Set  *Flag_FLO_0A  00000001 
+  474:  EndIf
+  47C:  SetGroup 00000000 
+  488:  Call     802D5830 ( 00000001 )
+  498:  Label    0000001E 
+  4A4:  Call     802D6420 ( )
+  4B0:  Set  *Var[2]  *Var[0] 
+  4C0:  Switch  *Var[2] 
+  4CC:  	Case  <=  00000000 
+  4D8:  		Call     802D6954 ( )
+  4E4:  		Call     802D5830 ( 00000000 )
+  4F4:  		Call     AWaitPlayerLeave 	( FFFFFFAB 00000055 0000001C )
+  50C:  		Return
+  514:  	Case  ==  0000005A 
+  520:  		Call     RemoveItemEntity 	( *MapVar[B] )
+  530:  		Wait     00000005 
+  53C:  		Call     SetPlayerAnimation 	( 00060006 )
+  54C:  		Wait     00000005 
+  558:  		Call     RemoveKeyItemAt 	( *Var[1] )
+  568:  		Call     $Function_8024137C ( )
+  574:  		Call     MakeItemEntity ( .Item:MiracleWater ~Vec3d:Item80248B1C 00000001 00000000 )
+  598:  		Set  *MapVar[B]  *Var[0] 
+  5A8:  		Call     SetPlayerAnimation 	( .PlayerAnim:StandStill )
+  5B8:  		Wait     0000001E 
+  5C4:  		Call     RemoveItemEntity 	( *MapVar[B] )
+  5D4:  		Wait     0000001E 
+  5E0:  		Call     ModifyColliderFlags 	( 00000000 ~Collider:o261 7FFFFE00 )
+  5F8:  		Call     PlayerMoveTo 	( FFFFFFC4 0000001E 00000014 )
+  610:  		Call     ModifyColliderFlags 	( 00000001 ~Collider:o261 7FFFFE00 )
+  628:  		Call     ModifyColliderFlags 	( 00000001 ~Collider:o351 7FFFFE00 )
+  640:  		Call     InterpPlayerYaw 	( 000000C8 00000000 )
+  654:  		Call     802CF56C ( 00000002 )
+  664:  		Wait     0000003C 
+  670:  		Call     FadeInMusic 	( 00000001 .Song:MagicBeanstalk 00000000 00000BB8 00000000 0000007F )
+  694:  		Call     FadeOutMusic 	( 00000000 00000BB8 )
+  6A8:  		Call     UseSettingsFrom 	( .Cam:Default FFFFFFAB 00000000 0000004B )
+  6C4:  		Call     SetPanTarget 	( .Cam:Default FFFFFFAB 00000000 0000004B )
+  6E0:  		Call     SetCamSpeed 	( .Cam:Default *Fixed[1.0] )
+  6F4:  		Call     SetCamPitch 	( .Cam:Default *Fixed[17.0] *Fixed[-6.0] )
+  70C:  		Call     SetCamDistance ( .Cam:Default 000000FA )
+  720:  		Call     PanToTarget 	( .Cam:Default 00000000 00000001 )
+  738:  		Call     WaitForCam  	( .Cam:Default *Fixed[1.0] )
+  74C:  		ExecWait $Script_80247FAC 
+  758:  EndSwitch
+  760:  If  *Var[2]  !=  0000005A 
+  770:  	Goto     0000001E 
+  77C:  EndIf
+  784:  Return
+  78C:  End
+%/
+  
+#string $NeedTheBean1
+{
+[STYLE:Right]Oh, thank you, Mario. You did a[BR]
+tree-mendous job.[BR]
+[Wait][NEXT]You cleared off those clouds so[BR]
+the sun could rise once more.[BR]
+[Wait][NEXT]It's so nice seeing my dear[BR]
+Flower Fields full of light again[BR]
+after such a long time.[BR]
+[PAUSE:0A]There's nothing like sunlight![BR]
+[Wait][NEXT]Oh yes, of course![BR]
+[PAUSE:0A]That Magical Bean would grow[BR]
+nicely now, but you still need [BR]
+to find who stole it.[BR]
+[Wait][NEXT]Once you get it back, I'd[BR]
+say you should plant it in[BR]
+that patch of empty soil[BR]
+over there.[Wait][END]
+}
+  
+#string $NeedTheBean2
+{
+[STYLE:Right]There's no way to reach[BR]
+Huff N. Puff without that[BR]
+Magical Bean. Find whoever[BR]
+stole it and take it back![BR]
+[Wait][END]
+}
+
+@ $Script_Interact_80243C4C
+{
+	0:  If  *Flag_FLO_0B  ==  00000000 
+   10:  	Call     AdjustCam 	( .Cam:Default *Fixed[4.0] FFFFFFE2 0000012C *Fixed[20.0] *Fixed[-9.5] )
+   34:  	Set  *Flag_FLO_0B  00000001 
+   44:  EndIf
+		Label 0
+   4C:  Switch  *GB_StoryProgress 
+   58:  	Case  <  0000002D %before you "get" the bean
+   64:  		Switch  *AreaByte[0] 
+   70:  			Case  ==  00000000 
+   7C:  				Call     SpeakToPlayer 	( .Npc:Self 00C50002 00C50001 00000000 00110035 ) % Hey, guy! Where you going? Oh, Petunia...? Yeah, P ...
+   9C:  				Call     EndSpeech 	( .Npc:Self 00C50003 00C50003 00000000 )
+   B8:  				Set  *AreaByte[0]  00000001 
+   C8:  			Case  ==  00000001 
+   D4:  				Call     SpeakToPlayer 	( .Npc:Self 00C50002 00C50001 00000000 00110038 ) % Hey, Super Star! Lemme fill you in on something! Y ...
+   F4:  				Call     EndSpeech 	( .Npc:Self 00C50003 00C50003 00000000 )
+  110:  				Set  *AreaByte[0]  00000002 
+  120:  			Case  ==  00000002 
+  12C:  				Call     SpeakToPlayer 	( .Npc:Self 00C50002 00C50001 00000000 00110039 ) % Hey, you! Everybody's hero! You want to know the i ...
+  14C:  				Call     EndSpeech 	( .Npc:Self 00C50003 00C50003 00000000 )
+  168:  				Set  *AreaByte[0]  00000000 
+  178:  		EndSwitch
+  180:  	Case  <  0000002F 
+  18C:  		Switch  *AreaByte[0] 
+  198:  			Case  ==  00000000
+  1A4:  				Call     SpeakToPlayer 	( .Npc:Self 00C50002 00C50001 00000000 00110036 ) % Hey, Mr. Big Shot! You looking for something? The  ...
+  1C4:  				Call     EndSpeech 	( .Npc:Self 00C50003 00C50003 00000000 )
+  1E0:  				Set  *AreaByte[0]  00000001 
+  1F0:  			Case  ==  00000001 
+  1FC:  				Call     SpeakToPlayer 	( .Npc:Self 00C50002 00C50001 00000000 00110038 ) % Hey, Super Star! Lemme fill you in on something! Y ...
+  21C:  				Call     EndSpeech 	( .Npc:Self 00C50003 00C50003 00000000 )
+  238:  				Set  *AreaByte[0]  00000002 
+  248:  			Case  ==  00000002 
+  254:  				Call     SpeakToPlayer 	( .Npc:Self 00C50002 00C50001 00000000 00110039 ) % Hey, you! Everybody's hero! You want to know the i ...
+  274:  				Call     EndSpeech 	( .Npc:Self 00C50003 00C50003 00000000 )
+						If *GameFlag[586] == 00000000
+							Set  *AreaByte[0]  00000003 
+						Else
+  290:  					Set  *AreaByte[0]  00000000 
+						EndIf
+					Case  ==  00000003
+						Set  *AreaByte[0]  00000000 
+						If *GameFlag[586] == 00000001
+							Goto 0
+						EndIf
+						Call     SpeakToPlayer 	( .Npc:Self 00C50002 00C50001 00000000 $WheresCovertGuy ) % Hey, you! Everybody's hero! You want to know the i ...
+						Call     EndSpeech 	( .Npc:Self 00C50003 00C50003 00000000 )
+  2A0:  		EndSwitch
+  2A8:  	Case  <  00000035 
+  2B4:  		Switch  *AreaByte[0] 
+  2C0:  			Case  ==  00000000 
+  2CC:  				Call     SpeakToPlayer 	( .Npc:Self 00C50002 00C50001 00000000 00110037 ) % Hey, Mr. High and Mighty! Great weather, isn't it? ...
+  2EC:  				Call     EndSpeech 	( .Npc:Self 00C50003 00C50003 00000000 )
+  308:  				Set  *AreaByte[0]  00000001 
+  318:  			Case  ==  00000001 
+  324:  				Call     SpeakToPlayer 	( .Npc:Self 00C50002 00C50001 00000000 00110038 ) % Hey, Super Star! Lemme fill you in on something! Y ...
+  344:  				Call     EndSpeech 	( .Npc:Self 00C50003 00C50003 00000000 )
+  360:  				Set  *AreaByte[0]  00000002 
+  370:  			Case  ==  00000002 
+  37C:  				Call     SpeakToPlayer 	( .Npc:Self 00C50002 00C50001 00000000 00110039 ) % Hey, you! Everybody's hero! You want to know the i ...
+  39C:  				Call     EndSpeech 	( .Npc:Self 00C50003 00C50003 00000000 )
+						If *GameFlag[586] == 00000000
+							Set  *AreaByte[0]  00000003 
+						Else
+							Set  *AreaByte[0]  00000000 
+						EndIf
+					Case  ==  00000003
+						Set  *AreaByte[0]  00000000 
+						If *GameFlag[586] == 00000001
+							Goto 0
+						EndIf
+						Call     SpeakToPlayer 	( .Npc:Self 00C50002 00C50001 00000000 $WheresCovertGuy ) % Hey, you! Everybody's hero! You want to know the i ...
+						Call     EndSpeech 	( .Npc:Self 00C50003 00C50003 00000000 )
+  3C8:  		EndSwitch
+  3D0:  	Case  <  00000039 
+  3DC:  		Switch  *AreaByte[0] 
+  3E8:  			Case  ==  00000000 
+  3F4:  				Call     SpeakToPlayer 	( .Npc:Self 00C50002 00C50001 00000000 00110039 ) % Hey, you! Everybody's hero! You want to know the i ...
+  414:  				Call     EndSpeech 	( .Npc:Self 00C50003 00C50003 00000000 )
+  430:  				Set  *AreaByte[0]  00000001 
+  440:  			Case  ==  00000001 
+  44C:  				Call     SpeakToPlayer 	( .Npc:Self 00C50002 00C50001 00000000 00110038 ) % Hey, Super Star! Lemme fill you in on something! Y ...
+  46C:  				Call     EndSpeech 	( .Npc:Self 00C50003 00C50003 00000000 )
+  488:  		EndSwitch
+  490:  	Default
+  498:  		Call     SpeakToPlayer 	( .Npc:Self 00C50002 00C50001 00000000 0011003A ) % Hey, guy! By the way, do you even know what my nam ...
+  4B8:  		Call     EndSpeech 	( .Npc:Self 00C50003 00C50003 00000000 )
+  4D4:  EndSwitch
+  4DC:  Call     ResetCam    	( .Cam:Default *Fixed[4.0] )
+  4F0:  Return
+  4F8:  End
+}
+
+#string $WheresCovertGuy
+{
+[STYLE:Right]Hey, Mr. Big Shot! You looking[BR]
+for who has the Magical Bean?[BR]
+[Wait][NEXT]Oh, you'll find him easily.[BR]
+He's way out in the open.[BR]
+You won't find him anywhere[BR]
+near the maze![BR]
+[Wait][NEXT][Yield]...Heh heh heh...[BR]
+[Wait][NEXT]Sorry, guy, I can't tell you any[BR]
+more, not even if you ask.[Wait][END]
+}

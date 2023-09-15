@@ -1,0 +1,9 @@
+Loaded 10159 strings from 191 files in 0,93s.
+Loaded string editor.
+Initializing OpenGL 3.3 (core)
+Using driver: 3.3.0 NVIDIA 537.13
+Loaded icon previews
+Compiling shader: TexturedShader
+Compiling shader: LineShader
+Compiling shader: IndexedShader
+Compiling shader: FontShader

@@ -1,0 +1,291 @@
+%Messing around with partner properties
+
+%Partner y pos is loaded at 80264C58
+
+%...and it is later stored at the home pos
+
+%Post blocking animation is handled by partner handle event scripts
+
+%80297814
+%Partner blocking and setting animations
+%	Battle library says this is unused (but this is wrong because I traced the animation call to this script)
+%	Doubly wrong, I found that the partner scripts call this when handling block
+/%
+#new:Script $Script_80297814
+{
+    0:  Call  $Function_SetActorDispOffset  ( .Actor:Self 00000000 00000000 00000000 )
+   1C:  Call  $Function_SetAnimation        ( .Actor:Self *Var0 *Var1 )					
+   34:  Call  $Function_AddActorPos ( .Actor:Self FFFFFFFE 00000000 00000000 )
+   50:  Wait  1`
+   5C:  Call  $Function_AddActorPos ( .Actor:Self 00000002 00000000 00000000 )
+   78:  Wait  1`
+   84:  Call  $Function_AddActorPos ( .Actor:Self FFFFFFFC 00000000 00000000 )
+   A0:  Wait  1`
+   AC:  Call  $Function_AddActorPos ( .Actor:Self 00000004 00000000 00000000 )
+   C8:  Wait  1`
+   D4:  Call  $Function_AddActorPos ( .Actor:Self FFFFFFFE 00000000 00000000 )
+   F0:  Wait  1`
+   FC:  Call  $Function_AddActorPos ( .Actor:Self 00000002 00000000 00000000 )
+  118:  Wait  1`
+  124:  Call  $Function_AddActorPos ( .Actor:Self FFFFFFFD 00000000 00000000 )
+  140:  Wait  1`
+  14C:  Call  $Function_AddActorPos ( .Actor:Self 00000003 00000000 00000000 )
+  168:  Wait  1`
+  174:  Call  $Function_AddActorPos ( .Actor:Self FFFFFFFE 00000000 00000000 )
+  190:  Wait  1`
+  19C:  Call  $Function_AddActorPos ( .Actor:Self 00000002 00000000 00000000 )
+  1B8:  Wait  1`
+  1C4:  Call  $Function_AddActorPos ( .Actor:Self FFFFFFFF 00000000 00000000 )
+  1E0:  Wait  1`
+  1EC:  Call  $Function_AddActorPos ( .Actor:Self 00000001 00000000 00000000 )
+  208:  Wait  1`
+  214:  Return
+  21C:  End
+}
+%/
+
+
+/%
+Thinking and idle animations
+% 004202B0 --> 802AB520
+#new:IntTable $IntTable_802AB520
+{
+    00000000 00090012 000A001A 000B001C 
+	000C0017 009D0001 000E000B 000F0012 
+	00100003 000D0000 00000000 00000000 
+	00000000 00000000
+}
+
+% 004202E8 --> 802AB558
+#new:IntTable $IntTable_802AB558
+{
+    00000000 00090002 000A0005 000B0006 
+	000C0002 009D0002 000E0002 000F0002 
+	00100002 000D0002 00000000 00000000 
+	00000000 00000000
+}
+%/
+@Data 4202D8
+{
+	00FC0001
+}
+
+@Data 420310
+{
+	00FC0001
+}
+
+
+%Weird note:
+%	twink and goombaria share the same icon	(98F10)
+%	but not goompa	(his is 97890)
+%	
+
+
+
+%Partner fleeing is controlled by $Script_80294720
+%However, searching the libraries found no other references
+
+%Focus anims are in a table at 8029C890
+%See table below
+
+%not sure what these rom addresses are for
+
+%it looks like 2 tables that star rod mashed together
+%Focus anims are loaded from halfway in the table
+/%
+% 001CB0B0 --> 8029C7D0
+#new:Unknown $???_8029C7D0
+{
+	00789E60 0078B600 802A1000 802A24E8 
+	0078B600 0078D150 802A1000 802A2928
+	0078D150 0078E7D0 802A1000 802A24D8 
+	0078E7D0 007900D0 802A1000 802A25A8
+	007900D0 00791D90 802A1000 802A27A8 
+	00791D90 00793D20 802A1000 802A2510
+	00793D20 007952E0 802A1000 802A23D8 
+	007952E0 00796FC0 802A1000 802A2588
+	00796FC0 007997B0 802A1000 802A35B4 
+	007997B0 0079BFA0 802A1000 802A35B4
+	0079BFA0 0079D8A0 802A1000 802A23E8 
+	0079D8A0 0079EF40 802A1000 802A2468
+	0001001F 0001002C 0001002A 00010005 00000000 	%looks like mario's focus anims? (Not sure if focus actually references these)
+	00090003 00090013 00090013 00090003 00090001 
+	000A0006 000A001B 000A001B 000A0006 000A0004 
+	000B0008 000B001D 000B001D 000B0008 000B0004 
+	000C0003 000C0018 000C0018 000C0003 000C0001 
+	00000000 00000000 00000000 00000000 00000000 	%should be goompas anims, but he doesn't even have the right stuff to create the focus option
+	000E0003 000E000A 000E000A 000E0003 000C0001 
+	000F0003 000F0013 000F0013 000F0003 000F0001
+	00100003 00100009 00100009 00100003 00100001 
+	000D0003 000D0013 000D0013 000D0003 000D0001 
+	00000000 00000000								 %the table ends here, so it seems that its not long enough for more partners
+}
+%/
+
+
+%Partner battle data struct size = 0x14 bytes
+%DMA start address?
+%DMA end address?
+%DMA destination?
+%??? (end address?)
+%Partner y pos
+
+%note that the DMA destinations seem incorrect: the table thing says that goombario has addresses 006F0B30-006F58C8 while goombario.bscr has addresses 6F10E0-6F5E80
+%	The two have the same size, so it might just be a star rod thing
+
+/%
+Also has the partner y positions in battle as the final part of the table
+% 001B27F0 --> 80283F10
+#new:IntTable $PartnerMoveTable
+{
+	00000000 00000000 00000000 00000000 00000000	%Null partner (*The game probably doesn't actually consult this table when you have no partner)
+	006F10E0 006F5E80 80238000 802392C8 00000000
+	006F5E80 006FAD10 80238000 80238548 00000000
+	006FAD10 006FFD80 80238000 80238758 00000000
+	006FFD80 00703AF0 80238000 80239928 0000001E
+	006F0B30 006F10E0 80238000 802380E8 00000000
+	00703AF0 00707CA0 80238000 802390B0 00000014
+	00707CA0 0070BD10 80238000 80238FE8 00000000
+	0070BD10 00710EF0 80238000 8023A2F8 0000000A
+	00710EF0 00714CF0 80238000 80238418 00000014
+	00000000 00000000 00000000 00000000 00000000	%Goombaria stuff would be here (Adding new pointers is kinda sketchy right now)
+	00714CF0 00715850 80238000 802381C0 0000001E
+}
+%/
+
+%star rod patches here later which is bad
+%	To do: create a workaround by hot rewriting this
+/%
+@Data 1B28B8	%+ C8
+{
+	00714CF0 00715850 80238000 802381C0 0000001E
+}
+%/
+
+%no, star rod actually changes these pointers, so I have to manually copy them
+/%
+#new:Data $MoveTableRewriteCode
+{
+	00714CF0 00715850 80238000 802381C0 0000001E
+}
+%/
+
+%193454 --> 80264B74
+%   4C:  LA        V1, $PartnerMoveTable
+@Hook 1934A0
+{
+	LA        V1, 80283F10		%$PartnerMoveTable
+	PUSH	  T0, T1, T2, T3
+	ORI		  T0, R0, C8
+	ADD		  T0, V1, T0
+	LI		  T1, 80283F10
+	ADDI	  T1, T1, DC
+	ORI		  T2, R0, 0
+	%copy loop
+	.loop
+	LW		  T3, 0 (T1)
+	SW		  T3, 0 (T0)
+	ADDI	  T0, T0, 4
+	ADDI	  T1, T1, 4
+	ADDI	  T2, T2, 4
+	SLTI	  T3, T2, 14
+	BNE		  T3, R0, .loop
+	NOP
+	POP		  T0, T1, T2, T3
+	J		  80264BC8
+	NOP
+}
+
+
+%Removing battle Twink has no relation with removing world Twink, which is good for me as that means only one battle has to be removed
+
+
+
+%Other tables to look into
+%around 800F836C
+%	^Partner world animation tables?
+
+%800F836C
+/%
+stop, walk, jump ascend, jump descend, stop/idle?, idle 2?, run, talk, damage
+
+00010000 00010002 00010004 00010005 00010001 00010001 00010003 00010008 00010007
+00020000 00020004 00020006 00020007 00020000 00020003 00020005 0002000D 0002000C 
+00030000 00030005 00030009 0003000A 00030000 00030003 00030007 0003000E 0003000D 
+00040000 00040002 00040008 00040002 00040002 00040001 00040003 00040006 00040005 
+009D0000 009D0002 009D0004 009D0005 009D0001 009D0001 009D0003 009D0008 009D0001 
+00060000 00060002 00060002 00060002 00060000 00060001 00060003 00060004 00060007 
+00070000 00070002 00070002 00070002 00070000 00070001 00070003 00070004 00070008 
+00080000 00080005 00080005 00080005 00080000 00080001 00080007 00080009 0008000A 
+00050000 00050002 00050002 00050002 00050000 00050001 00050003 00050004 0005000C
+009E0000 009E0005 009E0012 009E0013 009E0001 009E0001 009E0007 009E000B 009E0001 
+00200000 00200001 00200001 00200001 00200001 00200001 00200001 00200009 00200020
+%/
+
+%actually...
+/%
+% 00091818 --> 800F8368
+#new:IntTable $IntTable_800F8368
+{
+	00000000 00010000 00010002 00010004 00010005 00010001 00010001 00010003
+	00010008 00010007 00020000 00020004 00020006 00020007 00020000 00020003
+	00020005 0002000D 0002000C 00030000 00030005 00030009 0003000A 00030000
+	00030003 00030007 0003000E 0003000D 00040000 00040002 00040008 00040002
+	00040002 00040001 00040003 00040006 00040005 009D0000 009D0002 009D0004
+	009D0005 009D0001 009D0001 009D0003 009D0008 009D0001 00060000 00060002
+	00060002 00060002 00060000 00060001 00060003 00060004 00060007 00070000
+	00070002 00070002 00070002 00070000 00070001 00070003 00070004 00070008
+	00080000 00080005 00080005 00080005 00080000 00080001 00080007 00080009
+	0008000A 00050000 00050002 00050002 00050002 00050000 00050001 00050003
+	00050004 0005000C 009E0000 009E0005 009E0012 009E0013 009E0001 009E0001
+	009E0007 009E000B 009E0001 00200000 00200001 00200001 00200001 00200001
+	00200001 00200001 00200009 00200020
+}
+%/
+
+
+%star rod patches here later which is bad
+%though actually it is in Partners.xml
+/%
+@Data 918C4		%800F8414
+{
+	00FC0000 00FC0002 00FC0002 00FC0002 00FC0000 00FC0001 00FC0003 00FC000E 00FC0006
+}
+%/
+
+
+/%
+super block stuff
+
+add more memory to the heap malloc (need more space for 9 menu entries?)
+   3C:  JAL       ~Func:heap_malloc
+   40:  LI        A0, 396 % 330 Set the heap to 396 instead of 330
+
+later there is a table like this
+   50:  LA        S4, $???_802426B8 % Table Partner?
+
+add 1 more entry to the table so it looks like this (Display all the partners, though it probably doesn't show the null partner)
+	00010002 00030004 00090006 00070008 000A0000
+
+add 2 more entries to a table that looks like this (2 new strings)
+	001D00E0 001D00E1 001D00E2 001D00E3 001D00E4 001D00E5 001D00E6 001D00E7
+	001D00E8 001D00E9 001D00EA 001D00EB 001D00EC 001D00ED 001D00EE 001D00EF
+	[new super upgrade] [new ultra upgrade]
+%/
+
+
+
+%Partner icon note: the two palettes share the same raster data, so make sure they have the same order of colors in the raster
+
+
+
+%try to make the new partner image work
+%I don't have a real image yet but I have a placeholder that is a working image
+
+%Current state: it just hangs when trying to load the image
+#new:Data $PartnerImage_Raster
+{ ~RasterFile:CI-8:party_buzzy.png }
+
+#new:Data $PartnerImage_Palette
+{ ~PaletteFile:CI-8:party_buzzy.png }

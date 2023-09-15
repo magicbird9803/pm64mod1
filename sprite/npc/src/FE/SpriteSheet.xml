@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SpriteSheet maxComponents="2" paletteGroups="1">
+	<PaletteList>
+		<Palette id="0" src="Palette_00.png"/>
+	</PaletteList>
+	<RasterList>
+		<Raster id="0" palette="0" src="Raster_00.png"/>
+		<Raster id="1" palette="0" src="Raster_01.png"/>
+		<Raster id="2" palette="0" src="Raster_02.png"/>
+	</RasterList>
+	<AnimationList>
+		<Animation name="Anim_00">
+			<Component name="Comp_00" xyz="4,-1,0">
+				<Command val="1000"/>
+				<Command val="A"/>
+				<Command val="5002"/>
+				<Command val="5A"/>
+				<Command val="3000"/>
+				<Command val="0"/>
+				<Command val="1"/>
+				<Command val="0"/>
+				<Command val="1000"/>
+				<Command val="A"/>
+				<Command val="1000"/>
+				<Command val="A"/>
+				<Command val="5001"/>
+				<Command val="6A"/>
+				<Command val="1000"/>
+				<Command val="A"/>
+				<Command val="2000"/>
+			</Component>
+			<Component name="Comp_01" xyz="-4,6,2">
+				<Command val="1001"/>
+				<Command val="96"/>
+				<Command val="1002"/>
+				<Command val="6"/>
+				<Command val="1001"/>
+				<Command val="4"/>
+				<Command val="7002"/>
+				<Command val="1"/>
+				<Command val="2000"/>
+			</Component>
+		</Animation>
+	</AnimationList>
+</SpriteSheet>

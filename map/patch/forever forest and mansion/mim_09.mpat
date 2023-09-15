@@ -1,0 +1,292 @@
+%problem: central block crashes when approaching it
+%could be the collider or the model too
+
+%solved: it was the central camera
+%it caused a div/0 error since it was set up wrong
+
+@ $Script_MakeEntities %%was FPPlusA
+%	0:  Call     MakeEntity  	( .Entity:RedBlock 0.0 90.0 0.0 45.0 .Item:FPPlusA 80000000 )
+{
+	0:  Call     MakeEntity  	( .Entity:RedBlock ~Vec4d:Entity80241330 .Item:MegaRush 80000000 )
+   28:  Call     AssignBlockFlag 	( *Flag_MIM_02 )
+   38:  Return
+   40:  End
+}
+
+%new: dark tubba fight
+@ $Script_Main_EnterWalk
+{
+	0:  Set  *GB_WorldLocation  .Location:ForeverForest
+   10:  Call     SetSpriteShading 	( 00070008 )
+   20:  Call     SetCamPerspective 	( .Cam:Default 00000003 00000019 00000010 0000028A )
+   40:  Call     SetCamBGColor 	( .Cam:Default 00000000 00000000 00000000 )
+   5C:  Call     SetCamEnabled 	( .Cam:Default .True )
+   70:  Call     SetCamLeadPlayer 	( .Cam:Default .False )
+   84:  Set  *AreaByte[2]  *Byte_MIM_00 
+   94:  Call     GetMapID    	( *Byte_MIM_00 )
+   A4:  ExecWait $Script_802426D0 
+   %B0:  Call     MakeNpcs    	( 00000001 $NpcGroupList_80242B64 )
+		If  *GB_StoryProgress  >=  00000033 %he appears as soon as you can get the ultra boots legit
+			If *GameFlag[3A9] == 00000000
+				Call	MakeNpcs ( 00000001 $NpcGroupList_Tubba )
+			EndIf
+		EndIf
+   C4:  ExecWait $Script_MakeEntities 
+   D0:  Set  *Var[0]  $Script_802410F0 
+   E0:  Exec     EnterWalk 
+   EC:  Wait     00000001 
+   F8:  Exec     $Script_80240F40 
+  104:  ExecWait $Script_802419A0 
+  110:  Call     $Function_80240000 ( )
+  11C:  Thread
+  124:  	Label    00000000 
+  130:  	Call     WaitForCam  	( .Cam:Default *Fixed[1.0] )
+  144:  	Call     $Function_80240068 ( )
+  150:  	If  *Var[0]  <  0000015E 
+  160:  		Call     SetCamSpeed 	( .Cam:Default *Fixed[1.0] )
+  174:  	Else
+  17C:  		Call     SetCamSpeed 	( .Cam:Default *Fixed[3.0] )
+  190:  	EndIf
+  198:  	Goto     00000000 
+  1A4:  EndThread
+  1AC:  Return
+  1B4:  End
+}
+
+#new:NpcGroupList $NpcGroupList_Tubba %give him his own npcgrouplist
+{
+00000001 $NpcGroup_Tubba 	30000001 %0D000000 %todo: change to tubba re-fight formation
+}
+
+#define .TubbaID 00000000
+
+#new:NpcGroup $NpcGroup_Tubba
+{
+.TubbaID $NpcSettings_Tubba ~Vec3f:NPC_Tubba %since there's no other npcs, the id can be any number we want
+00240F04 $Script_Init_Tubba 00000000 00000000 0000010E 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus
+~Movement:NPC_Tubba
+%~AnimationTable:NPC_Tubba
+006A0007 006A0008 006A000A 006A000B 006A0001 006A0001 006A000B 006A000C %animation table
+006A0001 006A0001 006A0001 006A0001 006A0001 006A0001 006A0001 006A0001  %thanks star rod % .Sprite:WorldTubba
+00000000 00000000 $ExtraAnimationList_Tubba 00000000 % no tattle string
+}
+
+#new:ExtraAnimationList $ExtraAnimationList_Tubba %we need to keep these animations in memory to make his sprite not break
+{
+006A0000 006A0011 006A0007 006A0006 006A0010 006A0008 006A000F 006A0012 006A0009
+FFFFFFFF 
+}
+
+%I think I know why
+%if you don't have the animations he needs in one of those lists, his sprite bugs out
+
+#new:NpcSettings $NpcSettings_Tubba
+{
+00000000 005A0041 00000000 00000000 00000000 80077F70 00000000 00000000
+00000000 00000000 000D0000 
+}
+
+#new:Script $Script_Init_Tubba
+{
+	0:  If  *GB_StoryProgress  <  00000033 %he appears as soon as you can get the ultra boots legit
+			Call     RemoveNpc   	( .Npc:Self )
+			Return
+   20:  EndIf
+		If *GameFlag[3A9] == 00000001
+			Call     RemoveNpc   	( .Npc:Self )
+		EndIf
+		Call	BindNpcIdle ( .TubbaID $Script_TubbaAI )
+		Call	BindNpcDefeat ( .TubbaID $Script_EndBattle )
+   28:  Return
+   30:  End
+}
+
+@ $Script_8024255C
+{
+	0:  Call     DisablePlayerInput 	( .True )
+   10:  Set  *Var[7]  00000000 
+   20:  Set  *Var[8]  FFFFFFBA 
+   30:  Set  *Var[9]  00000024 
+   40:  Set  *Var[A]  00000080 
+   50:  ExecWait $Script_80241EB4 
+   5C:  Call     DisablePlayerInput 	( .False )
+		%cutscene time (?)
+		If  *GB_StoryProgress  >=  00000033 %he appears as soon as you can get the ultra boots legit, aka when you can hit the block
+			If *GameFlag[3A9] == 00000000
+				Set	*GameFlag[3A9] 1` %triggers tubba refight
+			EndIf
+		EndIf
+   6C:  Return
+   74:  End
+}
+
+#new:Script $Script_TubbaAI %just a simple thing that checks when to start the fight
+{
+Loop %infinite loop is fine :)
+	Call     GetPlayerPos 	( *Var[0] *Var[1] *Var[2] )
+	If *Var[2] < 370` %the door puts you past this, so there's no way to open the door and not trigger the cutscene
+		BreakLoop
+	EndIf
+	Wait 00000001
+EndLoop
+Exec $Script_Cutscene
+Return
+End
+}
+
+#string $FightMe1
+{
+[STYLE:Right][Size:30:30]Mario![SizeReset][BR][BR][BR]
+[Wait][NEXT]I finally have you now![BR]
+[Wait][END]
+}
+
+%oh look, partner specific dialogue
+#string $ResponseA
+{
+[STYLE:Right]Why, it's Tubba Blubba![BR]
+So this is where he ended up...[BR][Pause:0A]
+He must've gotten lost in this[BR]
+forest.[Wait][END]
+}
+
+#string $ResponseB
+{
+[STYLE:Right]Hey, it's Tubba Blubba![BR]
+Did he get lost in the forest?[Wait][END]
+}
+
+#string $ResponseC
+{
+[STYLE:Right]It's Tubba Blubba![BR]
+He must have gotten lost in this[BR]
+forest after he ran away.[Wait][END]
+}
+
+#string $ResponseD
+{
+[STYLE:Right]Is that Tubba Blubba?[BR]
+It looks like he's been in the[BR]
+forest for a while. [BR]
+[Pause:0A]Is he lost?[Wait][END]
+}
+
+#string $ResponseE
+{
+[STYLE:Right]Did you get lost in the forest[BR]
+again, Tubba Blubba?[Wait][END]
+}
+
+#string $ResponseF
+{
+[STYLE:Right]This big guy looks sad...[BR]
+Is he lost in the forest?[Wait][END]
+}
+
+#string $ResponseG
+{
+[STYLE:Right]Poor thing... He looks like[BR]
+he got lost in the forest.[Wait][END]
+}
+
+#string $ResponseH
+{
+[STYLE:Right]Who does this guy think he is,
+[BR]Mario? I bet he's just lost in[BR]
+the forest.[BR][Wait][END]
+}
+
+%new
+#string $ResponseI
+{
+[STYLE:Right]He looks out of place here...[BR]
+Is he lost in the forest?[Wait][END]
+}
+
+#string $FightMe2
+{
+[STYLE:Right]What? No! I'm not lost![BR]
+[Wait][NEXT]I was just...training![BR]
+[Pause:0A]...To fight you![BR]
+[PAUSE:0A]Now theres no way you can beat[BR]
+me now![BR]
+[Wait][NEXT][Wave]Time to get my revenge![/fx]
+[Wait][END]
+}
+
+   
+#new:Script $Script_Cutscene %tubba walks up to you, says some stuff, and then you fight
+{
+	/%
+	If *GameFlag[3A9] == 00000000
+		Return
+	EndIf
+	%/
+	Call     DisablePlayerInput 	( .True )
+	Wait	 00000003 %make the cutscene look better
+	Call     SetMusicTrack 	( 00000000 .Song:TubbaBlubbaTheme 00000000 00000008 )
+	Wait	 00000010 %make it not seem like tubba is barely offscreen
+	Call	 SetNpcPos			( .Npc:Self 300` 0` 150`)
+	Call     SetNpcAnimation 	( .Npc:Self 006A0009 )
+	Call	 GetPlayerPos ( *Var[0] *Var[1] *Var[2] )
+	Add		 *Var0 40
+	Call     SpeakToPlayer 	( .TubbaID 006A0011 006A0006 00000000 $FightMe1 )
+	Call     NpcMoveTo   	( .TubbaID *Var[0] *Var[2] *Var[1] ) %apparently the args are in a different order
+	Call     SetNpcAnimation 	( .Npc:Self 006A0007 ) %stop moving
+	Call  GetCurrentPartnerID   ( *Var0 )
+	Switch  *Var0 %Copied this switch statement from the mayor penguin map so I get all the Right animation values
+		Case  ==  .Partner:Goombario % 1
+			Call  SpeakToNpc    ( .Npc:Partner 00010008 00010001 00000000 00000000 $ResponseA ) % What's your problem? You don't actually think Mari ...
+		Case  ==  .Partner:Kooper % 2
+			Call  SpeakToNpc    ( .Npc:Partner 0002000D 00020003 00000000 00000000 $ResponseB ) % Are you crazy? Do you really think Mario would do  ...
+		Case  ==  .Partner:Bombette % 3
+			Call  SpeakToNpc    ( .Npc:Partner 0003000E 00030003 00000000 00000000 $ResponseC ) % Don't be ridiculous! Mario didn't do it!
+		Case  ==  .Partner:Parakarry % 4
+			Call  SpeakToNpc    ( .Npc:Partner 00040006 00040001 00000000 00000000 $ResponseD ) % Mario didn't do it. He's obviously innocent!
+		Case  ==  .Partner:Bow % 9
+			Call  SpeakToNpc    ( .Npc:Partner 00050004 00050001 00000000 00000000 $ResponseE ) % I was with him the whole time. I swear on my own g ...
+		Case  ==  .Partner:Watt % 6
+			Call  SpeakToNpc    ( .Npc:Partner 00060004 00060001 00000000 00000000 $ResponseF ) % Mario, um, didn't do it! It's mean that you're tre ...
+		Case  ==  .Partner:Sushie % 7
+			Call  SpeakToNpc    ( .Npc:Partner 00070004 00070001 00000000 00000000 $ResponseG ) % Hey, use your head! Do you really think Mario is c ...
+		Case  ==  .Partner:Lakilester % 8
+			Call  SpeakToNpc    ( .Npc:Partner 00080009 00080001 00000000 00000000 $ResponseH ) % What! Are you nuts, man? Mario's not a murderer! T ...
+		Case  ==  0000000A
+			Call  SpeakToNpc    ( .Npc:Partner 00FC000E 00FC0001 00000000 00000000 $ResponseI )
+	EndSwitch
+	Call     SpeakToPlayer 	( .TubbaID 006A0011 006A0006 00000000 $FightMe2 )
+	Call     DisablePlayerInput 	( .False )
+	Call	 StartBossBattle 	( .Song:TubbaBlubbaBattle )
+	Return
+	End
+}
+
+
+
+#string $GGNoRe
+{
+[STYLE:Right][Wave]Oh... Oh... Nooo![BR]
+[PAUSE:0A][Wait][NEXT]You guys are too mean![Wait][END]
+}
+
+#new:Script $Script_EndBattle %tubba says more stuff and runs off
+{
+Call     GetBattleOutcome 	( *Var[0] )
+Switch  *Var[0] 
+	Case  ==  .Outcome:PlayerWon
+		Call     SetMusicTrack 	( 00000000 .Song:TubbasManor 00000001 00000008 )
+		Set  *GameFlag[3A9]  00000001 
+		Call     SpeakToPlayer 	( .TubbaID 006A0012 006A0008 00000005 $GGNoRe )
+		Call     SetNpcAnimation 	( .Npc:Self 006A000F )
+		Call	 SetNpcSpeed 	( .TubbaID *Fixed[4.0] )
+		Call     NpcMoveTo   	( .TubbaID 220` 250` 0` ) %this is back offscreen, so we can delete him
+		Call     SetMusicTrack 	( 00000000 .Song:ForeverForest 00000000 00000008 ) %fix the music		
+		Set	*GameFlag[3A9] 1` %triggers tubba refight
+		Call	 RemoveNpc ( .TubbaID )
+	Case  ==  .Outcome:PlayerLost
+	Case  ==  .Outcome:PlayerFled
+EndSwitch
+Return
+End
+}

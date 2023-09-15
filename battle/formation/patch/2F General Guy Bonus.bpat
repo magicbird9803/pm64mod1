@@ -1,0 +1,133 @@
+%extra stuff for general guy fights
+
+%to find anti guy:
+%Wait until it attempts to load the address
+%then search memory for: 00AF2A32
+%(the first part of anti-guy's data)
+%the address to use is 4 before that (there's a section of flags) (= actor flags?)
+%What the data actually is
+%00 = ??? (always 00?)
+%AF = actor ID
+%2A = level
+%32 = maxhp
+
+%bobuke data: 00DA1B0C
+%ember guy data: 006A1A0C
+%practitioner data: 00E91909
+
+
+%original general guy summons anti guy, refight summons the other two
+
+#import newenemy/AntiGuy.bpat
+#import newenemy/PractitionerGuy.bpat
+#import newenemy/EmberGuy.bpat
+
+#new:Script $Script_Die
+{
+    0:  ExecWait 8029AF08 
+    C:  Call     SetPartFlagBits 	( .Actor:Self 00000002 00000001 .True )
+   28:  Call     SetPartFlagBits 	( .Actor:Self 00000001 00000001 .True )
+   6C:  Call     SetActorVar 	( .Actor:Enemy1 0000000A 00000001 )
+   94:  Call     8026BF48 ( 00000001 )
+   AC:  Call     UseBattleCamPreset 	( 00000002 )
+   BC:  Call     MoveBattleCamOver 	( 00000064 )
+   CC:  Call     RemoveActor 	( .Actor:Self )
+   DC:  Return
+   E4:  End
+}
+
+@ $Script_HandleEvent_80221C20_10 %we need to set general guy's variables
+{
+    0:  Call     UseIdleAnimation 	( .Actor:Self .False )
+   14:  Call     GetLastEvent 	( .Actor:Self *Var[0] )
+   28:  Switch  *Var[0] 
+   34:  	CaseOR  ==  .Event:HitCombo
+   40:  	CaseOR  ==  .Event:Hit
+   4C:  		SetConst  *Var[0]  00000001 
+   5C:  		SetConst  *Var[1]  003B050C 
+   6C:  		ExecWait DoNormalHit 
+   78:  	EndCaseGroup
+   80:  	Case  ==  .Event:BurnHit
+   8C:  		SetConst  *Var[0]  00000001 
+   9C:  		SetConst  *Var[1]  003B050D 
+   AC:  		SetConst  *Var[2]  003B050E 
+   BC:  		ExecWait DoBurnHit 
+   C8:  	Case  ==  .Event:BurnDeath
+   D4:  		SetConst  *Var[0]  00000001 
+   E4:  		SetConst  *Var[1]  003B050D 
+   F4:  		SetConst  *Var[2]  003B050E 
+  104:  		ExecWait DoBurnHit 
+  110:  		SetConst  *Var[0]  00000001 
+  120:  		SetConst  *Var[1]  003B050E 
+  130:  		ExecWait $Script_Die
+  13C:  		Return
+  144:  	Case  ==  .Event:SpinSmashHit
+  150:  		SetConst  *Var[0]  00000001 
+  160:  		SetConst  *Var[1]  003B050C 
+  170:  		ExecWait 8029B998 
+  17C:  	Case  ==  .Event:SpinSmashDeath
+  188:  		SetConst  *Var[0]  00000001 
+  198:  		SetConst  *Var[1]  003B050C 
+  1A8:  		ExecWait 8029B998 
+  1B4:  		SetConst  *Var[0]  00000001 
+  1C4:  		SetConst  *Var[1]  003B050C 
+  1D4:  		ExecWait $Script_Die
+  1E0:  		Return
+  1E8:  	Case  ==  .Event:ShockHit
+  1F4:  		SetConst  *Var[0]  00000001 
+  204:  		SetConst  *Var[1]  003B050C 
+  214:  		ExecWait DoShockHit 
+  220:  		SetConst  *Var[0]  00000001 
+  230:  		SetConst  *Var[1]  003B050C 
+  240:  		ExecWait DoJumpBack 
+  24C:  		Call     SetActorSpeed 	( .Actor:Self *Fixed[4.0] )
+  260:  		ExecWait $Script_80221BBC_AntiGuy 
+  26C:  	Case  ==  .Event:ShockDeath
+  278:  		SetConst  *Var[0]  00000001 
+  288:  		SetConst  *Var[1]  003B050C 
+  298:  		ExecWait DoShockHit 
+  2A4:  		SetConst  *Var[0]  00000001 
+  2B4:  		SetConst  *Var[1]  003B050C 
+  2C4:  		ExecWait $Script_Die
+  2D0:  		Return
+  2D8:  	CaseOR  ==  00000017
+  2E4:  	CaseOR  ==  .Event:Immune
+  2F0:  	CaseOR  ==  .Event:AirLiftFailed
+  2FC:  		SetConst  *Var[0]  00000001 
+  30C:  		SetConst  *Var[1]  003B0501 
+  31C:  		ExecWait DoImmune 
+  328:  	EndCaseGroup
+  330:  	Case  ==  .Event:Death
+  33C:  		SetConst  *Var[0]  00000001 
+  34C:  		SetConst  *Var[1]  003B050C 
+  35C:  		ExecWait DoNormalHit 
+  368:  		Wait     0000000A 
+  374:  		SetConst  *Var[0]  00000001 
+  384:  		SetConst  *Var[1]  003B050C 
+  394:  		ExecWait $Script_Die 
+  3A0:  		Return
+  3A8:  	Case  ==  .Event:RecoverStatus
+  3B4:  		SetConst  *Var[0]  00000001 
+  3C4:  		SetConst  *Var[1]  003B0501 
+  3D4:  		ExecWait DoRecover 
+  3E0:  	Case  ==  .Event:ScareAway
+  3EC:  		SetConst  *Var[0]  00000001 
+  3FC:  		SetConst  *Var[1]  003B0503 
+  40C:  		SetConst  *Var[2]  003B0514 
+  41C:  		ExecWait DoScareAway 
+  428:  		Return
+  430:  	Case  ==  .Event:BeginAirLift
+  43C:  		SetConst  *Var[0]  00000001 
+  44C:  		SetConst  *Var[1]  003B050C 
+  45C:  		ExecWait DoAirLift 
+  468:  	Case  ==  .Event:BlowAway
+  474:  		SetConst  *Var[0]  00000001 
+  484:  		SetConst  *Var[1]  003B050C 
+  494:  		ExecWait DoBlowAway 
+  4A0:  		Return
+  4A8:  	Default
+  4B0:  EndSwitch
+  4B8:  Call     UseIdleAnimation 	( .Actor:Self .True )
+  4CC:  Return
+  4D4:  End
+}

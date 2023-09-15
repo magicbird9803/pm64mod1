@@ -1,0 +1,176 @@
+%alRight, this maze needs more enemies :)
+%let's throw covert guy in here too, near the exit of the maze
+
+@ $NpcGroupList_802430D4
+{
+00000002 $NpcGroup_80242CF4 18070009 
+00000001 $NpcGroup_CovertGuy 18250009
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroupList_NoCovert
+{
+00000002 $NpcGroup_80242CF4 18070009 
+00000000 00000000 00000000
+}
+
+#new:NpcSettings $NpcSettings_CovertGuy
+{
+00000000 00300018 00000000 00000000 00000000 00000000 00000000 00000000 
+00000000 00000000 00630000 
+}
+
+/%
+00000000 00180016 00000000 00000000 00000000 80077F70 00000000 8007809C 
+00000000 00000000 00140000 
+%/
+
+#new:NpcGroup $NpcGroup_CovertGuy
+{
+00000002 $NpcSettings_CovertGuy ~Vec3f:NPC_CovertGuy %Right at the entrance
+00002801 $Script_Init_CovertGuy 00000000 00000000 0000010E 
+~İtems:64:StopWatch:A
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:3:40 ~FP:30:40:3:40 ~FP:50:40:3:40 ~FP:80:40:3:40 ~FP:100:30:3:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:0:2
+~Movement:NPC_CovertGuy
+%{AnimationTable:NPC_CovertGuy % 
+003F0102 003F0104 003F0105 003F0105 003F0102 003F0102 003F010B 003F010C
+003F0102 003F0102 003F0102 003F0102 003F0102 003F0102 003F0102 003F0102
+00000000 00000000 00000000 001A0123 % has a tattle
+}
+
+%palette 5 = invis palette
+%palette 1 = covert guy
+
+@ $Script_Main_EnterWalk
+{
+	0:  Set  *GB_WorldLocation  .Location:FlowerFields
+   10:  Call     SetSpriteShading 	( FFFFFFFF )
+   20:  Call     SetCamLeadPlayer 	( .Cam:Default .False )
+   34:  Call     SetCamPerspective 	( .Cam:Default 00000003 00000019 00000010 00001000 )
+   54:  Call     SetCamBGColor 	( .Cam:Default 00000000 00000000 00000000 )
+   70:  Call     SetCamEnabled 	( .Cam:Default .True )
+   84:  Call     80044238 ( 00000005 )
+		If *GameFlag[586] == 00000001
+   94:  	Call     MakeNpcs    	( 00000000 $NpcGroupList_NoCovert )
+		Else
+			Call     MakeNpcs    	( 00000000 $NpcGroupList_802430D4 )
+		EndIf
+   A8:  ExecWait $Script_MakeEntities 
+   B4:  Call     ModifyColliderFlags 	( 00000000 ~Collider:deilitw 7FFFFE00 )
+   CC:  Call     ModifyColliderFlags 	( 00000000 ~Collider:deilite 7FFFFE00 )
+   E4:  Call     GetEntryID  	( *Var[0] )
+   F4:  If  *Var[0]  <=  00000001 
+  104:  	Set  *Var[0]  $Script_80241698 
+  114:  	Exec     EnterWalk 
+  120:  	Exec     $Script_80242240 
+  12C:  	Wait     00000001 
+  138:  Else
+  140:  	Set  *Var[A]  $Script_80241698 
+  150:  	Exec     $Script_802406FC 
+  15C:  	Wait     00000001 
+  168:  EndIf
+  170:  ExecWait $Script_802403E0 
+  17C:  If  *GB_StoryProgress  >=  00000035 
+  18C:  	Call     $Function_802402E0 ( )
+  198:  EndIf
+  1A0:  Call     ModifyColliderFlags 	( 00000003 ~Collider:o90 00000009 )
+  1B8:  Call     ModifyColliderFlags 	( 00000003 ~Collider:o104 00000009 )
+  1D0:  Call     ModifyColliderFlags 	( 00000003 ~Collider:o105 00000009 )
+  1E8:  Call     ModifyColliderFlags 	( 00000003 ~Collider:o109 00000009 )
+  200:  Return
+  208:  End
+}
+
+#new:Script $Script_CovertFight
+{
+	Call     DisablePlayerInput 	( .True )
+	Wait     0000000F 
+	If *Flag_FLO_10  == 0 %
+		Call     SpeakToPlayer  	( 00000001 003F0105 003F0102 00000000 $FoundMe1 ) % time to fight
+		Goto 0
+	EndIf
+	If *GB_StoryProgress < 00000031
+		Call     SpeakToPlayer  	( 00000001 003F0105 003F0102 00000000 $FoundMe2 ) % time to fight
+		Goto 0
+	EndIf
+	Call     SpeakToPlayer  	( 00000001 003F0105 003F0102 00000000 $FoundMe3 ) % time to fight
+	Label 0
+	Call	 SetNpcAnimation	( 00000001 003F0108 ) 
+	Call     DisablePlayerInput 	( .False )
+	Call     StartBossBattle 	( .Song:SpecialBattle )
+	Return
+	End
+}
+
+#new:Script $Script_CovertDefeat
+{
+	Call	 SetNpcAnimation	( 00000001 003F010B ) 
+	Call    SpeakToPlayer  	( 00000001 003F0105 003F0102 00000000 $BeanGet1 )
+	Set *GameFlag[586] 1 %you got the bean :)
+	Set  *Var[0]  00000058 
+	Set  *Var[1]  00000001 
+    Call     ShowGotItem 	( *Var[0] 00000001 00000000 ) %normally the game packages this into its own script, but I don't see why it won't work here
+	Call     AddKeyItem  	( .Item:MagicalBean )
+	Call     GetNpcPos   	( .Npc:Self *Var[0] *Var[1] *Var[2] )
+	Call     PlaySoundAtNpc ( .Npc:Self 000002CD 00000000 )
+	Call     PlayEffect  	( ~FX:BigSmokePuff *Var[0] *Var[1] *Var[2] 00000001 00000001 00000001 00000001 00000000 00000000 00000000 00000000 00000000 00000000 )
+	Call     SetNpcPos   	( .Npc:Self 00000000 FFFFFC18 00000000 )
+	Call	DisablePlayerInput 	( .False )
+	Call	RemoveNpc   	( 00000001 )
+	Return
+	End
+}
+
+#new:Script $Script_Init_CovertGuy
+{
+	Call	 BindNpcInteract  ( .Npc:Self $Script_CovertFight )
+	Call	 BindNpcDefeat  ( .Npc:Self $Script_CovertDefeat )
+	Return
+	End
+}
+
+
+
+%new dialogue
+
+%finding him immediately (i.e. before getting to rosie)
+#string $FoundMe1
+{
+[STYLE:Right]What? How did you find me?[BR]
+My camoflage was perfect![BR]
+[PAUSE:0A]Well, now that you found[BR]
+me, I have to kill you![Wait][END]
+}
+
+%finding somewhere in between the first time you pass him (see above) and the last time (before using the water stone)
+#string $FoundMe2
+{
+[STYLE:Right]Heh heh heh...[PAUSE:0A][BR]
+Finished running those [BR]
+errands?[BR]
+[Wait][NEXT]Well, I'm not giving up[BR]
+that bean without a fight![Wait][END]
+}
+
+%finding him later
+#string $FoundMe3
+{
+[STYLE:Right]Heh heh heh...[PAUSE:0A][BR]
+I had you running all over[BR]
+the place, and for what?[BR]
+A tiny bean?[BR]
+[Wait][NEXT]Well, now that you found[BR]
+me, I have to kill you![Wait][END]
+}
+
+#string $BeanGet1
+{
+[STYLE:Right]Argh![PAUSE:08] Fine![PAUSE:08][BR]
+You can have that stupid[BR]
+bean![BR]
+[Wait][NEXT]It doesn't matter. There's[BR]
+no way you'll get all of the[BR]
+Star Spirits.[Wait][END]
+}

@@ -1,0 +1,1119 @@
+#message:08:00F
+{
+[STYLE:Right]You've correctly answered[BR]
+[Var 0] question[Var 1]
+ so far...[BR]
+[Wait][END]
+}
+
+#message:08:010
+{
+[NEXT][PrintRising][Wave]Correct!![BR]
+[/fx][/fx][Wait][NEXT]Congratulations![BR]
+[PAUSE:0A]This is my last prize![BR]
+[Wait][NEXT]A final Star Piece for you![BR]
+Thanks for playing![Wait][END]
+}
+
+#message:08:011
+{
+[STYLE:Right]You've managed to correctly[BR]
+answer all [Var 0] questions.[BR]
+[PAUSE:0A][PrintRising]Incredible!![BR]
+[/fx][Wait][NEXT]Never in all my years did[BR]
+I think I'd find someone who[BR]
+had all the answers![BR]
+[Wait][NEXT]This is truly a momentous[BR]
+and exciting day![BR]
+[Wait][NEXT]I no longer have any regrets.[BR]
+I've reached my peak.[BR]
+I can now retire as quizmaster.[BR]
+[Wait][NEXT]Hee hee![BR]
+[PAUSE:0A]Really? You flatter me![BR]
+[Wait][NEXT]Perhaps our paths will cross[BR]
+again someday.[BR]
+[Wait][NEXT]'Til then...[BR]
+[PAUSE:05][Wave]so [PAUSE:03]long, [PAUSE:03]fare[PAUSE:03]well.[BR]
+[PAUSE:03]Bye![Wait][END]
+}
+
+#message:08:049
+{
+[STYLE:Right]But we're not done yet![BR]
+Want to try the next one?[BR]
+[Yield][END]
+}
+
+#message:08:04A
+{
+[STYLE:Right]Looks like that's it for now.[BR]
+Well, well... [PAUSE:05][Wave]so [PAUSE:03]long, [PAUSE:03]fare[PAUSE:03]well.[BR]
+[PAUSE:03]'Til we meet again![BR]
+[Wait][END]
+}
+
+#message:2C:000
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]What color of pants was the[BR]
+Goomba King wearing?[BR]
+[Yield][END]
+}
+
+#message:2D:000
+{
+[Style Choice pos=86,70 size=148,62][StartChoice][Option:00]Red and Blue[BR]
+[Cursor:01][Option:01]Red and White[BR]
+[Cursor:02][Option:02]Blue and White[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:001
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]What is the area just east[BR]
+of Toad Town called?[BR]
+[Yield][END]
+}
+
+#message:2D:001
+{
+[Style Choice pos=86,70 size=148,62][StartChoice][Option:00]Koopa Road[BR]
+[Cursor:01][Option:01]Pleasant Path[BR]
+[Cursor:02][Option:02]Goomba Village[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:002
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]How many bushes can you search[BR]
+in Jr Troopa's playground?[BR]
+[Yield][END]
+}
+
+#message:2D:002
+{
+[Style Choice pos=116,70 size=88,62][StartChoice][Option:00]Five[BR]
+[Cursor:01][Option:01]Six[BR]
+[Cursor:02][Option:02]Seven[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:003
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]How did Princess Peach close[BR]
+her invitation letter?[BR]
+[Yield][END]
+}
+
+#message:2D:003
+{
+[Style Choice pos=70,70 size=180,62][StartChoice][Option:00]Sincerely, Peach[BR]
+[Cursor:01][Option:01]Best wishes, Peach[BR]
+[Cursor:02][Option:02]Yours truly, Peach[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:004
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]How many windows are there[BR]
+in Goomba Village?[BR]
+[Yield][END]
+}
+
+#message:2D:004
+{
+[Style Choice pos=118,70 size=84,62][StartChoice][Option:00]One[BR]
+[Cursor:01][Option:01]Two[BR]
+[Cursor:02][Option:02]Three[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:005
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]Which one of the Goomba King's[BR]
+minions had more health?[BR]
+[Yield][END]
+}
+
+#message:2D:005
+{
+[Style Choice pos=96,70 size=128,62][StartChoice][Option:00]Red Goomba[BR]
+[Cursor:01][Option:01]Blue Goomba[BR]
+[Cursor:02][Option:02]Neither[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:006
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]What did the leader of the[BR]
+Koopa Bros. call himself while[BR]
+disguised as a toad?[BR]
+[Yield][END]
+}
+
+#message:2D:006
+{
+[Style Choice pos=110,70 size=100,62][StartChoice][Option:00]Tuff T.[BR]
+[Cursor:01][Option:01]Bru T.[BR]
+[Cursor:02][Option:02]Nash T.[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:007
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]How many buildings are there in[BR]
+Koopa Village?[BR]
+[Yield][END]
+}
+
+#message:2D:007
+{
+[Style Choice pos=118,70 size=84,62][StartChoice][Option:00]Six[BR]
+[Cursor:01][Option:01]Seven[BR]
+[Cursor:02][Option:02]Eight[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:008
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]Which of these could you meet at[BR]
+Princess Peach's party?[BR]
+[Yield][END]
+}
+
+#message:2D:008
+{
+[Style Choice pos=102,70 size=116,62][StartChoice][Option:00]A Goomba[BR]
+[Cursor:01][Option:01]A Yoshi[BR]
+[Cursor:02][Option:02]A Bob-omb[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:009
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]Which of these stations is NOT[BR]
+available on the radio in[BR]
+Koopa Village?[BR]
+[Yield][END]
+}
+
+#message:2D:009
+{
+[Style Choice pos=92,70 size=136,62][StartChoice][Option:00]Golden Oldies[BR]
+[Cursor:01][Option:01]Hot Hits[BR]
+[Cursor:02][Option:02]FM Shroom[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:00A
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]How many Bob-ombs besides[BR]
+Bombette were imprisoned in[BR]
+Koopa Bros. Fortress?[BR]
+[Yield][END]
+}
+
+#message:2D:00A
+{
+[Style Choice pos=114,70 size=92,62][StartChoice][Option:00]Four[BR]
+[Cursor:01][Option:01]Six[BR]
+[Cursor:02][Option:02]Eight[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:00B
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]What happens if you wait long[BR]
+enough during chapter title[BR]
+screens?[BR]
+[Yield][END]
+}
+
+#message:2D:00B
+{
+[Style Choice pos=42,70 size=236,62][StartChoice][Option:00]The next chapter begins[BR]
+[Cursor:01][Option:01]A new song begins to play[BR]
+[Cursor:02][Option:02]A secret message appears[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:00C
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]How many guards patrol the hall[BR]
+outside Princess Peach's room?[BR]
+[Yield][END]
+}
+
+#message:2D:00C
+{
+[Style Choice pos=118,70 size=84,62][StartChoice][Option:00]Two[BR]
+[Cursor:01][Option:01]Three[BR]
+[Cursor:02][Option:02]Five[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:00D
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]How is Merluvlee related to[BR]
+Merlon?[BR]
+[Yield][END]
+}
+
+#message:2D:00D
+{
+[Style Choice pos=72,70 size=176,62][StartChoice][Option:00]His niece[BR]
+[Cursor:01][Option:01]His daughter[BR]
+[Cursor:02][Option:02]His granddaughter[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:00E
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]How many animal skulls decorate[BR]
+Dry Dry Outpost?[BR]
+[Yield][END]
+}
+
+#message:2D:00E
+{
+[Style Choice pos=118,70 size=84,62][StartChoice][Option:00]One[BR]
+[Cursor:01][Option:01]Two[BR]
+[Cursor:02][Option:02]Three[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:00F
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]What is the name of my lovely[BR]
+assistant here?[BR]
+[Yield][END]
+}
+
+#message:2D:00F
+{
+[Style Choice pos=106,70 size=108,62][StartChoice][Option:00]Vanna T.[BR]
+[Cursor:01][Option:01]Hot T.[BR]
+[Cursor:02][Option:02]Beau T.[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:010
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]Who is Moustafa descendent [BR]
+from?[BR]
+[Yield][END]
+}
+
+#message:2D:010
+{
+[Style Choice pos=106,70 size=108,62][StartChoice][Option:00]Mousa[BR]
+[Cursor:01][Option:01]Mowz[BR]
+[Cursor:02][Option:02]Mousta[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:011
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]How many maps are there[BR]
+in Dry Dry Desert?[BR]
+[Yield][END]
+}
+
+#message:2D:011
+{
+[Style Choice pos=138,70 size=54,62][StartChoice][Option:00]36[BR]
+[Cursor:01][Option:01]49[BR]
+[Cursor:02][Option:02]64[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:012
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]How many gates do you[BR]
+need to use in Forever Forest[BR]
+to reach Boo's Mansion?[BR]
+[Yield][END]
+}
+
+#message:2D:012
+{
+[Style Choice pos=106,70 size=108,62][StartChoice][Option:00]Twelve[BR]
+[Cursor:01][Option:01]Fourteen[BR]
+[Cursor:02][Option:02]Fifteen[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:013
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]One of the toads has a crush on[BR]
+Merluvlee. What color is he?[BR]
+[Yield][END]
+}
+
+#message:2D:013
+{
+[Style Choice pos=118,70 size=84,62][StartChoice][Option:00]Red[BR]
+[Cursor:01][Option:01]Green[BR]
+[Cursor:02][Option:02]Blue[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:014
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]Which one of these dishes are[BR]
+available on the Sailor's Lunch[BR]
+Special at Club 64?[BR]
+[Yield][END]
+}
+
+#message:2D:014
+{
+[Style Choice pos=83,70 size=154,62][StartChoice][Option:00]Mushroom Salad[BR]
+[Cursor:01][Option:01]Seafood Soup[BR]
+[Cursor:02][Option:02]Fishy Fry[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:015
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]How many Boo Leaves can you find[BR]
+in Boo's mansion?[BR]
+[Yield][END]
+}
+
+#message:2D:015
+{
+[Style Choice pos=118,70 size=84,62][StartChoice][Option:00]Two[BR]
+[Cursor:01][Option:01]Three[BR]
+[Cursor:02][Option:02]Four[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:016
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]What is the color of the roof of[BR]
+the house in Koopa Village where[BR]
+you can listen to a radio?[BR]
+[Yield][END]
+}
+
+#message:2D:016
+{
+[Style Choice pos=117,70 size=86,62][StartChoice][Option:00]Red[BR]
+[Cursor:01][Option:01]Yellow[BR]
+[Cursor:02][Option:02]Blue[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:017
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]What event had to be canceled[BR]
+after Princess Peach's castle[BR]
+disappeared?[BR]
+[Yield][END]
+}
+
+#message:2D:017
+{
+[Style Choice pos=83,70 size=154,62][StartChoice][Option:00]Mushroom Gala[BR]
+[Cursor:01][Option:01]Cooking Contest[BR]
+[Cursor:02][Option:02]Talent Show[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:018
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]What giant furniture piece[BR]
+cannot be found in Tubba[BR]
+Blubba's castle?[BR]
+[Yield][END]
+}
+
+#message:2D:018
+{
+[Style Choice pos=110,70 size=100,62][StartChoice][Option:00]Trunk[BR]
+[Cursor:01][Option:01]Clock[BR]
+[Cursor:02][Option:02]Dresser[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:019
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]How many types of Dayzees[BR]
+exist around the world?[BR]
+[Yield][END]
+}
+
+#message:2D:019
+{
+[Style Choice pos=117,70 size=86,62][StartChoice][Option:00]Three[BR]
+[Cursor:01][Option:01]Five[BR]
+[Cursor:02][Option:02]Four[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:01A
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]Of the following, who is NOT a[BR]
+member of the Koopa Bros.?[BR]
+[Yield][END]
+}
+
+#message:2D:01A
+{
+[Style Choice pos=118,70 size=84,62][StartChoice][Option:00]Red[BR]
+[Cursor:01][Option:01]Green[BR]
+[Cursor:02][Option:02]Blue[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:01B
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]Which of these objects can[BR]
+be found in the storeroom[BR]
+of Harry's shop?[BR]
+[Yield][END]
+}
+
+#message:2D:01B
+{
+[Style Choice pos=114,70 size=92,62][StartChoice][Option:00]Barrel[BR]
+[Cursor:01][Option:01]Wheel[BR]
+[Cursor:02][Option:02]Broom[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:01C
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]Which item can Tayce T. combine[BR]
+with a Koopa Leaf?[BR]
+[Yield][END]
+}
+
+#message:2D:01C
+{
+[Style Choice pos=90,70 size=140,62][StartChoice][Option:00]Dried Pasta[BR]
+[Cursor:01][Option:01]Shroom Steak[BR]
+[Cursor:02][Option:02]Dried Fruit[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:01D
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]What is your prize for getting[BR]
+three stars on the slot machine[BR]
+in Shy Guy's Toybox?[BR]
+[Yield][END]
+}
+
+#message:2D:01D
+{
+[Style Choice pos=90,70 size=140,62][StartChoice][Option:00]Shooting Star[BR]
+[Cursor:01][Option:01]Super Shroom[BR]
+[Cursor:02][Option:02]10 Mushrooms[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:01E
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]What part of Toad Town[BR]
+doesn't have a toad with[BR]
+a purple hat?[BR]
+[Yield][END]
+}
+
+#message:2D:01E
+{
+[Style Choice pos=67,70 size=186,62][StartChoice][Option:00]Gate district[BR]
+[Cursor:01][Option:01]Castle district[BR]
+[Cursor:02][Option:02]Residential district[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:01F
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]What is the name of the Bob-omb[BR]
+who loves Bombette?[BR]
+[Yield][END]
+}
+
+#message:2D:01F
+{
+[Style Choice pos=115,70 size=108,62][StartChoice][Option:00]Bruce[BR]
+[Cursor:01][Option:01]Arnold[BR]
+[Cursor:02][Option:02]Johnathan[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:020
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]What color is the toad who[BR]
+hands out prizes for the[BR]
+radio contests?[BR]
+[Yield][END]
+}
+
+#message:2D:020
+{
+[Style Choice pos=112,70 size=88,62][StartChoice][Option:00]Blue[BR]
+[Cursor:01][Option:01]Green[BR]
+[Cursor:02][Option:02]Pink[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:021
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]Which of these meals will restore[BR]
+the most health?[BR]
+[Yield][END]
+}
+
+#message:2D:021
+{
+[Style Choice pos=90,70 size=140,62][StartChoice][Option:00]Boiled Egg[BR]
+[Cursor:01][Option:01]Spaghetti[BR]
+[Cursor:02][Option:02]Potato Salad[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:022
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]What color was the leader of [BR]
+Yoshi's Village?[BR]
+[Yield][END]
+}
+
+#message:2D:022
+{
+[Style Choice pos=117,70 size=86,70][StartChoice][Option:00]Blue[BR]
+[Cursor:01][Option:01]Green[BR]
+[Cursor:02][Option:02]Pink[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:023
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]What is the real name of the[BR]
+Toad who calls himself the[BR]
+Master Poet?[BR]
+[Yield][END]
+}
+
+#message:2D:023
+{
+[Style Choice pos=111,70 size=98,62][StartChoice][Option:00]Daniel[BR]
+[Cursor:01][Option:01]Richard[BR]
+[Cursor:02][Option:02]Simon[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:024
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]What is the name of the plant[BR]
+that grows in Jade Jungle and[BR]
+blows out stars?[BR]
+[Yield][END]
+}
+
+#message:2D:024
+{
+[Style Choice pos=86,70 size=148,62][StartChoice][Option:00]Trumpet Plant[BR]
+[Cursor:01][Option:01]Hurt Plant[BR]
+[Cursor:02][Option:02]Bellbell Plant[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:025
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]How many colors of Yoshis did[BR]
+you see in Yoshi's Village?[BR]
+[Yield][END]
+}
+
+#message:2D:025
+{
+[Style Choice pos=119,70 size=82,62][StartChoice][Option:00]Six[BR]
+[Cursor:01][Option:01]Seven[BR]
+[Cursor:02][Option:02]Eight[BR]
+[EndChoice][Yield][END]
+}
+
+
+#message:2C:026
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]
+Where did the Bob-ombs held[BR]
+in Koopa Bros. Fortress go?[BR]
+[Yield][END]
+}
+
+#message:2D:026
+{
+[Style Choice pos=79,75 size=162,62][StartChoice]
+[Option:00]Koopa Village[BR]
+[Cursor:01][Option:01]Dry Dry Outpost[BR]
+[Cursor:02][Option:02]Toad Town[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:027
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]Which of the following tour trips[BR]
+is offered by Toad Town Tours?[BR]
+[Yield][END]
+}
+
+#message:2D:027
+{
+[Style Choice pos=60,70 size=200,62][StartChoice][Option:00]Blossom Festival Tour[BR]
+[Cursor:01][Option:01]Winter Sports Tour[BR]
+[Cursor:02][Option:02]Tropical Resort Tour[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:028
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]Now that it's been repaired,[BR]
+what item can you find on[BR]
+the Goomba family's verdana?[BR]
+[Yield][END]
+}
+
+#message:2D:028
+{
+[Style Choice pos=90,70 size=140,62][StartChoice][Option:00]Shooting Star[BR]
+[Cursor:01][Option:01]Ultra Shroom[BR]
+[Cursor:02][Option:02]Repel Gel[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:029
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]How many docks are there in[BR]
+the Jade Jungle?[BR]
+[Yield][END]
+}
+
+#message:2D:029
+{
+[Style Choice pos=108,70 size=104,62][StartChoice][Option:00]Nine[BR]
+[Cursor:01][Option:01]Eleven[BR]
+[Cursor:02][Option:02]Thirteen[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:02A
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]Which of these badges can you[BR]
+obtain in Flower Fields?[BR]
+[Yield][END]
+}
+
+#message:2D:02A
+{
+[Style Choice pos=86,70 size=148,62][StartChoice][Option:00]Happy Flower[BR]
+[Cursor:01][Option:01]FP Plus[BR]
+[Cursor:02][Option:02]Flower Fanatic[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:02B
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]Among the following Toads, who[BR]
+can you deliver a letter to?[BR]
+[Yield][END]
+}
+
+#message:2D:02B
+{
+[Style Choice pos=95,70 size=130,62][StartChoice][Option:00]Dojo Master[BR]
+[Cursor:01][Option:01]Tayce T.[BR]
+[Cursor:02][Option:02]Russ T.[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:02C
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]How many descendents does[BR]
+Merlon have?[BR]
+[Yield][END]
+}
+
+#message:2D:02C
+{
+[Style Choice pos=118,70 size=84,62][StartChoice][Option:00]Two[BR]
+[Cursor:01][Option:01]Three[BR]
+[Cursor:02][Option:02]Four[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:02D
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]Who lives under the crystal tree[BR]
+in Flower Fields?[BR]
+[Yield][END]
+}
+
+#message:2D:02D
+{
+[Style Choice pos=110,70 size=100,62][StartChoice][Option:00]Petunia[BR]
+[Cursor:01][Option:01]Posie[BR]
+[Cursor:02][Option:02]Rosie[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:02E
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]Who do the love-struck Boos of[BR]
+Gusty Gulch pine for?[BR]
+[Yield][END]
+}
+
+#message:2D:02E
+{
+[Style Choice pos=104,70 size=112,62][StartChoice][Option:00]Victoria[BR]
+[Cursor:01][Option:01]Elizabeth[BR]
+[Cursor:02][Option:02]Katherine[BR]
+[EndChoice][Yield][END]
+}
+
+/%
+#message:2C:02F
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]How many questions were there[BR]
+in that cheap knock-off quiz,[BR]
+the 64th Trivia Quiz-off?[BR]
+[Yield][END]
+}
+
+#message:2D:02F
+{
+[Style Choice pos=114,70 size=92,62][StartChoice][Option:00]Eight[BR]
+[Cursor:01][Option:01]Ten[BR]
+[Cursor:02][Option:02]Twelve[BR]
+[EndChoice][Yield][END]
+}
+%/
+
+#message:2C:02F
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]Where is Tubba Blubba now?[BR]
+[Yield][END]
+}
+
+#message:2D:02F
+{
+[Style Choice pos=60,70 size=198,62][StartChoice][Option:00]Gusty Gulch[BR]
+[Cursor:01][Option:01]Forever Forest[BR]
+[Cursor:02][Option:02]Tubba Blubba's Castle[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:030
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]Which of these items can you[BR]
+get by cooking a Mystery?[BR]
+[Yield][END]
+}
+
+#message:2D:030
+{
+[Style Choice pos=92,70 size=136,62][StartChoice][Option:00]Thunder Bolt[BR]
+[Cursor:01][Option:01]Hot Shroom[BR]
+[Cursor:02][Option:02]Apple Pie[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:031
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]What is the name of the Star[BR]
+Spirit who can use Star Storm?[BR]
+[Yield][END]
+}
+
+#message:2D:031
+{
+[Style Choice pos=106,70 size=108,62][StartChoice][Option:00]Eldstar[BR]
+[Cursor:01][Option:01]Muskular[BR]
+[Cursor:02][Option:02]Skolar[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:032
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]How many Yoshis did you rescue[BR]
+in Jade Jungle?[BR]
+[Yield][END]
+}
+
+#message:2D:032
+{
+[Style Choice pos=118,70 size=84,62][StartChoice][Option:00]Four[BR]
+[Cursor:01][Option:01]Five[BR]
+[Cursor:02][Option:02]Six[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:033
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]Who gave you Miracle Water in[BR]
+Flower Fields?[BR]
+[Yield][END]
+}
+
+#message:2D:033
+{
+[Style Choice pos=119,70 size=82,62][StartChoice][Option:00]Posie[BR]
+[Cursor:01][Option:01]Rosie[BR]
+[Cursor:02][Option:02]Lily[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:034
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]How many Super Blocks are[BR]
+hidden in the Toad Town[BR]
+Tunnels?[BR]
+[Yield][END]
+}
+
+#message:2D:034
+{
+[Style Choice pos=118,70 size=84,62][StartChoice][Option:00]Three[BR]
+[Cursor:01][Option:01]Four[BR]
+[Cursor:02][Option:02]Five[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:035
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]Which of these Toads are NOT[BR]
+one of the three traveling[BR]
+sisters?[BR]
+[Yield][END]
+}
+
+#message:2D:035
+{
+[Style Choice pos=112,70 size=96,62][StartChoice][Option:00]Miss T.[BR]
+[Cursor:01][Option:01]Minh T.[BR]
+[Cursor:02][Option:02]Kris T.[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:036
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]Who was Goompa in his[BR]
+younger days?[BR]
+[Yield][END]
+}
+
+#message:2D:036
+{
+[Style Choice pos=74,70 size=172,62][StartChoice][Option:00]Master fisherman[BR]
+[Cursor:01][Option:01]Champion fighter[BR]
+[Cursor:02][Option:02]Famous musician[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:037
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]How many different kinds of[BR]
+Li'l Oinks are there?[BR]
+[Yield][END]
+}
+
+#message:2D:037
+{
+[Style Choice pos=119,70 size=82,62][StartChoice][Option:00]Eight[BR]
+[Cursor:01][Option:01]Nine[BR]
+[Cursor:02][Option:02]Ten[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:038
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]Which one of these doesn't make[BR]
+anything when Tayce T. cooks it[BR]
+with Cake Mix?[BR]
+[Yield][END]
+}
+
+#message:2D:038
+{
+[Style Choice pos=94,70 size=132,62][StartChoice][Option:00]Dried Fruit[BR]
+[Cursor:01][Option:01]Iced Potato [BR]
+[Cursor:02][Option:02]Koopa Leaf[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:039
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]How many shovels can you find[BR]
+in Shiver City?[BR]
+[Yield][END]
+}
+
+#message:2D:039
+{
+[Style Choice pos=119,70 size=82,62][StartChoice][Option:00]Four[BR]
+[Cursor:01][Option:01]Five[BR]
+[Cursor:02][Option:02]Six[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:03A
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]Who among these are related[BR]
+to The Master in Toad Town?[BR]
+[Yield][END]
+}
+
+#message:2D:03A
+{
+[Style Choice pos=115,70 size=92,62][StartChoice][Option:00]Russ T.[BR]
+[Cursor:01][Option:01]Tayce T.[BR]
+[Cursor:02][Option:02]Fice T.[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:03B
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]Which one of these ingredients[BR]
+was NOT needed to bake a cake[BR]
+for Gourmet Guy?[BR]
+[Yield][END]
+}
+
+#message:2D:03B
+{
+[Style Choice pos=114,70 size=92,62][StartChoice][Option:00]Flour[BR]
+[Cursor:01][Option:01]Butter[BR]
+[Cursor:02][Option:02]Milk[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:03C
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]Where can you find the[BR]
+Mega Jump badge?[BR]
+[Yield][END]
+}
+
+#message:2D:03C
+{
+[Style Choice pos=78,70 size=164,62][StartChoice][Option:00]Shiver Snowfield[BR]
+[Cursor:01][Option:01]Shiver Mountain[BR]
+[Cursor:02][Option:02]Crystal Palace[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:03D
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]What is the name of Sushie's[BR]
+daughter?[BR]
+[Yield][END]
+}
+
+#message:2D:03D
+{
+[Style Choice pos=109,70 size=102,62][StartChoice][Option:00]Sashimie[BR]
+[Cursor:01][Option:01]Nigirie[BR]
+[Cursor:02][Option:02]Makie[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:03E
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]Who of these people are in the[BR]
+audience tonight?[BR]
+[Yield][END]
+}
+
+#message:2D:03E
+{
+[Style Choice pos=98,70 size=128,62][StartChoice][Option:00]Anti Guy[BR]
+[Cursor:01][Option:01]Y. Ninjakoopa[BR]
+[Cursor:02][Option:02]Jr Troopa[BR]
+[EndChoice][Yield][END]
+}
+
+#message:2C:03F
+{
+[STYLE:Right]Question.[BR]
+[Wait][NEXT]What does Luigi, who may be in[BR]
+the audience tonight, secretly[BR]
+wish for?[BR]
+[Yield][END]
+}
+
+#message:2D:03F
+{
+[Style Choice pos=40,70 size=240,62][StartChoice][Option:00]A kiss from Princess Peach[BR]
+[Cursor:01][Option:01]To sleep on the top bunk[BR]
+[Cursor:02][Option:02]To be mayor of Toad Town[BR]
+[EndChoice][Yield][END]
+}

@@ -1,0 +1,86 @@
+%Add a red clubba
+
+@ $NpcGroupList_802425C8
+{
+	00000002 $NpcGroup_80241E08 0F020001
+	00000002 $NpcGroup_802421E8 0F010001
+	00000002 $NpcGroup_RedClubba 0F060001	%single red clubba, so its not really that bad
+	00000000 00000000 00000000
+}
+
+#import NPC_Clubba.mpat
+
+%I created the pit before adding the red clubba here
+%the development of this mod is very convoluted
+
+#new:NpcGroup $NpcGroup_RedClubba
+{
+	00000020 $NpcSettings_RedClubba ~Vec3f:NPC_RedClubba % 375 0 100
+	00000C00 00000000 00000000 00000000 0000010E
+	~İtems:5:SuperShroom:A ~HP:Standard:3 ~FP:Standard:2 ~CoinBonus:2:3
+	~Movement:NPC_RedClubba
+	00390202 00390203 00390204 00390204 00390202 00390202 0039020C 0039020C
+	00390211 00390212 00390207 00390208 00390201 00390202 00390202 00390202 % .Sprite:WorldClubba
+	00000002 00000000 00000000 00000000 % no tattle string
+	%
+	% $NpcGroup_802421E8[1F0]
+	00000021 $NpcSettings_ClubbaB ~Vec3f:NPC_802423D8 % 0 -1000 0
+	00800D00 00000000 00000000 00000000 00000000
+	~NoDrops
+	~Movement:NPC_802423D8
+	00390202 00390203 00390204 00390204 00390202 00390202 0039020C 0039020C
+	00390211 00390212 00390207 00390208 00390201 00390202 00390202 00390202 % .Sprite:WorldClubba
+	00000000 00000000 $ExtraAnimationList_ClubbaB 00000000 % no tattle string
+}
+
+#new:NpcSettings $NpcSettings_RedClubba
+{
+00000000 00240022 00000000 00000000 $Script_NpcAI_ClubbaA 80077F70 00000000 $ClubbaDefeat
+00000000 00000000 000D0000 
+}
+
+#new:Script $ClubbaDefeat %normal defeat script with extra stuff?
+{
+	0:  Call     SetNpcRotation ( FFFFFFFF 00000000 00000000 00000000 )
+   1C:  Call     GetBattleOutcome 	( *Var[0] )
+   2C:  Switch  *Var[0] 
+   38:  	Case  ==  .Outcome:PlayerWon % 0
+   44:  		Call     DoNpcDefeat 	( )
+   50:  	Case  ==  .Outcome:PlayerFled % 2
+   5C:  		Call     80045900 ( 00000000 )
+   6C:  	Case  ==  .Outcome:EnemyFled % 3
+   78:  		Call     SetEnemyFlagBits 	( FFFFFFFF 00000010 00000001 )
+   90:  		Call     RemoveNpc   	( FFFFFFFF )
+   A0:  EndSwitch
+   A8:  Return
+   B0:  End
+}
+
+#new:AISettings $AISettings_RedClubba
+{
+    3.0 % move speed
+    120` % move time
+    30` % Wait time
+   85.0 % alert radius
+   65.0
+    5`
+    5.0 % chase speed
+    90`
+    12`
+  110.0 % chase radius
+   90.0
+    3`
+}
+
+%change some parameters
+%this should make them harder to deal with
+#new:Script $Script_NpcAI_RedClubba
+{
+	0:  Call     SetSelfVar 	( 00000000 00000000 )
+   14:  Call     SetSelfVar 	( 00000001 00000004 )
+   28:  Call     SetSelfVar 	( 00000002 00000007 )
+   3C:  Call     SetSelfVar 	( 00000003 00000006 )
+   50:  Call     $Function_8024061C_Clubba ( $AISettings_RedClubba )
+   60:  Return
+   68:  End
+}

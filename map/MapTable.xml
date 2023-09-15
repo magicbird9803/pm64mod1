@@ -1,0 +1,730 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MapTable>
+	<Area name="kmr">
+		<Map name="kmr_00" flags="1"/>
+		<Map name="kmr_02"/>
+		<Map name="kmr_03"/>
+		<Map name="kmr_04"/>
+		<Map name="kmr_05"/>
+		<Map name="kmr_06"/>
+		<Map name="kmr_07"/>
+		<Map name="kmr_09"/>
+		<Map name="kmr_10"/>
+		<Map name="kmr_11"/>
+		<Map name="kmr_12"/>
+		<Map name="kmr_20"/>
+		<Map name="kmr_21" hasShape="false" hasHit="false"/>
+		<Map name="kmr_22" hasShape="false" hasHit="false"/>
+		<Map name="kmr_23" hasShape="false" hasHit="false"/>
+		<Map name="kmr_24" hasShape="false" hasHit="false"/>
+		<Map name="kmr_30"/>
+		<Stage name="kmr_bt03"/>
+		<Stage name="kmr_bt04"/>
+		<Stage name="kmr_bt05"/>
+		<Stage name="kmr_bt06"/>
+	</Area>
+	<Area name="mac">
+		<Map name="machi"/>
+		<Map name="mac_00"/>
+		<Map name="mac_01"/>
+		<Map name="mac_02"/>
+		<Map name="mac_03"/>
+		<Map name="mac_04"/>
+		<Map name="mac_05"/>
+		<Map name="mac_06"/>
+		<Map name="mac_07" nickname="mac_07 (new)"/>
+		<Stage name="mac_bt01"/>
+		<Stage name="mac_bt02"/>
+		<Stage name="mac_b03" nickname="mac_bt03"/>
+	</Area>
+	<Area name="tik">
+		<Map name="tik_01" flags="102"/>
+		<Map name="tik_02" flags="102"/>
+		<Map name="tik_03" flags="102"/>
+		<Map name="tik_04" flags="102"/>
+		<Map name="tik_05" flags="102"/>
+		<Map name="tik_06" flags="102"/>
+		<Map name="tik_07" flags="102"/>
+		<Map name="tik_08" flags="102"/>
+		<Map name="tik_09" flags="102"/>
+		<Map name="tik_10" flags="102"/>
+		<Map name="tik_12" flags="102"/>
+		<Map name="tik_14" flags="102"/>
+		<Map name="tik_15" flags="102"/>
+		<Map name="tik_17" flags="102"/>
+		<Map name="tik_18" flags="102"/>
+		<Map name="tik_19" flags="102"/>
+		<Map name="tik_20" flags="102"/>
+		<Map name="tik_21" flags="102"/>
+		<Map name="tik_22" flags="102"/>
+		<Map name="tik_23" flags="102"/>
+		<Map name="tik_24" flags="102" hasShape="false" hasHit="false"/>
+		<Map name="tik_25" flags="102"/>
+		<Map name="tik_26" flags="102"/>
+		<Stage name="tik_bt01"/>
+		<Stage name="tik_bt02"/>
+		<Stage name="tik_bt03"/>
+		<Stage name="tik_bt04"/>
+		<Stage name="tik_bt05"/>
+	</Area>
+	<Area name="kgr">
+		<Map name="kgr_01" flags="1"/>
+		<Map name="kgr_02" flags="1"/>
+		<Stage name="kgr_bt01"/>
+	</Area>
+	<Area name="kkj">
+		<Map name="kkj_00" flags="103"/>
+		<Map name="kkj_01" flags="103"/>
+		<Map name="kkj_02" flags="2"/>
+		<Map name="kkj_03" flags="3"/>
+		<Map name="kkj_10" flags="103"/>
+		<Map name="kkj_11" flags="103"/>
+		<Map name="kkj_12" flags="102"/>
+		<Map name="kkj_13" flags="103"/>
+		<Map name="kkj_14"/>
+		<Map name="kkj_15"/>
+		<Map name="kkj_16" flags="1"/>
+		<Map name="kkj_17"/>
+		<Map name="kkj_18"/>
+		<Map name="kkj_19"/>
+		<Map name="kkj_20"/>
+		<Map name="kkj_21" flags="1"/>
+		<Map name="kkj_22" flags="102"/>
+		<Map name="kkj_23"/>
+		<Map name="kkj_24" flags="102"/>
+		<Map name="kkj_25"/>
+		<Map name="kkj_26"/>
+		<Map name="kkj_27" flags="1"/>
+		<Map name="kkj_28" flags="1"/>
+		<Map name="kkj_29" flags="1"/>
+		<Stage name="kkj_bt01"/>
+		<Stage name="kkj_bt02"/>
+	</Area>
+	<Area name="hos">
+		<Map name="hos_00"/>
+		<Map name="hos_01"/>
+		<Map name="hos_02"/>
+		<Map name="hos_03"/>
+		<Map name="hos_04"/>
+		<Map name="hos_05" flags="102"/>
+		<Map name="hos_06"/>
+		<Map name="hos_10"/>
+		<Map name="hos_20"/>
+		<Map name="hos_07"/>
+		<Map name="hos_08"/>
+		<Map name="hos_09"/>
+		<Map name="hos_11" nickname="under waterfall"/>
+		<Map name="hos_12"/>
+		<Map name="hos_13"/>
+		<Map name="hos_14"/>
+		<Stage name="hos_bt01"/>
+		<Stage name="hos_bt02"/>
+	</Area>
+	<Area name="nok">
+		<Map name="nok_01"/>
+		<Map name="nok_02"/>
+		<Map name="nok_03"/>
+		<Map name="nok_04"/>
+		<Map name="nok_11"/>
+		<Map name="nok_12"/>
+		<Map name="nok_13"/>
+		<Map name="nok_14"/>
+		<Map name="nok_15"/>
+		<Map name="nok_16" nickname="north path 1"/>
+		<Map name="nok_17" nickname="north path 2"/>
+		<Stage name="nok_bt01"/>
+		<Stage name="nok_bt02"/>
+		<Stage name="nok_bt03"/>
+		<Stage name="nok_bt04"/>
+	</Area>
+	<Area name="trd">
+		<Map name="trd_00"/>
+		<Map name="trd_01" flags="103"/>
+		<Map name="trd_02" flags="103"/>
+		<Map name="trd_03" flags="103"/>
+		<Map name="trd_04" flags="103"/>
+		<Map name="trd_05" flags="103"/>
+		<Map name="trd_06" flags="103"/>
+		<Map name="trd_07" flags="103"/>
+		<Map name="trd_08" flags="103"/>
+		<Map name="trd_09"/>
+		<Map name="trd_10" flags="103"/>
+		<Stage name="trd_bt00"/>
+		<Stage name="trd_bt01"/>
+		<Stage name="trd_bt02"/>
+		<Stage name="trd_bt03"/>
+		<Stage name="trd_bt04"/>
+		<Stage name="trd_bt05"/>
+	</Area>
+	<Area name="iwa">
+		<Map name="iwa_00"/>
+		<Map name="iwa_01"/>
+		<Map name="iwa_02"/>
+		<Map name="iwa_03"/>
+		<Map name="iwa_04"/>
+		<Map name="iwa_10"/>
+		<Map name="iwa_11"/>
+		<Stage name="iwa_bt01"/>
+		<Stage name="iwa_bt02"/>
+	</Area>
+	<Area name="dro">
+		<Map name="dro_01"/>
+		<Map name="dro_02"/>
+	</Area>
+	<Area name="sbk">
+		<Map name="sbk_00"/>
+		<Map name="sbk_01"/>
+		<Map name="sbk_02"/>
+		<Map name="sbk_03"/>
+		<Map name="sbk_04"/>
+		<Map name="sbk_05"/>
+		<Map name="sbk_06"/>
+		<Map name="sbk_10"/>
+		<Map name="sbk_11"/>
+		<Map name="sbk_12"/>
+		<Map name="sbk_13"/>
+		<Map name="sbk_14"/>
+		<Map name="sbk_15"/>
+		<Map name="sbk_16"/>
+		<Map name="sbk_20"/>
+		<Map name="sbk_21"/>
+		<Map name="sbk_22"/>
+		<Map name="sbk_23"/>
+		<Map name="sbk_24"/>
+		<Map name="sbk_25"/>
+		<Map name="sbk_26"/>
+		<Map name="sbk_30"/>
+		<Map name="sbk_31"/>
+		<Map name="sbk_32"/>
+		<Map name="sbk_33"/>
+		<Map name="sbk_34"/>
+		<Map name="sbk_35"/>
+		<Map name="sbk_36"/>
+		<Map name="sbk_40"/>
+		<Map name="sbk_41"/>
+		<Map name="sbk_42"/>
+		<Map name="sbk_43"/>
+		<Map name="sbk_44"/>
+		<Map name="sbk_45"/>
+		<Map name="sbk_46"/>
+		<Map name="sbk_50"/>
+		<Map name="sbk_51"/>
+		<Map name="sbk_52"/>
+		<Map name="sbk_53"/>
+		<Map name="sbk_54"/>
+		<Map name="sbk_55"/>
+		<Map name="sbk_56"/>
+		<Map name="sbk_60"/>
+		<Map name="sbk_61"/>
+		<Map name="sbk_62"/>
+		<Map name="sbk_63"/>
+		<Map name="sbk_64"/>
+		<Map name="sbk_65"/>
+		<Map name="sbk_66"/>
+		<Map name="sbk_99"/>
+		<Stage name="sbk_bt02"/>
+	</Area>
+	<Area name="isk">
+		<Map name="isk_01" flags="102"/>
+		<Map name="isk_02" flags="102"/>
+		<Map name="isk_03" flags="102"/>
+		<Map name="isk_04" flags="102"/>
+		<Map name="isk_05" flags="102"/>
+		<Map name="isk_06" flags="102"/>
+		<Map name="isk_07" flags="102"/>
+		<Map name="isk_08" flags="102"/>
+		<Map name="isk_09" flags="102"/>
+		<Map name="isk_10" flags="102"/>
+		<Map name="isk_11" flags="102"/>
+		<Map name="isk_12" flags="102"/>
+		<Map name="isk_13" flags="102"/>
+		<Map name="isk_14" flags="102"/>
+		<Map name="isk_16" flags="102"/>
+		<Map name="isk_18" flags="102"/>
+		<Map name="isk_19" flags="102"/>
+		<Stage name="isk_bt01"/>
+		<Stage name="isk_bt02"/>
+		<Stage name="isk_bt03"/>
+		<Stage name="isk_bt04"/>
+		<Stage name="isk_bt05"/>
+		<Stage name="isk_bt06"/>
+		<Stage name="isk_bt07"/>
+		<Stage name="isk_bt08"/>
+	</Area>
+	<Area name="mim">
+		<Map name="mim_01" flags="102"/>
+		<Map name="mim_02" flags="102"/>
+		<Map name="mim_03" flags="102"/>
+		<Map name="mim_04" flags="102"/>
+		<Map name="mim_05" flags="102"/>
+		<Map name="mim_06" flags="102"/>
+		<Map name="mim_07" flags="102"/>
+		<Map name="mim_08" flags="102"/>
+		<Map name="mim_09" flags="102"/>
+		<Map name="mim_10"/>
+		<Map name="mim_11" flags="102"/>
+		<Map name="mim_12" flags="102"/>
+		<Stage name="mim_bt01"/>
+	</Area>
+	<Area name="obk">
+		<Map name="obk_01" flags="102"/>
+		<Map name="obk_02" flags="101"/>
+		<Map name="obk_03" flags="101"/>
+		<Map name="obk_04" flags="101"/>
+		<Map name="obk_05" flags="101"/>
+		<Map name="obk_06" flags="101"/>
+		<Map name="obk_07" flags="101"/>
+		<Map name="obk_08" flags="101"/>
+		<Map name="obk_09" flags="102"/>
+		<Stage name="obk_b01"/>
+	</Area>
+	<Area name="arn">
+		<Map name="arn_02"/>
+		<Map name="arn_03"/>
+		<Map name="arn_04"/>
+		<Map name="arn_05"/>
+		<Map name="arn_07"/>
+		<Map name="arn_08" flags="101"/>
+		<Map name="arn_09" flags="101"/>
+		<Map name="arn_10" flags="101"/>
+		<Map name="arn_11" flags="101"/>
+		<Map name="arn_12" flags="101"/>
+		<Map name="arn_13" flags="101"/>
+		<Map name="arn_20" hasData="false"/>
+		<Map name="arn_21"/>
+		<Map name="arn_22"/>
+		<Stage name="arn_bt01"/>
+		<Stage name="arn_bt02"/>
+		<Stage name="arn_bt03"/>
+		<Stage name="arn_bt04"/>
+		<Stage name="arn_bt05"/>
+		<Stage name="arn_bt06"/>
+	</Area>
+	<Area name="dgb">
+		<Map name="dgb_00" hasShape="false" hasHit="false"/>
+		<Map name="dgb_01" flags="102"/>
+		<Map name="dgb_02" flags="102"/>
+		<Map name="dgb_03" flags="102"/>
+		<Map name="dgb_04" flags="102"/>
+		<Map name="dgb_05" flags="102"/>
+		<Map name="dgb_06" flags="102"/>
+		<Map name="dgb_07" flags="102"/>
+		<Map name="dgb_08" flags="102"/>
+		<Map name="dgb_09" flags="102"/>
+		<Map name="dgb_10" flags="102"/>
+		<Map name="dgb_11" flags="102"/>
+		<Map name="dgb_12" flags="102"/>
+		<Map name="dgb_13" flags="102"/>
+		<Map name="dgb_14" flags="102"/>
+		<Map name="dgb_15" flags="102"/>
+		<Map name="dgb_16" flags="102"/>
+		<Map name="dgb_17" flags="102"/>
+		<Map name="dgb_18" flags="102"/>
+		<Stage name="dgb_bt01"/>
+		<Stage name="dgb_bt02"/>
+		<Stage name="dgb_bt03"/>
+		<Stage name="dgb_bt04"/>
+		<Stage name="dgb_bt05"/>
+	</Area>
+	<Area name="omo">
+		<Map name="omo_01" flags="102"/>
+		<Map name="omo_02" flags="102"/>
+		<Map name="omo_03" flags="102"/>
+		<Map name="omo_04" flags="102"/>
+		<Map name="omo_05" flags="102"/>
+		<Map name="omo_06" flags="102"/>
+		<Map name="omo_07" flags="102"/>
+		<Map name="omo_08" flags="102"/>
+		<Map name="omo_09" flags="102"/>
+		<Map name="omo_10" flags="102"/>
+		<Map name="omo_11" flags="102"/>
+		<Map name="omo_12" flags="102"/>
+		<Map name="omo_13" flags="102"/>
+		<Map name="omo_14" flags="102"/>
+		<Map name="omo_15" flags="102"/>
+		<Map name="omo_16" flags="102"/>
+		<Map name="omo_17" flags="102"/>
+		<Stage name="omo_bt01"/>
+		<Stage name="omo_bt02"/>
+		<Stage name="omo_bt03"/>
+		<Stage name="omo_bt04"/>
+		<Stage name="omo_bt05"/>
+		<Stage name="omo_bt06"/>
+		<Stage name="omo_bt07"/>
+	</Area>
+	<Area name="jan">
+		<Map name="jan_00"/>
+		<Map name="jan_01"/>
+		<Map name="jan_02"/>
+		<Map name="jan_03"/>
+		<Map name="jan_04"/>
+		<Map name="jan_05"/>
+		<Map name="jan_06"/>
+		<Map name="jan_07"/>
+		<Map name="jan_08"/>
+		<Map name="jan_09"/>
+		<Map name="jan_10"/>
+		<Map name="jan_11" flags="102"/>
+		<Map name="jan_12" flags="101"/>
+		<Map name="jan_13" flags="101"/>
+		<Map name="jan_14" flags="101"/>
+		<Map name="jan_15" flags="101"/>
+		<Map name="jan_16" flags="101"/>
+		<Map name="jan_17" flags="102"/>
+		<Map name="jan_18"/>
+		<Map name="jan_19" flags="102"/>
+		<Map name="jan_22" flags="101"/>
+		<Map name="jan_23"/>
+		<Stage name="jan_bt00"/>
+		<Stage name="jan_bt01"/>
+		<Stage name="jan_bt02"/>
+		<Stage name="jan_bt03"/>
+		<Stage name="jan_bt04"/>
+	</Area>
+	<Area name="kzn">
+		<Map name="kzn_01" flags="102"/>
+		<Map name="kzn_02" flags="102"/>
+		<Map name="kzn_03" flags="102"/>
+		<Map name="kzn_04" flags="102"/>
+		<Map name="kzn_05" flags="102"/>
+		<Map name="kzn_06" flags="102"/>
+		<Map name="kzn_07" flags="102"/>
+		<Map name="kzn_08" flags="102"/>
+		<Map name="kzn_09" flags="102"/>
+		<Map name="kzn_10" flags="102"/>
+		<Map name="kzn_11" flags="102"/>
+		<Map name="kzn_17" flags="102"/>
+		<Map name="kzn_18" flags="102"/>
+		<Map name="kzn_19" flags="102"/>
+		<Map name="kzn_20" flags="102"/>
+		<Map name="kzn_22" flags="102"/>
+		<Map name="kzn_23" flags="102"/>
+		<Stage name="kzn_bt01"/>
+		<Stage name="kzn_bt02"/>
+		<Stage name="kzn_bt04"/>
+		<Stage name="kzn_bt05"/>
+	</Area>
+	<Area name="flo">
+		<Map name="flo_00"/>
+		<Map name="flo_03"/>
+		<Map name="flo_07"/>
+		<Map name="flo_08"/>
+		<Map name="flo_09"/>
+		<Map name="flo_10"/>
+		<Map name="flo_11"/>
+		<Map name="flo_12"/>
+		<Map name="flo_13"/>
+		<Map name="flo_14"/>
+		<Map name="flo_15"/>
+		<Map name="flo_16"/>
+		<Map name="flo_17"/>
+		<Map name="flo_18"/>
+		<Map name="flo_19"/>
+		<Map name="flo_21"/>
+		<Map name="flo_22"/>
+		<Map name="flo_23"/>
+		<Map name="flo_24"/>
+		<Map name="flo_25"/>
+		<Map name="flo_26"/>
+		<Stage name="flo_bt01"/>
+		<Stage name="flo_bt02"/>
+		<Stage name="flo_bt03"/>
+		<Stage name="flo_bt04"/>
+		<Stage name="flo_bt05"/>
+		<Stage name="flo_bt06"/>
+	</Area>
+	<Area name="sam">
+		<Map name="sam_01"/>
+		<Map name="sam_02"/>
+		<Map name="sam_03"/>
+		<Map name="sam_04"/>
+		<Map name="sam_05"/>
+		<Map name="sam_06"/>
+		<Map name="sam_07" flags="101"/>
+		<Map name="sam_08" flags="101"/>
+		<Map name="sam_09" flags="101"/>
+		<Map name="sam_10" flags="101"/>
+		<Map name="sam_11"/>
+		<Map name="sam_12" flags="101"/>
+		<Map name="sam_13" nickname="sam_13 (between 8 and 9)" flags="101"/>
+		<Map name="sam_14" nickname="sam_14 (between 3 and 4)"/>
+		<Map name="sam_15" nickname="sam_15 (near top of path)"/>
+		<Map name="sam_16" nickname="sam_16 (climb midpoint)"/>
+		<Stage name="sam_bt01"/>
+		<Stage name="sam_bt02"/>
+		<Stage name="sam_bt03"/>
+		<Stage name="sam_bt04"/>
+	</Area>
+	<Area name="pra">
+		<Map name="pra_01" flags="1"/>
+		<Map name="pra_02" flags="102"/>
+		<Map name="pra_03" flags="102"/>
+		<Map name="pra_04" flags="102"/>
+		<Map name="pra_05" flags="101"/>
+		<Map name="pra_06" flags="101" hasShape="false" hasHit="false"/>
+		<Map name="pra_09" flags="102"/>
+		<Map name="pra_10" flags="102"/>
+		<Map name="pra_11" flags="101"/>
+		<Map name="pra_12" flags="101" hasShape="false" hasHit="false"/>
+		<Map name="pra_13" flags="102"/>
+		<Map name="pra_14" flags="102"/>
+		<Map name="pra_15" flags="101"/>
+		<Map name="pra_16" flags="102"/>
+		<Map name="pra_18" flags="102"/>
+		<Map name="pra_19" flags="102"/>
+		<Map name="pra_20" flags="101"/>
+		<Map name="pra_21" flags="102"/>
+		<Map name="pra_22" flags="102"/>
+		<Map name="pra_27" flags="101" hasShape="false" hasHit="false"/>
+		<Map name="pra_28" flags="101" hasShape="false" hasHit="false"/>
+		<Map name="pra_29" flags="102"/>
+		<Map name="pra_31" flags="102"/>
+		<Map name="pra_32" flags="101"/>
+		<Map name="pra_33" flags="102"/>
+		<Map name="pra_34" flags="101"/>
+		<Map name="pra_35" flags="102"/>
+		<Map name="pra_36" flags="102" hasShape="false" hasHit="false"/>
+		<Map name="pra_37" flags="102" hasShape="false" hasHit="false"/>
+		<Map name="pra_38" flags="102" hasShape="false" hasHit="false"/>
+		<Map name="pra_39" flags="102" hasShape="false" hasHit="false"/>
+		<Map name="pra_40" flags="101"/>
+		<Stage name="pra_bt01"/>
+		<Stage name="pra_bt02"/>
+		<Stage name="pra_bt03"/>
+		<Stage name="pra_bt04"/>
+	</Area>
+	<Area name="kpa">
+		<Map name="kpa_01" flags="103"/>
+		<Map name="kpa_03" flags="103"/>
+		<Map name="kpa_04" flags="102"/>
+		<Map name="kpa_08" flags="102"/>
+		<Map name="kpa_09" flags="102"/>
+		<Map name="kpa_10" flags="103"/>
+		<Map name="kpa_11" flags="103"/>
+		<Map name="kpa_12" flags="103"/>
+		<Map name="kpa_13" flags="103"/>
+		<Map name="kpa_14" flags="103"/>
+		<Map name="kpa_15" flags="103"/>
+		<Map name="kpa_16" flags="103"/>
+		<Map name="kpa_17" flags="102"/>
+		<Map name="kpa_32" flags="103"/>
+		<Map name="kpa_33" flags="103"/>
+		<Map name="kpa_40" flags="102"/>
+		<Map name="kpa_41" flags="102"/>
+		<Map name="kpa_50" flags="102"/>
+		<Map name="kpa_51" flags="102" hasShape="false" hasHit="false"/>
+		<Map name="kpa_52" flags="102"/>
+		<Map name="kpa_53" flags="102" hasShape="false" hasHit="false"/>
+		<Map name="kpa_60"/>
+		<Map name="kpa_61"/>
+		<Map name="kpa_62"/>
+		<Map name="kpa_63" flags="102"/>
+		<Map name="kpa_70" flags="103"/>
+		<Map name="kpa_81" flags="102" hasShape="false" hasHit="false"/>
+		<Map name="kpa_82" flags="102" hasShape="false" hasHit="false"/>
+		<Map name="kpa_83" flags="102" hasShape="false" hasHit="false"/>
+		<Map name="kpa_90" flags="102"/>
+		<Map name="kpa_91" flags="102"/>
+		<Map name="kpa_94" flags="102"/>
+		<Map name="kpa_95" flags="102"/>
+		<Map name="kpa_96" flags="101"/>
+		<Map name="kpa_100" flags="101" hasShape="false" hasHit="false"/>
+		<Map name="kpa_101" flags="101" hasShape="false" hasHit="false"/>
+		<Map name="kpa_102" flags="103"/>
+		<Map name="kpa_111" flags="103"/>
+		<Map name="kpa_112" flags="102"/>
+		<Map name="kpa_113" flags="103"/>
+		<Map name="kpa_114" flags="102" hasShape="false" hasHit="false"/>
+		<Map name="kpa_115" flags="103"/>
+		<Map name="kpa_116" flags="102"/>
+		<Map name="kpa_117" flags="101"/>
+		<Map name="kpa_118" flags="102"/>
+		<Map name="kpa_119" flags="101"/>
+		<Map name="kpa_121" flags="102"/>
+		<Map name="kpa_130" flags="103"/>
+		<Map name="kpa_133" flags="103"/>
+		<Map name="kpa_134" flags="103"/>
+		<Map name="kpa_80" hasData="false"/>
+		<Stage name="kpa_bt01"/>
+		<Stage name="kpa_bt02"/>
+		<Stage name="kpa_bt03"/>
+		<Stage name="kpa_bt04"/>
+		<Stage name="kpa_bt05"/>
+		<Stage name="kpa_bt07"/>
+		<Stage name="kpa_bt08"/>
+		<Stage name="kpa_bt09"/>
+		<Stage name="kpa_bt11"/>
+		<Stage name="kpa_bt13"/>
+		<Stage name="kpa_bt14"/>
+	</Area>
+	<Area name="osr">
+		<Map name="osr_00"/>
+		<Map name="osr_01"/>
+		<Map name="osr_02"/>
+		<Map name="osr_03"/>
+		<Map name="osr_04" hasShape="false" hasHit="false"/>
+	</Area>
+	<Area name="end">
+		<Map name="end_00"/>
+		<Map name="end_01"/>
+	</Area>
+	<Area name="mgm">
+		<Map name="mgm_00"/>
+		<Map name="mgm_01"/>
+		<Map name="mgm_02"/>
+		<Map name="mgm_03"/>
+	</Area>
+	<Area name="gv">
+		<Map name="gv_01"/>
+	</Area>
+	<Area name="tst">
+		<Map name="tst_01"/>
+		<Map name="tst_02"/>
+		<Map name="tst_03"/>
+		<Map name="tst_04"/>
+		<Map name="tst_10"/>
+		<Map name="tst_11"/>
+		<Map name="tst_12"/>
+		<Map name="tst_13"/>
+		<Map name="tst_20"/>
+		<Map name="tst_21" nickname="cav_00 mimic"/>
+		<Map name="tst_22" nickname="cav_01 mimic"/>
+		<Map name="tst_23" nickname="cav_02 mimic"/>
+		<Map name="tst_24" nickname="cav_03 mimic"/>
+		<Map name="tst_25" nickname="cav_04 mimic"/>
+		<Stage name="tst_b01" nickname="debug battle stage"/>
+	</Area>
+	<Area name="cav" nickname="dark cave">
+		<Map name="cav_00" nickname="cave entrance"/>
+		<Map name="cav_01" nickname="platforming cave 1" flags="102"/>
+		<Map name="cav_02" nickname="crossroads 1" flags="102"/>
+		<Map name="cav_03" nickname="pit entrance" flags="102"/>
+		<Map name="cav_04" nickname="crossroads 2" flags="102"/>
+		<Map name="cav_05" nickname="ruins 1"/>
+		<Map name="cav_06" nickname="ruins 2"/>
+		<Map name="cav_07" nickname="temple entrance"/>
+		<Map name="cav_08" nickname="spiky room"/>
+		<Map name="cav_09" nickname="dark map"/>
+		<Map name="cav_10" nickname="light maze"/>
+		<Map name="cav_11" nickname="river"/>
+		<Map name="cav_12" nickname="sparky town"/>
+		<Map name="cav_13" nickname="sparky town 2"/>
+		<Map name="cav_14" nickname="ruined palace dining"/>
+		<Map name="cav_15" nickname="ruined palace main"/>
+		<Map name="cav_16" nickname="ruined palace supply"/>
+		<Map name="cav_17" nickname="ruined palace star"/>
+		<Stage name="cav_b01"/>
+		<Stage name="cav_b02" nickname="ceiling cave"/>
+		<Stage name="cav_b03" nickname="lower cave"/>
+		<Stage name="cav_b04" nickname="darker cave"/>
+		<Stage name="cav_b05" nickname="river cave"/>
+		<Stage name="cav_b06" nickname="precipice cave"/>
+		<Stage name="cav_b07" nickname="temple cave"/>
+		<Stage name="cav_b08" nickname="palace inside"/>
+	</Area>
+	<Area name="pit">
+		<Map name="pit_01" nickname="pit floor 1-9"/>
+		<Map name="pit_02" nickname="pit floor 11-19"/>
+		<Map name="pit_03" nickname="pit floor 21-29"/>
+		<Map name="pit_04" nickname="pit floor 31-39"/>
+		<Map name="pit_05" nickname="pit floor 41-49"/>
+		<Map name="pit_06" nickname="pit floor 51-59"/>
+		<Map name="pit_07" nickname="pit floor 61-69"/>
+		<Map name="pit_08" nickname="pit floor 71-79"/>
+		<Map name="pit_09" nickname="pit floor 81-89"/>
+		<Map name="pit_10" nickname="pit floor 91-99"/>
+		<Map name="pit_11" nickname="pit floors 10,20,30 etc"/>
+		<Map name="pit_12" nickname="floor 100"/>
+		<Stage name="pit_b01" nickname="normal pit stage"/>
+	</Area>
+	<Area name="tem" nickname="temple of darkness">
+		<Map name="tem_00" nickname="entrance"/>
+		<Map name="tem_01" nickname="entrance hall"/>
+		<Map name="tem_02" nickname="lobby outside"/>
+		<Map name="tem_03" nickname="warp stone trial 1"/>
+		<Map name="tem_04" nickname="shield stone trial 1"/>
+		<Map name="tem_05" nickname="badge stone trial 1"/>
+		<Map name="tem_06" nickname="ultra stone trial 1"/>
+		<Map name="tem_07" nickname="greed stone trial 1"/>
+		<Map name="tem_08" nickname="knowledge stone trial 1"/>
+		<Map name="tem_09" nickname="void stone trial 1"/>
+		<Map name="tem_10" nickname="temple top"/>
+		<Map name="tem_11" nickname="warp stone trial 2"/>
+		<Map name="tem_12" nickname="shield stone trial 2"/>
+		<Map name="tem_13" nickname="badge stone trial 2"/>
+		<Map name="tem_14" nickname="ultra stone trial 2"/>
+		<Map name="tem_15" nickname="greed stone trial 2"/>
+		<Map name="tem_16" nickname="knowledge stone trial 2"/>
+		<Map name="tem_17" nickname="void stone trial 2"/>
+		<Stage name="tem_b01" nickname="outside temple"/>
+		<Stage name="tem_b02" nickname="inside basic"/>
+		<Stage name="tem_b03" nickname="inside fiery"/>
+		<Stage name="tem_b04" nickname="inside switches"/>
+		<Stage name="tem_b05" nickname="inside pillars"/>
+		<Stage name="tem_b06" nickname="inside platforms"/>
+		<Stage name="tem_b07" nickname="inside chain walls"/>
+		<Stage name="tem_b08" nickname="outside top"/>
+	</Area>
+	<Area name="hal" nickname="crystal hall">
+		<Map name="hal_01" nickname="crystal hall rooms 1-5"/>
+		<Map name="hal_02" nickname="crystal hall room 6"/>
+		<Map name="hal_00" nickname="crystal hall lobby"/>
+		<Stage name="hal_b01"/>
+	</Area>
+	<Resource name="mac_tex" compressed="false"/>
+	<Resource name="tik_tex" compressed="false"/>
+	<Resource name="kgr_tex" compressed="false"/>
+	<Resource name="kmr_tex" compressed="false"/>
+	<Resource name="iwa_tex" compressed="false"/>
+	<Resource name="sbk_tex" compressed="false"/>
+	<Resource name="dro_tex" compressed="false"/>
+	<Resource name="isk_tex" compressed="false"/>
+	<Resource name="trd_tex" compressed="false"/>
+	<Resource name="nok_tex" compressed="false"/>
+	<Resource name="hos_tex" compressed="false"/>
+	<Resource name="kpa_tex" compressed="false"/>
+	<Resource name="osr_tex" compressed="false"/>
+	<Resource name="kkj_tex" compressed="false"/>
+	<Resource name="tst_tex" compressed="false"/>
+	<Resource name="jan_tex" compressed="false"/>
+	<Resource name="mim_tex" compressed="false"/>
+	<Resource name="obk_tex" compressed="false"/>
+	<Resource name="arn_tex" compressed="false"/>
+	<Resource name="dgb_tex" compressed="false"/>
+	<Resource name="kzn_tex" compressed="false"/>
+	<Resource name="flo_tex" compressed="false"/>
+	<Resource name="sam_tex" compressed="false"/>
+	<Resource name="pra_tex" compressed="false"/>
+	<Resource name="omo_tex" compressed="false"/>
+	<Resource name="end_tex" compressed="false"/>
+	<Resource name="mgm_tex" compressed="false"/>
+	<Resource name="gv__tex" compressed="false"/>
+	<Resource name="kmr_bg" compressed="true"/>
+	<Resource name="nok_bg" compressed="true"/>
+	<Resource name="sbk_bg" compressed="true"/>
+	<Resource name="sbk3_bg" compressed="true"/>
+	<Resource name="iwa_bg" compressed="true"/>
+	<Resource name="hos_bg" compressed="true"/>
+	<Resource name="arn_bg" compressed="true"/>
+	<Resource name="obk_bg" compressed="true"/>
+	<Resource name="omo_bg" compressed="true"/>
+	<Resource name="yos_bg" compressed="true"/>
+	<Resource name="jan_bg" compressed="true"/>
+	<Resource name="fla_bg" compressed="true"/>
+	<Resource name="flb_bg" compressed="true"/>
+	<Resource name="sra_bg" compressed="true"/>
+	<Resource name="yki_bg" compressed="true"/>
+	<Resource name="sam_bg" compressed="true"/>
+	<Resource name="kpa_bg" compressed="true"/>
+	<Resource name="title_bg" compressed="true"/>
+	<Resource name="title_data" compressed="true"/>
+	<Resource name="party_kurio" compressed="true"/>
+	<Resource name="party_kameki" compressed="true"/>
+	<Resource name="party_pinki" compressed="true"/>
+	<Resource name="party_pareta" compressed="true"/>
+	<Resource name="party_resa" compressed="true"/>
+	<Resource name="party_akari" compressed="true"/>
+	<Resource name="party_opuku" compressed="true"/>
+	<Resource name="party_pokopi" compressed="true"/>
+	<Resource name="party_buzzy" compressed="true"/>
+</MapTable>

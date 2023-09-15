@@ -1,0 +1,638 @@
+%once I planned to make a NG+ mode where you have to go through the game again with overpowered enemies and bosses
+%but resetting everything would be really hard
+%much harder than setting story progress to beginning and warping mario
+
+%So instead you just get a badge that does all this stuff
+%In an earlier version, all chapter bosses were tested to be barely possible with perfect item management (but not final bowser)
+
+%Later development: I added a new badge that does 1.5x stats, named this one Super Curse, the old double stat badge is now called Ultra Curse
+
+
+
+%only used first byte
+#export:Data $CurseFlags
+{
+00000000
+}
+
+%#export $CurseFlags
+
+
+%hp vals
+%double them
+
+@Hook 193DE8
+{
+PUSH	T0, T1, T2
+COPY	A0, V0
+JAL		$CurseMultiply
+NOP
+.nosuper
+SH 		V0, 1B8 (S1)
+SH 		V0, 1BA (S1)
+POP		T0, T1, T2
+J	80265510
+NOP
+}
+
+% @Hook 193DE8
+% PUSH	T0, T1
+% ADDI	T0, R0, 3 %number to multiply by
+% MULT	V0, T0
+% NOP		%lets wait for multiplication
+% NOP		
+% MFLO	V0
+% SH 		V0, 1B8 (S1)
+% SH 		V0, 1BA (S1)
+% POP		T0, T1
+% J	80265510
+% NOP
+
+
+%atk vals
+%a flat 2x
+%applies before all defense
+
+%originals
+%LH	S0, 17E (S4) %load in the damage val
+%ADDIU	V0, R0, 100
+
+@Hook 1A6134 %80277854
+{
+LH	S0, 17E (S4) %load in the damage val
+PUSH	T0, T1, T2, V0, A0
+COPY	A0, S0
+JAL		$CurseMultiply
+NOP
+COPY	S0, V0
+%if it has flag 20000 then do special stuff
+%but has to target partner also
+LW		T0, 188 (S4)
+LUI		T1, 0002
+AND		T0, T0, T1
+BEQ		T0, R0, .noforce
+NOP
+LAW		T0, 800DC14C
+BNE		T0, S3, .noforce
+NOP
+JAL		$GetDefenseOfActor2
+NOP
+ADD		S0, S0, V0
+.noforce
+.end
+POP		T0, T1, T2, V0, A0
+J 8027785C 
+ADDIU	V0, R0, 100 %hooked over
+}
+
+%	alternative: this would make high damage attacks slightly weaker
+%	only the first 10 damage is doubled
+%	so 15 damage would become 25 instead of 30
+% @Hook 1A6134 %80277854
+% PUSH	T0, T1
+% LH		S0, 17E (S4) %load in the damage val
+% SUBI	T0, S0, A
+% BGE		T0, R0, .storedamage 	%x + 10
+% ADDI 	T1, S0, A
+% ADD		T1, S0, S0 				%2x
+% .storedamage
+% ADD		S0, T1, R0
+% POP		T0, T1
+% J 8027785C 
+% ADDIU	V0, R0, 100 %hooked over
+
+
+%Change the color of health bars and health numbers in curse modes
+%To make it look cooler
+
+%Normal colors
+%	Yellow bar
+%	Red empty bar
+%	White numbers
+
+%Super curse colors
+%	Red bar
+%	Black or very dark blue empty bar
+%	Red / pink numbers
+
+%Ultra curse colors
+%	Gold bar
+%	Gray empty bar
+%	Yellow numbers
+
+%Mega curse colors
+%	Cyan bar
+%	White / gray empty bar
+%	Cyan numbers
+
+
+
+
+/%
+Normal	full bar
+#new:IntTable $IntTable_8028A940
+{
+	7BDEA801 8BC1F801 3991F7BD 00010001 00010001 0001DCC1 E501F5C1 FE41E739
+}
+7BDE A801 8BC1 F801 3991 F7BD 0001 0001 0001 0001 0001 DCC1 E501 F5C1 FE41 E739
+01111 01111 01111 0 = 15,15,15,0
+10101 00000 00000 1 = 21,0,0,1
+10001 01111 00000 1 = 17,15,0,1
+11111 00000 00000 1 = 31,0,0,1
+00111 00110 01000 1 = 7,6,8,1
+11110 11110 11110 1 = 30,30,30,1
+00000 00000 00000 1 = 0,0,0,1
+00000 00000 00000 1 = 0,0,0,1
+00000 00000 00000 1 = 0,0,0,1
+00000 00000 00000 1 = 0,0,0,1
+00000 00000 00000 1 = 0,0,0,1
+11011 10011 00000 1 = 27,19,0,1
+11100 10100 00000 1 = 28,20,0,1
+11110 10111 00000 1 = 30,23,0,1
+11111 11001 00000 1 = 31,25,0,1
+11100 11100 11100 1 = 28,28,28,1
+
+%Red bar
+01111 01111 01111 0 = 15,15,15,0
+10101 00000 00000 1 = 21,0,0,1
+10001 00000 00000 1 = 17,0,0,1		=	8801
+11111 00000 00000 1 = 31,0,0,1		=	F801
+00111 00000 01000 1 = 7,0,0,1		=	3811
+11110 11110 11110 1 = 30,30,30,1
+00000 00000 00000 1 = 0,0,0,1
+00000 00000 00000 1 = 0,0,0,1
+00000 00000 00000 1 = 0,0,0,1
+00000 00000 00000 1 = 0,0,0,1
+00000 00000 00000 1 = 0,0,0,1
+11011 00000 00000 1 = 27,0,0,1		=	D801
+11100 00000 00000 1 = 28,0,0,1		=	E001
+11110 00000 00000 1 = 30,0,0,1		=	F001
+11111 00000 00000 1 = 31,0,0,1		=	F801
+11100 11100 11100 1 = 28,28,28,1
+
+%Gold bar
+01111 01111 01111 0 = 15,15,15,0
+10101 00000 00000 1 = 21,0,0,1
+10001 01111 01000 1 = 17,15,8,1		=	8BD1
+11111 00000 00000 1 = 31,0,0,1	
+00111 00110 01000 1 = 7,6,8,1		
+11110 11110 11110 1 = 30,30,30,1
+00000 00000 00000 1 = 0,0,0,1
+00000 00000 00000 1 = 0,0,0,1
+00000 00000 00000 1 = 0,0,0,1
+00000 00000 00000 1 = 0,0,0,1
+00000 00000 00000 1 = 0,0,0,1
+11011 10011 01010 1 = 27,19,10,1	=	DCD5
+11100 10100 01010 1 = 28,20,10,1	=	E515
+11110 10111 01100 1 = 30,23,12,1	=	F5D9
+11111 11001 01101 1 = 31,25,13,1	=	FE5B
+11100 11100 11100 1 = 28,28,28,1
+
+%Cyan bar
+01111 01111 01111 0 = 15,15,15,0
+10101 00000 00000 1 = 21,0,0,1
+00000 10001 10001 1 = 0,17,17,1		=	0463
+00000 11111 11111 1 = 0,31,31,1		=	07FF
+00000 00111 00111 1 = 0,7,7,1		=	01CF
+11110 11110 11110 1 = 30,30,30,1
+00000 00000 00000 1 = 0,0,0,1
+00000 00000 00000 1 = 0,0,0,1
+00000 00000 00000 1 = 0,0,0,1
+00000 00000 00000 1 = 0,0,0,1
+00000 00000 00000 1 = 0,0,0,1
+00000 11011 11011 1 = 0,27,27,1		=	06F7
+00000 11100 11100 1 = 0,28,28,1		=	0739
+00000 11110 11110 1 = 0,30,30,1		=	07BD
+00000 11111 11111 1 = 0,31,31,1		=	07FF
+11100 11100 11100 1 = 28,28,28,1
+
+
+
+% 0016CA10 --> 8023E130
+
+  164:  LA        A0, $HudElementScript_80291F80
+%/
+
+#new:Data $Data_RedBar
+{
+	7BDEA801 8801F801 3801F7BD 00010001 00010001 0001D801 E001F001 F801E739
+}
+
+#new:Data $Data_GoldBar
+{
+	7BDEA801 8BD1F801 3991F7BD 00010001 00010001 0001DCD5 E515F5D9 FE5BE739
+}
+
+#new:Data $Data_CyanBar
+{
+	7BDEA801 046307FF 01CFF7BD 00010001 00010001 000106F7 073907BD 07FFE739
+}
+
+%4.5 = lime and dark green
+%6 = pink and purple
+%9 = white and black
+
+#new:Data $Data_LimeBar
+{
+	7bde0541 044107c1 01c1f7bd 00010001 00010001 000106c1 07010781 07c1e739
+}
+
+/%
+Color: 7BDE 15, 15, 15, 0
+Color: A801 21, 0, 0, 1  
+Color: 8801 17, 0, 0, 1  
+Color: F801 31, 0, 0, 1  
+Color: 3801 7, 0, 0, 1   
+Color: F7BD 30, 30, 30, 1
+Color: 0001 0, 0, 0, 1   
+Color: 0001 0, 0, 0, 1   
+Color: 0001 0, 0, 0, 1   
+Color: 0001 0, 0, 0, 1   
+Color: 0001 0, 0, 0, 1   
+Color: D801 27, 0, 0, 1  
+Color: E001 28, 0, 0, 1  
+Color: F001 30, 0, 0, 1  
+Color: F801 31, 0, 0, 1  
+Color: E739 28, 28, 28, 1
+%/
+
+#new:Data $Data_MagentaBar
+{
+	%7bdea82b 8823f83f 380ff7bd 00010001 00010001 0001d837 e039f03d f83fe739
+	 7BDEA82B 8823F83F 380FF7BD 00010001 00010001 0001D837 E039F03D F83FE739
+}
+
+#new:Data $Data_WhiteBar
+{
+	7bdeffff e739ffff 8421f7bd 00010001 00010001 0001ffff ffffffff ffffe739
+}
+
+
+#new:Data $Data_BarPalettes
+{
+	$Data_RedBar $Data_GoldBar $Data_CyanBar $Data_LimeBar $Data_MagentaBar $Data_WhiteBar
+}
+
+
+
+%The easy way to do this is to just change the palette pointer directly
+%80291F80 + 1C
+
+%Also set all the number palettes too
+
+@Hook 16CB74
+{
+	PUSH	A0, S0, S1, S2, S3, RA
+	JAL		$GetCurseState
+	NOP
+	BEQ		V0, R0, .end
+	NOP
+	%get stuff
+	SLL		V0, V0, 2
+	LI		S2, $Data_BarPalettes
+	LI		S3, $Data_NumberPalettes
+	ADD		S2, S2, V0
+	ADD		S3, S3, V0
+	ADDI	S2, S2, FFFC
+	ADDI	S3, S3, FFFC
+	LW		S2, 0 (S2)
+	LW		S3, 0 (S3)
+	/%
+	.redbar
+	LI 		S2, $Data_RedBar
+	LI 		S3, $Data_RedNumberPalette
+	BEQ		R0, R0, .place
+	NOP
+	.yellowbar
+	LI 		S2, $Data_GoldBar
+	LI 		S3, $Data_GoldNumberPalette
+	BEQ		R0, R0, .place
+	NOP
+	.cyanbar
+	LI 		S2, $Data_CyanBar	
+	LI 		S3, $Data_CyanNumberPalette
+	%/
+	.place
+	SAW		S2, 80291F9C	%Bar palette
+	%number palettes
+	SAW		S3, 80291FC4
+	SAW		S3, 80291FEC
+	SAW		S3, 80292014
+	SAW		S3, 8029203C
+	SAW		S3, 80292064
+	SAW		S3, 8029208C
+	SAW		S3, 802920B4
+	SAW		S3, 802920DC
+	SAW		S3, 80292104
+	SAW		S3, 8029212C
+	.end	
+	POP		A0, S0, S1, S2, S3, RA
+	LA      A0, 80291F80	%$HudElementScript_80291F80
+	J		8023E29C
+	RESERVED
+}
+
+
+
+/%
+Red bar colors
+% 0016E880 --> 8023FFA0
+
+  398:  LI        A0, FF					%Red
+  39C:  CLEAR     A1						%Green
+  3A0:  COPY      A2, A1					%Blue
+  3A4:  LHU       V0, 2 (S6)
+  3A8:  COPY      A3, A0					%Alpha
+  
+%/
+@Hook 16EC18
+{
+	PUSH	S0, S1, S2, RA
+	JAL		$GetCurseState
+	NOP
+	%Use a table
+	LI		S0, $Data_EmptyBarA
+	SLL		V0, V0, 2
+	ADD		S0, S0, V0
+	LB		A0, 0 (S0)
+	LB		A1, 1 (S0)
+	LB		A2, 2 (S0)
+	LB		A3, 3 (S0)
+	/%
+	LI		S0, 1
+	BEQ		V0, S0, .redbar
+	LI		S0, 2
+	BEQ		V0, S0, .yellowbar
+	LI		S0, 3
+	BEQ		V0, S0, .cyanbar
+	NOP
+	BEQ		R0, R0, .none
+	NOP
+	.redbar
+	LI        A0, 0A		%Red
+	LI		  A1, 0A		%Green
+	LI		  A2, 40		%Blue
+	LI		  A3, FF		%Alpha
+	BEQ		R0, R0, .end
+	NOP
+	.yellowbar
+	LI        A0, A0		%Red
+	LI		  A1, A0		%Green
+	LI		  A2, B8		%Blue
+	LI		  A3, FF		%Alpha
+	BEQ		R0, R0, .end
+	NOP
+	.cyanbar
+	LI        A0, D0		%Red
+	LI		  A1, D0		%Green
+	LI		  A2, D0		%Blue
+	LI		  A3, FF		%Alpha
+	BEQ		R0, R0, .end
+	NOP
+	.none
+	LI        A0, FF		%Red
+	LI		  A1, 00		%Green
+	LI		  A2, 00		%Blue
+	LI		  A3, FF		%Alpha
+	.end
+	%/
+	POP		S0, S1, S2, RA
+	J		8024034C
+	LHU       V0, 2 (S6)
+}
+
+%Also
+/%
+% 0016E880 --> 8023FFA0
+
+  344:  LI        A0, A8
+  348:  CLEAR     A1
+  34C:  COPY      A2, A1
+  350:  LI        A3, FF
+%/
+
+@Hook 16EBC4
+{
+	PUSH	S0, S1, S2, RA
+	JAL		$GetCurseState
+	NOP
+	%Use a table
+	LI		S0, $Data_EmptyBarB
+	SLL		V0, V0, 2
+	ADD		S0, S0, V0
+	LB		A0, 0 (S0)
+	LB		A1, 1 (S0)
+	LB		A2, 2 (S0)
+	LB		A3, 3 (S0)
+	/%
+	LI		S0, 1
+	BEQ		V0, S0, .redbar
+	LI		S0, 2
+	BEQ		V0, S0, .yellowbar
+	LI		S0, 3
+	BEQ		V0, S0, .cyanbar
+	NOP
+	BEQ		R0, R0, .none
+	NOP
+	.redbar
+	LI        A0, 00		%Red
+	LI		  A1, 00		%Green
+	LI		  A2, 20		%Blue
+	LI		  A3, FF		%Alpha
+	BEQ		R0, R0, .end
+	NOP
+	.yellowbar
+	LI        A0, 80		%Red
+	LI		  A1, 80		%Green
+	LI		  A2, 98		%Blue
+	LI		  A3, FF		%Alpha
+	BEQ		R0, R0, .end
+	NOP
+	.cyanbar
+	LI        A0, B0		%Red
+	LI		  A1, B0		%Green
+	LI		  A2, B0		%Blue
+	LI		  A3, FF		%Alpha
+	BEQ		R0, R0, .end
+	NOP
+	.none
+	LI        A0, A8		%Red
+	LI		  A1, 00		%Green
+	LI		  A2, 00		%Blue
+	LI		  A3, FF		%Alpha
+	.end
+	%/
+	POP		S0, S1, S2, RA	
+	J	 	802402F4
+	NOP
+}
+
+%none is first
+#new:Data $Data_EmptyBarA
+{
+	FF0000FF 0A0A40FF A0A0B8FF D0D0D0FF 00A000FF 400080FF 121212FF
+}
+
+#new:Data $Data_EmptyBarB
+{
+	A80000FF 000020FF 808098FF B0B0B0FF 008000FF 300060FF 000000FF
+}
+
+
+/%
+Battle number palettes
+
+Originals
+
+
+#new:IntTable $IntTable_8028A980
+{
+	7BDE314F 399139D3 00010001 00010001 00010001 00010001 0001FFFF EFBDE77B
+}
+
+7BDE = 01111 01111 01111 0 = 15,15,15,0
+314F = 00110 00101 00111 1 = 6,5,7,1
+3991 = 00111 00110 01000 1 = 7,6,8,1
+39D3 = 00111 00111 01001 1 = 7,7,9,1
+0001
+0001 
+0001
+0001 
+0001
+0001 
+0001
+0001 
+0001
+FFFF = 11111 11111 11111 1 = 31,31,31,1
+EFBD = 11101 11110 11110 1 = 29,30,30,1
+E77B = 11100 11101 11101 1 = 28,29,29,1
+
+
+%red
+7BDE = 01111 01111 01111 0 = 15,15,15,0 
+314F = 00110 00100 00100 1 = 6,4,4,1 = 3109
+3991 = 00111 00100 00100 1 = 7,4,4,1 = 3909
+39D3 = 00111 00100 00101 1 = 7,4,5,1 = 390B
+0001
+0001 
+0001
+0001 
+0001
+0001 
+0001
+0001 
+0001
+FFFF = 11111 10100 10100 1 = 31,20,20,1 = FD29
+EFBD = 11101 10100 10100 1 = 29,20,20,1 = ED29
+E77B = 11100 10100 10100 1 = 28,20,20,1 = E529
+
+
+%yellow
+7BDE = 01111 01111 01111 0 = 15,15,15,0 
+314F = 00110 00110 00100 1 = 6,6,4,1 = 3189
+3991 = 00111 00111 00100 1 = 7,7,4,1 = 39C9
+39D3 = 00111 00111 00101 1 = 7,7,5,1 = 39CD
+0001
+0001 
+0001
+0001 
+0001
+0001 
+0001
+0001 
+0001
+FFFF = 11111 11111 10100 1 = 31,31,20,1 = FFE9
+EFBD = 11101 11101 10100 1 = 29,29,20,1 = EF69
+E77B = 11100 11100 10100 1 = 28,28,20,1 = E729
+
+%cyan
+7BDE = 01111 01111 01111 0 = 15,15,15,0 
+314F = 00100 00110 00110 1 = 4,6,6,1 = 218D
+3991 = 00100 00111 00111 1 = 4,7,7,1 = 21CF
+39D3 = 00101 00111 00111 1 = 5,7,7,1 = 29CF
+0001
+0001 
+0001
+0001 
+0001
+0001 
+0001
+0001 
+0001
+FFFF = 10100 11111 11111 1 = 20,31,31,1 = A7FF
+EFBD = 10100 11101 11101 1 = 20,29,29,1 = A77B
+E77B = 10100 11100 11100 1 = 20,28,28,1 = A739
+
+
+00FF0000 0FFF3000 02EE2000 00EE2000 00DD2000 00DD1000 00011000 00000000
+
+
+Places to overwrite
+$HudElementScript_80291FA8
+$HudElementScript_80291FD0
+$HudElementScript_80291FF8
+$HudElementScript_80292020
+$HudElementScript_80292048
+$HudElementScript_80292070
+$HudElementScript_80292098
+$HudElementScript_802920C0
+$HudElementScript_802920E8
+$HudElementScript_80292110
+
+%/
+
+#new:Data $Data_RedNumberPalette
+{
+	7BDE3109 3909390B 00010001 00010001 00010001 00010001 0001FD29 ED29E529
+}
+
+#new:Data $Data_GoldNumberPalette
+{
+	7BDE3189 39C939CD 00010001 00010001 00010001 00010001 0001FFE9 EF69E729
+}
+
+#new:Data $Data_CyanNumberPalette
+{
+	7BDE218D 21CF29CF 00010001 00010001 00010001 00010001 0001A7FF A77BA739
+}
+
+
+/%
+Color: 7BDE 15, 15, 15, 0
+Color: 218D 4, 6, 6, 1
+Color: 21CF 4, 7, 7, 1
+Color: 29CF 5, 7, 7, 1
+Color: 0001 0, 0, 0, 1
+Color: 0001 0, 0, 0, 1
+Color: 0001 0, 0, 0, 1
+Color: 0001 0, 0, 0, 1
+Color: 0001 0, 0, 0, 1
+Color: 0001 0, 0, 0, 1
+Color: 0001 0, 0, 0, 1
+Color: 0001 0, 0, 0, 1
+Color: 0001 0, 0, 0, 1
+Color: A7FF 20, 31, 31, 1
+Color: A77B 20, 29, 29, 1
+Color: A739 20, 28, 28, 1
+%/
+
+#new:Data $Data_GreenNumberPalette
+{
+	%7bde2189 21c929cb 00010001 00010001 00010001 00010001 0001a7e9 a769a729
+	7BDE2189 21C929CB 00010001 00010001 00010001 00010001 0001A7E9 A769A729
+}
+
+#new:Data $Data_PinkNumberPalette
+{
+	7bde310d 390f394f 00010001 00010001 00010001 00010001 0001fd3f ed3be539
+}
+
+#new:Data $Data_WhiteNumberPalette
+{
+	7bdece73 ce73ce73 00010001 00010001 00010001 00010001 00010001 00010001
+}
+
+#new:Data $Data_NumberPalettes
+{
+	$Data_RedNumberPalette $Data_GoldNumberPalette $Data_CyanNumberPalette $Data_GreenNumberPalette $Data_PinkNumberPalette $Data_WhiteNumberPalette
+}

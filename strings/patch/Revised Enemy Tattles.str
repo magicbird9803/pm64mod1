@@ -1,0 +1,4747 @@
+#message:1C:000
+{
+[STYLE:Right]This is a Goomba.[BR]
+[Wait][NEXT]Goombas are what you'd call[BR]
+"small fries." Actually, they're[BR]
+pretty much the smallest fries.[BR]
+[PAUSE:14]...Hey, wait! I'm one of 'em![BR]
+[Wait][NEXT]You can jump on them or whack[BR]
+'em with the Hammer.[BR]
+[Wait][NEXT]These guys are old school.[BR]
+They've been around since you[BR]
+were in Super Mario Bros.![Wait][END]
+}
+
+#message:1C:001
+{
+[STYLE:Right]This is a Spiked Goomba.[BR]
+[PAUSE:0A]Spiked Goombas are Goombas[BR]
+with spikes on their heads.[BR]
+[Wait][NEXT]Whatever you do, don't jump on[BR]
+their spikes or you'll get [BR]
+hurt or even paralyzed![Wait][END]
+}
+
+#message:1C:002
+{
+[STYLE:Right]This is a Paragoomba.[BR]
+[PAUSE:0A]Obviously, Paragoombas are[BR]
+Goombas with wings.[BR]
+[Wait][NEXT]You can't hit 'em with the[BR]
+Hammer while they're airborne.[BR]
+[Wait][NEXT]If you damage 'em, they'll fall[BR]
+to the ground and become [BR]
+ordinary Goombas.[Wait][END]
+}
+
+#message:1C:003
+{
+[STYLE:Right]This is Red Goomba.[BR]
+[PAUSE:0A]He's the older of the two[BR]
+notorious Goomba Bros.[BR]
+[Wait][NEXT]The Goomba King ordered him[BR]
+to try to stop you.[BR]
+[Wait][NEXT]You can take this guy, no prob.[BR]
+He has just a little more HP[BR]
+than an ordinary Goomba.[Wait][END]
+}
+
+#message:1C:004
+{
+[STYLE:Right]This is Blue Goomba.[BR]
+[PAUSE:0A]He's the younger of the two[BR]
+notorious Goomba Bros.[BR]
+[Wait][NEXT]As you heard in his little speech,[BR]
+he's one of the Goomba King's[BR]
+men.[BR]
+[Wait][NEXT]His attack is weaker than his[BR]
+brother's, but it hits twice.[Wait][END]
+}
+
+#message:1C:005
+{
+[STYLE:Right]This is the Goomba King.[BR]
+[PAUSE:0A]He's really big. I mean, look[BR]
+at him! He looks really powerful.[BR]
+[Wait][NEXT]He's the boss of Red Goomba[BR]
+and Blue Goomba.[BR]
+[PAUSE:0A]Who cares if he's strong?[BR]
+You're much stronger.[BR]
+[Wait][NEXT]He kicks three times as his[BR]
+attack, but if you guard them,[BR]
+you'll be fine.[BR]
+[Wait][NEXT]Gee, I wonder what he ate[BR]
+to become so big?[BR]
+[PAUSE:0A]I'd like to be a bit bigger, too.[Wait][END]
+}
+
+#message:1C:006
+{
+[STYLE:Right]This is a Goomnut Tree.[BR]
+[PAUSE:0A]Spiky Goomnuts will fall down[BR]
+if you hit this tree.[BR]
+[Wait][NEXT]They'll definitely hurt if they[BR]
+hit us, but it may be worth it [BR]
+to use them against the enemy.[Wait][END]
+}
+
+#message:1C:007
+{
+[STYLE:Right]This is a Koopa Troopa.[BR]
+[PAUSE:0A]Everybody knows Koopa Troopas.[BR]
+They're Bowser's followers.[BR]
+Their shells are hard.[BR]
+[Wait][NEXT]If you can flip 'em over,[BR]
+their defense power will fall[BR]
+to 0 and it will become much[BR]
+easier for you to defeat 'em.[BR]
+[Wait][NEXT]You can flip 'em with a POW[BR]
+Block or a Jump attack. [Wait][END]
+}
+
+#message:1C:008
+{
+[STYLE:Right]This is a Paratroopa.[BR]
+[PAUSE:0A]No surprise here--Paratroopas[BR]
+are Koopa Troopas with wings.[BR]
+[Wait][NEXT]When you jump on 'em or use a[BR]
+POW Block, their wings fall[BR]
+off and they become normal[BR]
+Koopa Troopas.[BR]
+[Wait][NEXT]It's easy to beat 'em once[BR]
+they're normal Koopa Troopas.[BR]
+[PAUSE:0A]Give 'em another Jump attack![BR]
+[Wait][NEXT]They think they're pretty cool[BR]
+because they wear sunglasses,[BR]
+but they're not that tough.[Wait][END]
+}
+
+#message:1C:009
+{
+[STYLE:Right]This is a Fuzzy.[BR]
+[PAUSE:0A]Why do Fuzzies always jump[BR]
+up and down? They need to[BR]
+chill out![BR]
+[Wait][NEXT]The problem with Fuzzies is their[BR]
+quickness. It's really tough to[BR]
+time their attacks.[BR]
+[Wait][NEXT]If they latch on to you, watch[BR]
+out! They'll absorb your HP.[Wait][END]
+}
+
+#message:1C:00A
+{
+[STYLE:Right]This is a Bob-omb.[BR]
+[Wait][NEXT]Bob-ombs are pretty[BR]
+temperamental, [BR]
+[PAUSE:0A]and they get steaming mad[BR]
+when you attack 'em.[BR]
+[Wait][NEXT]However, they can occasionally[BR]
+ignite themselves at the end[BR]
+of their turn.[BR]
+[Wait][NEXT]You'd better not jump on 'em[BR]
+when they're angry or they'll[BR]
+blow up in your face.[BR]
+[PAUSE:0A]In fact, stay away entirely.[BR]
+[Wait][NEXT]Attack 'em from a distance with[BR]
+items like Hammers.[BR]
+[PAUSE:0A]Or you could send in other[BR]
+things, like shells.[BR]
+[Wait][NEXT]If they attack when angry,[BR]
+they'll charge in and explode.[BR]
+[PAUSE:0A]So you'd better take care of [BR]
+them before they blow![Wait][END]
+}
+
+#message:1C:00B
+{
+[STYLE:Right]This is a Bullet Bill, [BR]
+a kamikaze attacker.[BR]
+[Wait][NEXT]If you don't beat Bullet Bills[BR]
+quickly, they'll slam into you[BR]
+and explode.[BR]
+[Wait][NEXT]I'm serious, Mario. These guys[BR]
+will really make us pay if they[BR]
+manage to hit us![BR]
+[Wait][NEXT]We have to beat 'em before they[BR]
+get the chance to strike us.[Wait][END]
+}
+
+#message:1C:00C
+{
+[STYLE:Right]This is a Bill Blaster.[BR]
+[PAUSE:0A]Bill Blasters are the cannons[BR]
+that shoot out Bullet Bills.[BR]
+[Wait][NEXT]They won't attack us directly,[BR]
+but they'll keep shooting out[BR]
+Bullet Bills as long as they can.[BR]
+[Wait][NEXT]It's efficient to attack 'em[BR]
+all at once, but you can also [BR]
+beat 'em one at a time.[Wait][END]
+}
+
+#message:1C:00D
+{
+[STYLE:Right]Bowser...?[BR]
+[PAUSE:0A]But he looks kind of...lame. [BR]
+[PAUSE:0A]I mean, he's lame anyway, but...[BR]
+[Wait][NEXT]Does Bowser really look like this?[BR]
+[PAUSE:0A]I always imagined him looking,[BR]
+well, a lot scarier.[Wait][END]
+}
+
+#message:1C:00E
+{
+[STYLE:Right]This is Red Ninjakoopa.[BR]
+[PAUSE:0A]He's the Koopa Bros. leader.[BR]
+[Wait][NEXT]Unlike the others, he can attack[BR]
+twice in a row when he's not[BR]
+in the tower.[BR]
+[Wait][NEXT]He has a little bit of defense[BR]
+power, but you can flip him[BR]
+over by jumping on him, just[BR]
+like a normal Koopa Troopa.[BR]
+[Wait][NEXT]He's immune to fire, so[BR]
+Fire Flowers won't work on[BR]
+him.[Wait][END]
+}
+
+#message:1C:00F
+{
+[STYLE:Right]This is Black Ninjakoopa.[BR]
+[PAUSE:0A]Black is pretty fashionable...[BR]
+[Wait][NEXT]He has some defense[BR]
+power, but you can flip him[BR]
+over by jumping on him, just[BR]
+like a normal Koopa Troopa.[BR]
+[Wait][NEXT]He has more defense than[BR]
+the others, so you should[BR]
+use your Hammer on him after[BR]
+flipping him.[BR]
+[Wait][NEXT]Let's flip him over quick![BR]
+Otherwise, the Bros. may form[BR]
+a tower and do their famous[BR]
+spinning attack![Wait][END]
+}
+
+#message:1C:010
+{
+[STYLE:Right]This is Yellow Ninjakoopa.[BR]
+[Wait][NEXT]Yellow reminds me of curry.[BR]
+Isn't that a weird thing to[BR]
+think of in the middle of[BR]
+a battle?[BR]
+[Wait][NEXT]He has a little bit of defense[BR]
+power, but you can flip him[BR]
+over by jumping on him, just[BR]
+like a normal Koopa Troopa.[BR]
+[Wait][NEXT]However, he electrified himself,[BR]
+so you'll get hurt if you jump[BR]
+on him.[Wait][END]
+}
+
+#message:1C:011
+{
+[STYLE:Right]This is Green Ninjakoopa.[BR]
+[PAUSE:0A]He looks exactly the same as a[BR]
+normal Koopa Troopa.[BR]
+[Wait][NEXT]He has a little bit of defense[BR]
+power, but you can turn him[BR]
+over by jumping on him, just[BR]
+like a normal Koopa Troopa.[BR]
+[Wait][NEXT]However, he won't stay down[BR]
+for as long, so you should[BR]
+focus fire on him first.[Wait][END]
+}
+
+#message:1C:012
+{
+[STYLE:Right]The Koopa Bros. have formed[BR]
+a tall Koopa tower![BR]
+[Wait][NEXT]I'm not sure about this...[BR]
+[Wait][NEXT]They do a spinning attack[BR]
+with the whole gang piled[BR]
+high atop one another.[BR]
+[Wait][NEXT]Hit 'em with a Hammer or[BR]
+something to make 'em unstable.[BR]
+After that, any attack should [BR]
+knock 'em down.[BR]
+[Wait][NEXT]If you use an explosion, you[BR]
+can make 'em fall down at once.[BR]
+[Wait][NEXT]If you flip 'em over, the battle[BR]
+will nearly be ours![BR]
+[PAUSE:0A]Beat 'em one by one![Wait][END]
+}
+
+#message:1C:013
+{
+[STYLE:Right]What was his name? Jr. Troopa?[BR]
+I don't remember exactly...[BR]
+[PAUSE:0F]...Just joking, kid![BR]
+[Wait][NEXT]He looks so adorable hiding in[BR]
+his egg, doesn't he? So cute![BR]
+[Wait][NEXT]It should be a snap to[BR]
+beat him now.[BR]
+[PAUSE:0A]...I think.[Wait][END]
+}
+
+#message:1C:014
+{
+[STYLE:Right]This is a Monty Mole.[BR]
+[PAUSE:0A]Monty Moles are rock-throwing[BR]
+moles, big time mischief-makers.[BR]
+[Wait][NEXT]Usually, they throw fast-moving[BR]
+rocks, but sometimes they throw[BR]
+them more slowly to throw you off.[BR]
+[Wait][NEXT]Maybe they wear sunglasses[BR]
+because they have really[BR]
+sensitive eyes.[BR]
+[PAUSE:0A]Or maybe they're just hip.[Wait][END]
+}
+
+#message:1C:015
+{
+[STYLE:Right]This is a Cleft.[BR]
+[PAUSE:0A]Clefts are pretty strong, so[BR]
+you'd better be careful.[BR]
+[Wait][NEXT]Their specialty is pretending[BR]
+to be rocks, so watch your step[BR]
+on the mountain.[BR]
+[Wait][NEXT]You'll get hurt if you jump[BR]
+on the spikes on their heads.[Wait][END]
+}
+
+#message:1C:016
+{
+[STYLE:Right]This is Pokey, an evil cactus.[BR]
+[PAUSE:0A]Pokeys attack by throwing parts[BR]
+of their bodies or by coming up[BR]
+close and falling on you.[BR]
+[Wait][NEXT]Be careful fighting them![BR]
+It'll hurt if you jump on their[BR]
+spiky heads![BR]
+[Wait][NEXT]They will slowly regenerate over[BR]
+time.[BR]
+[Wait][NEXT]They also have an annoying habit[BR]
+of calling in reinforcements.[BR]
+[PAUSE:0A]Let's beat 'em quickly![Wait][END]
+}
+
+#message:1C:017
+{
+[STYLE:Right]This is a Bandit.[BR]
+[PAUSE:0A]Bandits bump into you hard[BR]
+and shake up your pockets.[BR]
+They can steal up to 10 coins. [BR]
+[Wait][NEXT]They'll slyly approach and then[BR]
+slam into you all of a sudden.[BR]
+[Wait][NEXT]If you can damage them in[BR]
+an attack, you can get your[BR]
+stolen coins back.[BR]
+[Wait][NEXT]Let's beat 'em before they[BR]
+can make off with our loot![Wait][END]
+}
+
+#message:1C:018
+{
+[STYLE:Right]This is a Pokey Mummy.[BR]
+[Wait][NEXT]Pokey Mummies are Pokeys[BR]
+that dried out and became[BR]
+mummies then went to live[BR]
+in the ruins. [BR]
+[Wait][NEXT]Careful! They have spikes on[BR]
+their heads![BR]
+[PAUSE:0A]Trust me--it'll hurt if you[BR]
+jump on 'em.[BR]
+[Wait][NEXT]The mummification also made[BR]
+'em poisonous. If you get[BR]
+poisoned when they attack you,[BR]
+you'll take damage for a while.[BR]
+[Wait][NEXT]Like regular Pokeys, they will[BR]
+regenerate over time.[BR]
+[Wait][NEXT]For some reason, they can[BR]
+hit twice as fast as normal[BR]
+Pokeys.[BR]
+[Wait][NEXT]What do you say we beat 'em[BR]
+before they can poison us?[Wait][END]
+}
+
+#message:1C:019
+{
+[STYLE:Right]This is a Buzzy Beetle.[BR]
+[PAUSE:0A]Buzzy Beetles are cute--[BR]
+but mean.[BR]
+[Wait][NEXT]Fire attacks don't work very[BR]
+well against these hardheads.[BR]
+[Wait][NEXT]If you can flip 'em, though,[BR]
+their defense power falls to 0.[BR]
+[PAUSE:0A]However, you can't flip them[BR]
+unless you deal damage to them.[BR]
+[Wait][NEXT]I heard that they used to[BR]
+flourish all over the place, but[BR]
+now they're only found in dark,[BR]
+shadowy places.[Wait][END]
+}
+
+#message:1C:01A
+{
+[STYLE:Right]This is a Swooper, a ghost bat.[BR]
+[PAUSE:0A]If they hit you, theres a[BR]
+high chance you'll be poisoned.[BR]
+[Wait][NEXT]Even Jump attacks can't reach[BR]
+'em when they're hanging on[BR]
+the ceiling, but earth tremors[BR]
+will knock 'em loose.[BR]
+[Wait][NEXT]Parakarry can also knock 'em[BR]
+loose with one of his moves.[BR]
+[Wait][NEXT]You can attack 'em however[BR]
+you choose once they're[BR]
+hovering in the air.[Wait][END]
+}
+
+#message:1C:01B
+{
+[STYLE:Right]This is Buzzar.[BR]
+[PAUSE:0A]He guards Mt. Rugged.[BR]
+[PAUSE:0A]Wow! That's one big bird![BR]
+[Wait][NEXT]If you get caught in the[BR]
+clutches of his sharp claws,[BR]
+you'll take a lot of damage.[BR]
+Try to wriggle out of his grip.[BR]
+[Wait][NEXT]His special attack is flapping[BR]
+his wings to create wind.[BR]
+This attack damages your[BR]
+party members, too.[BR]
+[Wait][NEXT]But he was hatching eggs,[BR]
+wasn't he? Is it possible[BR]
+that he's really a she?[BR]
+[PAUSE:0A]I wonder...[Wait][END]
+}
+
+#message:1C:01C
+{
+[STYLE:Right]This is Tutankoopa.[BR]
+[PAUSE:0A]He's one of Bowser's followers[BR]
+and he's been assigned to guard[BR]
+one of the Star Spirits.[BR]
+[Wait][NEXT]I've heard that he has sort[BR]
+of a pharaoh complex.[BR]
+[Wait][NEXT]He attacks by throwing shells[BR]
+from that high perch.[BR]
+[Wait][NEXT]Try to dodge when he uses[BR]
+magic, it can put you to[BR]
+sleep if you're not careful.[BR]
+[Wait][NEXT]That might not be the only[BR]
+magic he has, though...[BR]
+[Wait][NEXT]He also summons Chomps,[BR]
+his loyal subjects.[BR]
+[PAUSE:0A]Those Chomps have some serious[BR]
+attack power.[BR]
+[Wait][NEXT]Think hard about who to attack [BR]
+first, Tutankoopa or Chomp.[Wait][END]
+}
+
+#message:1C:01D
+{
+[STYLE:Right]It's a Chomp.[BR]
+[PAUSE:0A]You've heard about Chomps[BR]
+before, I'm sure.[BR]
+[Wait][NEXT]They're made of such hard[BR]
+stuff that most of your[BR]
+attacks won't even faze them.[BR]
+[Wait][NEXT]I heard a rumor that the[BR]
+Chomps are a little peeved at[BR]
+Tutankoopa because he works[BR]
+them so hard.[Wait][END]
+}
+
+#message:1C:01E
+{
+[STYLE:Right]This is a Stone Chomp, who[BR]
+guards the treasure in this[BR]
+room.[BR]
+[PAUSE:0A]He's made of stone. Duh![BR]
+[Wait][NEXT]Sometimes they will fake you[BR]
+out. You'll need quick reflexes[BR]
+to block them.[BR]
+[Wait][NEXT]His jaws can supposedly crush[BR]
+a Coconut.[BR]
+[PAUSE:0A]I don't know about you, but I[BR]
+don't want to become a snack.[Wait][END]
+}
+
+#message:1C:01F
+{
+[STYLE:Right]This is a Piranha Plant.[BR]
+[PAUSE:0A]Piranha Plants pop out of[BR]
+the ground at unexpected[BR]
+moments, so be on your guard.[BR]
+[Wait][NEXT]You've seen 'em in every one[BR]
+of your adventures, so I imagine[BR]
+you know 'em pretty well.[BR]
+[Wait][NEXT]Their sharp jaws point upward,[BR]
+so you'll get bitten if you try[BR]
+to jump on 'em.[BR]
+[Wait][NEXT]They smile after biting people.[BR]
+[PAUSE:0A]That smug smile...it makes me[BR]
+hopping mad![Wait][END]
+}
+
+#message:1C:020
+{
+[STYLE:Right]This is a Forest Fuzzy.[BR]
+[PAUSE:0A]Forest Fuzzies are always green.[BR]
+[Wait][NEXT]If they grab hold of you,[BR]
+they'll absorb your HP and add[BR]
+it to their own. The fiends![BR]
+[PAUSE:0A]Those no good...[BR]
+[Wait][NEXT]Oh! And they sometimes divide.[BR]
+[PAUSE:0A]If they divide they become even[BR]
+stronger, so try to beat 'em[BR]
+before they can split.[Wait][END]
+}
+
+#message:1C:021
+{
+[STYLE:Right]This is a Hyper Goomba.[BR]
+[PAUSE:0A]Hyper Goombas are crazy,[BR]
+uncivilized Goombas living[BR]
+in Gusty Gulch.[BR]
+[Wait][NEXT]They sometimes charge their[BR]
+power before attacking.[BR]
+[Wait][NEXT]That charged attack will take[BR]
+away 12 HP, so watch out when[BR]
+they start to glow.[BR]
+[Wait][NEXT]It's a good idea to use Bow or[BR]
+an item to become transparent.[BR]
+The attack will miss for sure.[Wait][END]
+}
+
+#message:1C:022
+{
+[STYLE:Right]This is a Hyper Paragoomba.[BR]
+[PAUSE:0A]Hyper Paragoombas are[BR]
+Hyper Goombas with wings.[BR]
+[Wait][NEXT]They sometimes charge their[BR]
+power before attacking.[BR]
+[Wait][NEXT]That charged attack will take[BR]
+away 12 HP, so watch out when[BR]
+they start to glow.[BR]
+[Wait][NEXT]It'll miss you if you can[BR]
+become transparent.[BR]
+[Wait][NEXT]Except for that, they're no[BR]
+different from normal[BR]
+Paragoombas, so use a Jump[BR]
+attack to defeat 'em.[Wait][END]
+}
+
+#message:1C:023
+{
+[STYLE:Right]This is a Hyper Cleft.[BR]
+[PAUSE:0A]Hyper Clefts have more defense[BR]
+power than normal Clefts.[BR]
+[Wait][NEXT]They sometimes charge their[BR]
+power before attacking.[BR]
+[Wait][NEXT]That charged attack will take[BR]
+away 15 HP, so watch out when[BR]
+they start to glow.[BR]
+[Wait][NEXT]It'll miss you if you can[BR]
+become transparent.[BR]
+[Wait][NEXT]Their defense power will fall[BR]
+to 2 if you use an explosion[BR]
+to flip 'em over.[BR]
+[Wait][NEXT]And in case you hadn't noticed,[BR]
+they have spikes up top![BR]
+[PAUSE:0A]It'll hurt if you jump on 'em.[Wait][END]
+}
+
+#message:1C:024
+{
+[STYLE:Right]This is a Clubba.[BR]
+[PAUSE:0A]Clubbas are the main guards of[BR]
+Tubba Blubba's Castle.[BR]
+[Wait][NEXT]They often sleep on the job.[BR]
+If you walk very slowly,[BR]
+they won't wake up.[BR]
+[Wait][NEXT]Jumping on them is a bad idea[BR]
+because they can counterattack[BR]
+with their club.[BR]
+[Wait][NEXT]They may look big, but if you use[BR]
+the action command perfectly,[BR]
+they're not so tough.[Wait][END]
+}
+
+#message:1C:025
+{
+[STYLE:Right]This is Tubba Blubba.[BR]
+[PAUSE:0A]He is one of Bowser's toughest[BR]
+followers and he's the master[BR]
+of this cursed castle.[BR]
+[Wait][NEXT]I don't know his defense power.[BR]
+[PAUSE:0A]Everyone says he's invincible[BR]
+because he has never been hurt.[BR]
+[Wait][NEXT]I'd say it's a good idea to[BR]
+run from immortal enemies![BR]
+[PAUSE:0A]If you get in deep trouble, Bow[BR]
+can hide you from him.[Wait][END]
+}
+
+#message:1C:026
+{
+[STYLE:Right]This is Tubba's Heart.[BR]
+[PAUSE:0A]You might say it's the "heart"[BR]
+of Tubba's secret. Ha![BR]
+OK, that wasn't funny.[BR]
+[Wait][NEXT]He will regenerate a lot of[BR]
+HP each turn, so you'll have[BR]
+to do a lot of damage quickly.[BR]
+[Wait][NEXT]He has a terrible attack, so[BR]
+hide when he tells you he's[BR]
+about to unleash it.[BR]
+[Wait][NEXT]The attack is nearly impossible[BR]
+to survive since it's so[BR]
+powerful.[BR]
+[Wait][NEXT]Try to beat him before he can[BR]
+do his huge attack again.[BR]
+Trust me, it's dangerous.[BR]
+[PAUSE:0A]This is Bow's turn to shine![Wait][END]
+}
+
+#message:1C:027
+{
+[STYLE:Right]This is Tubba Blubba, now[BR]
+reunited with his heart.[BR]
+[PAUSE:0A]This is finally his true self.[BR]
+[Wait][NEXT]His main attacks are jumping[BR]
+on you and smashing you[BR]
+with his arms.[BR]
+[Wait][NEXT]
+He can also throw you into[BR]
+the air to do a strong,[BR]
+unblockable attack.[BR]
+[Wait][NEXT]...But...[BR]
+I think he's definitely weaker[BR]
+than before...[Wait][END]
+}
+
+#message:1C:028
+{
+[STYLE:Right]It's Jr. Troopa.[BR]
+I can't get enough of this guy![BR]
+[Wait][NEXT]Waa ha ha ha![BR]
+[PAUSE:0A]Did the little guy get lost[BR]
+in the big, bad forest?[BR]
+[Wait][NEXT]Apparently he's grown wings,[BR]
+so he can fly now. You'll have[BR]
+to jump to reach him.[BR]
+[Wait][NEXT]He's a bit stronger, so it may[BR]
+be worth it to use any items you[BR]
+have to attack him.[Wait][END]
+}
+
+#message:1C:029
+{
+[STYLE:Right]This is a Shy Guy.[BR]
+[PAUSE:0A]They're ne'er-do-wells.[BR]
+Big time rascals. No good...  [BR]
+[Wait][NEXT]They can do acrobatic[BR]
+attacks that are stronger than[BR]
+their normal move and hit[BR]
+twice.[BR]
+[Wait][NEXT]I think they act a certain[BR]
+way based on what color they're[BR]
+wearing, but I don't know the[BR]
+specifics...[BR]
+[Wait][NEXT]Who knows what lies in the[BR]
+hearts of these troublemakers?[BR]
+[PAUSE:0A]I guess they're dangerous, but[BR]
+they're pretty small time.[Wait][END]
+}
+
+#message:1C:02A
+{
+[STYLE:Right]This is a Groove Guy.[BR]
+[PAUSE:0A]Groove Guys wear weird clothes.[BR]
+[PAUSE:05]They're probably stage clothes.[BR]
+Pssh... You know performers...[BR]
+[Wait][NEXT]They shake their booties to[BR]
+call in reinforcements.[BR]
+[PAUSE:05]They also spin around in front[BR]
+of you and make you feel dizzy.[BR]
+[Wait][NEXT]These rock 'n' rollers are a[BR]
+drag, so let's ditch 'em as[BR]
+fast as we can.[Wait][END]
+}
+
+#message:1C:02B
+{
+[STYLE:Right]This is a Spy Guy.[BR]
+[PAUSE:0A]Spy Guys look like they're[BR]
+ready for war in their spiffy[BR]
+camouflage gear![BR]
+[Wait][NEXT]They change their weapons each[BR]
+time they're attacked.[BR]
+Also, they also go invisible for[BR]
+a turn when they switch. [PAUSE:0A]Great.[BR]
+[Wait][NEXT]Your best bet is to beat them[BR]
+with one attack so you don't have[BR]
+to deal with their invisibility.[BR]
+[Wait][NEXT]You'd best try to avoid their[BR]
+hammer attack! Every time[BR]
+you're hit by it, you'll lose[BR]
+one of your commands![Wait][END]
+}
+
+#message:1C:02C
+{
+[STYLE:Right]This is a Pyro Guy.[BR]
+[PAUSE:0A]Pyro Guys are on fire, so any[BR]
+contact with them will cause[BR]
+damage.[BR]
+[Wait][NEXT]They're tough opponents, mainly[BR]
+because their attack power is[BR]
+so high.[BR]
+[Wait][NEXT]Any attacks that involve water[BR]
+or snow are our best bet[BR]
+because...well...you know.[Wait][END]
+}
+
+#message:1C:02D
+{
+[STYLE:Right]This is a Sky Guy.[BR]
+[PAUSE:0A]Sky Guys are master balloonists.[BR]
+[Wait][NEXT]We can attack the balloon, too.[BR]
+[PAUSE:0A]Once they fall, they're just[BR]
+like normal Shy Guys, except[BR]
+they can't do flips.[BR]
+[Wait][NEXT]I wish I had a balloon so I could[BR]
+float... That looks awesome![Wait][END]
+}
+
+#message:1C:02E
+{
+[STYLE:Right]This is a Medi Guy.[BR]
+[PAUSE:0A]Medi Guys are the emergency[BR]
+workers of the Shy Guy clan.[BR]
+[Wait][NEXT]They have the power to heal[BR]
+their wounded companions.[BR]
+[PAUSE:0A]Of course, they also attack.[BR]
+[Wait][NEXT]If they're all alone, they[BR]
+will flee from battle.[BR]
+[Wait][NEXT]We'd better hurry up and take[BR]
+them out of the mix. It's a[BR]
+pain if they keep fixing all[BR]
+the damage we do.[Wait][END]
+}
+
+#message:1C:02F
+{
+[STYLE:Right]This is Anti Guy.[BR]
+[PAUSE:0A]His attacks are so intense that[BR]
+he's also called Deadly Guy.[BR]
+[Wait][NEXT]Like other Shy Guys, he can[BR]
+do acrobatic attacks that hit[BR]
+multiple times.[BR]
+[Wait][NEXT]However, when his health becomes[BR]
+low, he may preform a triple[BR]
+flip that does 20 damage![BR]
+[Wait][NEXT]This guy is for real, so we'd[BR]
+better take him seriously.[Wait][END]
+}
+
+#message:1C:030
+{
+[STYLE:Right]This is a Big Lantern Ghost.[BR]
+[PAUSE:0A]He avoids attacks by hiding[BR]
+in the dark.[BR]
+[Wait][NEXT]Your friends, like (ahem) me,[BR]
+will also be damaged when[BR]
+he does the flash attack.[BR]
+[PAUSE:0A]The flash attack's power is 2.[BR]
+[Wait][NEXT]Hit the Lantern many times[BR]
+to make it brighter, then[BR]
+you'll be able to attack him.[BR]
+[Wait][NEXT]Wait...[PAUSE:0A] If he hates light so[BR]
+much, then why does he even[BR]
+have a lantern?[Wait][END]
+}
+
+#message:1C:031
+{
+[STYLE:Right]This is General Guy in his tank.[BR]
+[PAUSE:0A]The tank seems to be dangerous[BR]
+even though it's a toy.[BR]
+[Wait][NEXT]Not only does the General give[BR]
+commands from the tank, but he[BR]
+also throws bombs and uses[BR]
+electric attacks.[BR]
+[Wait][NEXT]He alternates between two[BR]
+types of bombs, with the[BR]
+red one being stronger and[BR]
+faster.[BR]
+[Wait][NEXT]His electric attack will also[BR]
+hurt your party member, so[BR]
+defend yourself carefully.[BR]
+[Wait][NEXT]He does the electrical attack[BR]
+every turn, but not if we break[BR]
+the light bulb.[BR]
+[Wait][NEXT]He may seem tough, but compared[BR]
+to who we fought through, he's[BR]
+a piece of cake.[Wait][END]
+}
+
+#message:1C:032
+{
+[STYLE:Right]This is the Shy Squad.[BR]
+[PAUSE:0A]It'll attack us with all [BR]
+its members at once.[BR]
+[Wait][NEXT]The number of times we're [BR]
+attacked will equal the number[BR]
+of Shy Guys in the Squad.[BR]
+[Wait][NEXT]Its attack power is huge when[BR]
+there are many Guys, but it [BR]
+drops for each one that falls. [BR]
+[Wait][NEXT]Let's use an attack that does[BR]
+tons of damage so we can[BR]
+decrease their numbers and[BR]
+increase our chances![Wait][END]
+}
+
+#message:1C:033
+{
+[STYLE:Right]This is a Shy Stack.[BR]
+[PAUSE:0A]Whoa, this pile has an[BR]
+incredible sense of balance![BR]
+Look at that stack![BR]
+[Wait][NEXT]Its attack power equals double[BR]
+the number of Guys in the stack.[BR]
+It will be 8 if there are four [BR]
+Shy Guys stacked up.[BR]
+[Wait][NEXT]If you have the Spin Hammer[BR]
+ability, you can knock 'em[BR]
+off one by one.[BR]
+[Wait][NEXT]Obviously, their attack power[BR]
+decreases when there are fewer[BR]
+of 'em in the stack.[Wait][END]
+}
+
+#message:1C:034
+{
+[STYLE:Right]This is Stilt Guy.[BR]
+[PAUSE:0A]Yes, as the name suggests,[BR]
+Stilt Guys are Shy Guys on[BR]
+Stilts.[BR]
+[Wait][NEXT]I mean, it seems pretty obvious[BR]
+to me...[BR]
+[Wait][NEXT]If you attack 'em by shaking[BR]
+the ground, they'll fall off[BR]
+their stilts and become[BR]
+normal Shy Guys.[Wait][END]
+}
+
+#message:1C:035
+{
+[STYLE:Right]This is a Hurt Plant.[BR]
+[PAUSE:0A]Hurt Plants pretend to be [BR]
+Heart Plants, which give you[BR]
+a Heart when you touch them.[BR]
+[Wait][NEXT]If a Hurt Plant bites you,[BR]
+you'll be poisoned.[BR]
+[PAUSE:0A]Then your HP will slowly[BR]
+fall with each turn.[BR]
+[Wait][NEXT]We'd better beat 'em as quickly[BR]
+as possible.[BR]
+[Wait][NEXT]Unless you can frequently[BR]
+restore your HP, you'll find[BR]
+yourself in trouble pretty fast.[Wait][END]
+}
+
+#message:1C:036
+{
+[STYLE:Right]This is an M. Bush.[BR]
+[PAUSE:0A]M. Bushes pretend to be bushes[BR]
+and wait for unwary prey. [BR]
+[Wait][NEXT]Their bites are usually[BR]
+poisonous, so be careful.[BR]
+[Wait][NEXT]If you get poisoned, your HP[BR]
+will gradually fall.[BR]
+[Wait][NEXT]Your situation could become[BR]
+critical unless you restore[BR]
+your HP as soon as possible.[BR]
+[Wait][NEXT]Let's clear 'em out quickly,[BR]
+OK? Use your most powerful[BR]
+attack, why don't you?[Wait][END]
+}
+
+#message:1C:037
+{
+[STYLE:Right]This is a Jungle Fuzzy.[BR]
+[Wait][NEXT]Jungle Fuzzies are very similar[BR]
+to other Fuzzies, but they live[BR]
+in the jungle, so...[BR]
+...that's their name.[BR]
+[Wait][NEXT]They cling to you, suck out[BR]
+your HP and add it to their own.[BR]
+What a sleazy move![BR]
+[Wait][NEXT]They won't stop clinging to you[BR]
+unless you tear 'em off[BR]
+with the action command.[BR]
+[Wait][NEXT]They also divide constantly,[BR]
+[PAUSE:0A]so let's beat 'em before they[BR]
+get the chance.[Wait][END]
+}
+
+#message:1C:038
+{
+[STYLE:Right]This is a Spear Guy.[BR]
+[PAUSE:0A]Spear Guys are relatives of[BR]
+Shy Guys. They live in the[BR]
+jungle.[BR]
+[Wait][NEXT]You'll get hurt if you attack[BR]
+with the Hammer while they're[BR]
+pointing the spear at you.[BR]
+[Wait][NEXT]You'll also get hurt if you[BR]
+try to jump on 'em when the[BR]
+spear's pointing upward.[BR]
+[Wait][NEXT]Pay attention to the position[BR]
+of their spears when we attack.[BR]
+[Wait][NEXT]Sometimes they do a little dance[BR]
+to give an ally an extra turn.[BR]
+[PAUSE:0A]After they throw their spears,[BR]
+they become ordinary Shy Guys.[Wait][END]
+}
+
+#message:1C:039
+{
+[STYLE:Right]This is a Putrid Piranha.[BR]
+[PAUSE:0A][Wait][NEXT]Putrid Piranhas bite us with[BR]
+unpredictable timing, but their[BR]
+deadliest attack is their[BR]
+bad breath.[BR]
+[Wait][NEXT]The power of their bad breath[BR]
+is low, but your HP will begin[BR]
+to fall if you get poisoned.[BR]
+[Wait][NEXT]You should try to recover as[BR]
+quickly as possible if you[BR]
+get poisoned.[Wait][END]
+}
+
+#message:1C:03A
+{
+[STYLE:Right]This is a Lava Bubble, a fire[BR]
+ball monster.[BR]
+[PAUSE:0A]Lava Bubbles live near lava.[BR]
+[Wait][NEXT]They are obviously pretty hot,[BR]
+so you'll get hurt if you try[BR]
+to jump on 'em.[BR]
+[Wait][NEXT]They sometimes attack your[BR]
+friends (like me!), too.[BR]
+[PAUSE:0A]The power of that attack is 2.[BR]
+[Wait][NEXT]Because of their fiery nature,[BR]
+they fear snow and water.[Wait][END]
+}
+
+#message:1C:03B
+{
+[STYLE:Right]This is Spike Top.[BR]
+[PAUSE:0A]Spike Tops have spikes on top.[BR]
+Duh![BR]
+[Wait][NEXT]They're tough, just like Buzzy[BR]
+Beetles, so you need to hit[BR]
+'em hard to flip them.[BR]
+[Wait][NEXT]Their underbellies are still[BR]
+armored, but it's easier to[BR]
+get through.[Wait][END]
+}
+
+#message:1C:03C
+{
+[STYLE:Right]This is a Lava Piranha.[BR]
+[PAUSE:0A]Lava Piranhas are plants that[BR]
+can somehow survive in lava.[BR]
+[Wait][NEXT]They blow out huge balls of[BR]
+fire to attack.[BR]
+[Wait][NEXT]That is one big flower! Wow![Wait][END]
+}
+
+#message:1C:03D
+{
+[STYLE:Right]This is a Lava Piranha.[BR]
+[PAUSE:0A]Lava Piranhas are plants that[BR]
+can somehow survive in lava.[BR]
+[Wait][NEXT]Since their bodies are on fire,[BR]
+you'll take damage if you step[BR]
+on 'em.[BR]
+[PAUSE:0A]Don't worry if you're fireproof.[BR]
+[Wait][NEXT]Their bodies are extremely hot.[BR]
+Standing close to them will cause[BR]
+your defenses to drop really fast.[BR]
+[Wait][NEXT]They'll try to burn you with[BR]
+their fire breath.[BR]
+[Wait][NEXT]They're creatures born of fire,[BR]
+so water attacks will work[BR]
+extremely well against them.[Wait][END]
+}
+
+#message:1C:03E
+{
+[STYLE:Right]This is a Lava Bud.[BR]
+[Wait][NEXT]Lava Buds are little flowers[BR]
+branching out from the main[BR]
+stem of the Lava Piranha.[BR]
+They love it in the lava.[BR]
+[Wait][NEXT]Hey, if you were a fiery plant,[BR]
+you'd love it in there, too.[BR]
+[Wait][NEXT]While they are still alive,[BR]
+Lava Piranha gets a defense[BR]
+boost and will slowly[BR]
+regenerate HP.[BR]
+[Wait][NEXT]They blow small seeds or[BR]
+other projectiles to attack.[BR]
+[PAUSE:0A]Those projectiles move really[BR]
+fast, so watch out![Wait][END]
+}
+
+#message:1C:03F
+{
+[STYLE:Right]This is a Lava Bud.[BR]
+[Wait][NEXT]Lava Buds are little flowers[BR]
+branching out from the main[BR]
+stem of the Lava Piranha.[BR]
+They love it in the lava.[BR]
+[Wait][NEXT]Hey, if you were a fiery plant,[BR]
+you'd love it in there, too.[BR]
+[Wait][NEXT]While they are still alive,[BR]
+Lava Piranha gets a defense[BR]
+boost and will slowly[BR]
+regenerate HP.[BR]
+[Wait][NEXT]They blow out Petit Piranhas.[BR]
+[PAUSE:0A]The Lava Buds' stems[BR]
+themselves won't attack you.[Wait][END]
+}
+
+#message:1C:040
+{
+[STYLE:Right]This is a Petit Piranha.[BR]
+[PAUSE:0A]Petit Piranhas spew from[BR]
+Lava Buds.[BR]
+[Wait][NEXT]These things can do some[BR]
+serious damage, so watch it![Wait][END]
+}
+
+#message:1C:041
+{
+[STYLE:Right]It's Jr. Troopa![BR]
+[PAUSE:0A]He swam all the way after us![BR]
+[PAUSE:05]This kid...he's got guts![BR]
+[Wait][NEXT]He still flies but now he has[BR]
+a spike on his head. It'll hurt[BR]
+if you jump on him.[BR]
+[PAUSE:0A]He seems tougher this time...[BR]
+[Wait][NEXT]Luckily for us, he also looks[BR]
+pretty tuckered out.[BR]
+[Wait][NEXT]Well, he should be tired.[BR]
+The little guy swam to[BR]
+Lavalava Island and back![BR]
+[Wait][NEXT]He's still going to try[BR]
+attacking us with full power,[BR]
+but I bet he'll wear himself[BR]
+out if we wait long enough.[BR]
+[Wait][NEXT]It seems better to attack[BR]
+from a distance with an item[BR]
+or something, rather than[BR]
+attacking him directly.[Wait][END]
+}
+
+#message:1C:042
+{
+[STYLE:Right]This is a Lakitu.[BR]
+[PAUSE:0A]
+Lakitus are strange Koopas[BR]
+that can ride clouds.[BR]
+[Wait][NEXT]They toss down Spiny Eggs,[BR]
+and these sometimes turn[BR]
+into crawling Spinies.[BR]
+[Wait][NEXT]We'd better deal with them[BR]
+quickly or else we'll be[BR]
+surrounded by Spinies.[BR]
+[Wait][NEXT]It seems like these Lakitus[BR]
+have been hassling you for[BR]
+your entire career, Mario.[Wait][END]
+}
+
+#message:1C:043
+{
+[STYLE:Right]This is a Spiny.[BR]
+[PAUSE:0A]Spinies have spikes on their[BR]
+shells that are pretty sharp.[BR]
+[Wait][NEXT]They'll roll into Spiny Eggs[BR]
+and slam into you.[BR]
+[Wait][NEXT]It'll be much easier to fight[BR]
+them if you can flip them over.[BR]
+It doesn't take much to flip them,[BR]
+but they'll still have 1 defense.[Wait][END]
+}
+
+#message:1C:044
+{
+[STYLE:Right]This is a Bzzap![BR]
+[PAUSE:0A]
+Bzzaps! are monstrous bees.[BR]
+[Wait][NEXT]If they sting you, sometimes[BR]
+you'll be poisoned.[BR]
+[Wait][NEXT]They also occasionally call a[BR]
+swarm of small bees to attack[BR]
+you in a cloud.[BR]
+[Wait][NEXT]Be careful of those little[BR]
+attackers, because you'll[BR]
+sometimes shrink when stung. [BR]
+[Wait][NEXT]They don't have a lot of HP,[BR]
+so take care of 'em as quick[BR]
+as you can.[Wait][END]
+}
+
+#message:1C:045
+{
+[STYLE:Right]This is a Crazee Dayzee.[BR]
+[PAUSE:0A]
+Crazee Dayzees look cute, but[BR]
+you won't think they're so[BR]
+cute after they attack you![BR]
+[Wait][NEXT]They attack by singing songs.[BR]
+[PAUSE:0A]One of them will reduce your attack[BR]
+and defense.[BR]
+[PAUSE:0A]The other one can put to you sleep.[BR]
+[Wait][NEXT]If you get their HP low enough,[BR]
+they'll try to run away. Beat[BR]
+'em quickly so they can't flee.[Wait][END]
+}
+
+#message:1C:046
+{
+[STYLE:Right]This is an Amazy Dayzee.[BR]
+[PAUSE:0A]
+Amazy Dayzees are so rare that[BR]
+they're also called the [BR]
+Legendary Crazee Dayzees. [BR]
+[Wait][NEXT]These guys aren't afraid of[BR]
+anything because of their massive[BR]
+attack power.[BR]
+[Wait][NEXT]They will occasionally sing a[BR]
+different, weaker song to reduce[BR]
+your attack and defense.[BR]
+[Wait][NEXT]It would be nice to beat one,[BR]
+but be careful! Their attacks[BR]
+pack a powerful punch![Wait][END]
+}
+
+#message:1C:047
+{
+[STYLE:Right]This is a Monty Mole.[BR]
+[PAUSE:0A]
+You remember Monty Moles from[BR]
+Mt. Rugged, don't you?[BR]
+[Wait][NEXT]They're vicious rock-throwers.[BR]
+[Wait][NEXT]They're weak to earthquakes, but[BR]
+they'll start throwing more rocks[BR]
+when you reduce their health.[BR]
+[Wait][END]
+}
+
+#message:1C:048
+{
+[STYLE:Right]He said his name is Spike.[BR]
+[PAUSE:0A]
+He seems to be a Lakitu, but[BR]
+he's the weirdest one I've seen.[BR]
+[Wait][NEXT]He throws Spiny Eggs.[BR]
+When he gets low on health, he'll[BR]
+throw a Spiny Surge.[BR]
+[Wait][NEXT]Don't worry, it's a lot weaker than[BR]
+it sounds.[BR]
+[Wait][NEXT]Is it just me, or did he call [BR]
+himself Spike, Michael and[BR]
+Lakilester? What an odd guy...[BR]
+[Wait][NEXT]...I have to wonder just what[BR]
+his real name is...[Wait][END]
+}
+
+#message:1C:049
+{
+[STYLE:Right]This is a Fluff Puff.[BR]
+[PAUSE:0A]Fluff Puffs are fluffy clouds[BR]
+that float in the air.[BR]
+[Wait][NEXT]Despite being made of fluff,[BR]
+their attacks are surprisingly[BR]
+powerful.[BR]
+[Wait][NEXT]If you don't block their[BR]
+attacks, you'll be shrunken.[BR]
+[Wait][NEXT]Fluff Puffs float in the air,[BR]
+so a Jump attack or something[BR]
+similar may be best.[BR]
+[Wait][NEXT]Of course, I'd be more than[BR]
+happy to give 'em a Headbonk![BR]
+[Wait][NEXT]It's your call, Mario.[Wait][END]
+}
+
+/%
+[STYLE:Right]This is a Ruff Puff.[BR]
+[PAUSE:0A]Ruff Puffs are nasty little[BR]
+cloud henchmen of Huff N. Puff.[BR]
+[Wait][NEXT]They can shoot a powerful[BR]
+lightning bolt when they're[BR]
+electrified, so take 'em[BR]
+out quickly.[BR]
+[Wait][NEXT]Ruff Puffs float in the air,[BR]
+so a Jump attack or something[BR]
+similar may be best.[BR]
+[Wait][NEXT]Of course, I'd be more than[BR]
+happy to give 'em a Headbonk![BR]
+[Wait][NEXT]It's your call, Mario.[Wait][END]
+%/
+
+#message:1C:04A
+{
+[STYLE:Right]This is Huff N. Puff.[BR]
+[PAUSE:0A]He's a giant cloud monster.[BR]
+[Wait][NEXT]His thunder attack is very[BR]
+dangerous. If you don't defend,[BR]
+you'll take massive damage.[BR]
+[Wait][NEXT]The attack power of his slam[BR]
+attack is proportional to his size,[BR]
+so he'll get weaker as the fight[BR]
+goes on.[BR]
+[Wait][NEXT]When you attack Huff N. Puff,[BR]
+little clouds called Tuff Puffs[BR]
+come out. Their number is based[BR]
+on the amount of damage you do.[BR]
+[Wait][NEXT]If you leave the Tuff Puffs,[BR]
+Huff N. Puff will swallow[BR]
+them up and restore his HP.[BR]
+[Wait][NEXT]Also, their attack power is[BR]
+proportional to how many there[BR]
+are, so you may want to keep[BR]
+their numbers as low as possible.[BR]
+[Wait][NEXT]You need to use smart tactics[BR]
+to beat this guy, Mario.[Wait][END]
+}
+
+#message:1C:04B
+{
+[STYLE:Right]These are the Tuff Puffs that[BR]
+break off when you damage[BR]
+Huff N. Puff.[BR]
+[Wait][NEXT]Tuff Puffs will fly over and[BR]
+attack you directly.[BR]
+[Wait][NEXT]You have to shake them off you[BR]
+using the action command or[BR]
+they'll keep on damaging you.[BR]
+[Wait][NEXT]Their attack power increases[BR]
+when there are more of them, so[BR]
+be aware of that.[BR]
+[Wait][NEXT]Huff N. Puff will swallow[BR]
+the Tuff Puffs to restore[BR]
+his HP, so think carefully[BR]
+when attacking.[BR]
+[Wait][NEXT]You can beat most of the Tuff [BR]
+Puffs by attacking all enemies,[BR]
+but they will sometimes spawn[BR]
+invisible.[Wait][END]
+}
+
+#message:1C:04C
+{
+[STYLE:Right]It's Jr. Troopa![BR]
+[PAUSE:0A]I'm stunned! Really![BR]
+This guy just will not quit![BR]
+[Wait][NEXT]He's obviously been training.[BR]
+It seems he can use magic now.[BR]
+[Wait][NEXT]Sigh... Let's get this over with.[Wait][END]
+}
+
+#message:1C:04D
+{
+[STYLE:Right]This is a Gulpit.[BR]
+[PAUSE:0A]Whoa! Gulpits look pretty [BR]
+burly, don't they?[BR]
+[Wait][NEXT]Gulpits attack by picking rocks[BR]
+up in their mouths and then[BR]
+spitting 'em back out.[BR]
+[Wait][NEXT]The bigger the rock they spit,[BR]
+the more damage you'll take.[BR]
+[Wait][END]
+}
+
+#message:1C:04E
+{
+[STYLE:Right]These are Gulpits' Rocks. Gulpits[BR]
+gulp them and then spit 'em at[BR]
+people.[BR]
+[PAUSE:0A]There are two sizes of rocks.[BR]
+[Wait][NEXT]The big rocks do more damage[BR]
+than the small rocks do. [BR]
+[PAUSE:0A]...Big surprise, huh?[Wait][END]
+}
+
+#message:1C:04F
+{
+[STYLE:Right]This monster... Even I don't[BR]
+know what it is![BR]
+[Wait][NEXT]I don't know why, but it looks[BR]
+really terrifying.[BR]
+[PAUSE:0A]...I get the funny feeling I[BR]
+had a nightmare about it...[BR]
+[Wait][NEXT]I have no clue what its attack[BR]
+power is.[BR]
+[Wait][NEXT]Its health seems low, but[BR]
+few attacks will work on it.[BR]
+Not even defense piercing moves[BR]
+will work.[BR]
+[Wait][NEXT]There's only one thing we can[BR]
+do! We have to charge our[BR]
+strongest attacks to take[BR]
+this guy out![BR]
+[Wait][NEXT]Although... I get the feeling that[BR]
+something isn't as it seems...[BR]
+It might be weak to some status[BR]
+but I have no clue what it could be.[BR]
+[Wait][END]
+}
+
+#message:1C:050
+{
+[STYLE:Right]This is a Frost Piranha.[BR]
+[PAUSE:0A]Frost Piranhas are frozen[BR]
+Piranha Plants.[BR]
+[Wait][NEXT]They'll try to freeze you with[BR]
+their icy breath.[BR]
+[Wait][NEXT]You'll be at their mercy if[BR]
+they freeze you, so you'd[BR]
+better try to immobilize them[BR]
+right away.[BR]
+[Wait][NEXT]Ice attacks won't work--[BR]
+they love ice![BR]
+[PAUSE:0A]Fire attacks, though...[Wait][END]
+}
+
+#message:1C:051
+{
+[STYLE:Right]This is a White Clubba. They[BR]
+live in cold climates.[BR]
+[PAUSE:0A]Who knows why they moved here...[BR]
+[Wait][NEXT]They sometimes attack[BR]
+consecutively.[BR]
+[Wait][NEXT]Jumping on them is a bad idea[BR]
+because they can counterattack[BR]
+with their club.[BR]
+[Wait][NEXT]They're pretty powerful. It's[BR]
+tough to swing such big clubs![BR]
+[Wait][NEXT]Ice attacks won't work on them,[BR]
+so break out fire if you have it.[Wait][END]
+}
+
+#message:1C:052
+{
+[STYLE:Right]This is a Duplighost.[BR]
+[PAUSE:0A]Duplighosts disguise themselves[BR]
+as members of our party.[BR]
+[Wait][NEXT]They love to attack in disguise.[BR]
+[Wait][NEXT]It seems like they're generally[BR]
+stronger fighters when they're[BR]
+not disguised, though.[BR]
+[Wait][NEXT]Their attack power is equal[BR]
+to the power of the last attack[BR]
+they've been hit by.[BR]
+[Wait][END]
+}
+
+#message:1C:053
+{
+[STYLE:Right]It's a Duplighost disguised[BR]
+as Watt.[BR]
+[Wait][NEXT]Its disguise is pretty much[BR]
+perfect. Its attack power[BR]
+is exactly the same as the[BR]
+character it's imitating.[BR]
+[Wait][NEXT]You know how Watt is shocking?[BR]
+Same goes for this Duplighost.[Wait][END]
+}
+
+#message:1C:054
+{
+[STYLE:Right]It's a Duplighost disguised[BR]
+as Kooper.[BR]
+[Wait][NEXT]This imposter almost looks[BR]
+better than the original! Ha![BR]
+[Wait][NEXT]Its disguise is pretty much[BR]
+perfect. Its attack power[BR]
+is exactly the same as the[BR]
+character it's imitating.[BR]
+[Wait][NEXT]It's probably not very difficult[BR]
+for this Duplighost to disguise[BR]
+itself as Kooper. After all, our[BR]
+pal is pretty unusual looking.[BR]
+[Wait][NEXT]It'll attack us with its shell,[BR]
+just like the regular Kooper.[BR]
+[Wait][NEXT]You'll have the best luck[BR]
+beating it if you flip it.[Wait][END]
+}
+
+#message:1C:055
+{
+[STYLE:Right]It's a Duplighost disguised[BR]
+as me.[BR]
+[PAUSE:0A]It'll do Headbonk and Tattle.[BR]
+[Wait][NEXT]That looks nothing like me.[BR]
+Does it? No![BR]
+Seriously, though, does it?[BR]
+[PAUSE:0F]Mario? Hello?[BR]
+[Wait][NEXT]Look, I've been working out[BR]
+like crazy trying to get in[BR]
+shape for adventuring. There's[BR]
+just no way I'm that pudgy![Wait][END]
+}
+
+#message:1C:056
+{
+[STYLE:Right]It's a Duplighost disguised[BR]
+as Sushie.[BR]
+[Wait][NEXT]Its face looks even grouchier[BR]
+than the real thing![BR]
+[Wait][NEXT]Its disguise is pretty much[BR]
+perfect. Its attack power[BR]
+is exactly the same as Sushie's.[BR]
+[Wait][NEXT]I'm glad we have Sushie on our[BR]
+side. She's intimidating![BR]
+[PAUSE:0A]I wonder if this imposter is[BR]
+meddlesome as well...[Wait][END]
+}
+
+#message:1C:057
+{
+[STYLE:Right]It's a Duplighost disguised[BR]
+as Lakilester.[BR]
+[PAUSE:0A]It's hard to take him seriously.[BR]
+[Wait][NEXT]Its disguise is pretty much[BR]
+perfect. Its attack power[BR]
+is exactly the same as [BR]
+Lakilester's.[BR]
+[Wait][NEXT]It's attacks are hard to guard,[BR]
+but they're relatively weak [BR]
+otherwise.[Wait][END]
+}
+
+#message:1C:058
+{
+[STYLE:Right]It's a Duplighost disguised[BR]
+as Parakarry.[BR]
+[Wait][NEXT]He looks even more intelligent[BR]
+as an enemy.[BR]
+[Wait][NEXT]Its disguise is pretty much[BR]
+perfect. Its attack power[BR]
+is exactly the same as [BR]
+Parakarry's.[BR]
+[Wait][NEXT]Don't underestimate him, Mario.[BR]
+He looks pretty serious.[BR]
+That Shell Shot can do serious[BR]
+damage and it's hard to guard.[Wait][END]
+}
+
+#message:1C:059
+{
+[STYLE:Right]It's a Duplighost disguised[BR]
+as Bombette.[BR]
+[Wait][NEXT]Its disguise is pretty much[BR]
+perfect. Its attack power [BR]
+is exactly the same as[BR]
+Bombette's.[BR]
+[Wait][NEXT]You should be careful even[BR]
+though she looks cute.[Wait][END]
+}
+
+#message:1C:05A
+{
+[STYLE:Right]It's a Duplighost disguised[BR]
+as Bow.[BR]
+[Wait][NEXT]Its disguise is pretty much[BR]
+perfect. Its attack power[BR]
+is exactly the same as Bow's.[BR]
+[Wait][NEXT]Look, you've seen her in action.[BR]
+Do you really want to know what[BR]
+a Smack attack feels like?[Wait][END]
+}
+
+#message:1C:05B
+{
+[STYLE:Right]This is an Albino Dino.[BR]
+[PAUSE:0A]Albino Dinos are the guards[BR]
+of this frosty place.[BR]
+[Wait][NEXT]Fire attacks won't work.[BR]
+[Wait][NEXT]Their defense power is huge,[BR]
+so let's reduce their HP[BR]
+steadily using our strongest[BR]
+damage-dealing attacks.[Wait][END]
+}
+
+#message:1C:05C
+{
+[STYLE:Right]This is a Swoopula.[BR]
+[PAUSE:0A]Swoopulas attack from the air[BR]
+and cling to you to suck your HP.[BR]
+[Wait][NEXT]Also, they can only be defeated[BR]
+with exact damage.[BR]
+If you deal too much, they'll[BR]
+actually survive.[BR]
+[Wait][NEXT]They can suck out HP extremely[BR]
+fast, so using Zap Tap to[BR]
+prevent that would be a[BR]
+good idea.[BR]
+[Wait][NEXT]They can't suck as fast[BR]
+when they aren't on the ceiling.[BR]
+[Wait][NEXT]Hit 
+[Color:10]
+[A]
+[Color:0A]
+ repeatedly to fight[BR]
+it off or else it'll keep[BR]
+sucking your HP.[BR]
+[Wait][NEXT]You can't jump high enough[BR]
+to attack them while they're[BR]
+hanging from the ceiling.[BR]
+[Wait][NEXT]An earthquake attack ought[BR]
+to work, though.[BR]
+[Wait][NEXT]Flying party members, like[BR]
+Bow or Parakarry, can also[BR]
+attack them with ease.[BR]
+[Wait][NEXT]If they fall and begin to flap[BR]
+around, you can attack them by[BR]
+jumping as well.[Wait][END]
+}
+
+#message:1C:05D
+{
+[STYLE:Right]This is the Crystal King.[BR]
+[PAUSE:0A]He's one of Bowser's main guys.[BR]
+I don't know how he managed[BR]
+to take over this palace, but...[BR]
+[Wait][NEXT]He'll attack you by summoning[BR]
+and launching Crystal Bits.[BR]
+[Wait][NEXT]The number of times he[BR]
+attacks equals the number of[BR]
+Crystal Bits he's deployed.[BR]
+[Wait][NEXT]He'll also try to freeze you[BR]
+whenever he can.[BR]
+[Wait][NEXT]When his HP gets low, he may[BR]
+try to divide and conquer.[BR]
+[PAUSE:0A]You can hurt him only by[BR]
+attacking his real body.[BR]
+[Wait][NEXT]If you don't know which one's[BR]
+the main body, you should[BR]
+attack all of them.[BR]
+[Wait][NEXT]I think there might be some[BR]
+difference between the real one[BR]
+and the fake ones, but it's[BR]
+probably very hard to tell.[BR]
+[Wait][NEXT]This guy is really powerful.[BR]
+If we're out here for too long,[BR]
+we'll be frozen forever![BR]
+[Wait][NEXT]Also, as we get weaker,[BR]
+he will get stronger, so[BR]
+keep your guard up at all[BR]
+costs![BR]
+[Wait][END]
+}
+
+#message:1C:05E
+{
+[STYLE:Right]This is the Crystal King.[BR]
+[PAUSE:0A]He's one of Bowser's main guys.[BR]
+I don't know how he managed[BR]
+to take over this palace, but...[BR]
+[Wait][NEXT]He'll attack you by summoning[BR]
+and launching Crystal Bits.[BR]
+[Wait][NEXT]The number of times he[BR]
+attacks equals the number of[BR]
+Crystal Bits he's deployed.[BR]
+[Wait][NEXT]He'll also try to freeze you[BR]
+whenever he can.[BR]
+[Wait][NEXT]When his HP gets low, he may[BR]
+try to divide and conquer.[BR]
+[PAUSE:0A]You can hurt him only by[BR]
+attacking his real body.[BR]
+[Wait][NEXT]If you don't know which one's[BR]
+the main body, you should[BR]
+attack all of them.[BR]
+[Wait][NEXT]I think there might be some[BR]
+difference between the real one[BR]
+and the fake ones, but it's[BR]
+probably very hard to tell.[BR]
+[Wait][NEXT]This guy is really powerful.[BR]
+If we're out here for too long,[BR]
+we'll be frozen forever![BR]
+[Wait][NEXT]Also, as we get weaker,[BR]
+he will get stronger, so[BR]
+keep your guard up at all[BR]
+costs![BR]
+[Wait][END]
+}
+
+%0 turn tattle causes problems
+/%
+#message:1C:05E
+{
+[STYLE:Right]I think this is a deceptive[BR]
+duplicate of the Crystal King.[BR]
+[Wait][NEXT]Since it's just an illusion,[BR]
+all of your attacks will just[BR]
+go through it.[BR]
+[Wait][NEXT][PAUSE:0A]Just a reminder, Mario...[BR]
+[PAUSE:0A]You must damage the real one.[Wait][END]
+}
+%/
+
+#message:1C:05F
+{
+[STYLE:Right]This is a Crystal Bit.[BR]
+[PAUSE:0A]Basically, Crystal Bits are[BR]
+just pieces of the Crystal King.[BR]
+[PAUSE:0A]You can drop 'em with ease.[BR]
+[Wait][NEXT]They're only dangerous when [BR]
+the Crystal King spews 'em out.[BR]
+[PAUSE:0A]These guys are pretty weak.[BR]
+[Wait][NEXT]They'll keep coming, though,[BR]
+until you've finally beaten[BR]
+the Crystal King.[Wait][END]
+}
+
+#message:1C:060
+{
+[STYLE:Right]This is an Ember.[BR]
+[PAUSE:0A]Embers are fiery monsters[BR]
+forged from uncanny blue fire.[BR]
+[Wait][NEXT]They may look frosty, but[BR]
+they're actually on fire, so[BR]
+fire attacks won't work.[BR]
+[Wait][NEXT]They divide themselves when[BR]
+they're attacked.[BR]
+[PAUSE:0A]Keep attacking 'em, though.[BR]
+You'll get 'em eventually.[BR]
+[Wait][NEXT]They usually use multi-hit[BR]
+attacks, so anything that reduces[BR]
+their attack power will be useful.[BR]
+[Wait][NEXT]Water attacks will work well too.[BR]
+[PAUSE:0A]Let's beat 'em before they[BR]
+get a chance to burn us.[Wait][END]
+}
+
+#message:1C:061
+{
+[STYLE:Right]This is a Dry Bones.[BR]
+[PAUSE:0A]Dry Bones are skeletal remains[BR]
+from Koopa Troopas.[BR]
+[Wait][NEXT]Just when you think they're[BR]
+beat, these guys rise back up[BR]
+and attack again![BR]
+[Wait][NEXT]You're going to have to beat[BR]
+them all at once.[BR]
+[Wait][NEXT]They're immune to fire, but[BR]
+explosions will completely[BR]
+disintegrate them.[Wait][END]
+}
+
+#message:1C:062
+{
+[STYLE:Right]It's a Bony Beetle.[BR]
+[PAUSE:0A]They're bony Buzzy Beetles.[BR]
+...Hence the name.[BR]
+[Wait][NEXT]It's tough to damage 'em.[BR]
+Flipping them will only go[BR]
+so far.[BR]
+[Wait][NEXT]When their spikes are out,[BR]
+their attack power is higher,[BR]
+but you can flip them more[BR]
+easily.[BR]
+[Wait][NEXT]Earthquakes will always flip[BR]
+them, so that's the best way[BR]
+to beat them.[Wait][END]
+}
+
+#message:1C:063
+{
+[STYLE:Right]This is a Magikoopa.[BR]
+[PAUSE:0A]Magikoopas are the elite[BR]
+magicians of the Koopa clan.[BR]
+[Wait][NEXT]Tread carefully, Mario![BR]
+Their magical attacks pack a[BR]
+serious punch![BR]
+[Wait][NEXT]We'd better beat them before[BR]
+they can do anything crazy.[Wait][END]
+}
+
+#message:1C:064
+{
+[STYLE:Right]This is a deceptive duplicate [BR]
+of a Magikoopa.[BR]
+[PAUSE:0A]There's no use attacking 'em.[BR]
+[Wait][END]
+}
+
+#message:1C:065
+{
+[STYLE:Right]This is a Magikoopa.[BR]
+[PAUSE:0A]Magikoopas are the elite[BR]
+magicians of the Koopa clan.[BR]
+[Wait][NEXT]Tread carefully, Mario![BR]
+Their magical attacks pack a[BR]
+serious punch![BR]
+[Wait][NEXT]We'd better beat them before[BR]
+they can do anything crazy.[Wait][END]
+}
+
+#message:1C:066
+{
+[STYLE:Right]This is a deceptive duplicate[BR]
+of a Dark Magikoopa.[BR]
+[PAUSE:0A]There's no use attacking 'em.[BR]
+[Wait][END]
+}
+
+#message:1C:067
+{
+[STYLE:Right]This is a Koopatrol.[BR]
+They're elite Koopa soldiers.[BR]
+[PAUSE:0A]These are the highest-ranked[BR]
+guards of Bowser's Castle.[BR]
+[Wait][NEXT]In case you hadn't noticed,[BR]
+they're fitted with spikes.[BR]
+Don't jump on 'em.[BR]
+[Wait][NEXT]If you flip them, they will[BR]
+increase their attack power when[BR]
+they get back up.[BR]
+[Wait][NEXT]When their HP drops low,[BR]
+they'll charge up power for[BR]
+one last-ditch attack.[BR]
+[Wait][NEXT]The power of this desperate[BR]
+attack is massive.[BR]
+[Wait][NEXT]They've also been known to[BR]
+call in reinforcements when[BR]
+they're in trouble.[BR]
+[Wait][NEXT]Don't underestimate these[BR]
+nasty Koopas, Mario.[Wait][END]
+}
+
+#message:1C:068
+{
+[STYLE:Right]These are the Hammer Bros.[BR]
+[PAUSE:0A]You've seen these punks[BR]
+before, haven't you?[BR]
+[Wait][NEXT]Be careful of that hammer![BR]
+If it hits you, you'll get[BR]
+shrunk in a wink.[BR]
+[Wait][NEXT]When the Hammer Bros. get[BR]
+below half health, they'll hurl[BR]
+a ton of hammers, so watch it.[BR]
+[Wait][NEXT]Every turn, they will get[BR]
++1 attack power.[BR]
+[Wait][NEXT]These guys have been a pain for[BR]
+ages, so let's give 'em an [BR]
+old-fashioned whooping. [BR]
+[Wait][NEXT]As always, they're not to be[BR]
+underestimated.[Wait][END]
+}
+
+#message:1C:069
+{
+[STYLE:Right]This is a Bombshell Bill.[BR]
+[Wait][NEXT]Bombshell Bills have such[BR]
+beautiful gold casings![BR]
+Of course, if you sit and[BR]
+admire 'em, you'll get hit.[BR]
+[Wait][NEXT]Their attack power is pretty[BR]
+high, but they don't have a lot[BR]
+of health, and their defense[BR]
+isn't that high.[BR]
+[Wait][NEXT]However, they are sturdy[BR]
+enough that most attacks[BR]
+can't take 'em out in[BR]
+a single hit.[BR]
+[Wait][NEXT]Electricity won't work, but[BR]
+explosions will still make[BR]
+them explode early though.[Wait][END]
+}
+
+#message:1C:06A
+{
+[STYLE:Right]This is a B. Bill Blaster.[BR]
+[PAUSE:0A]B. Bill Blasters shoot a[BR]
+constant stream of[BR]
+Bombshell Bills.[BR]
+[Wait][NEXT]They won't attack you directly.[BR]
+They're pretty resilient.[BR]
+Electrical attacks will not[BR]
+work against them.[BR]
+[Wait][NEXT]You have to keep attacking 'em,[BR]
+though, otherwise the air will[BR]
+be filled with Bombshell Bills.[BR]
+And nobody wants that.[BR]
+[Wait][END]
+}
+
+#message:1C:06B
+{
+[STYLE:Right]It's Jr. Troopa again! My man![BR]
+[PAUSE:0A]The little guy still has some[BR]
+egg shell left on his body! Aww![BR]
+[Wait][NEXT]I don't know what's in Hustle [BR]
+Drinks, but it couldn't have been [BR]
+good for him. He looks too tired [BR]
+to fight back now.[BR]
+[Wait][NEXT]You've got to love this guy's[BR]
+effort, Mario. To follow us all[BR]
+the way here? What dedication![BR]
+[Wait][NEXT]Come to think of it, how do[BR]
+you think he got here, anyway?[Wait][END]
+}
+
+#message:1C:06C
+{
+[STYLE:Right]It's the Evil King Bowser![BR]
+[PAUSE:0A]Finally, after all this time![BR]
+[Wait][NEXT]He has a huge arsenal of[BR]
+attacks, from blowing clouds[BR]
+of fire to jumping on us.[BR]
+[Wait][NEXT]I'm sure he has other attacks[BR]
+that I don't know.[BR]
+[PAUSE:0A]Boy, does he look nasty![BR]
+[Wait][NEXT]He's strong enough as it is,[BR]
+but I'm sure he can use that[BR]
+Star Rod to increase his power[BR]
+until he's nearly invincible.[BR]
+[Wait][NEXT]The power of the Dark Star[BR]
+causes his attack power to[BR]
+increase every turn, but[BR]
+Star Beam will reset his attack.[BR]
+[Wait][NEXT]Princess Peach needs us![BR]
+Let's take him, Mario![Wait][END]
+}
+
+#message:1C:06D
+{
+[STYLE:Right]It's the Evil King Bowser![BR]
+[PAUSE:0A]Uh... I think he got bigger.[BR]
+That's not a good sign...[BR]
+[Wait][NEXT]He has a huge arsenal of[BR]
+attacks, from blowing clouds[BR]
+of fire to jumping on us.[BR]
+[Wait][NEXT]I'm sure he has other attacks[BR]
+that I don't know.[BR]
+[Wait][NEXT]Kammy Koopa's mysterious[BR]
+device has somehow beefed up[BR]
+his power even more.[BR]
+That's hardly fair![BR]
+[Wait][NEXT]The power of the Dark Star[BR]
+causes his attack power to[BR]
+increase every turn, but[BR]
+Star Beam will reset his attack.[BR]
+[Wait][NEXT]You should use that Star Beam[BR]
+whenever he uses the Star Rod[BR]
+to increase his power.[BR]
+Oh, you already knew that?[Wait][END]
+}
+
+#message:1C:06E
+{
+[STYLE:Right]It's the Evil King Bowser![BR]
+[PAUSE:0A]No more messing around![BR]
+[Wait][NEXT]He has a huge arsenal of[BR]
+attacks, from blowing clouds[BR]
+of fire to jumping on us.[BR]
+[Wait][NEXT]I'm sure he has other attacks[BR]
+that I don't know.[BR]
+[Wait][NEXT]When he increases his power[BR]
+with the Star Rod, our attacks[BR]
+will be totally useless.[BR]
+[Wait][NEXT]The power of the Dark Star[BR]
+causes his attack power to[BR]
+increase every turn, but[BR]
+Peach Beam will reset his attack.[BR]
+[Wait][NEXT]When that happens, you must[BR]
+use our ultimate weapon, the[BR]
+Peach Beam! It has the power[BR]
+of everyone's wishes![BR]
+[Wait][NEXT]When he gets below one third[BR]
+of his max HP, he will be[BR]
+able to use the Star Rod and[BR]
+attack on the same turn![BR]
+[Wait][NEXT]He will immediately use[BR]
+it as soon as his health is[BR]
+low enough, so you'll need[BR]
+to prepare for that.[BR]
+[Wait][NEXT]This is our time, Mario![BR]
+Let's take this chump![BR]
+We're coming, Princess![Wait][END]
+}
+
+#message:1C:06F
+{
+[STYLE:Right]This is Kent C. Koopa.[BR]
+[PAUSE:0A]He seems pretty greedy for[BR]
+such a large Koopa.[BR]
+[Wait][NEXT]That giant shell gives him[BR]
+high defense and reduces[BR]
+incoming damage by half, even if[BR]
+your attack pierces defense.[BR]
+[Wait][NEXT]He sometimes does a stamp[BR]
+attack with his shell.[BR]
+[PAUSE:0A]It will sometimes hit twice.[BR]
+[Wait][NEXT]His shell attack also damages[BR]
+party members (like me!), [BR]
+so be sure to defend![BR]
+[Wait][NEXT]As with all Koopas, your[BR]
+chances will greatly improve[BR]
+if you can flip him over.[BR]
+His defense power will drop.[BR]
+[Wait][NEXT]Watch it, though! He'll attack[BR]
+as soon as he's back on his feet.[BR]
+[Wait][NEXT]And by the way, is he not [BR]
+THE HUGEST KOOPA EVER!?![BR]
+[PAUSE:0A]Somebody told me that he used[BR]
+to live in Koopa Village...[Wait][END]
+}
+
+#message:1C:070
+{
+[STYLE:Right]This is a Blooper.[BR]
+[PAUSE:0A]Bloopers lurk in the dank[BR]
+pools of Toad Town Tunnels.[BR]
+[Wait][NEXT]They seem pretty unremarkable.[BR]
+[Wait][NEXT]Although...[BR]
+[PAUSE:0A]You have to wonder how they[BR]
+float in the air like that...[Wait][END]
+}
+
+#message:1C:071
+{
+[STYLE:Right]This is an Electro Blooper.[BR]
+[PAUSE:0A]Electro Bloopers are[BR]
+electro-charged.[BR]
+[Wait][NEXT]A bit of advice: When they're[BR]
+emitting electricity, it'd[BR]
+be a smart move to avoid[BR]
+contact with 'em.[BR]
+[Wait][NEXT]If you can manage to damage[BR]
+'em while they're emitting[BR]
+electricity, they'll go back[BR]
+to normal.[BR]
+[Wait][NEXT]You'll need to hit them really[BR]
+hard to decharge them, however.[BR]
+[Wait][NEXT]Their attack power when they're[BR]
+emitting electricity is incredible.[BR]
+[PAUSE:0A]Let's try to be careful,[BR]
+what do you say?[Wait][END]
+}
+
+#message:1C:072
+{
+[STYLE:Right]This is a Super Blooper.[BR]
+[PAUSE:0A]Whoa! It's huge![BR]
+[PAUSE:0A]Easily the biggest Blooper ever![BR]
+[Wait][NEXT]Trust me, its size doesn't lie.[BR]
+It's pretty powerful.[BR]
+[PAUSE:0A]When it gets mad, it turns red[BR]
+and its power goes way up.[BR]
+[Wait][NEXT]All of its attacks are faster[BR]
+than the smaller Bloopers,[BR]
+despite how big it is.[BR]
+[Wait][NEXT]And sometimes it spawns[BR]
+Blooper Babies.[BR]
+[PAUSE:0A]Buckle down, Mario![BR]
+We're in for a fight![Wait][END]
+}
+
+#message:1C:073
+{
+[STYLE:Right]This is a Blooper Baby.[BR]
+[PAUSE:0A]Super Blooper spits 'em out[BR]
+and they come to drain you.[BR]
+[Wait][NEXT]They won't get hurt if you're [BR]
+electrified, so you'll need [BR]
+another way to stop them.[BR]
+[Wait][NEXT]We need to beat 'em quickly so[BR]
+they can't drain us dry.[BR]
+[PAUSE:0A]They're so cute, though! [Wait][END]
+}
+
+#message:1C:074
+{
+[STYLE:Right]This is The Master.[BR]
+[PAUSE:0A]He owns the Dojo--[BR]
+and he's the strongest member.[BR]
+[Wait][NEXT]If he's the best in the Dojo,[BR]
+he must be pretty tough![BR]
+[Wait][END]
+}
+
+#message:1C:075
+{
+[STYLE:Right]This is The Master.[BR]
+[PAUSE:0A]He owns the Dojo--[BR]
+and he's the strongest member.[BR]
+[Wait][NEXT]He knows both normal and[BR]
+advanced methods of attack.[BR]
+[Wait][NEXT]You'd better concentrate,[BR]
+Mario! This guy doesn't mess[BR]
+around at all![Wait][END]
+}
+
+#message:1C:076
+{
+[STYLE:Right]He is The Master.[BR]
+[PAUSE:0A]He owns the Dojo-- [BR]
+and he's the strongest member.[BR]
+[Wait][NEXT]He may well know a few moves[BR]
+I've never heard of...[BR]
+[Wait][NEXT]We can't expect mercy from[BR]
+this guy, so let's take the[BR]
+fight to him.[Wait][END]
+}
+
+#message:1C:077
+{
+[STYLE:Right]This is Chan, of the Dojo.[BR]
+[PAUSE:0A]He's training under The Master[BR]
+and is happy to fight us.[BR]
+[Wait][NEXT]Hammer attacks don't work well,[BR]
+but you can turn him over with[BR]
+strong Jump attacks. Once he's [BR]
+flipped over, he's easy.[BR]
+[Wait][NEXT]No mercy, Mario![Wait][END]
+}
+
+#message:1C:078
+{
+[STYLE:Right]This is Lee, of the Dojo.[BR]
+[PAUSE:0A]He's training under The Master[BR]
+and is happy to fight us.[BR]
+[Wait][NEXT]He has mastered the art of[BR]
+disguise, so don't let it[BR]
+faze you when he suddenly[BR]
+mirrors us.[BR]
+[Wait][NEXT]Remember, he can't stay[BR]
+disguised forever.[BR]
+[Wait][NEXT]Don't let his strange tactics[BR]
+throw you off guard, no matter[BR]
+how many times he transforms.[Wait][END]
+}
+
+#message:1C:079
+{
+[STYLE:Right]This is a Gloomba.[BR]
+[PAUSE:0A]Gloombas are nasty Goombas who[BR]
+live in the Toad Town Tunnels.[BR]
+[Wait][NEXT]They're stronger than ordinary[BR]
+Goombas, but you can take 'em.[BR]
+[Wait][END]
+}
+
+#message:1C:07A
+{
+[STYLE:Right]This is a Paragloomba.[BR]
+[PAUSE:0A]Paragloombas are nasty winged[BR]
+Gloombas who make their home[BR]
+in the Toad Town Tunnels.[BR]
+[Wait][NEXT]Just like Paragoombas, [BR]
+Paragloombas lose their wings[BR]
+when attacked, then they fall [BR]
+and become Gloombas.  [Wait][END]
+}
+
+#message:1C:07B
+{
+[STYLE:Right]This is a Spiked Gloomba.[BR]
+[PAUSE:0A]They're Spiked Goombas who live[BR]
+in the Toad Town Tunnels.[BR]
+[Wait][NEXT]Be careful of the spiked hats[BR]
+they wear.[BR]
+[PAUSE:0A]It'll definitely hurt if you[BR]
+jump on 'em.[Wait][END]
+}
+
+#message:1C:07C
+{
+[STYLE:Right]This is a Dark Koopa.[BR]
+[Wait][NEXT]Dark Koopas are Koopa Troopas[BR]
+who live in the Toad Town[BR]
+Tunnels. They're known for[BR]
+causing dizziness.[BR]
+[Wait][NEXT]Be extra careful when you see[BR]
+'em grin, because that means[BR]
+they're getting ready to do[BR]
+their dizzy attack.[BR]
+[Wait][NEXT]Their defense power is 0 [BR]
+when they're turned over, so[BR]
+you should use Jump attacks.[Wait][END]
+}
+
+#message:1C:07D
+{
+[STYLE:Right]This is a D. Paratroopa.[BR]
+[PAUSE:0A]D. Paratroopas are Para-[BR]
+troopas who live in the[BR]
+Toad Town Tunnels.[BR]
+[Wait][NEXT]Normal hammer attacks won't [BR]
+work because they're airborne.[BR]
+However, throwing attacks are[BR]
+more effective on them.[BR]
+[Wait][NEXT]They'll lose their wings if[BR]
+you jump on 'em.[BR]
+[Wait][NEXT]They'll become Dark Koopas[BR]
+when they fall, but be careful![BR]
+They'll do a dizzy attack[BR]
+once they're grounded.[Wait][END]
+}
+
+#message:1C:07E
+{
+[STYLE:Right]This is Tubba Blubba again.[BR]
+[PAUSE:0A]He says he's been training, but[BR]
+I don't believe that.[BR]
+[Wait][NEXT]He looks exactly as strong as[BR]
+last time, so this should be[BR]
+a piece of cake...[BR]
+[Wait][NEXT]But he might not be lying, so[BR]
+look out for surprises.[Wait][END]
+}
+
+#message:1C:07F
+{
+[STYLE:Right]That's a Dark Satellmite.[BR]
+[PAUSE:0A]A small piece of the Dark Star.[BR]
+[Wait][NEXT]They can attack us by jumping, but[BR]
+they can also transform into dark[BR]
+versions of us.[BR]
+[Wait][NEXT]Since they are part of the Dark[BR]
+Star, do you think that hurting them[BR]
+will damage the Dark Star itself?[BR]
+[Wait][END]
+}
+
+#message:1C:080
+{
+[STYLE:Right]It's dark copy of me.[BR]
+[PAUSE:0A]He looks really dumb.[BR]
+I bet he can't even Tattle.[BR]
+[Wait][NEXT]If he's anything like me, he'll[BR]
+use some of my other moves, but[BR]
+since his appearance is wrong,[BR]
+it's probably not that simple.[BR]
+[Wait][NEXT]It's a good thing I look[BR]
+nothing like that![BR]
+Right, Mario?[BR]
+[PAUSE:0A]...Mario?[Wait][END]
+}
+
+#message:1C:081
+{
+[STYLE:Right]It's a dark copy of Kooper.[BR]
+[PAUSE:0A]This imposter almost looks[BR]
+better than the original! Ha![BR]
+[Wait][NEXT]It's a dark copy, so it can use[BR]
+moves similar to what Kooper[BR]
+can use.[BR]
+[Wait][NEXT]It'll attack us with its shell,[BR]
+just like the regular Kooper.[BR]
+[PAUSE:0A]You'll have the best luck[BR]
+beating it if you flip it.[Wait][END]
+}
+
+#message:1C:082
+{
+[STYLE:Right]It's a dark copy of Bombette.[BR]
+[Wait][NEXT]It's a dark copy, so it can use[BR]
+moves similar to what Bombette[BR]
+can use.[BR]
+[Wait][NEXT]You should be careful even[BR]
+though she looks cute.[Wait][END]
+}
+
+#message:1C:083
+{
+[STYLE:Right]It's a dark copy of Parakarry.[BR]
+[PAUSE:0A]He looks pretty threatening.[BR]
+[Wait][NEXT]It's a dark copy, so it can use[BR]
+moves similar to what Parakarry[BR]
+can use.[BR]
+[Wait][NEXT]Don't underestimate him, Mario.[BR]
+He looks pretty serious.[BR]
+His attacks are very strong and[BR]
+hard to guard.[Wait][END]
+}
+
+#message:1C:084
+{
+[STYLE:Right]It's a dark copy of Bow.[BR]
+[Wait][NEXT]It's a dark copy, so it can use[BR]
+moves similar to what Bow can[BR]
+use.[BR]
+[Wait][NEXT]If her regular attack doesn't[BR]
+do enough damage, she will[BR]
+not do it again.[BR]
+[Wait][END]
+}
+
+#message:1C:085
+{
+[STYLE:Right]It's a dark copy of Watt.[BR]
+[Wait][NEXT]It's a dark copy, so it can use[BR]
+moves similar to what Watt can[BR]
+use.[BR]
+[Wait][NEXT]You know how Watt is shocking?[BR]
+Same goes for this dark copy.[Wait][END]
+}
+
+%I set up the lightning bolts so this tattle is wrong!
+%	^	not entirely true, there is only one lightning bolt palette so it gets messed up if you take Watt out at any point
+/%
+#message:1C:085
+{
+[STYLE:Right]It's a dark copy of Watt.[BR]
+[Wait][NEXT]It's a dark copy, so it can use[BR]
+moves similar to what Watt can[BR]
+use.[BR]
+[Wait][NEXT]Hang on, why aren't the lightning[BR]
+bolts the same color as her?[BR]
+Sounds like someone didn't[BR]
+set up the palettes correctly.[BR]
+[Wait][NEXT]Or maybe it's not as simple as[BR]
+that...[BR]
+[PAUSE:0A]...That's probably it.
+[Wait][NEXT]You know how Watt is shocking?[BR]
+Same goes for this dark copy.[Wait][END]
+}
+%/
+
+#message:1C:086
+{
+[STYLE:Right]It's a dark copy of Sushie.[BR]
+[PAUSE:0A]What's with that creepy smile?[BR]
+That can't be good...[BR]
+[Wait][NEXT]It's a dark copy, so it can use[BR]
+moves similar to what Sushie[BR]
+can use.[BR]
+[Wait][NEXT]I'm glad we have Sushie on our[BR]
+side. She's intimidating![BR]
+[PAUSE:0A]I wonder if this dark copy is[BR]
+meddlesome as well...[Wait][END]
+}
+
+#message:1C:087
+{
+[STYLE:Right]It's a dark copy of Lakilester.[BR]
+[PAUSE:0A]It's hard to take him seriously,[BR]
+Even his dark clone doesn't[BR]
+look threatening.[BR]
+[Wait][NEXT]It's a dark copy, so it can use[BR]
+moves similar to what Lakilester[BR]
+can use.[BR]
+[Wait][NEXT]Its attacks are hard to guard,[BR]
+but they're relatively weak [BR]
+otherwise.[Wait][END]
+}
+
+#message:1C:088
+{
+[STYLE:Right]This is a Magikoopa.[BR]
+[PAUSE:0A]Magikoopas use magical rods.[BR]
+[Wait][NEXT]Magic attacks are no joke,[BR]
+Mario. You'd better take these[BR]
+guys seriously.[Wait][END]
+}
+
+#message:1C:089
+{
+[STYLE:Right]This is a Magikoopa.[BR]
+[PAUSE:0A]Magikoopas use magical rods.[BR]
+[Wait][NEXT]Magic attacks are no joke,[BR]
+Mario. You'd better take these[BR]
+guys seriously.[Wait][END]
+}
+
+#message:1C:08A
+{
+[STYLE:Right]This is Lee disguised as Watt.[BR]
+[PAUSE:0A]You should be serious even though [BR]
+he looks as adorable as Watt.[BR]
+[Wait][NEXT]Lee has disguised himself as[BR]
+Watt perfectly, so his[BR]
+attack power is the same as[BR]
+Watt's usual power.[BR]
+[Wait][NEXT]He can do Power Shock, which[BR]
+will paralyze you for 3 turns[BR]
+if you don't guard it![BR]
+[Wait][NEXT]Remember, don't stomp on him![BR]
+You'll get a massive electric[BR]
+charge if you do.[Wait][END]
+}
+
+#message:1C:08B
+{
+[STYLE:Right]This is Lee disguised as Kooper.[BR]
+[Wait][NEXT]Lee has disguised himself as[BR]
+Kooper perfectly, so his [BR]
+attack power is the same as[BR]
+Kooper's usual power.[BR]
+[Wait][NEXT]Just like Kooper, he attacks[BR]
+with his shell.[BR]
+[PAUSE:0A]If you flip him over, you'll beat[BR]
+him with ease.[BR]
+[Wait][NEXT]Incidentally, Lee's red scarf[BR]
+and wristband look cooler[BR]
+than Kooper's.[BR]
+[Wait][NEXT]...Don't tell Kooper I said[BR]
+that, though.[Wait][END]
+}
+
+#message:1C:08C
+{
+[STYLE:Right]It's Lee disguised as me.[BR]
+[Wait][NEXT]Do I really look like that?[BR]
+[PAUSE:0F]No way...[BR]
+[Wait][NEXT]He'll use Headbonk and Tattle.[BR]
+[PAUSE:0A]He has the same skills as me.[BR]
+[Wait][NEXT]Of course, I'm much better[BR]
+looking and more debonair.[BR]
+[PAUSE:0A]And I hope that I'm stronger![Wait][END]
+}
+
+#message:1C:08D
+{
+[STYLE:Right]This is Lee disguised as Sushie.[BR]
+[PAUSE:0A]Sushie looks tough! Think she'd[BR]
+be mad if she heard that?[BR]
+[Wait][NEXT]Lee has disguised himself as[BR]
+Sushie perfectly, so his [BR]
+attack power is the same as[BR]
+Sushie's usual power.[BR]
+[Wait][NEXT]I'm not too thrilled to have to[BR]
+fight Sushie. She's strong![Wait][END]
+}
+
+#message:1C:08E
+{
+[STYLE:Right]This is Lee disguised as[BR]
+Lakilester.[BR]
+[Wait][NEXT]If I remember our battle with[BR]
+the real Lakilester correctly,[BR]
+this one seems to be weaker.[BR]
+[Wait][NEXT]Lee has disguised himself as[BR]
+Lakilester perfectly, so his[BR]
+attack power is the same as[BR]
+Lakilester's usual power.[BR]
+[Wait][NEXT]Dodging his attacks is[BR]
+tough, so pay attention.[Wait][END]
+}
+
+#message:1C:08F
+{
+[STYLE:Right]This is Lee disguised as[BR]
+Parakarry.[BR]
+[Wait][NEXT]Lee has disguised himself as[BR]
+Parakarry perfectly, so his[BR]
+attack power is the same as[BR]
+Parakarry's usual power.[BR]
+[Wait][NEXT]He's usually slow, but once[BR]
+he's in battle, he's a[BR]
+whirlwind of feet and feathers.[BR]
+[Wait][NEXT]He's a sight to behold in[BR]
+the heat of battle.[BR]
+[Wait][NEXT]To tell the truth, I think[BR]
+he's the most intimidating[BR]
+one on our team![Wait][END]
+}
+
+#message:1C:090
+{
+[STYLE:Right]This is Lee disguised as [BR]
+Bombette.[BR]
+[Wait][NEXT]Lee has disguised himself as[BR]
+Bombette perfectly, so his [BR]
+attack power is the same as[BR]
+Bombette's usual power.[BR]
+[Wait][NEXT]Sure, he looks cute as Bombette,[BR]
+but he packs a punch![Wait][END]
+}
+
+#message:1C:091
+{
+[STYLE:Right]This is Lee disguised as Bow.[BR]
+[Wait][NEXT]Lee has disguised himself as[BR]
+Bow perfectly, so his[BR]
+attack power is the same as[BR]
+Bow's usual power.[BR]
+[Wait][NEXT]That Smack attack is brutal![BR]
+So cruel![Wait][END]
+}
+
+#message:1C:092
+{
+[STYLE:Right]
+It's Mario, silly![BR]
+[PAUSE:0A]
+He's here to save Princess[BR]
+Peach, who was kidnapped by[BR]
+Bowser. Remember?[BR]
+[Wait][NEXT]
+He fights until the bitter end,[BR]
+no matter what enemies attack.[Wait][END]
+}
+
+#message:1C:096
+{
+[STYLE:Right]This is a Red Bob-omb.[BR]
+[Wait][NEXT]Similar to regular Bob-ombs,[BR]
+they get steaming hot when[BR]
+you attack them.[BR]
+[Wait][NEXT]However, have a chance to ignite[BR]
+themselves at the end of their[BR]
+turn.[BR]
+[Wait][NEXT]Their explosions are twice[BR]
+as powerful as regular Bob-ombs![BR]
+[PAUSE:0A]So you'd better take care of [BR]
+them before they blow![Wait][END]
+}
+
+#message:1C:097
+{
+[STYLE:Right]This is a Bandito.[BR]
+[PAUSE:0A]Like regular Bandits, they[BR]
+bump into you and steal your coins.[BR]
+They can steal up to 10 coins. [BR]
+[Wait][NEXT]Sometimes, they'll slyly[BR]
+approach and then ram you[BR]
+all of the sudden.[BR]
+[Wait][NEXT]Other times, they'll pretend[BR]
+to miss their attack, only[BR]
+to hit you in the back![BR]
+[Wait][NEXT]Unlike regular Bandits, they[BR]
+won't wait around with our coins.[BR]
+[PAUSE:0A]Let's beat 'em before they[BR]
+can make off with our loot![Wait][END]
+}
+
+#message:1C:098
+{
+[STYLE:Right]This is a Dull Bones.[BR]
+[PAUSE:0A]Dull Bones are skeletal remains[BR]
+from Koopa Troopas.[BR]
+[Wait][NEXT]Just when you think they're[BR]
+beat, these guys rise back up[BR]
+and attack again![BR]
+[Wait][NEXT]You should try to beat them[BR]
+after beating the other enemies.[BR]
+Or, you could use an explosion[BR]
+to take 'em out for good.[Wait][END]
+}
+
+#message:1C:099
+{
+[STYLE:Right]This is a Layzee Dayzee.[BR]
+[PAUSE:0A]Layzee Dayzees are a weaker[BR]
+variant of Crazee Dayzees[BR]
+that live in Forever Forest.[BR]
+[Wait][NEXT]They attack by singing a song.[BR]
+[PAUSE:0A]Even though they don't put[BR]
+much effort into it, they can[BR]
+still put you to sleep.[BR]
+[Wait][NEXT]If you get their HP low enough,[BR]
+they might run away. But[BR]
+they're pretty lazy, so that's[BR]
+unlikely.[Wait][END]
+}
+%so the status chance is supposed to be 1% but for some reason it acts like 100% (:P)
+
+#message:1C:09A
+{
+[STYLE:Right]This is a Poison Fuzzy.[BR]
+[PAUSE:0A]Poison Fuzzies like to live[BR]
+in places that are dark,[BR]
+cramped, and moist.[BR]
+[Wait][NEXT]When they attack, you'll be[BR]
+poisoned if you don't guard.[BR]
+Also, they can absorb HP much more[BR]
+efficiently than other Fuzzies.[BR]
+[Wait][NEXT]They have an annoying[BR]
+habit of dividing if there's[BR]
+room.[BR]
+[Wait][NEXT]We're in for a long fight.[BR]
+Unless you can quickly[BR]
+take them out...[Wait][END]
+}
+
+#message:1C:09B
+{
+[STYLE:Right]This is a Red Clubba.[BR]
+[PAUSE:0A]Red Clubbas are elite versions[BR]
+of regular Clubbas.[BR]
+[Wait][NEXT]Unlike their green brethren,[BR]
+they are much less suseptible to[BR]
+sleep.[BR]
+[Wait][NEXT]Jumping on them is a bad idea[BR]
+because they can counterattack[BR]
+with their club.[BR]
+[Wait][NEXT]In addition, they will usually[BR]
+hit you multiple times, doing[BR]
+a lot of damage.[BR]
+[Wait][NEXT]They may look big, but if you use[BR]
+the action command perfectly,[BR]
+they're not so tough.[Wait][END]
+}
+
+#message:1C:09C
+{
+[STYLE:Right]This is a Bob-uke.[BR]
+[Wait][NEXT]They are elite Bob-ombs with[BR]
+a lot of explosive power.[BR]
+[Wait][NEXT]They're different from normal[BR]
+Bob-ombs on the inside, so[BR]
+things that would make normal[BR]
+Bob-ombs blow up won't work.[BR]
+[Wait][NEXT]Once ignited, their defense [BR]
+rises to 8.[BR]
+You'll have a hard time making[BR]
+'em explode early too.[BR]
+[Wait][NEXT]It's also impossible to hide from[BR]
+their explosions too.[BR]
+[Wait][NEXT]If you leave them alone for[BR]
+too long, they'll eventually[BR]
+ignite and explode on the same[BR]
+turn.[BR]
+[Wait][NEXT]You know, there's courage in[BR]
+running away sometimes...[Wait][END]
+}
+
+#message:1C:09D
+{
+[STYLE:Right]This is a Boo.[BR]
+[PAUSE:0A]Man, I thought these guys were[BR]
+friendly, but I guess you could[BR]
+say the same about Goombas.[BR]
+[Wait][NEXT]Anyway, these guys go invisible[BR]
+and launch sneak attacks from[BR]
+the shadows. [BR]
+[Wait][NEXT]I don't think we can scare them[BR]
+off or run away easily. Yup, I'd[BR]
+say we're in for a real fright[PAUSE:18][BR]
+-- get it?[BR]
+[Wait][END]
+}
+
+#message:1C:09E
+{
+[STYLE:Right]This is a Cryo Guy.[BR]
+[PAUSE:0A]Cryo Guys are encased in ice,[BR]
+which gives them some defense.[BR]
+[Wait][NEXT]Their attack power isn't that[BR]
+high, but if you don't guard,[BR]
+you'll be frozen solid![BR]
+[Wait][NEXT]You can't hurt them with electric[BR]
+shocks, but fire and explosions will[BR]
+work just fine.[Wait][END]
+}
+
+#message:1C:09F
+{
+[STYLE:Right]This is an Evil Mushroom.[BR]
+[PAUSE:0A]A red mushroom given life[BR]
+by Kammy's magic.[BR]
+[Wait][NEXT]It's a Mushroom, so expect[BR]
+it to heal itself each turn.[BR]
+[PAUSE:0A]We'll need to charge up our[BR]
+strongest attacks to take it out.[BR]
+[Wait][NEXT]It doesn't look very threatening...[BR]
+Did Bowser think that this would [BR]
+stop us or something?[BR]
+[Wait][END]
+}
+
+#message:1C:0A0
+{
+[STYLE:Right]This is a Dark Goomba.[BR]
+[PAUSE:0A]An incredibly powerful, dark[BR]
+version of a Goomba.[BR]
+[Wait][NEXT]Their regular attack hits twice[BR]
+unless you interrupt that first[BR]
+hit.[BR]
+[Wait][NEXT]Their charge attack will deal[BR]
+massive damage, so you better [BR]
+avoid it![BR]
+[Wait][NEXT]Isn't it weird that the dark [BR]
+versions of things are usually [BR]
+stronger?[BR]
+[Wait][NEXT]Of course, theres no way this[BR]
+guy is stronger than me...[Wait][END]
+}
+
+#message:1C:0A1
+{
+[STYLE:Right]This is an Insanee Dayzee.[BR]
+[PAUSE:0A]They're called Insanee Dayzees[BR]
+because legend has it that their[BR]
+songs can drive people insane.[BR]
+[Wait][NEXT]Their songs are hard[BR]
+to guard and do some decent[BR]
+damage.[BR]
+[Wait][NEXT]If they sense that you're [BR]
+struggling, they may sing a [BR]
+different song to weaken you [BR]
+further.[BR]
+[Wait][END]
+}
+
+#message:1C:0A2
+{
+[STYLE:Right]This is a Red Fuzzy.[BR]
+[PAUSE:0A]Red Fuzzies are resistant to heat [BR]
+and like to live close to lava. [BR]
+[Wait][NEXT]They can siphon a lot of health[BR]
+at a time. Even if you're electrified,[BR]
+they can still hurt you.[BR]
+[Wait][NEXT]They will also divide every[BR]
+turn, if there's room.[BR]
+[Wait][NEXT]We're gonna need smart tactics[BR]
+to beat them before they can[BR]
+overwhelm us![Wait][END]
+}
+
+#message:1C:0A3
+{
+[STYLE:Right]This is a Gold Koopatrol.[BR]
+[PAUSE:0A]They're Koopatrols with [BR]
+gold-plated armor.[BR]
+[Wait][NEXT]The gold plating doesn't increase[BR]
+their defense, but it makes them [BR]
+immune to electricity for some [BR]
+reason.[BR]
+[Wait][NEXT]If you flip them, they will[BR]
+increase their attack power when[BR]
+they get back up.[BR]
+[Wait][NEXT]Wait...[PAUSE:0A] I thought gold was[BR]
+good at conducting electricity![BR]
+How does that work?[BR]
+[Wait][NEXT]If you don't guard their attacks,[BR]
+they will keep going. However,[BR]
+that gold plating weighs them[BR]
+down, so their attacks are slow.[BR]
+[Wait][NEXT]When their HP drops low,[BR]
+they'll charge up power for[BR]
+one last-ditch attack.[BR]
+[Wait][NEXT]The power of this desperate[BR]
+attack is massive.[BR]
+[Wait][NEXT]They're proud of their fighting[BR]
+abilities, so they will not[BR]
+call in reinforcements.[BR]
+[Wait][NEXT]Don't underestimate these[BR]
+nasty Koopas, Mario.[Wait][END]
+}
+
+#message:1C:0A4
+{
+[STYLE:Right]This is a Dark Koopatrol.[BR]
+[PAUSE:0A]The elite of the elite.[BR]
+[Wait][NEXT]They've trained day and night[BR]
+to become the best fighters[BR]
+they can be![BR]
+[Wait][NEXT]If you flip them, they will[BR]
+increase their attack power when[BR]
+they get back up.[BR]
+[Wait][NEXT]If you don't guard their attacks,[BR]
+they will keep on attacking.[BR]
+[Wait][NEXT]When their HP drops low,[BR]
+they'll charge up power for[BR]
+one last-ditch attack.[BR]
+[Wait][NEXT]You'll have to guard it multiple[BR]
+times to make it stop![BR]
+[Wait][NEXT]These guys are the best of the[BR]
+best! Don't underestimate them,[BR]
+Mario![Wait][END]
+}
+
+#message:1C:0A5
+{
+[STYLE:Right]This is a Frost Pokey.[BR]
+[PAUSE:0A]Somehow, these cacti have [BR]
+adapted to live in icy [BR]
+conditions.[BR]
+[Wait][NEXT]Most of their attacks can [BR]
+freeze you, so be careful. [BR]
+However, their attack power [BR]
+goes down as they get smaller.[BR]
+[Wait][NEXT]When they get low on health,[BR]
+they may throw more of their[BR]
+segments at you at a time.[BR]
+[Wait][NEXT]They will slowly regenerate over[BR]
+time, like the other Pokeys.[BR]
+[Wait][NEXT]Like most other icy creatures,[BR]
+they are weak to fire.[BR]
+[Wait][END]
+}
+
+#message:1C:0A6
+{
+[STYLE:Right]This is a Frost Puff.[BR]
+[PAUSE:0A]An evil cloud of snow.[BR]
+[Wait][NEXT]They will either attack by[BR]
+slamming onto you, or by blowing[BR]
+some frost at you.[BR]
+[Wait][NEXT]Frost Puffs are weak to fire [BR]
+attacks, but it's hard to reach [BR]
+them with one since they're [BR]
+floating.
+[Wait][END]
+}
+
+#message:1C:0A7
+{
+[STYLE:Right]This is a Blue Spike Top.[BR]
+[PAUSE:0A]A stronger version of a regular[BR]
+Spike Top.[BR]
+[Wait][NEXT]These guys have a lot of defense.[BR]
+Flipping them will reduce it,[BR]
+but you'll have to hit them hard[BR]
+to flip them.[BR]
+[Wait][NEXT]Even then, their defense will still[BR]
+be higher than most enemies.
+[Wait][END]
+}
+
+#message:1C:0A8
+{
+[STYLE:Right]This is a Bzzrk![PAUSE:0A][BR]
+Nasty cousins to the common[BR]
+Bzzap![BR]
+[Wait][NEXT]Is the "!" part of the name?[PAUSE:0A][BR]
+How do you even pronounce that,[BR]
+do you just yell?[BR]
+[Wait][NEXT]The first person to find[BR]
+these creatures must've yelled[BR]
+from the painful sting.[BR]
+[Wait][NEXT]Speaking of, that sting is[BR]
+one of the most painful[BR]
+attacks out there.[BR]
+[Wait][NEXT]No matter how strong your[BR]
+attacks are, it always takes[BR]
+at least two hits to defeat[BR]
+them.[BR]
+[Wait][NEXT]When they feel threatened, they[BR]
+can even sting you multiple times[BR]
+in a desperation attack.[BR]
+[Wait][NEXT]Maybe we should be careful[BR]
+and take them out first.[BR]
+[Wait][END]
+}
+
+#message:1C:0A9
+{
+[STYLE:Right]This is a Poison Puff.[BR]
+[PAUSE:0A]A cloud of poisonous gas.[BR]
+[Wait][NEXT]They will either attack by[BR]
+slamming onto you, or by blowing[BR]
+poison onto you.[BR]
+[Wait][NEXT]The gasses they are made of [BR]
+are flammable, so if you have [BR]
+any Fire Flowers lying around,[BR]
+now is a good time to use 'em.[Wait][END]
+}
+
+#message:1C:0AA
+{
+[STYLE:Right]This is a Dark Bubble.[BR]
+[PAUSE:0A]A bubble made made out of[BR]
+dark energy.[BR]
+[Wait][NEXT]That dark energy will cause you[BR]
+to lose Flower Points when they[BR]
+attack you, but their attacks[BR]
+aren't that strong otherwise.[BR]
+[Wait][NEXT]However, that dark energy makes[BR]
+them immune to star powers.[BR]
+[Wait][NEXT]Touching them will hurt you,[BR]
+just like the other bubbles.[BR]
+[Wait][NEXT]
+However, they aren't actually[BR]
+burning, so Ice Power and the[BR]
+like won't help you here.[BR]
+[Wait][NEXT]They'll also divide when you[BR]
+attack them.[BR]
+[PAUSE:0A]If we don't plan our attacks[BR]
+carefully, we'll be surrounded![Wait][END]
+}
+
+#message:1C:0AB
+{
+[STYLE:Right]This is a Dark Beetle.[BR]
+[PAUSE:0A]Don't let their cute appearance[BR]
+fool you, these guys are [BR]
+really tough![BR]
+[Wait][NEXT]Their defense is sky-high, and[BR]
+defense piercing abilities don't[BR]
+work on them.[BR]
+[Wait][NEXT]That shell protects them from[BR]
+most elements too.[BR]
+[Wait][NEXT]They have no defense to[BR]
+quakes, but only when flipped[BR]
+over.[BR]
+[Wait][NEXT]They used to live all around the[BR]
+world, but now they're only found[BR]
+deep underground.[Wait][END]
+}
+
+#message:1C:0AC
+{
+[STYLE:Right]This is a Lil' Sparky.[BR]
+[PAUSE:0A]
+They look pretty cute, but[BR]
+don't underestimate them![BR]
+[Wait][NEXT]They attack by charging up[BR]
+some electricity, then unleashing[BR]
+it by ramming into you.[BR]
+[Wait][NEXT]Direct attacks are a bad idea[BR]
+if you don't want to get shocked.[BR]
+[Wait][NEXT]I remember hearing that water[BR]
+and electricity don't mix, so use[BR]
+that to your advantage.[Wait][END]
+}
+
+#string:1C:0AD
+{
+	[Style Right]
+	This is a Remedy Guy.[BR]
+	[Pause 10]Remedy Guys are similar[BR]
+	to Medi Guys but with slightly[BR]
+	higher stats.[BR]
+	[Wait][Next]
+	They can heal our enemies[BR]
+	just like regular Medi Guys.[BR]
+	[Wait][Next]
+	We'd better hurry up and take[BR]
+	them out of the mix. It's a[BR]
+	pain if they keep fixing all[BR]
+	the damage we do.[Wait][End]
+}
+
+#string:1C:0AE
+{
+	[Style Right]
+	This is a Practitioner Guy.[BR]
+	[Pause 10]They're the most elite[BR]
+	of the Medi Guys.[BR]
+	[Wait][Next]
+	They can heal and attack on the[BR]
+	same turn.[BR]
+	[Wait][Next]
+	We'd better hurry up and take[BR]
+	them out of the mix. It's a[BR]
+	pain if they keep fixing all[BR]
+	the damage we do.[Wait][End]
+}
+
+#message:1C:0AF
+{
+[STYLE:Right]This is Robotoad.[BR]
+[PAUSE:0A]A robotic Toad Guard who guards[BR]
+the entrance to the cave below.[BR]
+[Wait][NEXT]He looks strong, but his[BR]
+programming is outdated and [BR]
+predictable.[BR]
+[Wait][NEXT]He has three different modes.[BR]
+The red one does the most damage,[BR]
+the blue one has higher defense, and[BR]
+the yellow one will buff itself.[BR]
+[Wait][NEXT]Each hit will change his form in[BR]
+a cycle from red, to blue, to[BR]
+yellow, then back to red.[BR]
+[Wait][NEXT]It shouldn't be too hard to keep[BR]
+him in a certain form, but they're[BR]
+all pretty strong.[Wait][END]
+}
+
+#message:1C:0B0
+{
+[STYLE:Right]He is The Master.[BR]
+[PAUSE:0A]He owns the Dojo-- [BR]
+and he's the strongest member.[BR]
+[Wait][NEXT]
+Though you'd hardly recognize[BR]
+him now! Look at that crazy[BR]
+hair![BR]
+[Wait][NEXT]
+Say, what do you think keeps[BR]
+his hair in place? I bet he[BR]
+goes through a ton of hair[BR]
+product to get that style.[BR]
+[Wait][NEXT]
+This is a whole new look, and[BR]
+with it a new fighting style.[BR]
+It doesn't look like he'll use[BR]
+the same tricks as before.[BR]
+[Wait][NEXT]
+His attacks will do[BR]
+massive damage unless you block,[BR]
+so you need to pay close[BR]
+attention to them.[BR]
+[Wait][NEXT]
+Rumor has it he can [Color:20]detect[BR]
+savestates[Color 10]. It's probably[BR]
+just a rumor though... I don't[BR]
+even know what those are.[BR]
+[Wait][NEXT]
+Upkeeping such a powerful[BR]
+presence must be exhausting. I[BR]
+think the fatigue might end[BR]
+up getting to him.[BR]
+[Wait][NEXT]
+I guess we just have to face[BR]
+the music, this guy is going to[BR]
+be our greatest challenge.[BR]
+[Wait][END]
+}
+
+#message:1C:0B1
+{
+[STYLE:Right]This is [Color:20]Whacka[Color:0A].[BR]
+[PAUSE:0A]Years of getting whacked and[BR]
+beaten have turned him into this.[BR]
+[Wait][NEXT]He's covered in red fire, which [BR]
+somehow turned his name red too.[BR]
+[PAUSE:0A]How are you even supposed to[BR]
+pronounce that?[BR]
+[Wait][NEXT]All his stats are through the[BR]
+roof! He has more health than[BR]
+anyone else in the world, and his[BR]
+other stats are high too.[BR]
+[Wait][NEXT]You know...[PAUSE:0A] I think we should just[BR]
+make a run for it...[BR]
+[Wait][NEXT]
+I mean, I'm not even sure[BR]
+we could beat him... Even[BR]
+if we did, would it be worth it?[BR]
+[Wait][END]
+}
+
+#message:1C:0B2
+{
+[STYLE:Right]This is Phalanx Guy.[BR]
+[PAUSE:0A]He's a master at fighting[BR]
+with his heavy spear.[BR]
+[Wait][NEXT]The spear is too heavy to be[BR]
+thrown, but each hit packs[BR]
+a powerful punch![BR]
+[Wait][NEXT]If you try to go invisible, then[BR]
+he will prepare a counter-attack.[BR]
+[PAUSE:0A]Also, he won't use his charge[BR]
+attack if you're invisible.[BR]
+[Wait][NEXT]He's trained to be resistant[BR]
+to most statuses, but [BR]
+I don't think he'll like being[BR]
+spun around.[Wait][END]
+}
+
+#message:1C:0B3
+{
+[STYLE:Right]This is Covert Guy.[BR]
+[PAUSE:0A]He's a master of stealth fighting.[BR]
+[Wait][NEXT]That slingshot can shoot pellets[BR]
+lightning-fast, so you'll need[BR]
+quick reflexes to block it.[BR]
+[Wait][NEXT]The hammer will stun you and take[BR]
+away battle commands.[BR]
+[Wait][NEXT]Attacking him will make him go[BR]
+invisible. [PAUSE:0A]What a coward![BR]
+[Wait][NEXT]We should charge up some strong[BR]
+attacks then unleash them when[BR]
+he's visible.[Wait][END]
+}
+
+#message:1C:0B4
+{
+[STYLE:Right]This is Permafrost Guy.[BR]
+[PAUSE:0A]A chilly fighter encased in[BR]
+a thick block of ice.[BR]
+[Wait][NEXT]That shell is so cold that fire[BR]
+can't get through at all![BR]
+Explosions don't work either.[BR]
+[Wait][NEXT]It doesn't seem like statuses[BR]
+will help us, so we'll have to[BR]
+beat him the old-fashioned way.[BR]
+[Wait][NEXT][Shake]Brrr! I-Is it getting cold in[BR]
+here or what?[BR]
+[PAUSE:0A]I-If we don't b-beat him f-fast,[BR]
+we'll t-turn into popsicles![Wait][END]
+}
+
+#message:1C:0B5
+{
+[STYLE:Right]This is Nuclear Guy.[BR]
+[PAUSE:0A]A warrior engulfed in green fire.[BR]
+[Wait][NEXT]The heat is so strong that[BR]
+going invisible won't stop[BR]
+him from damaging you.[BR]
+[Wait][NEXT]Trying to jump on him will hurt[BR]
+even if you have Ice Power.[BR]
+[Wait][NEXT]Sleep could work on him, but I[BR]
+doubt that he'll sleep long[BR]
+considering how much light he[BR]
+gives off.[Wait][END]
+}
+
+#message:1C:0B6
+{
+[STYLE:Right]This is Blue Ninjakoopa.[BR]
+[PAUSE:0A]He looks a lot like one of the [BR]
+Koopa Bros.[BR]
+[Wait][NEXT]He's a lot stronger than the[BR]
+Koopa Bros though, and he has a[BR]
+varied moveset.[BR]
+[Wait][NEXT]You'll have to watch him carefully[BR]
+to block his attacks.[Wait][END]
+}
+
+#message:1C:0B7
+{
+[STYLE:Right]This is a Dark Bones.[BR]
+[PAUSE:0A]A dark version of a Dry Bones.[BR]
+...Obviously.[BR]
+[Wait][NEXT]They have incredible defense[BR]
+and decent amounts of HP.[BR]
+[Wait][NEXT]There's no way to take 'em out [BR]
+for good. Fire and explosions [BR]
+will do nothing.[BR]
+[Wait][NEXT]Luckily for us, taking him down[BR]
+once should be enough to open the[BR]
+next pipe.[Wait][END]
+}
+
+#message:1C:0B8
+{
+[STYLE:Right]This is an Atomic Boo.[BR]
+[PAUSE:0A]Wow. That's one big Boo![BR]
+[Wait][NEXT]...Actually, it's made of a bunch [BR]
+of smaller Boos that function as [BR]
+one unit.[BR]
+[Wait][NEXT]Like any regular Boo, it can try[BR]
+to spook us, but it can also spit[BR]
+out some of the smaller Boos to[BR]
+damage us.[BR]
+[Wait][NEXT]It has massive attack power to[BR]
+match its massive size, so [BR]
+watch out![Wait][END]
+}
+
+#message:1C:0B9
+{
+[STYLE:Right]This is Sparkarine.[BR]
+[PAUSE:0A]A regular Lil' Sparky with a[BR]
+crown.[BR]
+[Wait][NEXT]Her main attack is charging up[BR]
+some electricity, then unleashing[BR]
+it by ramming into you.[BR]
+[Wait][NEXT]She can charge power for either [BR]
+a lightning bolt or a shockwave.[BR]
+When she's low on health, she can[BR]
+charge and attack on the same turn.[BR]
+[Wait][NEXT]I remember hearing that water[BR]
+and electricity don't mix, so use[BR]
+that to your advantage.[BR]
+[Wait][END]
+}
+
+#message:1C:0BA
+{
+[STYLE:Right]This is a Lava Cheep.[BR]
+[PAUSE:0A]A Cheep Cheep that loves living[BR]
+in lava.[BR]
+[Wait][NEXT]He can spit lava, or he can[BR]
+do a belly flop onto you.[BR]
+[Wait][NEXT]When he's covered in fire, his[BR]
+attack and defense are higher,[BR]
+so use water attacks to extinguish[BR]
+him.[Wait][END]
+}
+
+#message:1C:0BB
+{
+[STYLE:Right]This is a Beedazzle.[BR]
+[PAUSE:0A]A legendary, golden Bzzap.[BR]
+[Wait][NEXT]Very few people have ever seen[BR]
+them.[BR]
+[Wait][NEXT]It would be nice to beat one, but[BR]
+they have one of the strongest[BR]
+attacks in the world.[BR]
+[Wait][NEXT]Normally, you could beat Bzzaps[BR]
+in one turn, but Beedazzles have[BR]
+very high HP on top of their high[BR]
+attack power.[Wait][END]
+}
+
+#message:1C:0BC
+{
+[STYLE:Right]This is Doople.[BR]
+[PAUSE:0A]Unlike other Duplighosts, she will[BR]
+copy herself instead of copying[BR]us.[BR]
+[Wait][NEXT]The clones have the exact same[BR]
+stats and abilities as the[BR]
+original. They can even spawn[BR]
+more clones![BR]
+[Wait][NEXT]When she gets below half[BR]
+health, she will cast some[BR]
+spells on her allies.[BR]
+[Wait][NEXT]I can't tell the difference[BR]
+between the clones and the[BR]
+original, so who's to say we're[BR]
+fighting the real one?[BR]
+[Wait][NEXT]We should take 'em out all at[BR]once just to be safe.[Wait][END]
+}
+
+#message:1C:0BD
+{
+[STYLE:Right]This is the Magic Bro.[BR]
+[PAUSE:0A]A Hammer Bro who also knows some[BR]
+magic.[BR]
+[Wait][NEXT]His attacks are very hard[BR]
+to predict, so you have to watch[BR]
+them carefully.[BR]
+[Wait][NEXT]He will throw more hammers as[BR]
+his health gets lower, and the[BR]
+final hammer will inflict[BR]
+statuses.[BR]
+[Wait][NEXT]That's a pretty snazzy hat[BR]
+he has.[PAUSE:0A][BR]
+Maybe when we get out of here[BR]
+I should get one like that.[Wait][END]
+}
+
+#message:1C:0BE
+{
+[STYLE:Right]This is the Emperor Beetle.[BR]
+[PAUSE:0A]The emperor of the Buzzy Beetles,[BR]
+who was banished to this pit.[BR]
+[Wait][NEXT].[PAUSE:0A].[PAUSE:0A].I can't take him seriously.[BR]
+He looks really stupid with that[BR]
+giant wand.[BR]
+[Wait][NEXT]Apparently, it changes color to[BR]
+indicate which spell he casts.[BR]
+[Wait][NEXT]His defenses are slightly[BR]
+higher than regular Dark[BR]
+Beetles.[BR]
+[Wait][NEXT]He must have been pretty[BR]
+powerful to be banished all the[BR]
+way to Floor 90...[BR]
+Keep your guard up at all costs![BR]
+[Wait][END]
+}
+
+#message:1C:0BF
+{
+[STYLE:Right]Woah. That's a dark copy of[BR]
+you, Mario![BR]
+[Wait][NEXT]It looks like his attack power[BR]
+and defense are similar to[BR]
+yours, but his HP is much[BR]
+higher.[BR]
+[Wait][NEXT]He probably copied your[BR]
+abilities too, but it doesn't[BR]
+look like it matters what[BR]
+equipment you have.[BR]
+[Wait][NEXT]He'll start off with strong[BR]
+moves, but eventually he'll[BR]
+have to use weaker ones.[BR]
+[Wait][NEXT]Who does this guy think he is,[BR]
+copying you like that?[BR]
+There's no way he can be[BR]
+stronger than the real deal![BR]
+[Wait][NEXT]It all comes down to this,[BR]
+Mario![BR]
+[PAUSE:0A]We just have to beat him and[BR]
+then we're home free![Wait][END]
+}
+
+#message:1C:0C0
+{
+[STYLE:Right]This is a Fire Piranha.[BR]
+[PAUSE:0A][Wait][NEXT]Fire Piranhas will usually keep[BR]
+their distance and shoot[BR]
+fireballs at you.[BR]
+[Wait][NEXT]Their fiery nature makes them[BR]
+weak to ice and water.[Wait][END]
+}
+
+#message:1C:0C1
+{
+[STYLE:Right]This is the Dark Star.[BR]
+[PAUSE:0A]An ancient power older than the[BR]
+Star Spirits themselves![BR]
+[Wait][NEXT]It doesn't look like any direct[BR]
+attack will do anything.[BR]
+Not even the Star Beam will work.[BR]
+[Wait][NEXT]Oh, this is bad! [BR]
+[PAUSE:0A]We need to find a way to attack it[BR]
+or else we'll be sitting ducks![Wait][END]
+}
+
+#message:1C:0C2
+{
+[STYLE:Right]This is an Elite Bandit.[BR]
+[PAUSE:0A]They are the big bosses[BR]
+of highway robbery.[BR]
+[Wait][NEXT]These guys have very unpredictable[BR]
+attacks. It will be hard to guard[BR]
+against them.[BR]
+[Wait][NEXT]They do some decent damage[BR]
+and take away our abilities[BR]
+instead of our money![BR]
+[Wait][NEXT]They have loads of HP so let's[BR]
+hit 'em with everything we've[BR]
+got![Wait][END]
+}
+
+#message:1C:0C3
+{
+[STYLE:Right]This is a Steel Cleft.[BR]
+[PAUSE:0A]A Cleft made out of solid steel.[BR]
+[Wait][NEXT]Their armor is very strong, so[BR]
+most attacks will do nothing[BR]
+against it.[BR]
+Even earthquakes won't work![BR]
+[Wait][NEXT]If you don't block their normal[BR]
+attack, they will keep going.[BR]
+[Wait][NEXT]When their health is low enough,[BR]
+they will use their charge attack.[BR]
+[Wait][NEXT]They look a bit outdated though.[BR]
+I bet they have a weakness of[BR]
+some kind, but what could it be?[Wait][END]
+}
+
+#message:1C:0C4
+{
+[STYLE:Right]This is a Dark Sentinel.[BR]
+[PAUSE:0A]Not much is known about them.[BR]
+[Wait][NEXT]Their health isn't that high,[BR]
+but they have strange armor[BR]
+that makes all attacks deal[BR]
+one damage at most.[BR]
+[Wait][NEXT]They will probably try to grab[BR]
+you with their tentacles.[BR]
+[Wait][NEXT]If their health drops too low,[BR]
+they'll bring in some backup.[Wait][END]
+}
+
+#message:1C:0C5
+{
+[STYLE:Right]This is a Dark Boo.[BR]
+[PAUSE:0A]A very dangerous Boo that[BR]
+loves dark places. Like the[BR]
+bottom of a giant cave.[BR]
+[Wait][NEXT]They have relatively low attack,[BR]
+but they are hard to block.[BR]
+[Wait][NEXT]Their HP is pretty high, and[BR]
+they always start a fight[BR]
+invisible.[BR]
+[Wait][NEXT]We are in for a long fight, I hope[BR]
+we can heal off the damage they[BR]
+do.[Wait][END]
+}
+
+#message:1C:0C6
+{
+[STYLE:Right]This is a Ztar.[BR]
+[PAUSE:0A]A dark version of a regular[BR]
+Star only found in the darkest[BR]
+of places.[BR]
+[Wait][NEXT]They can grant small wishes,[BR]
+and use this power to buff[BR]
+enemy attack and defense.[BR]
+[Wait][NEXT]Their health is really low,[BR]
+but the problem is that they[BR]
+are immune to non-lethal[BR]
+attacks.[BR]
+[Wait][NEXT]
+You won't be able to damage[BR]
+them with star powers though...[BR]
+[Wait][END]
+}
+
+#message:1C:0C7
+{
+[STYLE:Right]This is a Dark Clubba.[BR]
+[PAUSE:0A]Very powerful versions of[BR]
+regular Clubbas.[BR]
+[PAUSE:0A]I wonder why they're down here...[BR]
+[Wait][NEXT]They have high HP, high defense,[BR]
+and high attack.[BR]
+[Wait][NEXT]In addition, their attacks are[BR]
+very fast, making them hard to [BR]
+guard.[BR]
+[Wait][NEXT]If you try most direct attacks,[BR]
+they will counterattack with their[BR]
+club.[BR]
+[Wait][NEXT]Apparently, their reflexes are so[BR]
+good, they can even counterattack[BR]
+in their sleep.[BR]
+[Wait][NEXT]They're immune to most statuses. [BR]
+I'm pretty sure they are weak[BR]
+to sleep though...[Wait][END]
+}
+
+#message:1C:0C8
+{
+[STYLE:Right]This is Lakilulu.[BR]
+[PAUSE:0A]She is Spike's girlfriend.[BR]
+There was no hesitation[BR]
+to stick up for him.[BR]
+[Wait][NEXT]That must be what love is.[BR]
+How did a loser like Spike[BR]
+get such a nice lady to[BR]
+go out with him?[BR]
+[Wait][NEXT]She seems to be pretty strong[BR]
+too. Say, you think she will[BR]
+join our party?[BR]
+[Wait][NEXT]We could use the extra muscle[BR]
+if we are going to fight[BR]
+Bowser in the end.[BR]
+[Wait][NEXT]Whatever the case, we have to[BR]
+beat her if we want to keep[BR]
+moving. I'm sure she will[BR]
+understand.[Wait][END]
+}
+
+#message:1C:0C9
+{
+[STYLE:Right]This is the Toadinator.[BR]
+[PAUSE:0A]An upgraded version of Robotoad.[BR]
+[Wait][NEXT]This form has higher HP, higher[BR]
+attack, and higher defense.[BR]
+[Wait][NEXT]Attacking him won't always change[BR]
+his form, so you'll just have to[BR]
+deal with whatever form he has.[Wait][END]
+}
+
+#message:1C:0CA
+{
+[STYLE:Right]This is a Lickit.[BR]
+[PAUSE:0A]They look pretty big, but[BR]
+they aren't very strong.[BR]
+[Wait][NEXT]They attack by licking you.[BR]
+If you don't block it, you'll be[BR]
+poisoned.[BR]
+[Wait][END]
+}
+
+#message:1C:0CB
+{
+[STYLE:Right]This is a Cheep Cheep.[BR]
+[PAUSE:0A]They usually attack by flopping[BR]
+onto you.[BR]
+[Wait][NEXT]Sometimes they'll go for your[BR]
+friends (like me) instead,[BR]
+so be careful!
+[Wait][END]
+}
+
+#message:1C:0CC
+{
+[STYLE:Right]
+This is a Red Goomba.[BR][PAUSE:A]
+They're faster, stronger,[BR]
+and more tenacious than normal[BR]
+Goombas.[BR]
+[Wait][NEXT]
+They'll attack you twice,[BR]
+so don't let your guard down![BR]
+[Wait][END]
+}
+
+#message:1C:0CD
+{
+[STYLE:Right]
+This is a Red Paragoomba.[BR][PAUSE:A]
+They're faster, stronger,[BR]
+and more tenacious than normal[BR]
+Paragoombas.[BR]
+[Wait][NEXT]
+They'll attack you twice,[BR]
+so don't let your guard down![BR]
+[Wait][END]
+}
+
+#message:1C:0CE
+{
+[STYLE:Right]
+This is a Dry Bubble.[BR][PAUSE:A]
+They're hot burning creatures[BR]
+that thrive in desert climates.[BR]
+[Wait][NEXT]
+They don't have too much HP, but[BR]
+you can't get a good jump on[BR]
+'em without feeling the heat.[BR]
+[Wait][NEXT]
+You could give 'em a good[BR]
+what-for with your hammer, but[BR]
+they like to sit up high.[BR]
+[Wait][NEXT]
+They're so shiny though, I...[BR]
+[PAUSE:20]Man, I think the heat is[BR]
+making me delusional.[BR]
+[Wait][END]
+}
+
+#message:1C:0CF
+{
+[STYLE:Right]
+This is a Bristle.[BR][PAUSE:A]
+They're large rock creatures[BR]
+as old as time.[BR]
+[Wait][NEXT]
+Immune to fire and covered in[BR]
+spikes. At least its HP isn't[BR]
+that impressive.[BR]
+[Wait][NEXT]
+I've read somewhere that the[BR]
+underside isn't as hard, but[BR]
+there doesn't seem to be a[BR]
+way to flip them.[BR]
+[Wait][NEXT]
+I bet they wouldn't do so[BR]
+hot if you nailed 'em with[BR]
+an earthquake from below.[BR]
+[Wait][NEXT]
+Bowser must have supplied them[BR]
+to Tubba Blubba to increase[BR]
+security at the castle.[BR]
+[Wait][END]
+}
+
+#message:1C:0D0
+{
+[STYLE:Right]
+This is a Dark Bristle.[BR][PAUSE:A]
+They're large rock creatures[BR]
+older than time itself.[BR]
+[Wait][NEXT]
+Immune to fire and explosion,[BR]
+and covered in spikes. I hope[BR]
+you have a plan, Mario.[BR]
+[Wait][NEXT]
+Just like the normal Bristle,[BR]
+these guys are weak to being[BR]
+struck from below.[BR]
+[Wait][NEXT]
+They won't feel so good if[BR]
+you nailed 'em with a quake[BR]
+from below.[BR]
+[Wait][NEXT]
+Bowser really found himself a[BR]
+dangerous ally with Dark[BR]
+Bristles.[PAUSE:A] Could it get worse?[BR]
+[Wait][END]
+}
+
+#message:1C:0D1
+{
+[STYLE:Right]
+This is a Crystal Bristle.[BR][PAUSE:A]
+They're large rock creatures[BR]
+older than time itself.[BR]
+[Wait][NEXT]
+Immune to fire and explosion,[BR]
+and covered in spikes. I hope[BR]
+you have a plan, Mario.[BR]
+[Wait][NEXT]
+Their attacks will get stronger[BR]
+when your health gets lower.[BR]
+[Wait][NEXT]
+Just like the other Bristles,[BR]
+these guys are weak to being[BR]
+struck from below.[BR]
+[Wait][NEXT]
+After their first attack, they[BR]
+will become invisible during[BR]
+their attack.[BR]
+[Wait][END]
+}
+
+#message:1C:0D2
+{
+[STYLE:Right]
+This is a Steel Bristle.[BR][PAUSE:A]
+Metallic creatures based on[BR]
+regular Bristles.[BR]
+[Wait][NEXT]
+Their defenses are better than[BR]
+the other Bristles, but they[BR]
+still have the same weakness.[BR]
+[Wait][NEXT]
+They have three different timings,[BR]
+but you can figure out what it is[BR]
+if you watch them carefully.[BR]
+[Wait][NEXT]
+They will also attack multiple[BR]
+times if you fail to block.[BR]
+[Wait][END]
+}
+
+#message:1C:0D3
+{
+[STYLE:Right]
+This is an Ember Guy.[BR][PAUSE:A]
+[PAUSE:0A]Much stronger versions of[BR]
+Pyro Guys.[BR]
+[Wait][NEXT]They're tough opponents, mainly[BR]
+because their attack power is[BR]
+so high.[BR]
+[Wait][NEXT]They have 1 defense to normal[BR]
+attacks, but -1 defense to water[BR]
+and ice.[BR]
+[Wait][NEXT]However, they get mad if you[BR]
+hit them with water or ice,[BR]
+and their attack goes way up.[BR]
+[Wait][END]
+}
+
+#message:1C:0D4
+{
+[STYLE:Right]
+This is an R. Bush.[BR]
+[PAUSE:0A]R. Bushes pretend to be bushes[BR]
+and wait for unwary prey. [BR]
+[Wait][NEXT]I'm not really sure what that[BR]
+"R" stands for...[BR]
+[PAUSE:0A]Rage Bushes? [PAUSE:0A]Random Bushes?[BR]
+[PAUSE:0A]Rose Bushes?[BR]
+[Wait][NEXT]You know what, it probably[BR]
+doesn't matter.[BR]
+Their bites are usually[BR]
+poisonous, so be careful.[BR]
+[Wait][NEXT]They will try to bite[BR]
+you twice in a row.[BR]
+[Wait][NEXT]Let's clear 'em out quickly,[BR]
+OK? Use your most powerful[BR]
+attack, why don't you?[Wait][END]
+}
+
+#message:1C:0D5
+{
+[STYLE:Right]
+This is a Crystal Chomp.[BR]
+[PAUSE:0A]Chomps made of crystal. Duh![BR]
+[Wait][NEXT]They will switch from being[BR]
+sapphire or ruby every time you[BR]
+hit them.[BR]
+[Wait][NEXT]The sapphire form can fake you[BR]
+out. You'll need quick reflexes[BR]
+to block them.[BR]
+[Wait][NEXT]The ruby form will never fake[BR]
+you out, but they attack twice[BR]
+in a row instead.[BR]
+[Wait][NEXT]
+Their attacks will get stronger[BR]
+when your health gets lower.[BR]
+[Wait][NEXT]His jaws can supposedly crush[BR]
+a Coconut.[BR]
+[PAUSE:0A]I don't know about you, but I[BR]
+don't want to become a snack.[Wait][END]
+}
+
+#message:1C:0D6
+{
+[STYLE:Right]
+This is a Bloody Beetle.[BR]
+[PAUSE:0A]Apparently the red markings[BR]
+might not be real blood.[BR]
+[Wait][NEXT]They're really vicious.[BR]
+If you miss blocking their attacks,[BR]
+they will keep going.[BR]
+[Wait][NEXT]When their spikes are out,[BR]
+that's when you really need to[BR]
+block since their attacks are[BR]
+much stronger.[BR]
+[Wait][NEXT]However, you can flip them[BR]
+much more easily when their[BR]
+spikes are out.[BR]
+[Wait][NEXT]It's tough to damage 'em.[BR]
+Flipping them will only go[BR]
+so far.[BR]
+[Wait][NEXT]Earthquakes will always flip[BR]
+them, so that's the best way[BR]
+to beat them.[Wait][END]
+}
+
+#message:1C:0D7
+{
+[STYLE:Right]
+This is a Red Bones.[BR]
+[PAUSE:0A]Red Bones are skeletal remains[BR]
+from Koopa Troopas.[BR]
+[Wait][NEXT]Just when you think they're[BR]
+beat, these guys rise back up[BR]
+and attack again![BR]
+[Wait][NEXT]You're going to have to beat[BR]
+them all at once.[BR]
+[Wait][NEXT]They throw 2 bones at a time.[BR]
+[Wait][NEXT]They're immune to fire, but[BR]
+explosions will completely[BR]
+disintegrate them.[Wait][END]
+}
+
+#message:1C:0D8
+{
+[STYLE:Right]This is a Dark Puff.[BR]
+[PAUSE:0A]A cloud of dust and dark energy.[BR]
+[Wait][NEXT]They will either attack by[BR]
+slamming onto you, or by blowing[BR]
+dark energy onto you.[BR]
+[Wait][NEXT]Their blowing attack can blow[BR]
+away your Flower Points if you[BR]
+don't block.[Wait][END]
+}
+
+#message:1C:0D9
+{
+[STYLE:Right]This is a Dark Magikoopa.[BR]
+[PAUSE:0A]Dark Magikoopas are the elite[BR]
+magicians of the Koopa clan[BR]
+who have studied dark magic.[BR]
+[Wait][NEXT]Tread carefully, Mario![BR]
+Their magical attacks pack a[BR]
+serious punch![BR]
+[Wait][NEXT]They know many nasty spells[BR]
+and can do up to 2 of them[BR]
+per turn.[BR]
+[Wait][NEXT]If you don't block their dark[BR]
+spell, your attack and defense[BR]
+will go down.[BR]
+[Wait][NEXT]When they take damage, they[BR]
+will quickly cast a vanish[BR]
+spell on themselves for 1 turn.[BR]
+[Wait][NEXT]We'd better beat them before[BR]
+they can do anything crazy.[Wait][END]
+}
+
+#message:1C:0DA
+{
+[STYLE:Right]It's an Ultra Shroom?[BR]
+[PAUSE:0A]Why is it attacking us?[BR]
+[Wait][NEXT]It's an Ultra Shroom,[BR]
+so it has very strong healing.[BR]
+[PAUSE:0A]We'll need to charge up our[BR]
+strongest attacks to take it out.[BR]
+[Wait][NEXT]It also deals massive damage,[BR]
+so we'll need smart tactics[BR]
+to beat it.[BR]
+[Wait][END]
+}
+
+#message:1C:0DB
+{
+[STYLE:Right]This is an Ultra Blooper?[BR]
+[PAUSE:0A]Huh? I was expecting it to be[BR]
+bigger... I guess he's not much[BR]
+of an Ultra Blooper then.[BR]
+[Wait][NEXT]His main attack is just like[BR]
+the Blooper Babies, but he is[BR]
+not immune to Zap Tap.[BR]
+[Wait][NEXT]However, he will stop trying[BR]
+to drain health if he gets[BR]
+zapped.[BR]
+[Wait][NEXT]His power is constantly going[BR]
+up, and he can even heal without[BR]
+attacking. We'll have to act[BR]
+quickly to beat him.[BR]
+[Wait][NEXT]
+He's so cute, though! [Wait][END]
+}
+
+#message:1C:0DC
+{
+[STYLE:Right]This is a Swoopix, a fiery bat.[BR]
+[PAUSE:0A]They can attack twice, but[BR]
+their attacks don't deal any[BR]
+statuses.[BR]
+[Wait][NEXT]The problem is that they can[BR]
+only be defeated by exact damage.[BR]
+If you deal too much, they'll[BR]
+actually survive.[BR]
+[Wait][NEXT]Bow's moves can help if you're[BR]
+having trouble beating them.[BR]
+[Wait][END]
+}
+
+
+%Dark bosses n stuff
+#message:1C:0DD
+{
+[STYLE:Right]This is one of the bosses[BR]
+in the Temple of Darkness.[BR]
+[PAUSE:0A]It looks kinda like one of[BR]
+the Koopa Bros.[BR]
+[Wait][NEXT]This one can attack from all[BR]
+directions, so you need to[BR]
+pay close attention to block[BR]
+its attacks.[BR]
+[Wait][NEXT]When it teleports, sometimes[BR]
+it creates a hole in reality[BR]
+that makes it harder to target.[BR]
+[Wait][NEXT]It can bend space, but it[BR]
+can't bend time, which is[BR]
+pretty good.[BR]
+[Wait][NEXT]It would be really annoying[BR]
+if this guy could slow down[BR]
+time for us to make this[BR]
+take forever...[BR]
+[Wait][END]
+}
+
+#message:1C:0DE
+{
+[STYLE:Right]This is a Solid Void.[BR]
+[PAUSE:0A]It's basically a hole in reality.[BR]
+[Wait][NEXT]There's no way to attack it,[BR]
+but it doesn't do anything[BR]
+either.[BR]
+[Wait][NEXT]We should probably try to[BR]
+ignore them.[BR]
+[Wait][NEXT]You know, I'm not sure it's[BR]
+safe to even be around these[BR]
+things. Beating the boss should[BR]
+make them disappear though.[BR]
+[Wait][END]
+}
+
+#message:1C:0DF
+{
+[STYLE:Right]This is one of the bosses[BR]
+in the Temple of Darkness.[BR]
+[PAUSE:0A]It looks kinda like some kind[BR]
+of Dry Bones.[BR]
+[Wait][NEXT]This one has unpiercable[BR]
+defense that goes up every turn.[BR]
+[Wait][NEXT]We'll have to act fast[BR]
+in order to beat this guy.[BR]
+[Wait][END]
+}
+
+#message:1C:0E0
+{
+[STYLE:Right]This is one of the bosses[BR]
+in the Temple of Darkness.[BR]
+[PAUSE:0A]It looks kinda like some kind[BR]
+of giant Boo.[BR]
+[Wait][NEXT]Every attack against this[BR]
+guy will spawn smaller versions[BR]
+of itself.[BR]
+[Wait][NEXT]They will share the same[BR]
+boosts that the original[BR]
+has.[BR]
+[Wait][NEXT]This guy uses weak attacks,[BR]
+but it does a lot more damage[BR]
+if you go invisible.[BR]
+[Wait][END]
+}
+
+#message:1C:0E1
+{
+[STYLE:Right]This is a piece of a[BR]
+boss in the Temple of Darkness[BR]
+[Wait][NEXT]This guy will attack you[BR]
+and go back into the boss,[BR]
+but it can pierce invisibility[BR]
+too.[BR]
+[Wait][END]
+}
+
+#message:1C:0E2
+{
+[STYLE:Right]This is one of the bosses[BR]
+in the Temple of Darkness.[BR]
+[PAUSE:0A]It looks like a Lil' Sparky[BR]
+of some kind.[BR]
+[Wait][NEXT]Every turn, it will charge[BR]
+energy to perform stronger[BR]
+attacks.[BR]
+[Wait][NEXT]However, each hit will remove[BR]
+one level of charge.[BR]
+[Wait][NEXT]If its charge level is too high,[BR]
+it will unleash an unavoidable[BR]
+attack that will remove all[BR]
+charge, but deal massive damage.[BR]
+[Wait][END]
+}
+
+#message:1C:0E3
+{
+[STYLE:Right]This is one of the bosses[BR]
+in the Temple of Darkness.[BR]
+[PAUSE:0A]It looks like a Cheep Cheep[BR]
+of some kind.[BR]
+[Wait][NEXT]It looks kind of weak, but[BR]
+it will become stronger every[BR]
+time it reaches 0 hp.[BR]
+[Wait][END]
+}
+
+#message:1C:0E4
+{
+[STYLE:Right]This is one of the bosses[BR]
+in the Temple of Darkness.[BR]
+[PAUSE:0A]It looks like a Bzzap[BR]
+of some kind.[BR]
+[Wait][NEXT]It can't attack by itself,[BR]
+but it will summon different[BR]
+types of bits to attack.[BR]
+[Wait][NEXT]Each bit will give it[BR]
++2 unpiercable defense, so you'll[BR]
+only be able to damage it when[BR]
+they're gone.[BR]
+[Wait][END]
+}
+
+#message:1C:0E5
+{
+[STYLE:Right]This is a Perfect Bit.[BR]
+[PAUSE:0A]A piece of red crystal.[BR]
+[PAUSE:0A]They have low HP, but defeating[BR]
+them could be difficult.[BR]
+[Wait][NEXT]You can only defeat them with[BR]
+an attack that does damage[BR]
+equal to its maximum health.[BR]
+[Wait][NEXT]These guys shoot red lasers[BR]
+to attack you.[BR]
+Also, they give the Dark Summoner[BR]
+2 defense while it is out.[BR]
+[Wait][NEXT]They'll keep coming, though,[BR]
+until you've finally beaten[BR]
+the Dark Summoner.[Wait][END]
+}
+
+#message:1C:0E6
+{
+[STYLE:Right]This is a Shielded Bit.[BR]
+[PAUSE:0A]A piece of blue crystal.[BR]
+[PAUSE:0A]They have low HP, but defeating[BR]
+them could be difficult.[BR]
+[Wait][NEXT]When they're at maximum health,[BR]
+any attack that would reduce[BR]
+them to 0 hp is instead[BR]
+completely negated.[BR]
+[Wait][NEXT]These guys shoot ice beams[BR]
+to attack you.[BR]
+Also, they give the Dark Summoner[BR]
+2 defense while it is out.[BR]
+[Wait][NEXT]They'll keep coming, though,[BR]
+until you've finally beaten[BR]
+the Dark Summoner.[Wait][END]
+}
+
+#message:1C:0E7
+{
+[STYLE:Right]This is a Viscous Bit.[BR]
+[PAUSE:0A]A piece of green crystal.[BR]
+[PAUSE:0A]They have low HP, but defeating[BR]
+them could be difficult.[BR]
+[Wait][NEXT]No matter how strong your[BR]
+attacks are, all attacks will[BR]
+deal 1 damage.[BR]
+[Wait][NEXT]These guys will breath poison[BR]
+gas onto you as their attack.[BR]
+Also, they give the Dark Summoner[BR]
+2 defense while it is out.[BR]
+[Wait][NEXT]They'll keep coming, though,[BR]
+until you've finally beaten[BR]
+the Dark Summoner.[Wait][END]
+}
+
+#message:1C:0E8
+{
+[STYLE:Right]This is a Sturdy Bit.[BR]
+[PAUSE:0A]A piece of yellow crystal.[BR]
+[PAUSE:0A]They have low HP, but defeating[BR]
+them could be difficult.[BR]
+[Wait][NEXT]No matter how strong your[BR]
+attacks are, these guys always[BR]
+take at least 2 hits to defeat.[BR]
+[Wait][NEXT]These guys shoot lightning bolts[BR]
+to attack you.[BR]
+Also, they give the Dark Summoner[BR]
+2 defense while it is out.[BR]
+[Wait][NEXT]They'll keep coming, though,[BR]
+until you've finally beaten[BR]
+the Dark Summoner.[Wait][END]
+}
+
+#message:1C:0E9
+{
+[STYLE:Right]This is one of the bosses[BR]
+in the Temple of Darkness.[BR]
+[PAUSE:0A]It looks like a Duplighost[BR]
+of some kind.[BR]
+[Wait][NEXT]It can't attack by itself,[BR]
+but it will copy itself[BR]
+to fight us.[BR]
+[Wait][NEXT]When it can't copy itself on[BR]
+its turn, it will instead heal[BR]
+all of the clones.[BR]
+[Wait][NEXT]It's impossible to damage[BR]
+it, but every clone it makes will[BR]
+make it lose 1 hp each.[BR]
+[Wait][END]
+}
+
+#message:1C:0EA
+{
+[STYLE:Right]It's a copy of a boss in the[BR]
+Temple of Darkness.[BR]
+[Wait][NEXT]Their attack power is based[BR]
+on how much health they have[BR]
+left, so attacking all of them[BR]
+might not be the best idea.[BR]
+[Wait][END]
+}
+
+#message:1C:0EB
+{
+[STYLE:Right]I'm not sure what this is...[BR]
+[PAUSE:0A]It looks like some sort of[BR]
+shadowy sword.[BR]
+[Wait][NEXT]It has a variety of attacks[BR]
+it can do, and they all get[BR]
+stronger as time goes on.[BR]
+[Wait][NEXT]It was stuck down here for[BR]
+quite a while, so it's probably[BR]
+not that strong, right?[BR]
+[PAUSE:0A]I could be wrong though...[BR]
+[Wait][NEXT]I have no idea what this thing[BR]
+is capable of...[BR]
+Maybe we should try to defeat[BR]
+it as fast as possible.[BR]
+[Wait][END]
+}
+
+#message:1C:0EC
+{
+[STYLE:Right]It's a Duplighost disguised[BR]
+as Buzzatrice.[BR]
+[Wait][NEXT]Its disguise is pretty much[BR]
+perfect. Its attack power[BR]
+is exactly the same as the[BR]
+character it's imitating.[BR]
+[Wait][NEXT]Her beam spell can hit you[BR]
+even if you go invisible.[BR]
+[Wait][NEXT]You should be careful even[BR]
+though she looks cute.[Wait][END]
+}
+
+#message:1C:0ED
+{
+[STYLE:Right]This is Lee disguised as[BR]
+Buzzatrice.[BR]
+[PAUSE:0A]You should be careful even[BR]
+if he looks cute as her.[BR]
+[Wait][NEXT]Her beam spell can hit you[BR]
+even if you go invisible.[BR]
+[Wait][NEXT]She also has some[BR]
+unpiercable defense too.[Wait][END]
+}
+
+#message:1C:0EE
+{
+[STYLE:Right]It's a dark copy of Buzzatrice.[BR]
+[Wait][NEXT]It's a dark copy, so it can use[BR]
+moves similar to what Buzzatrice[BR]
+can use.[BR]
+[Wait][NEXT]Her magic pretty is dangerous.[BR]
+Her beam attack can pierce[BR]
+invisibility, and she can[BR]
+give her allies extra turns.[BR]
+[Wait][NEXT]You should be careful even[BR]
+though she looks cute.[Wait][END]
+}
+
+#message:1C:0EF
+{
+[STYLE:Right]This thing looks kind of[BR]
+like a star, but it looks[BR]
+kind of off.[BR]
+[Wait][NEXT]It's too hot to jump on,[BR]
+even with Ice Power, and[BR]
+it slowly gets stronger[BR]
+every turn.[BR]
+[Wait][NEXT]Its attacks are fast and not[BR]
+that strong, but being this[BR]
+close to it hurts a lot.[BR]
+[Wait][NEXT]
+Maybe talking about this guy[BR]
+wasn't a good idea...[BR]
+[Wait][END]
+}
+
+
+
+
+
+
+%Made the EX boss tattles have IDs above 100 to make sure I don't have to move them
+
+#message:1C:100
+{
+[STYLE:Right]This is Red Goomba.[BR]
+[PAUSE:0A]He's the older of the two[BR]
+notorious Goomba Bros.[BR]
+[Wait][NEXT]The Goomba King ordered him[BR]
+to try to stop you.[BR]
+You can take this guy, no prob.[BR]
+[Wait][NEXT]
+He can boost Goomba King's[BR]
+attack, charge, or headbonk.[BR]
+[Wait][NEXT]
+However, he won't charge if[BR]
+Blue Goomba is charged.[BR]
+[Wait][NEXT]
+Also, he'll be able to charge[BR]
+and attack on the same turn[BR]
+if Blue Goomba is defeated.[BR]
+[Wait][END]
+}
+
+#message:1C:101
+{
+[STYLE:Right]This is Blue Goomba.[BR]
+[PAUSE:0A]He's the younger of the two[BR]
+notorious Goomba Bros.[BR]
+[Wait][NEXT]He's one of the Goomba King's[BR]
+men.[BR]
+[Wait][NEXT]He can boost Goomba King's[BR]
+defense, charge, or headbonk.[BR]
+[Wait][NEXT]
+However, he won't charge if[BR]
+Red Goomba is charged.[BR]
+[Wait][NEXT]
+Also, he'll be able to charge[BR]
+and attack on the same turn[BR]
+if Red Goomba is defeated.[BR]
+[Wait][END]
+}
+
+#message:1C:102
+{
+[STYLE:Right]This is the Goomba King.[BR]
+[PAUSE:0A]He's really big. I mean, look[BR]
+at him! He looks really powerful.[BR]
+[Wait][NEXT]He can kick three times, and[BR]
+he receives boosts from[BR]
+Red Goomba and Blue Goomba.[BR]
+[Wait][NEXT]He's the boss of Red Goomba[BR]
+and Blue Goomba.[BR]
+[PAUSE:0A]Who cares if he's strong?[BR]
+You're much stronger.[BR]
+[Wait][NEXT]Gee, I wonder what he ate[BR]
+to become so big?[BR]
+[PAUSE:0A]I'd like to be a bit bigger, too.[Wait][END]
+}
+
+#message:1C:103
+{
+[STYLE:Right]This is Red Ninjakoopa.[BR]
+[PAUSE:0A]He's the Koopa Bros. leader.[BR]
+[Wait][NEXT]His special move is the Fire Shell,[BR]
+which will hit both you and me.[BR]
+[Wait][NEXT]He's immune to fire, so[BR]
+Fire Flowers won't work on[BR]
+him.[BR]
+[Wait][NEXT]He trained himself to resist[BR]
+most statuses.[BR]
+You know, [PAUSE 10]sometimes people like[BR]
+him should learn to just stop...[Wait][END]
+}
+
+#message:1C:104
+{
+[STYLE:Right]This is Black Ninjakoopa.[BR]
+[PAUSE:0A]Black is pretty fashionable...[BR]
+[Wait][NEXT]His special move is the[BR]
+Tornado Shell, which can make[BR]
+you dizzy and launch you.[BR]
+[Wait][NEXT]Also, he becomes invisible[BR]
+when he does his normal attack.[BR]
+[Wait][NEXT]His health is lower than [BR]
+the others, but his defense is[BR]
+higher.[BR]
+[Wait][NEXT]He may have higher defense,[BR]
+but electricity will work fine[BR]
+on him.[Wait][END]
+}
+
+#message:1C:105
+{
+[STYLE:Right]This is Yellow Ninjakoopa.[BR]
+[Wait][NEXT]Yellow reminds me of curry.[BR]
+Isn't that a weird thing to[BR]
+think of in the middle of[BR]
+a battle?[BR]
+[Wait][NEXT]His special move is the[BR]
+Shell Bolt, which can paralyze you.[BR]
+[Wait][NEXT]I'm not really sure how he can[BR]
+make lightning bolts by spinning...[BR][PAUSE 10]
+Do you just spin really fast?[BR][PAUSE 10]
+Wouldn't you get dizzy?[Wait][END]
+}
+
+#message:1C:106
+{
+[STYLE:Right]This is Green Ninjakoopa.[BR]
+[PAUSE:0A]He looks pretty similar to a[BR]
+normal Koopa Troopa.[BR]
+[Wait][NEXT]He doesn't have a special move,[BR]
+but his landing attack is stronger[BR]
+and faster than the others. His[BR]
+normal Shell Toss is stronger too.[BR]
+[Wait][NEXT]It is impossible to flip him,[BR]
+and quakes do nothing against[BR]
+him.[BR]
+[Wait][NEXT]It seems like this guy figured[BR]
+out his weaknesses while the[BR]
+others were just practicing[BR]
+special attacks.[BR]
+[Wait][NEXT]I guess he got tired of trying[BR]
+to find a new special attack[BR]
+and just focused on his[BR]
+own weaknesses.[Wait][END]
+}
+
+#message:1C:107
+{
+[STYLE:Right]This is Tutankoopa.[BR]
+[PAUSE:0A]We've fought him before in[BR]
+Dry Dry Ruins.[BR]
+[Wait][NEXT]I've heard that he has sort[BR]
+of a pharaoh complex.[BR]
+[Wait][NEXT]He attacks by throwing shells[BR]
+from that high perch.[BR]
+[Wait][NEXT]This fight would be pretty easy[BR]
+if it wasn't for his magic.[BR]
+He can cut your Max HP in[BR]
+half with it.[BR]
+[Wait][NEXT]He also has the power to lower[BR]
+your attack and defense.[BR]
+[Wait][NEXT]He also summons Golden Chomps,[BR]
+[PAUSE:0A]Those Chomps have some serious[BR]
+attack power, but they are[BR]
+slower than regular Chomps.[BR]
+[Wait][NEXT]He can summon and attack on[BR]
+the same turn, so fighting the[BR]
+Chomps might not be worth it.[Wait][END]
+}
+
+#message:1C:108
+{
+[STYLE:Right]It's a Golden Chomp.[BR]
+[PAUSE:0A]It doesn't really look like[BR]
+they're made of real gold[BR]
+though...[BR]
+[Wait][NEXT]They have very high defense[BR]
+and pretty high attack.[BR]
+[Wait][NEXT]Since they're really heavy,[BR]
+they can't jump very fast.[BR][PAUSE 10]
+They can still do fakeout[BR]
+attacks, so be careful.[Wait][END]
+}
+
+#message:1C:109
+{
+[STYLE:Right]This is Tubba Blubba again.[BR]
+[PAUSE:0A]He looks stronger than before,[BR]
+but not by much.[BR]
+[Wait][NEXT]His Hip Attack is very[BR]
+strong.[BR]
+[Wait][NEXT]He can also throw you into[BR]
+the air to do massive damage[BR]
+[PAUSE:0A]-and you can't even block it![BR]
+[Wait][NEXT]I get the feeling that he's[BR]
+actually stronger than he looks[BR]
+now, so keep your eye out[BR]
+for surprises.[Wait][END]
+}
+
+#message:1C:10A
+{
+[STYLE:Right]This is General Guy in his tank.[BR]
+[PAUSE:0A]The tank seems to be dangerous[BR]
+even though it's a toy.[BR]
+[Wait][NEXT]Not only does the General give[BR]
+commands from the tank, but he[BR]
+also throws bombs and uses[BR]
+electric attacks.[BR]
+[Wait][NEXT]He has different types of bombs[BR]
+that can inflict different[BR]
+debuffs.[BR]
+[Wait][NEXT]Which bombs he uses and[BR]
+who he summons is based on[BR]
+your health and his health.[BR]
+[Wait][NEXT]He will always use the electrical[BR]
+attack if the bulb is available.[BR]
+Also, it has a lot of health[BR]
+and it is immune to electricity.[BR]
+[Wait][NEXT]He can also increase the attack[BR]
+of his allies, or even cure[BR]
+them of statuses.[BR]
+[Wait][END]
+}
+
+#message:1C:10B
+{
+[STYLE:Right]This is a Lava Piranha.[BR]
+[PAUSE:0A]Lava Piranhas are plants that[BR]
+can somehow survive in lava.[BR]
+[Wait][NEXT]They blow out huge balls of[BR]
+fire to attack.[BR]
+[Wait][NEXT]That is one big flower! Wow![Wait][END]
+}
+
+#message:1C:10C
+{
+[STYLE:Right]This is a Lava Piranha.[BR]
+[PAUSE:0A]Lava Piranhas are plants that[BR]
+can somehow survive in lava.[BR]
+[Wait][NEXT]Since their bodies are on fire,[BR]
+you'll take damage if you step[BR]
+on 'em.[BR]
+[PAUSE:0A]Don't worry if you're fireproof.[BR]
+[Wait][NEXT]Their bodies are extremely hot.[BR]
+Standing close to them will cause[BR]
+your defenses to drop really fast.[BR]
+[Wait][NEXT]They'll try to burn you with[BR]
+their fire breath.[BR]
+[Wait][NEXT]They're creatures born of fire,[BR]
+so water attacks will work[BR]
+extremely well against them.[Wait][END]
+}
+
+#message:1C:10D
+{
+[STYLE:Right]This is a Lava Bud.[BR]
+[Wait][NEXT]Lava Buds are little flowers[BR]
+branching out from the main[BR]
+stem of the Lava Piranha.[BR]
+They love it in the lava.[BR]
+[Wait][NEXT]Hey, if you were a fiery plant,[BR]
+you'd love it in there, too.[BR]
+[Wait][NEXT]While they are still alive,[BR]
+Lava Piranha gets a defense[BR]
+boost and will quickly[BR]
+regenerate HP.[BR]
+[Wait][NEXT]Even if you stun them,[BR]
+they can still spit lava to hurt[BR]
+you.[BR]
+[Wait][NEXT]They blow small seeds or[BR]
+other projectiles to attack.[BR]
+[PAUSE:0A]Those projectiles move really[BR]
+fast, so watch out![Wait][END]
+}
+
+#message:1C:10E
+{
+[STYLE:Right]This is a Lava Bud.[BR]
+[Wait][NEXT]Lava Buds are little flowers[BR]
+branching out from the main[BR]
+stem of the Lava Piranha.[BR]
+They love it in the lava.[BR]
+[Wait][NEXT]Hey, if you were a fiery plant,[BR]
+you'd love it in there, too.[BR]
+[Wait][NEXT]While they are still alive,[BR]
+Lava Piranha gets a defense[BR]
+boost and will quickly[BR]
+regenerate HP.[BR]
+[Wait][NEXT]Even if you stun them,[BR]
+they can still spit steam to hurt[BR]
+you.[BR]
+[Wait][NEXT]They won't get crumpled by[BR]
+water and ice until their[BR]
+health goes below half.[BR]
+[Wait][NEXT]They blow out Petit Piranhas.[BR]
+[PAUSE:0A]The Lava Buds will shoot[BR]
+lava at you afterwards.[Wait][END]
+}
+
+#message:1C:10F
+{
+[STYLE:Right]This is a Petit Piranha.[BR]
+[PAUSE:0A]Petit Piranhas spew from[BR]
+Lava Buds.[BR]
+[Wait][NEXT]These things can do[BR]
+massive damage, so watch it![Wait][END]
+}
+
+#message:1C:110
+{
+[STYLE:Right]This is Huff N. Puff.[BR]
+[PAUSE:0A]He's a giant cloud monster.[BR]
+[Wait][NEXT]His thunder attack is very[BR]
+dangerous. If you don't defend,[BR]
+you'll take massive damage.[BR]
+[Wait][NEXT]Also, he can charge and attack[BR]
+on the same turn, so it's hard[BR]
+to predict when he'll use it.[BR]
+[Wait][NEXT]The attack power of his slam[BR]
+attack is proportional to his size,[BR]
+so he'll get weaker as the fight[BR]
+goes on.[BR]
+[Wait][NEXT]His breath attack will reduce[BR]
+your Attack and remove some[BR]
+FP if you don't block.[BR]
+[Wait][NEXT]When you attack Huff N. Puff,[BR]
+little clouds called Tuff Puffs[BR]
+come out. Their number is based[BR]
+on the amount of damage you do.[BR]
+[Wait][NEXT]If you leave the Tuff Puffs,[BR]
+Huff N. Puff will swallow[BR]
+them up and restore his HP.[BR]
+[Wait][NEXT]Also, their attack power is[BR]
+proportional to how many there[BR]
+are, so you may want to keep[BR]
+their numbers as low as possible.[BR]
+[Wait][NEXT]You need to use smart tactics[BR]
+to beat this guy, Mario.[Wait][END]
+}
+
+#message:1C:111
+{
+[STYLE:Right]These are the Tuff Puffs that[BR]
+break off when you damage[BR]
+Huff N. Puff.[BR]
+[Wait][NEXT]Tuff Puffs will fly over and[BR]
+attack you directly.[BR]
+[Wait][NEXT]You have to shake them off you[BR]
+using the action command or[BR]
+they'll keep on damaging you.[BR]
+[Wait][NEXT]Their attack power increases[BR]
+when there are more of them, so[BR]
+be aware of that.[BR]
+[Wait][NEXT]Huff N. Puff will swallow[BR]
+the Tuff Puffs to restore[BR]
+his HP, so think carefully[BR]
+when attacking.[BR]
+[Wait][NEXT]You can beat most of the Tuff [BR]
+Puffs by attacking all enemies,[BR]
+but they will usually spawn[BR]
+invisible.[Wait][END]
+}
+
+
+#message:1C:112
+{
+[STYLE:Right]This is the Crystal King.[BR]
+[PAUSE:0A]He seems stronger now.[BR]
+[Wait][NEXT]As we get weaker, his attacks[BR]
+get up to 4x as powerful.[BR]
+[Wait][NEXT]He'll attack you by summoning[BR]
+and launching Crystal Bits.[BR]
+[Wait][NEXT]The number of times he[BR]
+attacks equals the number of[BR]
+Crystal Bits he's deployed.[BR]
+[Wait][NEXT]He'll also try to freeze you[BR]
+whenever he can.[BR]
+[Wait][NEXT]When his HP gets low, he may[BR]
+try to divide and conquer.[BR]
+[PAUSE:0A]You can hurt him only by[BR]
+attacking his real body.[BR]
+[Wait][NEXT]I think there is a difference[BR]
+between the clones and the[BR]
+original, but I can't really[BR]
+tell.[BR]
+[Wait][NEXT]If you don't know which one's[BR]
+the main body, you should[BR]
+attack all of them.[BR]
+[Wait][NEXT]This guy is really powerful.[BR]
+If we're out here for too long,[BR]
+we'll be frozen forever![BR]
+[Wait][NEXT]We'll need to plan our attacks[BR]
+well in order to beat him[BR]
+fast enough.[BR]
+[Wait][END]
+}
+
+#message:1C:113
+{
+[STYLE:Right]
+It's Dark Bowser![BR]
+[PAUSE:0A]
+His HP is massive and he can[BR]
+use any attack he wants.[BR]
+[Wait][NEXT]
+The dark power makes his[BR]
+attack go up a lot every turn,[BR]
+but the Star Beam will negate[BR]
+his attack boosts.[BR]
+[Wait][NEXT]
+When he increases his power[BR]
+with the Star Rod, our attacks[BR]
+will be totally useless.[BR]
+[Wait][NEXT]
+When that happens, you need[BR]
+to use Star Beam to disrupt[BR]
+the Star Rod's power![BR]
+[Wait][NEXT]
+When he gets below one third[BR]
+of his max HP, he will be[BR]
+able to use the Star Rod and[BR]
+attack on the same turn![BR]
+[Wait][NEXT]He will immediately use[BR]
+it as soon as his health is[BR]
+low enough, so you'll need[BR]
+to prepare for that.[BR]
+[Wait][NEXT]
+It's gonna take every trick[BR]
+in the book to win this fight![BR]
+[Wait][END]
+}
+
+#message:1C:114
+{
+[STYLE:Right]What was his name? Jr. Troopa?[BR]
+I don't remember exactly...[BR]
+[PAUSE:0F]...Just joking, kid![BR]
+[Wait][NEXT]He looks so adorable hiding in[BR]
+his egg, doesn't he? So cute![BR]
+[Wait][NEXT]He can switch between all his[BR]
+forms from our previous battles.[BR]
+[Wait][NEXT]We've beat him so many times[BR]
+before. There's no way he can[BR]
+beat us now![Wait][END]
+}
+
+/%
+#message:1C:115
+{
+[STYLE:Right]He is The Master.[BR]
+[PAUSE:0A]He owns the Dojo-- [BR]
+and he's the strongest member.[BR]
+[Wait][NEXT]
+Though you'd hardly recognize[BR]
+him now! Look at that crazy[BR]
+hair![BR]
+[Wait][NEXT]
+Say, what do you think keeps[BR]
+his hair in place? I bet he[BR]
+goes through a ton of hair[BR]
+product to get that style.[BR]
+[Wait][NEXT]
+This is a whole new look, and[BR]
+with it a new fighting style.[BR]
+It doesn't look like he'll use[BR]
+the same tricks as before.[BR]
+[Wait][NEXT]
+All of his attacks will do[BR]
+massive damage unless you block,[BR]
+so you need to pay close[BR]
+attention to his attacks.[BR]
+[Wait][NEXT]
+He also has the power to [Color:20]detect[BR]
+savestates[Color 10]. I'm not sure what[BR]
+those are, but it's probably[BR]
+a bad idea to use them.[BR]
+[Wait][NEXT]
+Upkeeping such a powerful[BR]
+presence must be exhausting. I[BR]
+think the fatigue might end[BR]
+up getting to him.[BR]
+[Wait][NEXT]
+I guess we just have to face[BR]
+the music, this guy is going to[BR]
+be our greatest challenge.[BR]
+[Wait][END]
+}
+%/
+
+#message:1C:115
+{
+[STYLE:Right]He is The Master.[BR]
+[PAUSE:0A]He owns the Dojo-- [BR]
+and he's the strongest member.[BR]
+[Wait][NEXT]
+Though you'd hardly recognize[BR]
+him now! Look at that crazy[BR]
+hair![BR]
+[Wait][NEXT]
+Say, what do you think keeps[BR]
+his hair in place? I bet he[BR]
+goes through a ton of hair[BR]
+product to get that style.[BR]
+[Wait][NEXT]
+This is a whole new look, and[BR]
+with it a new fighting style.[BR]
+It doesn't look like he'll use[BR]
+the same tricks as before.[BR]
+[Wait][NEXT]
+All of his attacks will do[BR]
+massive damage unless you block,[BR]
+so you need to pay close[BR]
+attention to his attacks.[BR]
+[Wait][NEXT]
+Upkeeping such a powerful[BR]
+presence must be exhausting. I[BR]
+think the fatigue might end[BR]
+up getting to him.[BR]
+[Wait][NEXT]
+I guess we just have to face[BR]
+the music, this guy is going to[BR]
+be our greatest challenge.[BR]
+[Wait][END]
+}
+
+
+
+%light rush bosses
+
+#message:1C:120
+{
+[STYLE:Right]This is a Light Goomba.[BR]
+[PAUSE:0A]An incredibly powerful, light[BR]
+version of a Goomba.[BR]
+[Wait][NEXT]Their regular attack hits twice[BR]
+unless you interrupt that first[BR]
+hit.[BR]
+[Wait][NEXT]Their charge attack will deal[BR]
+massive damage, and below half[BR]
+health they can charge and attack[BR]
+on the same turn.[BR]
+[Wait][NEXT]They can also boost their own[BR]
+attack every so often.[Wait][END]
+}
+
+#message:1C:121
+{
+[STYLE:Right]
+This is a Light Chomp.[BR]
+[PAUSE:0A]The strongest Chomps in the world.[BR]
+[Wait][NEXT]They jump very quickly, but[BR]
+they can still fake you out.[BR]
+[Wait][NEXT]When they get hit, they will[BR]
+counter attack you.[BR]
+This attack doesn't have any[BR]
+random timing though...[BR]
+[Wait][NEXT]
+It's probably a bad idea to try[BR]
+spread damage attacks here.[BR]
+[Wait][END]
+}
+
+#message:1C:122
+{
+[STYLE:Right]
+This is a Light Bones.[BR]
+[Wait][NEXT]They have a lot of unpiercable[BR]
+defense, and their attacks deal[BR]
+permanent damage to you, at least[BR]
+until the end of this battle.[BR]
+[Wait][NEXT]At least they can't rise up[BR]
+after they get beaten like[BR]
+regular Dry Bones...[BR]
+[Wait][END]
+}
+
+#message:1C:131
+{
+[STYLE:Right]This is a Light Bubble.[BR]
+[PAUSE:0A]A very bright bubble of light.[BR]
+[Wait][NEXT]Their attacks can hit both[BR]
+of us and can reduce your[BR]
+defense.[BR]
+[Wait][NEXT]
+They are too hot to jump on,[BR]
+even with Ice Power.[Wait][END]
+}
+
+#message:1C:132
+{
+[STYLE:Right]
+This is a Proto Bristle.[BR][PAUSE:A]
+One of the original Bristles.[BR]
+[Wait][NEXT]
+Their defense is not piercable,[BR]
+and they have no weaknesses.[BR]
+[Wait][NEXT]
+They spin into you three times[BR]
+as part of their attack.[BR]
+[Wait][END]
+}
+
+#message:1C:133
+{
+[STYLE:Right]This is a Breezee Dayzee.[BR]
+[PAUSE:0A]
+Bright versions of Crazee[BR]
+Dayzees.[BR]
+[Wait][NEXT]They won't sing songs, but[BR]
+they have a very strong breath[BR]
+attack that reduces your attack.[BR]
+[Wait][END]
+}
+
+#message:1C:134
+{
+[STYLE:Right]This is a Beestroyer.[BR]
+[PAUSE:0A]They are the strongest versions[BR]
+of regular Bzzaps.[BR]
+[Wait][NEXT]Very few people have ever seen[BR]
+them.[BR]
+[Wait][NEXT]Their health is very high,[BR]
+and their attack is very high[BR]
+too. We better get rid of this[BR]
+guy fast.[Wait][END]
+}
+
+
+#message:1C:151
+{
+[STYLE:Right]It's light copy of me.[BR]
+[PAUSE:0A]He looks really dumb.[BR]
+I bet he can't even Tattle.[BR]
+[Wait][NEXT]If he's anything like me, he'll[BR]
+use some of my other moves, but[BR]
+since his appearance is wrong,[BR]
+it's probably not that simple.[BR]
+[Wait][NEXT]It's a good thing I look[BR]
+nothing like that![BR]
+Right, Mario?[BR]
+[PAUSE:0A]...Mario?[Wait][END]
+}
+
+#message:1C:152
+{
+[STYLE:Right]It's a light copy of Kooper.[BR]
+[PAUSE:0A]This imposter almost looks[BR]
+better than the original! Ha![BR]
+[Wait][NEXT]It's a light copy, so it can use[BR]
+moves similar to what Kooper can[BR]
+use.[BR]
+[Wait][NEXT]It'll attack us with its shell,[BR]
+just like the regular Kooper.[BR]
+[PAUSE:0A]You'll have the best luck[BR]
+beating it if you flip it.[Wait][END]
+}
+
+#message:1C:153
+{
+[STYLE:Right]It's a light copy of Bombette.[BR]
+[Wait][NEXT]It's a light copy, so it can use[BR]
+moves similar to what Bombette[BR]
+can use.[BR]
+[Wait][NEXT]You should be careful even[BR]
+though she looks cute.[Wait][END]
+}
+
+#message:1C:154
+{
+[STYLE:Right]It's a light copy of Parakarry.[BR]
+[PAUSE:0A]He looks pretty threatening.[BR]
+[Wait][NEXT]It's a light copy, so it can use[BR]
+moves similar to what Parakarry[BR]
+can use.[BR]
+[Wait][NEXT]Don't underestimate him, Mario.[BR]
+He looks pretty serious.[BR]
+His attacks are very strong and[BR]
+hard to guard.[Wait][END]
+}
+
+#message:1C:155
+{
+[STYLE:Right]It's a light copy of Bow.[BR]
+[Wait][NEXT]It's a light copy, so it can use[BR]
+moves similar to what Bow can[BR]
+use.[BR]
+[Wait][NEXT]If her regular attack doesn't[BR]
+do enough damage, she will[BR]
+not do it again.[BR]
+[Wait][END]
+}
+
+#message:1C:156
+{
+[STYLE:Right]It's a light copy of Watt.[BR]
+[Wait][NEXT]It's a light copy, so it can use[BR]
+moves similar to what Watt can[BR]
+use.[BR]
+[Wait][NEXT]You know how Watt is shocking?[BR]
+Same goes for this light copy.[Wait][END]
+}
+
+%I set up the lightning bolts so this tattle is wrong!
+%	^	not entirely true, there is only one lightning bolt palette so it gets messed up if you take Watt out at any point
+/%
+#message:1C:156
+{
+[STYLE:Right]It's a light copy of Watt.[BR]
+[Wait][NEXT]It's a light copy, so it can use[BR]
+moves similar to what Watt can[BR]
+use.[BR]
+[Wait][NEXT]Hang on, why aren't the lightning[BR]
+bolts the same color as her?[BR]
+Sounds like someone didn't[BR]
+set up the palettes correctly.[BR]
+[Wait][NEXT]Or maybe it's not as simple as[BR]
+that...[BR]
+[PAUSE:0A]...That's probably it.
+[Wait][NEXT]You know how Watt is shocking?[BR]
+Same goes for this light copy.[Wait][END]
+}
+%/
+
+#message:1C:157
+{
+[STYLE:Right]It's a light copy of Sushie.[BR]
+[PAUSE:0A]What's with that creepy smile?[BR]
+That can't be good...[BR]
+[Wait][NEXT]It's a light copy, so it can use[BR]
+moves similar to what Sushie[BR]
+can use.[BR]
+[Wait][NEXT]I'm glad we have Sushie on our[BR]
+side. She's intimidating![BR]
+[PAUSE:0A]I wonder if this light copy is[BR]
+meddlesome as well...[Wait][END]
+}
+
+#message:1C:158
+{
+[STYLE:Right]It's a light copy of Lakilester.[BR]
+[PAUSE:0A]It's hard to take him seriously,[BR]
+Even his light clone doesn't[BR]
+look threatening.[BR]
+[Wait][NEXT]It's a light copy, so it can use[BR]
+moves similar to what Lakilester[BR]
+can use.[BR]
+[Wait][NEXT]It's attacks are hard to guard,[BR]
+but they're relatively weak [BR]
+otherwise.[Wait][END]
+}
+
+#message:1C:160
+{
+[STYLE:Right]This is the Queen of Light.[BR]
+[PAUSE:0A]It kinda looks like Princess[BR]
+Peach.[BR]
+[Wait][NEXT]It has strong attacks, but it[BR]
+will only get stronger as[BR]
+its HP goes down.[BR]
+[Wait][NEXT]At certain points, it will[BR]
+summon Light Guardians to[BR]
+protect itself.[Wait][END]
+}
+
+#message:1C:161
+{
+[STYLE:Right]It's a Light Guardian.[BR]
+[PAUSE:0A]These guys protect the Queen[BR]
+of Light.[BR]
+[Wait][NEXT]These guys only attack[BR]
+when you attack the Queen or[BR]
+if you attack them first.[BR]
+[Wait][NEXT]They change color and attacks[BR]
+when you hit them.[Wait][END]
+}

@@ -1,0 +1,7 @@
+Could not select initial NPC sprite
+Loaded sprite editor.
+Initializing OpenGL 3.3 (core)
+Using driver: 3.3.0 NVIDIA 537.13
+Compiling shader: TexturedShader
+Compiling shader: SpriteShader
+Compiling shader: LineShader

@@ -1,0 +1,1018 @@
+%pit stuff
+
+@ $StageTable
+{
+$ASCII_802285BC $Stage_8022792C 
+$ASCII_802285B4 $Stage_80227A64 
+$ASCII_802285AC $Stage_80227ACC 
+$ASCII_802285A4 $Stage_80227B54 
+$ASCII_8022859C $Stage_80227BD4 
+$ASCII_80228594 $Stage_80227C38 
+"pit_03" $Stage_Pit1
+00000000 00000000 
+}
+
+#new:Stage $Stage_Pit1
+{
+"kpa_tex"
+"pit_b01_shape"
+"pit_b01_hit"
+$Script_BeforeBattle_Pit
+$Script_AfterBattle_Pit
+00000000 
+00000000 
+00000000 
+00000000 
+00000000 
+}
+
+%to make things easier to add, I'm adding the pit scripts every time even when I don't need to
+#new:Script $Script_BeforeBattle_Pit
+{
+	Return
+	End
+}
+
+#new:Script $Script_AfterBattle_Pit
+{
+	Return
+	End
+}
+
+#import newenemy/Ch3_BonyBeetle.bpat
+#import newenemy/Ch3_DryBones.bpat
+
+%Bony beetles and dry bones get kicked back to here
+@ $Formation_00 %+ dry bones
+{
+	$HyperGoomba 00000001 0000000A 00000000 00000000 00000000 00000000
+	$Ch3_DryBones 00000002 00000009 00000000 00000000 00000000 00000000
+}
+
+@ $Formation_01 %+ bony beetle
+{
+	$HyperGoomba 00000001 0000000A 00000000 00000000 00000000 00000000
+	$HyperGoomba 00000002 00000009 00000000 00000000 00000000 00000000
+	$Ch3_BonyBeetle 00000003 00000008 00000000 00000000 00000000 00000000
+}
+
+@ $Formation_02 %back goomba => 2 bony beetles
+{
+	$HyperGoomba 00000000 0000000A 00000000 00000000 00000000 00000000
+	$HyperGoomba 00000001 00000009 00000000 00000000 00000000 00000000
+	$Ch3_BonyBeetle 00000002 00000008 00000000 00000000 00000000 00000000
+	$Ch3_BonyBeetle 00000003 00000007 00000000 00000000 00000000 00000000
+}
+
+@ $Formation_03 %+ dry bones
+{
+	$HyperGoomba 00000000 0000000A 00000000 00000000 00000000 00000000
+	$HyperGoomba 00000001 00000009 00000000 00000000 00000000 00000000
+	$Ch3_DryBones 00000002 00000008 00000000 00000000 00000000 00000000
+	$HyperParagoomba 00000007 00000007 00000000 00000000 00000000 00000000
+}
+
+@ $Formation_04
+{
+	$Ch3_BonyBeetle 00000001 0000000A 00000000 00000000 00000000 00000000
+	$Ch3_BonyBeetle 00000002 00000009 00000000 00000000 00000000 00000000
+	$Ch3_BonyBeetle 00000003 00000008 00000000 00000000 00000000 00000000
+}
+
+@ $Formation_05
+{
+	$Ch3_BonyBeetle 00000000 0000000A 00000000 00000000 00000000 00000000
+	$Ch3_DryBones 00000001 00000009 00000000 00000000 00000000 00000000
+	$Ch3_DryBones 00000002 00000008 00000000 00000000 00000000 00000000
+	$HyperGoomba 00000003 00000007 00000000 00000000 00000000 00000000
+}
+
+/%
+#new:Formation $Formation_06
+{
+	$HyperParagoomba 00000005 0000000A 00000000 00000000 00000000 00000000
+}
+%/
+
+@ $Formation_07 %+ dry bones
+{
+	$HyperParagoomba 00000005 0000000A 00000000 00000000 00000000 00000000
+	$HyperParagoomba 00000006 00000009 00000000 00000000 00000000 00000000
+	$Ch3_DryBones 00000003 00000008 00000000 00000000 00000000 00000000
+}
+
+@ $Formation_08 %+ dry bones
+{
+	$HyperParagoomba 00000004 0000000A 00000000 00000000 00000000 00000000
+	$HyperParagoomba 00000005 00000009 00000000 00000000 00000000 00000000
+	$HyperParagoomba 00000006 00000008 00000000 00000000 00000000 00000000
+	$Ch3_DryBones 00000003 00000007 00000000 00000000 00000000 00000000
+}
+
+/%
+#new:Formation $Formation_09
+{
+	$HyperParagoomba 00000004 0000000A 00000000 00000000 00000000 00000000
+	$HyperParagoomba 00000005 00000009 00000000 00000000 00000000 00000000
+	$HyperParagoomba 00000006 00000008 00000000 00000000 00000000 00000000
+	$HyperParagoomba 00000007 00000007 00000000 00000000 00000000 00000000
+}
+%/
+
+%+ 2 dry bones
+@ $Formation_0A
+{
+	$HyperCleft 00000001 0000000A 00000000 00000000 00000000 00000000
+	$Ch3_DryBones 00000002 00000009 00000000 00000000 00000000 00000000
+	$Ch3_DryBones 00000003 00000008 00000000 00000000 00000000 00000000
+}
+
+@ $Formation_0B %dry bones encounter
+{
+	$Ch3_DryBones 00000001 0000000A 00000000 00000000 00000000 00000000
+	$Ch3_DryBones 00000002 00000009 00000000 00000000 00000000 00000000
+	$HyperGoomba 00000003 00000008 00000000 00000000 00000000 00000000
+}
+
+/%
+#new:Formation $Formation_0C
+{
+	$HyperCleft 00000000 0000000A 00000000 00000000 00000000 00000000
+	$HyperCleft 00000001 00000009 00000000 00000000 00000000 00000000
+	$HyperCleft 00000002 00000008 00000000 00000000 00000000 00000000
+}
+%/
+
+@ $Formation_0D %+ bony beetle
+{
+	$HyperCleft 00000000 0000000A 00000000 00000000 00000000 00000000
+	$HyperGoomba 00000001 00000009 00000000 00000000 00000000 00000000
+	$HyperGoomba 00000002 00000008 00000000 00000000 00000000 00000000
+	$Ch3_BonyBeetle 00000003 00000007 00000000 00000000 00000000 00000000
+}
+
+/%
+#new:Formation $Formation_0E
+{
+	$HyperCleft 00000000 0000000A 00000000 00000000 00000000 00000000
+	$HyperCleft 00000001 00000009 00000000 00000000 00000000 00000000
+	$HyperGoomba 00000002 00000008 00000000 00000000 00000000 00000000
+	$HyperGoomba 00000003 00000007 00000000 00000000 00000000 00000000
+}
+%/
+
+@ $FormationTable
+{
+$SJIS_80228580 00000002 $Formation_00 $Stage_8022792C 00000000 
+$SJIS_8022856C 00000003 $Formation_01 $Stage_8022792C 00000000 
+$SJIS_80228558 00000004 $Formation_02 $Stage_8022792C 00000000 
+$SJIS_80228530 00000004 $Formation_03 $Stage_8022792C 00000000 
+$SJIS_80228508 00000003 $Formation_04 $Stage_8022792C 00000000 % unused  now bony beetle encounter A
+$SJIS_802284CC 00000004 $Formation_05 $Stage_8022792C 00000000 % unused  now bony beetle encounter B
+$SJIS_802284B4 00000001 $Formation_06 $Stage_8022792C 00000000 
+$SJIS_8022849C 00000003 $Formation_07 $Stage_8022792C 00000000 
+$SJIS_80228484 00000004 $Formation_08 $Stage_8022792C 00000000 
+$SJIS_8022846C 00000004 $Formation_09 $Stage_8022792C 00000000 
+$SJIS_80228458 00000003 $Formation_0A $Stage_8022792C 00000000 
+$SJIS_80228440 00000003 $Formation_0B $Stage_8022792C 00000000 % unused now dry bones encounter
+$SJIS_80228428 00000003 $Formation_0C $Stage_8022792C 00000000 
+$SJIS_80228400 00000004 $Formation_0D $Stage_8022792C 00000000 
+$SJIS_802283D8 00000004 $Formation_0E $Stage_8022792C 00000000 
+$SJIS_802283C4 00000001 $Formation_0F $Stage_80227C38 00000000 
+$SJIS_802283B8 00000001 $Formation_10 $Stage_8022792C 00000000 
+00000000 00000003 $Formation_11 $Stage_Pit1 00000000 %floor 26
+00000000 00000004 $Formation_12 $Stage_Pit1 00000000 %floor 27
+00000000 00000000 00000000 00000000 00000000 % unused
+}
+
+#new:Formation $Formation_11
+{
+$HyperGoomba 00000001 0000000A 00000000 00000000 00000000 00000000 
+$HyperGoomba 00000002 00000009 00000000 00000000 00000000 00000000 
+$Ch3_BonyBeetle 00000003 00000008 00000000 00000000 00000000 00000000 
+}
+
+#new:Formation $Formation_12
+{
+$HyperCleft 00000000 0000000A 00000000 00000000 00000000 00000000 
+$HyperParagoomba 00000005 00000009 00000000 00000000 00000000 00000000 
+$HyperParagoomba 00000006 00000008 00000000 00000000 00000000 00000000 
+$Ch3_DryBones 00000003 00000008 00000000 00000000 00000000 00000000 
+}
+
+
+
+@ $HyperGoomba
+{
+[MaxHP]         9`b %same as gloomba
+}
+
+%a max hp tester function
+% @ $Script_Init_802188C0
+		% Call	 $SetAllHealth ( 65535` ) %hope this works!
+    % 0:  Call     BindIdle    	( .Actor:Self $Script_Idle_802198FC )
+   % 14:  Call     BindHandleEvent 	( .Actor:Self $Script_HandleEvent_80219BD8 )
+   % 28:  Call     BindTakeTurn 	( .Actor:Self $Script_TakeTurn_802195F0 )
+   % 3C:  Call     BindNextTurn 	( .Actor:Self $Script_NextTurn_80218950 )
+   % 50:  Call     SetActorVar 	( .Actor:Self 00000000 00000000 )
+   % 68:  Call     SetActorVar 	( .Actor:Self 00000001 00000000 )
+   % 80:  Return
+   % 88:  End
+
+@ $Script_802189D4
+{
+[878]  Call     EnemyDamageTarget 	( .Actor:Self *Var[0] 00000000 00000000 00000000 0000000C 00000020 ) %8 -> 12
+}
+
+@ $Script_TakeTurn_8021A628
+{
+[9AC]  Call     EnemyDamageTarget 	( .Actor:Self *Var[0] 00000000 00000000 00000000 00000004 00000020 ) %1 -> 4
+}
+
+
+@ $HyperParagoomba
+{
+[MaxHP]         8`b %slightly less than regular hyper goomba
+}
+
+@ $DefenseTable_8021B2FC
+{
+.Element:Normal 00000000
+.Element:Throw	FFFFFFFF
+.Element:End
+}
+
+@ $Script_8021B678 %gain charge / charge attack
+{
+[9E4]  Call     EnemyDamageTarget 	( .Actor:Self *Var[0] 00000000 00000000 00000000 0000000C 00000020 ) %8 -> 12 
+}
+
+@ $Script_TakeTurn_8021D1DC
+{
+[6B4]  Call     EnemyDamageTarget 	( .Actor:Self *Var[0] 00000000 00000000 00000000 00000004 00000020 ) %1 -> 4
+}
+
+@ $Script_8021E218
+{
+[878]  Call     EnemyDamageTarget 	( .Actor:Self *Var[0] 00000000 00000000 00000000 0000000C 00000020 ) %8 -> 12
+}
+
+@ $Script_TakeTurn_8021FE6C
+{
+[9AC]  Call     EnemyDamageTarget 	( .Actor:Self *Var[0] 00000000 00000000 00000000 00000004 00000020 ) %1 -> 4
+}
+
+%hyper cleft
+@ $DefenseTable_80220B40
+{
+.Element:Normal 00000004 %no hammer damage for you :)
+.Element:Fire   00000063
+.Element:End
+}
+
+@ $DefenseTable_80220B54
+{
+.Element:Normal 00000002
+.Element:Fire   00000063
+.Element:End
+}
+
+@ $Script_80220DC0
+{
+[914]  Call     EnemyDamageTarget 	( .Actor:Self *Var[0] 00000000 00000000 00000000 0000000F 00000020 ) %lol 15 damage
+}
+
+@ $Script_80223310
+{
+[658]  Call     EnemyDamageTarget 	( .Actor:Self *Var[0] 00000000 00000000 00000000 00000004 00000020 ) %3 -> 4
+}
+
+%tubba's heart
+%Only 30 hp! (but remember he runs away at low hp)
+%However, he heals 8 per turn!
+
+%How hard is this?
+%Danger mode strategy is relatively straightforward
+
+%The main problem is that using your turn for healing sets you back in the fight pretty far (and you don't always have access to partner attacks to make up for it)
+
+%(with 8 hp heals, you get into the problem of not being able to deal damage fast enough without danger strats)
+%(6 hp heals are more manageable but danger strats really make this fight a lot easier)
+%	(because the heart doesn't actually hit you very often, and you really want high attack power)
+
+
+@ $TubbasHeart
+{
+[MaxHP]        30`b
+[PowerBounce]  3`b
+}
+
+@ $StatusTable_80223C84	%only shrink once
+{
+	.Status:Normal      0`
+	.Status:Default     0`
+	.Status:Sleep       0`
+	.Status:Poison      0`
+	.Status:Frozen      0`
+	.Status:Dizzy       0`
+	.Status:Fear        0`
+	.Status:Static      0`
+	.Status:Paralyze    0`
+	.Status:Shrink     50`
+	.Status:Stop        0`
+	.Status:DefaultTurnMod    0`
+	.Status:SleepTurnMod      0`
+	.Status:PoisonTurnMod     0`
+	.Status:FrozenTurnMod     0`
+	.Status:DizzyTurnMod      0`
+	.Status:FearTurnMod       0`
+	.Status:StaticTurnMod     0`
+	.Status:ParalyzeTurnMod   0`
+	.Status:ShrinkTurnMod     0`
+	.Status:StopTurnMod       0`
+	.Status:End
+}
+
+@ $Script_802255D8
+{
+[62C]  Call     EnemyDamageTarget 	( .Actor:Self *Var[0] 10000000 00000000 00000000 00000018 00000020 ) %12 -> 24 damage (use bow or you'll take a fat L)
+}
+
+@ $Script_Init_80223DA0
+{
+    0:  Call  SetActorVar   ( .Actor:Self 00000000 00000000 )
+   18:  Call  SetActorVar   ( .Actor:Self 00000001 00000000 )
+   30:  Call  SetActorVar   ( .Actor:Self 00000002 00000000 )
+   48:  Call  SetActorVar   ( .Actor:Self 00000003 00000000 )
+   60:  Call  SetActorVar   ( .Actor:Self 00000004 00000000 )
+   78:  Call  SetActorVar   ( .Actor:Self 00000005 00000000 )
+   90:  Call  BindTakeTurn  ( .Actor:Self $Script_TakeTurn_802245C8 )
+   A4:  Call  BindIdle      ( .Actor:Self $Script_Idle_80223E98 )
+   B8:  Call  BindHandleEvent       ( .Actor:Self $Script_HandleEvent_80224038 )
+		Call  BindNextTurn  ( .Actor:Self $Script_NextTurn_Heart )
+   CC:  Call  SetPartTargetFlagBits ( .Actor:Self 00000002 00000002 .True )
+   E8:  Return
+   F0:  End
+}
+
+#new:Script $Script_NextTurn_Heart
+{
+	Call	GetBattlePhase ( *Var[0] )
+	If *Var[0] == .Phase:EnemyEnd
+		Thread
+			Call	8026BF48	( 00000001 )
+			Call	HealActor	( .Actor:Self 00000006 00000001 )
+			Call	8026BF48	( 00000000 )
+		EndThread
+	EndIf
+	Return
+	End
+}
+
+@ $Script_TakeTurn_802245C8
+{
+    0:  Call     UseIdleAnimation 	( .Actor:Self .False )
+   14:  Call     SetTargetActor ( .Actor:Self .Actor:Player )
+   28:  Call     EnemyTestTarget ( .Actor:Self *Var[0] 00000000 00000000 00000001 00000010 )
+   4C:  If  *Var[0]  !=  00000006 
+   5C:  	Call     GetActorVar 	( .Actor:Self 00000002 *Var[0] )
+   74:  	If  *Var[0]  !&  00000001 
+   84:  		Call     GetCurrentPartner 	( *Var[0] )
+   94:  		If  *Var[0]  ==  00000009 
+   A4:  			Call     802535B4 ( 00000000 )
+   B4:  			ConstOR  *Var[0] 00000003 
+   C4:  			Call     SetActorVar 	( .Actor:Self 00000002 *Var[0] )
+   DC:  			Call     UseBattleCamPreset 	( 0000000E )
+   EC:  			Call     BattleCamTargetActor ( .Actor:Self )
+   FC:  			Call     MoveBattleCamOver 	( 00000028 )
+  10C:  			Wait     00000028 
+  118:  			Call     ActorSpeak  	( 000E00C3 .Actor:Self 00000001 006C000B 006C0001 ) % Hey, you! Lady ghost! You look quite tasty. Stick  ...
+  138:  			Call     UseBattleCamPreset 	( 0000000E )
+  148:  			Call     BattleCamTargetActor ( .Actor:Partner )
+  158:  			Call     MoveBattleCamOver 	( 00000019 )
+  168:  			Wait     00000019 
+  174:  			Call     UseIdleAnimation 	( .Actor:Partner .False )
+  188:  			Call     SetAnimation 	( .Actor:Partner 00000001 000D0004 )
+  1A0:  			Call     ActorSpeak  	( 000E00C4 .Actor:Partner 00000001 000D0004 000D0001 ) % Blech! You wish! You don't have a chance, you ghos ...
+  1C0:  			Call     SetAnimation 	( .Actor:Partner 00000001 000D000F )
+  1D8:  			Call     802532D0 ( 00000100 00000001 FFFFFFFF FFFFFFFF )
+  1F4:  			Call     UseBattleCamPreset 	( 00000002 )
+  204:  			Call     UseIdleAnimation 	( .Actor:Partner .True )
+  218:  			Call     MoveBattleCamOver 	( 0000001E )
+  228:  			Call     GetActorVar 	( .Actor:Self 00000000 *Var[0] )
+  240:  			If  *Var[0]  ==  00000000 
+  250:  				Call     GetActorVar 	( .Actor:Self 00000003 *Var[0] )
+  268:  				If  *Var[0]  !=  00000000 
+  278:  					Call     802535B4 ( 00000001 )
+  288:  				EndIf
+  290:  			Else
+  298:  				Call     802535B4 ( 00000001 )
+  2A8:  			EndIf
+  2B0:  		EndIf
+  2B8:  	EndIf
+  2C0:  EndIf
+  2C8:  Call     GetActorVar 	( .Actor:Self 00000000 *Var[0] )
+  2E0:  Switch  *Var[0] 
+  2EC:  	Case  ==  00000000 
+  2F8:  		Call     GetActorVar 	( .Actor:Self 00000003 *Var[0] )
+  310:  		If  *Var[0]  ==  00000000 
+  320:  			Call     SetActorVar 	( .Actor:Self 00000003 00000001 )
+  338:  			Call     UseBattleCamPreset 	( 0000000E )
+  348:  			Call     BattleCamTargetActor ( .Actor:Self )
+  358:  			Call     MoveBattleCamOver 	( 00000028 )
+  368:  			Wait     00000028 
+  374:  			Call     ActorSpeak  	( 000E00C5 .Actor:Self 00000001 006C000B 006C0001 ) % Heh heh heh heh... I'm gonna do this great attack. ...
+  394:  		EndIf
+  39C:  		ExecWait $Script_80225258 
+  3A8:  		Call     SetActorVar 	( .Actor:Self 00000000 00000001 )
+  3C0:  		Call     GetActorVar 	( .Actor:Self 00000002 *Var[0] )
+  3D8:  		If  *Var[0]  &  00000002 
+  3E8:  			Call     802535B4 ( 00000001 )
+  3F8:  		EndIf
+  400:  	Case  ==  00000001 
+  40C:  		ExecWait $Script_802255D8 
+  418:  		Call     GetActorVar 	( .Actor:Self 00000001 *Var[0] )
+  430:  		If  *Var[0]  ==  00000000 
+  440:  			Call     GetActorVar 	( .Actor:Self 00000005 *Var[1] )
+  458:  			Add  *Var[1]  00000001 
+  468:  			Call     SetActorVar 	( .Actor:Self 00000005 *Var[1] )
+  480:  			If  *Var[1]  >=  00000002 
+  490:  				Call     SetActorVar 	( .Actor:Self 00000000 00000002 )
+  4A8:  			Else
+  4B0:  				Call     SetActorVar 	( .Actor:Self 00000000 00000000 )
+  4C8:  			EndIf
+  4D0:  		EndIf
+  4D8:  	Case  ==  00000002 
+  4E4:  		Call     SetActorVar 	( .Actor:Self 00000000 00000000 )
+  4FC:  		ExecWait $Script_80224B3C
+				Call	 GetActorHP ( .Actor:Self *Var[B] )
+				%make this happen at 1/2 health
+				Call	 GetEnemyMaxHP ( .Actor:Self *Var[C] )
+				Div		*Var[C] 2
+				If (*Var[B] < *Var[C]) %at low health, he can attack and charge on the same turn
+					ExecWait $Script_80225258 
+					%this is his turn cycle
+					Call     SetActorVar 	( .Actor:Self 00000000 00000001 )
+					Call     GetActorVar 	( .Actor:Self 00000002 *Var[0] )
+					If  *Var[0]  &  00000002 
+						Call     802535B4 ( 00000001 )
+					EndIf
+				EndIf
+  508:  EndSwitch
+  510:  Call     GetActorVar 	( .Actor:Self 00000002 *Var[0] )
+  528:  ConstAND *Var[0] FFFFFFFD 
+  538:  Call     SetActorVar 	( .Actor:Self 00000002 *Var[0] )
+  550:  Call     UseIdleAnimation 	( .Actor:Self .True )
+  564:  Return
+  56C:  End
+}
+
+%FIX CHEESE
+%if you use zaptap, you can prevent him from doing the attack then charge move
+%so here I'm fixing that :)
+
+@ $Script_HandleEvent_80224038
+{
+    0:  Call     UseIdleAnimation 	( .Actor:Self .False )
+   14:  Call     SetActorScale 	( .Actor:Self *Fixed[1.0] *Fixed[1.0] *Fixed[1.0] )
+   30:  Call     GetLastEvent 	( .Actor:Self *Var[0] )
+   44:  Switch  *Var[0] 
+   50:  	CaseOR  ==  .Event:HitCombo % 9
+   5C:  	CaseOR  ==  .Event:Hit % A
+   68:  		ExecWait $Script_80223FD8 
+   74:  		SetConst  *Var[0]  00000001 
+   84:  		ExecWait DoNormalHit 
+   90:  	EndCaseGroup
+   98:  	Case  ==  .Event:BeginFirstStrike % 38
+   A4:  	CaseOR  ==  .Event:BurnHit % E
+   B0:  	CaseOR  ==  .Event:BurnDeath % 24
+   BC:  		SetConst  *Var[0]  00000001 
+   CC:  		SetConst  *Var[1]  006C0010 
+   DC:  		SetConst  *Var[2]  006C0011 
+   EC:  		ExecWait DoBurnHit 
+   F8:  	EndCaseGroup
+  100:  	Case  ==  .Event:SpinSmashHit % B
+  10C:  		ExecWait $Script_80223FD8 
+  118:  		SetConst  *Var[0]  00000001 
+  128:  		ExecWait DoSpinSmashHit 
+  134:  	CaseOR  ==  .Event:ShockHit % 2F
+  140:  	CaseOR  ==  .Event:ShockDeath % 26
+  14C:  		ExecWait $Script_80223FD8 
+  158:  		SetConst  *Var[0]  00000001 
+  168:  		ExecWait DoShockHit 
+  174:  		ExecWait $Script_80223FD8 
+  180:  		SetConst  *Var[0]  00000001 
+  190:  		ExecWait DoJumpBack 
+  19C:  		Call     SetAnimation 	( .Actor:Self 00000001 006C0003 )
+  1B4:  		ExecWait $Script_802244DC 
+				Call     GetActorVar 	( .Actor:Self 00000000 *Var[D] )
+				If *Var[D] == 00000000 %if the tackle was interrupted, you end up here
+					Call	 GetActorHP ( .Actor:Self *Var[B] )
+					%make this happen at 1/2 health
+					Call	 GetEnemyMaxHP ( .Actor:Self *Var[C] )
+					Div		*Var[C] 2
+					If (*Var[B] < *Var[C]) %at low health, he can attack and charge on the same turn
+						ExecWait $Script_80225258
+						%this is his turn cycle
+						Call     SetActorVar 	( .Actor:Self 00000000 00000001 )
+						Call     GetActorVar 	( .Actor:Self 00000002 *Var[0] )
+						If  *Var[0]  &  00000002
+							Call     802535B4 ( 00000001 )
+						EndIf
+					EndIf
+				EndIf
+  1C0:  	EndCaseGroup
+  1C8:  	CaseOR  ==  00000017 % 17
+  1D4:  	CaseOR  ==  .Event:Immune % 19
+  1E0:  	CaseOR  ==  .Event:AirLiftFailed % 1F
+  1EC:  		Set  *Var[1]  006C0001 
+  1FC:  		Call     GetActorVar 	( .Actor:Self 00000001 *Var[0] )
+  214:  		If  *Var[0]  !=  00000000 
+  224:  			Set  *Var[1]  006C000B 
+  234:  		EndIf
+  23C:  		SetConst  *Var[0]  00000001 
+  24C:  		ExecWait DoImmune 
+  258:  	EndCaseGroup
+  260:  	CaseOR  ==  .Event:Death % 20
+  26C:  		ExecWait $Script_80223FD8 
+  278:  		SetConst  *Var[0]  00000001 
+  288:  		ExecWait DoNormalHit 
+  294:  	EndCaseGroup
+  29C:  	Case  ==  .Event:SpinSmashDeath % 21
+  2A8:  		ExecWait $Script_80223FD8 
+  2B4:  		SetConst  *Var[0]  00000001 
+  2C4:  		ExecWait DoSpinSmashHit 
+  2D0:  	Case  ==  .Event:SpikeContact % 2A
+  2DC:  	Case  ==  .Event:BurnContact % 2C
+  2E8:  	Case  ==  .Event:EndFirstStrike % 35
+  2F4:  		Call     SetAnimation 	( .Actor:Self 00000001 006C0003 )
+  30C:  		ExecWait $Script_802244DC 
+  318:  		Call     HPBarToHome 	( .Actor:Self )
+  328:  	Case  ==  .Event:RecoverStatus % 31
+  334:  		SetConst  *Var[0]  00000001 
+  344:  		SetConst  *Var[1]  006C0001 
+  354:  		ExecWait DoRecover 
+  360:  	Default
+  368:  EndSwitch
+  370:  Call     GetActorHP  	( .Actor:Self *Var[0] )
+  384:  If  *Var[0]  <=  00000005 
+  394:  	ExecWait $Script_80224414 
+  3A0:  	Return
+  3A8:  Else
+  3B0:  	Call     UseIdleAnimation 	( .Actor:Self .True )
+  3C4:  EndIf
+  3CC:  Return
+  3D4:  End
+}
+
+%tubba
+
+@ $StatusTable_80225CA0
+{
+.Status:Normal      0`
+.Status:Default     0`
+.Status:Sleep      30`	%Healing 5 per turn is bad
+.Status:Poison      0`
+.Status:Frozen      0`
+.Status:Dizzy       0`
+.Status:Fear        0`
+.Status:Static      0`
+.Status:Paralyze    0`
+.Status:Shrink     50`
+.Status:Stop       30`
+.Status:DefaultTurnMod    0`
+.Status:SleepTurnMod      -1`
+.Status:PoisonTurnMod     0`
+.Status:FrozenTurnMod     0`
+.Status:DizzyTurnMod      0`
+.Status:FearTurnMod       0`
+.Status:StaticTurnMod     0`
+.Status:ParalyzeTurnMod   0`
+.Status:ShrinkTurnMod     0`
+.Status:StopTurnMod       0`
+.Status:End
+}
+
+@ $TubbaBlubba
+{
+[MaxHP]        50`b %he's a big boi
+[PowerBounce]  3`b
+}
+
+/%
+@ $Script_Init_80225D98
+{
+    0:  Call     BindTakeTurn 	( .Actor:Self $Script_TakeTurn_802264AC )
+   14:  Call     BindIdle    	( .Actor:Self $Script_Idle_80225F58 )
+   28:  Call     BindHandleEvent 	( .Actor:Self $Script_HandleEvent_802260D0 )
+   3C:  Call     SetActorVar 	( .Actor:Self 00000008 00000000 )
+		Call     SetActorVar 	( .Actor:Self 00000009 00000000 ) %spook check
+		Call     SetActorVar 	( .Actor:Self 0000000B 00000000 ) %AI stuff
+   54:  Exec     $Script_80225E08 
+   60:  Return
+   68:  End
+}
+%/
+
+%AI:
+%	0: randomly do jump or smash, set state so that he does the other one next turn
+%	1: do jump attack, set state to 3
+%	2: do smash attack, set state to 3
+%	3: do throw attack, set state to 0
+
+@ $Script_TakeTurn_802264AC %add a throw attack (executed once every 3 turns)
+{
+    0:  Call     UseIdleAnimation 	( .Actor:Self .False )
+   14:  Call     EnableIdleScript 	( .Actor:Self 00000000 )
+		Call     GetActorVar 	( .Actor:Self 0000000B *Var[9] )
+		Switch *Var[9]
+			Case == 00000000
+				Call     RandInt     	( 00000064 *Var[0] )
+				If  *Var[0]  <  00000032
+					Call     SetActorVar 	( .Actor:Self 0000000B 00000002 )
+					ExecWait $Script_80226558 %smash attack
+				Else
+					Call     SetActorVar 	( .Actor:Self 0000000B 00000001 )
+					ExecWait $Script_80226B88 %jump attack
+				EndIf
+			Case == 00000001
+				Call     SetActorVar 	( .Actor:Self 0000000B 00000003 )
+				ExecWait $Script_80226558 %smash attack	
+			Case == 00000002
+				Call     SetActorVar 	( .Actor:Self 0000000B 00000003 )
+				ExecWait $Script_80226B88 %jump attack					
+			Case == 00000003
+				Call     SetActorVar 	( .Actor:Self 0000000B 00000000 )
+				ExecWait $Script_ThrowAttack
+		EndSwitch
+   74:  Call     EnableIdleScript 	( .Actor:Self 00000001 )
+   88:  Call     UseIdleAnimation 	( .Actor:Self .True )
+   9C:  Return
+   A4:  End 
+}
+
+@ $Script_80226558 %4 -> 6
+{
+[4F4] 	Call     EnemyDamageTarget 	( .Actor:Self *Var[F] 00000000 00000000 00000000 00000006 00000020 )
+}
+
+@ $Script_80226B88 %6 -> 9 + 50% 3 turn shrink
+{
+[66C]  Call     EnemyDamageTarget 	( .Actor:Self *Var[F] 00000000 00000000 80080332 00000009 00000020 )
+}
+
+%throw attack -> 10 unblockable damage
+
+#new:Script $Script_ThrowAttack %this is basically just a heavily modified smash attack
+{
+    0:  Call     SetTargetActor ( .Actor:Self .Actor:Player )
+   14:  Call     UseBattleCamPreset 	( 0000003F )
+   24:  Call     SetBattleCamZoom  	( 00000096 )
+   34:  Call     BattleCamTargetActor ( .Actor:Self )
+   44:  Call     8024ECF8 ( FFFFFFFF 00000001 00000000 )
+   5C:  Set  *Var[1]  006B0006 
+   6C:  ExecWait $Script_80225F8C 
+   78:  Call     SetAnimation 	( .Actor:Self 00000001 *Var[1] )
+   90:  Call     SetGoalToTarget 	( .Actor:Self )
+   A0:  Call     GetStatusFlags ( .Actor:Self *Var[5] )
+   B4:  If  *Var[5]  !&  00080000 
+   %C4:  	Call     AddGoalPos 	( .Actor:Self 00000032 00000000 00000000 )
+			Call 	 GetActorVar ( .Actor:Self 0000000A *Var[5] )
+			Div		 *Var[5] 2
+			Call     AddGoalPos 	( .Actor:Self *Var[5] 00000000 00000000 )
+   E0:  Else
+   E8:  	Call     AddGoalPos 	( .Actor:Self 00000014 00000000 00000000 )
+  104:  EndIf
+  10C:  Call     SetActorSpeed 	( .Actor:Self *Fixed[4.0] )
+  120:  Call     RunToGoal   	( .Actor:Self 00000000 .False )
+  138:  Call     SetAnimation 	( .Actor:Self 00000001 006B0015 )
+  150:  Wait     00000008 
+  15C:  Call     PlaySoundAtActor 	( .Actor:Self 0000035E )
+  170:  Call     SetAnimation 	( .Actor:Self 00000001 006B0016 )
+  %188:  Wait     00000014 
+  %194:  Call     SetAnimation 	( .Actor:Self 00000001 006B0017 )
+  %1AC:  Wait     00000003 
+  1B8:  Call     SetGoalToTarget 	( .Actor:Self )
+  %1C8:  Call     GetStatusFlags ( .Actor:Self *Var[0] )
+  %1DC:  If  *Var[0]  !&  00080000 
+  %1EC:  	Call     GetGoalPos  	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+  %208:  	Set  *Var[1]  00000000 
+  %218:  	Call     PlayEffect  	( ~FX:Steam:LargeOutward *Var[0] *Var[1] *Var[2] 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+  %25C:  	Thread
+  %264:  		Call     80254218 ( 00000001 )
+  %274:  		Call     ShakeCam    	( 00000001 00000000 00000005 *Fixed[15.0] )
+  %290:  	EndThread
+  %298:  	Call     PlaySoundAtActor 	( .Actor:Self 000020EA )
+  %2AC:  EndIf
+  2B4:  Call     EnemyTestTarget ( .Actor:Self *Var[A] 00000000 00000000 00000001 00000010 )
+  2D8:  Switch  *Var[A] 
+  2E4:  	CaseOR  ==  00000006 
+  2F0:  	CaseOR  ==  00000005 
+  2FC:  		Call     GetGoalPos  	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+  %318:  		Call     PlayEffect  	( ~FX:ShockWave:White *Var[0] 00000000 *Var[2] 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+  35C:  		Wait     0000001E 
+  368:  		Set  *Var[1]  006B0001 
+  378:  		ExecWait $Script_80225F8C 
+  384:  		Call     SetAnimation 	( .Actor:Self 00000001 *Var[1] )
+  39C:  		Call     UseBattleCamPreset 	( 00000002 )
+  3AC:  		Call     MoveBattleCamOver 	( 00000014 )
+  3BC:  		If  *Var[A]  ==  00000005 
+  3CC:  			Call     EnemyTestTarget ( .Actor:Self *Var[0] 80000000 00000000 00000000 00000000 )
+  3F0:  		EndIf
+  3F8:  		ExecWait $Script_80225FD4 
+  404:  		Return
+  40C:  	EndCaseGroup
+  414:  	Default
+  41C:  EndSwitch
+  424:  Call     GetStatusFlags ( .Actor:Self *Var[5] )
+  438:  If  *Var[5]  !&  00080000 
+  448:  	Call     GetGoalPos  	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+  %464:  	Call     PlayEffect  	( ~FX:ShockWave:LargeWhite *Var[0] 00000000 *Var[2] 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+  4A8:  EndIf
+  4B0:  Wait     00000002 
+  4BC:  Call     SetGoalToTarget 	( .Actor:Self )
+  4CC:  If  *Var[5]  !&  00080000 
+  4DC:  	Call     80269EAC ( 00000017 )
+  4EC:  EndIf 
+		Call     UseBattleCamPreset 	( 0000003F ) %reset camera earlier to fix problems
+		Call     SetBattleCamZoom  	( 000000C8 )
+		%spliced from part of the master's script (make mario go flying)
+    	Call     EnablePlayerBlur 	( 00000001 )
+    	Call     SetActorJumpGravity 	( .Actor:Player *Fixed[0.30078125] )
+    	Call     GetActorPos 	( .Actor:Player *Var[0] *Var[1] *Var[2] )
+    	%Call     SetJumpAnimations 	( .Actor:Player 00000000 00010017 00010017 00010017 )
+    	Call     SetGoalPos 	( .Actor:Player *Var[0] *Var[1] *Var[2] )
+		If  *Var[5]  !&  00080000 %shrunken tubba can't launch you as high
+			Call     SetJumpAnimations 	( .Actor:Player 00000000 0001001B 0001001B 0001001B) %this doesn't do anything?
+			Call     SetAnimation 	( .Actor:Player 00000000 0001001B )
+			Call     80273444 ( 00000048 00000000 00000000 ) %player jump?
+    	Else
+			Call     SetJumpAnimations 	( .Actor:Player 00000000 00010028 00010028 00010028 ) %this doesn't do anything?
+			Call     SetAnimation 	( .Actor:Player 00000000 00010028 )
+			Call     80273444 ( 00000036 00000000 00000000 ) %player jump?
+		EndIf
+		Call     EnablePlayerBlur 	( 00000000 )  
+  4F4:  Call     EnemyDamageTarget 	( .Actor:Self *Var[F] 1A000000 00000000 00000000 0000000A 00000020 ) %10 unblockable damage
+  %51C:  Call     UseBattleCamPreset 	( 0000003F )
+  %52C:  Call     SetBattleCamZoom  	( 000000C8 )
+  53C:  Call     BattleCamTargetActor ( .Actor:Self )
+  54C:  Call     8024ECF8 ( FFFFFFFF 00000001 00000000 ) %flatten mario?
+  564:  Call     MoveBattleCamOver 	( 0000001E )
+  574:  Switch  *Var[F] 
+  580:  	CaseOR  ==  00000000 
+  58C:  	CaseOR  ==  00000002 
+  598:  		Wait     0000001E 
+  5A4:  		Set  *Var[1]  006B0001 
+  5B4:  		ExecWait $Script_80225F8C 
+  5C0:  		Call     SetAnimation 	( .Actor:Self 00000001 *Var[1] )
+  5D8:  		Call     UseBattleCamPreset 	( 00000002 )
+  5E8:  		Call     MoveBattleCamOver 	( 00000014 )
+  5F8:  		Call     YieldTurn   	( )
+  604:  		ExecWait $Script_80225FD4 
+  610:  	EndCaseGroup
+  618:  EndSwitch
+  620:  Return
+  628:  End
+}
+  
+%new: anti-spook measures (he's already immune, but it will be cool ;) )
+@ $Script_Init_80225D98
+{
+    0:  Call     BindTakeTurn 	( .Actor:Self $Script_TakeTurn_802264AC )
+		Call     BindNextTurn 	( .Actor:Self $Script_NextTurn )
+   14:  Call     BindIdle    	( .Actor:Self $Script_Idle_80225F58 )
+   28:  Call     BindHandleEvent 	( .Actor:Self $Script_HandleEvent_802260D0 )
+   3C:  Call     SetActorVar 	( .Actor:Self 00000008 00000000 )
+		Call     SetActorVar 	( .Actor:Self 00000009 00000000 ) %spook check
+		Call     SetActorVar 	( .Actor:Self 0000000A 00000064 ) %size
+		Call     SetActorVar 	( .Actor:Self 0000000B 00000000 ) %ai stuff
+   54:  Exec     $Script_80225E08 
+   60:  Return
+   68:  End
+}
+
+#new:Script $SpookCheck1 %spliced from jr troopas code
+{
+	Call     GetStatusFlags ( .Actor:Self *Var[2] )
+	If  *Var[2]  &  0035D000 %if he can't move, don't detect spooking
+		Return
+	EndIf
+	Call     GetActorVar 	( .Actor:Self 00000009 *Var[0] ) %equal to 1 if you used spook
+	If  *Var[0] == 00000001 %if flag set to 1, don't set it again
+		Call	SetActorVar ( .Actor:Self 00000009 00000002 )
+		Return
+	EndIf	
+	Call     GetBattleFlags ( *Var[2] )
+	If  *Var[2]  &  00080000 
+		Call     GetMenuSelection 	( *Var[0] *Var[1] *Var[2] )
+		If  *Var[2]  ==  000000B7 %apparently this is spook
+			Call	SetActorVar ( .Actor:Self 00000009 00000001 )
+		EndIf
+	EndIf
+Return
+End
+}
+
+#new:Script $SpookCheck2
+{
+Call     GetStatusFlags ( .Actor:Self *Var[0] )
+If  *Var[0]  !&  0035D000 
+	Call     GetActorVar 	( .Actor:Self 00000009 *Var[0] ) %equal to 1 if you used spook
+	If  *Var[0]  ==  00000001 %you did, time to die
+		Call     ActorSpeak  	( $DontSpookMe .Actor:Self 00000001 006B0009 006B0002 )
+		%can't do the instant regret script yet?
+		% ExecWait	$InstantRegret
+	EndIf
+EndIf
+Return
+End
+}
+
+#string $DontSpookMe
+{
+[STYLE:Right]What? I'll never be s-scared[BR]
+of a puny attack like that![BR]
+[Wait][NEXT]I'll show YOU![BR]
+[Wait][END]
+}
+
+#new:Script $Script_NextTurn
+{
+Call	GetBattlePhase ( *Var[0] )
+If *Var[0] == .Phase:EnemyEnd
+	Call     GetActorVar 	( .Actor:Self 00000009 *Var[0] ) %equal to 1 if you used spook, greater if you used spook then attacked
+	If  *Var[0]  >  00000000 %you did, time to die
+		ExecWait $InstantRegret
+	EndIf
+	Call	 SetActorVar	( .Actor:Self 00000009 00000000 )
+EndIf
+Return
+End
+}
+
+#new:Script $InstantRegret %oof
+{
+Call	$Function_SetLevel( $TubbaBlubba 120` ) %a whole bunch of star points if you beat him in this state
+Thread %stuff spliced from mq tubba refight
+	Wait     00000005 
+	Call     PlaySoundAtActor    ( *Var[0] 0000206D )
+	Call     PlaySoundAtActor    ( *Var[0] 00000214 )
+	Wait     30` 
+	Call     PlaySoundAtActor    ( *Var[0] 0000025C )
+EndThread
+Call	8026BF48	( 00000001 )
+Call	HealActor	( .Actor:Self 00000032 00000001 ) %full heal
+Call	8026BF48	( 00000000 )
+Wait 	00000014
+%
+Call	GetActorAttackBoost ( .Actor:Self *Var[0] )
+If  *Var[0]  <  14 %at this point tubba becomes big enough to go offscreen
+	Call	PlaySoundAtActor	( .Actor:Self 000002D8 )
+	Call	8026BF48	( 00000001 )
+	Call	BoostAttack	( .Actor:Self 000000A )
+	Call	8026BF48	( 00000000 )
+EndIf
+%more spliced stuff, make tubba bigger
+Label 0
+Call	 GetActorVar ( .Actor:Self 0000000A *Var[5] )
+Call     GetActorAttackBoost ( .Actor:Self *Var[6] )
+Mul	*Var[6] 10`
+Add *Var[6] 100`
+If (*Var[5] >= *Var[6]) %we're at the right size, so end script
+	Return 
+EndIf
+Call     MakeLerp	( *Var[5] *Var[6] 30` 00000000 )
+Label    1 
+	Call	UpdateLerp  	( )
+	DivF	*Var[0]  100`
+	Call	SetActorScale	( .Actor:Self *Var[0] *Var[0] *Var[0] )
+	Wait     1 
+If  *Var[1]  ==  .True 
+	Goto     1
+EndIf
+Set  *Var[5]  *Var[6]
+Call SetActorVar	(.Actor:Self 0000000A *Var[5])
+Call SetActorVar	(.Actor:Self 00000009 00000000)
+Goto     0 
+Return
+End
+%
+%the plan was to make him eat mario
+%but the functions didn't cooperate
+% Call     SetTargetActor ( .Actor:Self .Actor:Player )
+% Call     SetAnimation 	( .Actor:Self 00000001 006B0006 )
+% Call     SetGoalToTarget 	( .Actor:Self )
+% Call     AddGoalPos 	( .Actor:Self 00000032 00000000 00000000 )
+% Call     SetActorSpeed 	( .Actor:Self *Fixed[4.0] )
+% Call     RunToGoal   	( .Actor:Self 00000000 .False )
+% Wait	 00000003
+%%pick up mario
+% Call     SetActorSpeed 	( .Actor:Player *Fixed[5.0] )
+% Call     SetActorJumpGravity 	( .Actor:Player *Fixed[1.8007812] )
+% Call     SetAnimation 	( .Actor:Self 00000001 006A001E ) %i hope world tubba's sprites will work
+% Call     SetAnimation 	( .Actor:Player 00000000 0001002B )
+% Call	 GetActorPos    ( .Actor:Self *Var[0] *Var[1] *Var[2] )
+% Sub		*Var[0] 45`
+% Add		*Var[1] 30`
+% Call	 SetGoalPos   ( .Actor:Player *Var[0] *Var[1] *Var[2] )
+% Call	 FlyToGoal 	( .Actor:Player 00000003 00000003 00000000)
+% Wait	 00000005
+% Call     SetAnimation 	( .Actor:Self 00000001 006B001F )
+% Call	 GetActorPos    ( .Actor:Self *Var[0] *Var[1] *Var[2] )
+% Sub		*Var[0] 20`
+% Add		*Var[1] 50`
+% Call	 SetGoalPos   ( .Actor:Player *Var[0] *Var[1] *Var[2] )
+% Call	 FlyToGoal 	( .Actor:Player 00000003 00000003 00000000)
+% Wait	 00000005
+% Call     SetAnimation 	( .Actor:Self 00000001 006B0020 )
+% Call	 GetActorPos    ( .Actor:Self *Var[0] *Var[1] *Var[2] )
+% Add		*Var[1] 30`
+% Add		*Var[2] 30`
+% Call	 SetGoalPos   ( .Actor:Player *Var[0] *Var[1] *Var[2] )
+% Call	 FlyToGoal 	( .Actor:Player 00000001 00000003 00000000)
+%%rip mario
+% Call	$KillMario ( )
+Return
+End
+}
+
+@ $Script_HandleEvent_802260D0
+{
+    0:  Call     UseIdleAnimation 	( .Actor:Self .False )
+   14:  Call     EnableIdleScript 	( .Actor:Self 00000000 )
+   28:  Call     GetLastEvent 	( .Actor:Self *Var[A] )
+   3C:  Switch  *Var[A] 
+   48:  	CaseOR  ==  .Event:HitCombo
+   54:  	CaseOR  ==  .Event:Hit
+   60:  		SetConst  *Var[0]  00000001 
+   70:  		SetConst  *Var[1]  006B0014 
+   80:  		ExecWait DoNormalHit 
+				ExecWait $SpookCheck1
+				ExecWait $SpookCheck2
+   8C:  	EndCaseGroup
+   94:  	Case  ==  .Event:BurnHit
+   A0:  		SetConst  *Var[0]  00000001 
+   B0:  		SetConst  *Var[1]  006B0014 
+   C0:  		SetConst  *Var[2]  FFFFFFFF 
+   D0:  		ExecWait DoBurnHit 
+   DC:  	Case  ==  .Event:BurnDeath
+   E8:  		SetConst  *Var[0]  00000001 
+   F8:  		SetConst  *Var[1]  006B0014 
+  108:  		SetConst  *Var[2]  FFFFFFFF 
+  118:  		ExecWait DoBurnHit 
+  124:  		ExecWait $Script_80227878 
+  130:  		Return
+  138:  	Case  ==  .Event:SpinSmashHit
+  144:  		SetConst  *Var[0]  00000001 
+  154:  		SetConst  *Var[1]  006B0014 
+  164:  		ExecWait 8029B998 
+  170:  	Case  ==  .Event:ShockHit
+  17C:  		Call     UseBattleCamPreset 	( 00000002 )
+  18C:  		Call     MoveBattleCamOver 	( 00000014 )
+  19C:  		SetConst  *Var[0]  00000001 
+  1AC:  		SetConst  *Var[1]  006B0014 
+  1BC:  		ExecWait DoShockHit 
+  1C8:  		SetConst  *Var[0]  00000001 
+  1D8:  		SetConst  *Var[1]  006B0014 
+  1E8:  		ExecWait DoJumpBack 
+  1F4:  		ExecWait $Script_80225FD4 
+  200:  	CaseOR  ==  00000017
+  20C:  	CaseOR  ==  .Event:Immune
+  218:  	CaseOR  ==  .Event:AirLiftFailed
+  224:  		SetConst  *Var[0]  00000001 
+  234:  		SetConst  *Var[1]  006B0001 
+  244:  		ExecWait DoImmune 
+				ExecWait $SpookCheck1
+				ExecWait $SpookCheck2
+  250:  	EndCaseGroup
+  258:  	Case  ==  .Event:ShockDeath
+  264:  		Call     UseBattleCamPreset 	( 00000002 )
+  274:  		Call     MoveBattleCamOver 	( 00000014 )
+  284:  		SetConst  *Var[0]  00000001 
+  294:  		SetConst  *Var[1]  006B0014 
+  2A4:  		ExecWait DoShockHit 
+  2B0:  		ExecWait $Script_80227878 
+  2BC:  		Return
+  2C4:  	Case  ==  .Event:Death
+  2D0:  		SetConst  *Var[0]  00000001 
+  2E0:  		SetConst  *Var[1]  006B0014 
+  2F0:  		ExecWait DoNormalHit 
+  2FC:  		ExecWait $Script_80227878 
+  308:  		Return
+  310:  	Case  ==  .Event:SpinSmashDeath
+  31C:  		SetConst  *Var[0]  00000001 
+  32C:  		SetConst  *Var[1]  006B0014 
+  33C:  		ExecWait 8029B998 
+  348:  		ExecWait $Script_80227878 
+  354:  		Return
+  35C:  	Case  ==  .Event:RecoverStatus
+  368:  		SetConst  *Var[0]  00000001 
+  378:  		SetConst  *Var[1]  006B0001 
+  388:  		ExecWait DoRecover 
+  394:  	Default
+  39C:  EndSwitch
+  3A4:  Call     EnableIdleScript 	( .Actor:Self 00000001 )
+  3B8:  Call     UseIdleAnimation 	( .Actor:Self .True )
+  3CC:  Return
+  3D4:  End
+}

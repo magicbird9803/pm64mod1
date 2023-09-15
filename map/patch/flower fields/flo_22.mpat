@@ -1,0 +1,120 @@
+@ $NpcGroup_80240A04
+{
+00000000 $NpcSettings_80240520 ~Vec3f:NPC_80240A04 % 0 -1000 0
+00000F04 $Script_Init_80240740 00000000 00000000 0000010E 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus
+~Movement:NPC_80240A04
+%{AnimationTable:NPC_80240A04 % .Sprite:Bzzap
+004B0102 004B0102 004B0103 004B0103 004B0101 004B0102 004B0106 004B0106
+004B0104 004B0102 004B0101 004B0101 004B0101 004B0101 004B0101 004B0101 
+00000000 00000000 00000000 00000000 % no tattle string
+}
+
+%need to do it twice
+@ $Script_80241528
+{
+    0:  BindLock  $Script_80241028 .Trigger:WallPressA ~Collider:o5 $ItemList_80240E10 00000000 00000001
+   20:  If  *GF_FLO22_ThrewBlueBerryDownWell  ==  .True
+   30:  	Call  MakeItemEntity    ( .Item:FlowerPower ~Vec3d:Item80241558 00000000 *GF_FLO22_Item_FlowerSaverB )		%FlowerSaverB -> flower power
+   54:  EndIf
+   5C:  Return
+   64:  End
+}
+
+@ $Script_80241028
+{
+    0:  Call  DisablePlayerInput    ( .True )
+   10:  Call  DisablePlayerInput    ( .False )
+   20:  Call  ShowConsumableChoicePopup ( )
+   2C:  Call  CloseChoicePopup ( )
+   38:  Call  DisablePlayerInput    ( .True )
+   48:  Set   *Var8  *Var0
+   58:  Switch  *Var8
+   64:  	Case  <=  FFFFFFFF
+   70:  	Case  <=  00000000
+   7C:  		Call  ShowMessageAtScreenPos    ( 001D015C 000000A0 00000028 ) % It's a well.
+   94:  	Case  ==  0000009E
+   A0:  		ExecWait  $Script_80240E84
+   AC:  		Call  RemoveItemAt  ( *Var1 )
+   BC:  		If  *GF_FLO22_ThrewBlueBerryDownWell  ==  .False
+   CC:  			Call  ShowMessageAtWorldPos ( 001100DD 00000023 00000023 00000000 ) % Sniffle!!!!! Who's throwing stuff down into my wel ...
+   E8:  			Set   *GF_FLO22_ThrewBlueBerryDownWell  .True
+   F8:  			Call  MakeItemEntity    ( .Item:FlowerPower ~Vec3d:Item80241120 00000000 *GF_FLO22_Item_FlowerSaverB )
+  11C:  			Set   *Var7  *Var0
+  12C:  			Call  SetNpcFlagBits    ( 00000000 00000002 .True )
+  144:  			Call  SetNpcFlagBits    ( 00000000 00000010 .False )
+  15C:  			Call  SetNpcPos ( 00000000 00000023 00000000 00000000 )
+  178:  			Call  SetNpcJumpscale   ( 00000000 *Fixed[1.0] )
+  18C:  			Thread
+  194:  				Call  NpcJump0  ( 00000000 FFFFFFCB 00000000 00000000 00000019 )
+  1B4:  				Call  NpcJump0  ( 00000000 FFFFFFB7 00000000 00000000 0000000F )
+  1D4:  				Call  NpcJump0  ( 00000000 FFFFFFAD 00000000 00000000 00000008 )
+  1F4:  			EndThread
+  1FC:  			Loop  00000035
+  208:  				Call  GetNpcPos     ( 00000000 *Var1 *Var2 *Var3 )
+  224:  				Call  SetItemPos    ( *Var7 *Var1 *Var2 *Var3 )
+  240:  				Wait  1`
+  24C:  			EndLoop
+  254:  			Call  SetNpcPos ( 00000000 00000000 FFFFFC18 00000000 )
+  270:  			Call  SetNpcFlagBits    ( 00000000 00000002 .False )
+  288:  			Call  SetNpcFlagBits    ( 00000000 00000010 .True )
+  2A0:  		Else
+  2A8:  			Call  ShowMessageAtWorldPos ( 001100DE 00000023 00000023 00000000 ) % Sniffle!!!!! Burp... No more berries! I'm stuffed  ...
+  2C4:  		EndIf
+  2CC:  	Default
+  2D4:  		ExecWait  $Script_80240E84
+  2E0:  		Call  RemoveItemAt  ( *Var1 )
+  2F0:  		Call  ShowMessageAtWorldPos ( 001100DC 00000023 00000023 00000000 ) % Sniffle... Who's throwing stuff down into my well? ...
+  30C:  		Call  RandInt   ( 00000001 *Var1 )
+  320:  		If  *Var1  ==  00000000
+  330:  			Call  SetNpcJumpscale   ( 00000000 *Fixed[0.0] )
+  344:  			Call  NpcFacePlayer ( 00000000 00000000 )
+  358:  			Wait  1`
+  364:  			Call  SetNpcPos     ( 00000000 0000001E 00000000 00000000 )
+  380:  			Call  SetNpcAnimation   ( 00000000 004B0101 )
+  394:  			Call  NpcJump0      ( 00000000 0000001E 0000003C 00000000 00000014 )
+  3B4:  			Wait  10`
+  3C0:  			Call  SetNpcAnimation   ( 00000000 004B0104 )
+  3D4:  			Call  GetPlayerPos  ( *Var0 *Var1 *Var2 )
+  3EC:  			Add   *Var1  00000014
+  3FC:  			Call  NpcJump0      ( 00000000 *Var0 *Var1 *Var2 00000005 )
+  41C:  			Set   *MapVar[A]  00000001
+  42C:  		Else
+  434:  			Call  SetNpcPos ( 00000001 0000001E 00000000 00000000 )
+  450:  			Call  SetNpcAnimation   ( 00000001 0048000E )
+  464:  			Call  GetPlayerPos      ( *Var0 *Var1 *Var2 )
+  47C:  			Add   *Var1  00000014
+  48C:  			Call  SetNpcJumpscale   ( 00000001 *Fixed[2.0] )
+  4A0:  			Call  NpcJump0  ( 00000001 *Var0 *Var1 *Var2 00000014 )
+  4C0:  			Set   *MapVar[B]  00000001
+  4D0:  		EndIf
+  4D8:  EndSwitch
+  4E0:  Call  DisablePlayerInput    ( .False )
+  4F0:  Return
+  4F8:  End
+}
+
+@ $Script_Defeat_802405E4
+{
+    0:  Call  GetBattleOutcome  ( *Var0 )
+   10:  Switch  *Var0
+   1C:  	Case  ==  .Outcome:PlayerWon % 0
+   28:  		Thread
+   30:  			Wait  25`
+   3C:  			Call  SetNpcPos ( .Npc:Self 00000000 FFFFFC18 00000000 )
+   58:  			Call  SetNpcFlagBits    ( .Npc:Self 00000002 .False )
+   70:  		EndThread
+   78:  		Call  DoNpcDefeat ( )
+   84:  	Case  ==  .Outcome:PlayerLost % 1
+   90:  		Call  SetNpcPos ( .Npc:Self 00000000 FFFFFC18 00000000 )
+   AC:  	Case  ==  .Outcome:PlayerFled % 2
+   B8:  		Call  SetNpcAnimation   ( .Npc:Self 004B0101 )
+   CC:  		Call  SetNpcPos ( .Npc:Self 0000001E 0000003C 00000000 )
+   E8:  		Wait  10`
+   F4:  		Call  SetNpcJumpscale   ( .Npc:Self 00000000 )
+  108:  		Call  NpcJump0  ( .Npc:Self 0000001E 00000000 00000000 0000000F )
+  128:  		Call  SetNpcPos ( .Npc:Self 00000000 FFFFFC18 00000000 )
+  144:  EndSwitch
+  14C:  Return
+  154:  End
+}

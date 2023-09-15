@@ -1,0 +1,235 @@
+%Ok this is Petunia's room
+%I'm gonna do something "fun"
+%You don't get the magical bean immediately
+%To get the magical bean, you have to kill covert guy who is somewhere in Flower Fields :)
+
+
+%I don't have a lot of other places to put insanee dayzees, so here's one
+@ $NpcGroup_80243A7C
+{
+00000001 $NpcSettings_80240EB0 ~Vec3f:NPC_80243A7C % -233 0 -217
+00000D01 $Script_Init_80241E10 00000000 00000000 0000005A 
+~İtems:64:DarkLeaf:F ~NoHP ~NoFP ~NoCoinBonus
+~Movement:NPC_80243A7C
+00480201 00480202 00480203 00480203 00480201 00480201 00480208 00480208
+00480206 00480207 00480201 00480201 00480201 00480201 00480201 00480201 %{AnimationTable:NPC_80243A7C % .Sprite:Dayzee
+00000000 00000000 00000000 00000000 % no tattle string
+}
+
+@ $NpcGroupList_8024442C
+{
+00000001 $NpcGroup_8024388C 00000000 
+00000001 $NpcGroup_80243A7C 18260002 %insanee formation 
+00000001 $NpcGroup_80243C6C 19020002 
+00000001 $NpcGroup_80243E5C 19010002 
+00000001 $NpcGroup_8024404C 19030002 
+00000001 $NpcGroup_8024423C 19040002 
+00000000 00000000 00000000 
+}
+
+%change dialogue
+%use *Flag_FLO_34 or *GameFlag[586] for the flag of obtaining the bean
+
+%moles are harder to hit ;)
+@ $Script_Idle_8024219C
+{
+[258]  			Wait     0000000F 
+[298]  			Wait     00000028 
+}
+
+@ $Script_Idle_80242618
+{
+[258]  			Wait     0000000F 
+[298]  			Wait     00000028 
+}
+
+@ $Script_Idle_80242A94
+{
+[258]  			Wait     0000000F 
+[298]  			Wait     00000028 
+}
+
+@ $Script_Idle_80242F10
+{
+[258]  			Wait     0000000F 
+[298]  			Wait     00000028 
+}
+
+@ $Script_Interact_802412BC
+{
+	0:  ExecWait $Script_802407C0 
+    C:  Switch  *GB_StoryProgress 
+   18:  	Case  <  0000002C 
+   24:  		Set  *MapVar[E]  00000001 
+   34:  		Set  *Var[4]  *Fixed[3.5] 
+   44:  		ExecWait $Script_8024122C 
+   50:  		Call     SpeakToPlayer 	( .Npc:Self 00C70007 00C70006 00000000 00110050 ) % Do you have a second? Then listen to my sad tale!  ...
+   70:  		Call     SetNpcAnimation 	( .Npc:Self 00C70006 )
+   84:  		Call     SetPlayerAnimation 	( .PlayerAnim:NodYes )
+   94:  		Wait     00000014 
+   A0:  		Call     SpeakToPlayer 	( .Npc:Self 00C70007 00C70006 00000000 00110051 ) % In case you're wondering, the Monty Moles I'm talk ...
+   C0:  		Call     SetNpcAnimation 	( 00000002 002F0112 )
+   D4:  		Call     SetNpcYaw   	( 00000002 0000010E )
+   E8:  		Call     GetNpcPos   	( 00000002 *Var[0] *Var[1] *Var[2] )
+  104:  		Call     UseSettingsFrom 	( .Cam:Default *Var[0] *Var[1] *Var[2] )
+  120:  		Call     SetPanTarget 	( .Cam:Default *Var[0] *Var[1] *Var[2] )
+  13C:  		Call     SetCamSpeed 	( .Cam:Default *Fixed[90.0] )
+  150:  		Call     SetCamPitch 	( .Cam:Default *Fixed[17.0] *Fixed[-8.0] )
+  168:  		Call     SetCamDistance ( .Cam:Default 000000C8 )
+  17C:  		Call     PanToTarget 	( .Cam:Default 00000000 00000001 )
+  194:  		Call     WaitForCam  	( .Cam:Default *Fixed[1.0] )
+  1A8:  		Wait     00000014 
+  1B4:  		Call     PlaySoundAtNpc ( 00000002 00000321 00000000 )
+  1CC:  		Call     SetNpcAnimation 	( 00000002 002F0116 )
+  1E0:  		Wait     0000000A 
+  1EC:  		Call     PlaySoundAtNpc ( 00000002 00000263 00000000 )
+  204:  		Call     ShowEmote   	( 00000002 .Emote:Question FFFFFFD3 0000001E 00000001 00000000 00000000 00000000 00000000 )
+  234:  		Call     GetNpcPos   	( 00000003 *Var[0] *Var[1] *Var[2] )
+  250:  		Call     SpeakToPlayer 	( .Npc:Self 00C70007 00C70006 00000000 00110052 ) % this guy...
+  270:  		Call     SetNpcYaw   	( 00000003 0000005A )
+  284:  		Call     SetNpcPos   	( 00000003 00000000 FFFFFC18 00000000 )
+  2A0:  		Call     UseSettingsFrom 	( .Cam:Default *Var[0] *Var[1] *Var[2] )
+  2BC:  		Call     SetPanTarget 	( .Cam:Default *Var[0] *Var[1] *Var[2] )
+  2D8:  		Call     SetCamDistance ( .Cam:Default 000000C8 )
+  2EC:  		Call     SetCamPitch 	( .Cam:Default *Fixed[17.0] *Fixed[-8.0] )
+  304:  		Call     PanToTarget 	( .Cam:Default 00000000 00000001 )
+  31C:  		Call     WaitForCam  	( .Cam:Default *Fixed[1.0] )
+  330:  		Call     SetNpcAnimation 	( 00000003 002F0100 )
+  344:  		Wait     00000014 
+  350:  		Call     PlaySoundAtNpc ( 00000003 00000321 00000000 )
+  368:  		Call     SetNpcPos   	( 00000003 *Var[0] *Var[1] *Var[2] )
+  384:  		Call     SetNpcAnimation 	( 00000003 002F0110 )
+  398:  		Wait     00000014 
+  3A4:  		Call     SpeakToPlayer 	( .Npc:Self 00C70007 00C70006 00000000 00110053 ) % and this jerk...
+  3C4:  		Call     SetNpcYaw   	( 00000004 0000010E )
+  3D8:  		Call     GetNpcPos   	( 00000004 *Var[0] *Var[1] *Var[2] )
+  3F4:  		Call     UseSettingsFrom 	( .Cam:Default *Var[0] *Var[1] *Var[2] )
+  410:  		Call     SetPanTarget 	( .Cam:Default *Var[0] *Var[1] *Var[2] )
+  42C:  		Call     SetCamDistance ( .Cam:Default 000000C8 )
+  440:  		Call     SetCamPitch 	( .Cam:Default *Fixed[17.0] *Fixed[-8.0] )
+  458:  		Call     PanToTarget 	( .Cam:Default 00000000 00000001 )
+  470:  		Call     WaitForCam  	( .Cam:Default *Fixed[1.0] )
+  484:  		Wait     00000014 
+  490:  		Call     SetNpcAnimation 	( 00000004 002F0114 )
+  4A4:  		Call     SpeakToPlayer 	( .Npc:Self 00C70007 00C70006 00000000 00110054 ) % and this troublemaker...
+  4C4:  		Call     SetNpcYaw   	( 00000005 0000010E )
+  4D8:  		Call     GetNpcPos   	( 00000005 *Var[0] *Var[1] *Var[2] )
+  4F4:  		Call     UseSettingsFrom 	( .Cam:Default *Var[0] *Var[1] *Var[2] )
+  510:  		Call     SetPanTarget 	( .Cam:Default *Var[0] *Var[1] *Var[2] )
+  52C:  		Call     SetCamDistance ( .Cam:Default 000000C8 )
+  540:  		Call     SetCamPitch 	( .Cam:Default *Fixed[17.0] *Fixed[-9.0] )
+  558:  		Call     PanToTarget 	( .Cam:Default 00000000 00000001 )
+  570:  		Call     WaitForCam  	( .Cam:Default *Fixed[1.0] )
+  584:  		Call     SetNpcAnimation 	( 00000005 002F0106 )
+  598:  		Wait     00000014 
+  5A4:  		Call     SetNpcAnimation 	( 00000005 002F0107 )
+  5B8:  		Wait     00000014 
+  5C4:  		Call     SetNpcAnimation 	( 00000005 002F0108 )
+  5D8:  		Wait     00000014 
+  5E4:  		Call     SetNpcAnimation 	( 00000005 002F0116 )
+  5F8:  		Call     SpeakToPlayer 	( .Npc:Self 00C70007 00C70006 00000000 00110055 ) % and this wicked creature!
+  618:  		Call     SetNpcPos   	( 00000001 FFFFFF17 00000000 FFFFFF27 )
+  634:  		Call     GetNpcPos   	( 00000001 *Var[0] *Var[1] *Var[2] )
+  650:  		Call     UseSettingsFrom 	( .Cam:Default *Var[0] *Var[1] *Var[2] )
+  66C:  		Call     SetPanTarget 	( .Cam:Default *Var[0] *Var[1] *Var[2] )
+  688:  		Call     SetCamDistance ( .Cam:Default 0000012C )
+  69C:  		Call     SetCamPitch 	( .Cam:Default *Fixed[17.0] *Fixed[-9.0] )
+  6B4:  		Call     PanToTarget 	( .Cam:Default 00000000 00000001 )
+  6CC:  		Call     WaitForCam  	( .Cam:Default *Fixed[1.0] )
+  6E0:  		Call     SetNpcAnimation 	( 00000001 0048020D )
+  6F4:  		Call     PlaySoundAtNpc ( 00000001 00000262 00000000 )
+  70C:  		Call     ShowEmote   	( 00000001 .Emote:Exclamation 0000002D 0000001E 00000001 00000000 00000000 00000000 00000000 )
+  73C:  		Wait     0000000F 
+  748:  		Call     SpeakToPlayer 	( .Npc:Self 00C70007 00C70006 00000000 00110056 ) % This guy is... Well, you probably don't need to be ...
+  768:  		Set  *Var[4]  *Fixed[90.0] 
+  778:  		ExecWait $Script_8024122C 
+  784:  		Call     SpeakToPlayer 	( .Npc:Self 00C70007 00C70006 00000000 00110057 ) % Please don't fail me! My seeds and I are counting  ...
+  7A4:  		Call     SetEnemyFlagBits 	( 00000001 00000001 00000000 )
+  7BC:  		Call     SetEnemyFlagBits 	( 00000002 00000001 00000000 )
+  7D4:  		Call     SetEnemyFlagBits 	( 00000003 00000001 00000000 )
+  7EC:  		Call     SetEnemyFlagBits 	( 00000004 00000001 00000000 )
+  804:  		Call     SetEnemyFlagBits 	( 00000005 00000001 00000000 )
+  81C:  		Call     BindNpcAI   	( 00000001 $Script_NpcAI_8024119C )
+  830:  		Set  *MapVar[E]  00000000 
+  840:  		Set  *MapVar[F]  0000003C 
+  850:  		Set  *GB_StoryProgress  0000002C 
+  860:  	Case  ==  0000002C 
+  86C:  		If  *Flag_FLO_31  ==  00000000 
+  87C:  			Call     SpeakToPlayer 	( .Npc:Self 00C70007 00C70006 00000000 00110058 ) % There are still Monty Moles left! Please don't des ...
+  89C:  			Call     SetNpcAnimation 	( .Npc:Self 00C70006 )
+  8B0:  		Else
+  8B8:  			Set  *Var[4]  *Fixed[3.5] 
+  8C8:  			ExecWait $Script_8024122C 
+  8D4:  			Call     SpeakToPlayer 	( .Npc:Self 00C70008 00C70003 00000000 00110059 ) % Oh, yiipppeee!! Hooray! Hurrah! Yahoo! Whee! You g ...
+  8F4:  			Call     EndSpeech 	( .Npc:Self 00C70002 00C70001 00000000 )
+					/%
+  910:  			Call     SetNpcAnimation 	( .Npc:Self 00C70004 ) %giving you the bean
+  924:  			Wait     00000014 
+  930:  			Call     SetNpcAnimation 	( .Npc:Self 00C70001 )
+  944:  			Set  *Var[0]  00000058 
+  954:  			Set  *Var[1]  00000001 
+  964:  			ExecWait $Script_80240F0C %showgotitem
+  970:  			Call     AddKeyItem  	( .Item:MagicalBean )
+  980:  			Wait     00000014 
+					%/
+  %98C:  			Call     SpeakToPlayer 	( .Npc:Self 00C70002 00C70001 00000000 0011005A ) 
+  %9AC:  			Call     EndSpeech 	( .Npc:Self 00C70007 00C70006 00000000 )   
+					Call     GetPlayerTargetYaw 	( *Var[0] )
+					Call     InterpNpcYaw 	( .Npc:Self *Var[0] 00000001 )
+					Wait	 0000000A
+					Call     SetNpcAnimation 	( .Npc:Self 00C70005 ) %fix animations
+					Call     SpeakToPlayer 	( .Npc:Self 00C70005 00C70005 00000000 $Hmm ) % see below
+					Call     NpcFacePlayer 	( .Npc:Self 00000001 )
+					Call     SpeakToPlayer 	( .Npc:Self 00C70007 00C70006 00000000 $NoBean ) % see below
+					Call     SetNpcAnimation 	( .Npc:Self 00C70001 ) %fix animations
+  9C8:  			Set  *GB_StoryProgress  0000002D %we'll have to redefine what this value means
+  9D8:  		EndIf
+  9E0:  	Case  <  00000037 %planting the bean
+				If *GameFlag[586] == 00000000
+					Call     SpeakToPlayer 	( .Npc:Self 00C70007 00C70006 00000000 $GetTheBean ) % 
+				Else
+  9EC:  			Call     SpeakToPlayer 	( .Npc:Self 00C70002 00C70001 00000000 0011005B ) % Are you really going to plant my Magical Bean? Oh. ...
+				EndIf
+  A0C:  	Case  <  0000003C 
+  A18:  		Call     SpeakToPlayer 	( .Npc:Self 00C70002 00C70001 00000000 0011005C ) % After basking in this lovely sun for a while, I've ...
+  A38:  	Default
+  A40:  		If  *AreaByte[1]  ==  00000000 
+  A50:  			Call     SpeakToPlayer 	( .Npc:Self 00C70002 00C70001 00000000 0011005D ) % It feels so good to grow in the warm sunlight! Eve ...
+  A70:  			Set  *AreaByte[1]  00000001 
+  A80:  		Else
+  A88:  			Call     SpeakToPlayer 	( .Npc:Self 00C70002 00C70001 00000000 0011005E ) % It feels so good to grow in the warm sunlight! Eve ...
+  AA8:  		EndIf
+  AB0:  EndSwitch
+  AB8:  Call     ResetCam    	( .Cam:Default *Fixed[8.0] )
+  ACC:  ExecWait $Script_80240814 
+  AD8:  Return
+  AE0:  End
+}
+
+#string $Hmm
+{
+[STYLE:Right]Hm...?[BR]
+[Wait][END]
+}
+  
+#string $NoBean
+{
+[STYLE:Right]Oh no! Someone stole my[BR]
+Magical Bean![BR]
+[Wait][NEXT]I can't imagine what someone[BR]
+is doing with that bean![BR]
+What if they plant it?[BR]
+[Wait][NEXT][Down:08][PrintRising][Wave]No!!!!!!!!![/fx][/fx][BR]
+[BR]
+[BR]
+[Wait][NEXT][PAUSE:0A]Please... Could you make[BR]
+sure that doesn't happen?[Wait][END]
+}
+
+#string $GetTheBean
+{
+[STYLE:Right]I can't imagine what someone[BR]
+is doing with that bean![BR]
+You've got to find whoever[BR]
+stole it![Wait][END]
+}

@@ -1,0 +1,11 @@
+@ $Script_MakeEntities
+{
+    0:  Call  MakeEntity    ( .Entity:SavePoint ~Vec4d:Entity802414C0 80000000 )
+   24:  If  *GF_KPA11_Defeated_Guard  ==  .True
+   34:  	Call  MakeItemEntity    ( .Item:BowserCastleKey ~Vec3d:Item802414F4 .ItemSpawnMode:Fixed_NeverVanish *GF_KPA11_Item_CastleKey2 )
+   58:  EndIf
+   60:  Call  MakeEntity        ( .Entity:YellowBlock ~Vec4d:Entity80241520 .Item:GoldenShroom 80000000 )
+   88:  Call  AssignBlockFlag   ( *GF_KPA10_ItemBlock_LifeShroom )
+   98:  Return
+   A0:  End
+}

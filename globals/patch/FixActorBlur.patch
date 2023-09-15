@@ -1,0 +1,15 @@
+%Fix actor blur problems
+
+%"temporary" "solution": just get rid of it altogether and it won't cause me any problems anymore
+%802542CC
+/%
+@Function 182BAC
+{
+	JR		RA
+	ORI		V0, R0, 0
+}
+%/
+
+%permanent solution:
+%	I have no idea how this is broken or where this is broken, so this will come later
+%it looks like the koopa bros had too many palettes and that broke stuff

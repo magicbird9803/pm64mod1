@@ -1,0 +1,120 @@
+%introduce the idea of hidden models early so you'll expect it later (*Though actually I only ended up using them in the chaper 7 path to crystal palace)
+
+%so basically, the snowman doll is only accessible by going onto some hidden blocks
+
+
+%Add a cryo guy overworld enemy :)
+@ $NpcGroupList_80242AAC
+{
+	00000001 $NpcGroup_802426CC 10220008
+	00000001 $NpcGroup_802428BC 10240008
+	00000001 $NpcGroup_CryoGuy 10260008
+	00000000 00000000 00000000
+}
+
+#new:NpcGroup $NpcGroup_CryoGuy
+{
+	00000002 $NpcSettings_802426A0 ~Vec3f:NPC_CryoGuy % 330 0 83
+	00000C00 00000000 00000000 00000000 0000010E
+	~İtems:5:FireFlower:A ~HP:Standard:3 ~FP:Standard:2 ~CoinBonus:0:3
+	~Movement:NPC_CryoGuy
+	~AnimationTable:NPC_CryoGuy % .Sprite:PyroGuy
+	/%
+	00ED0001 00ED0002 00ED0003 00ED0002 00ED0001 00ED0001 00ED0006 00ED0006
+	00ED0001 00ED0001 00ED0001 00ED0001 00ED0001 00ED0001 00ED0001 00ED0001
+	%/
+	00000001 00000000 00000000 00000000 % no tattle string
+}
+
+
+#import LightBlocks.mpat
+
+@ $Script_MakeEntities
+{
+		Call     MakeEntity  	( .Entity:Signpost ~Vec4d:Sign 80000000 )
+		Call	 AssignScript   ( $Script_SignPost )
+	0:  Call     MakeEntity  	( .Entity:SuperBlock ~Vec4d:Entity80242488 80000000 )
+   24:  Set  *MapVar[0]  *Var[0] 
+   34:  Call     AssignBlockFlag 	( *Flag_OMO_60 )
+   44:  Call     AssignScript 	( $Script_80242008 )
+   54:  Call     MakeEntity  	( .Entity:MultiCoinBrick ~Vec4d:Entity802424DC 80000000 )
+   78:  Call     AssignBlockFlag 	( *Flag_OMO_4F )
+   88:  Call     80111F2C ( 00000001 )
+   98:  Call     MakeEntity  	( .Entity:HiddenYellowBlock ~Vec4d:Entity80242520 .Item:VoltShroom 80000000 )
+   C0:  Call     AssignBlockFlag 	( *Flag_OMO_53 )
+   D0:  Call     MakeEntity  	( .Entity:YellowBlock ~Vec4d:Entity80242558 .Item:SnowmanDoll 80000000 ) %un-hidden block!
+   F8:  Call     AssignBlockFlag 	( *Flag_OMO_54 )
+  108:  Call     MakeEntity  	( .Entity:YellowBlock ~Vec4d:Entity80242590 .Item:Coin 80000000 )
+  130:  Call     AssignBlockFlag 	( *Flag_OMO_52 )
+  140:  Call     MakeEntity  	( .Entity:HiddenRedBlock ~Vec4d:Entity802425C8 .Item:DeepFocus2 80000000 )
+  168:  Call     AssignBlockFlag 	( *Flag_OMO_50 )
+  178:  Call     MakeEntity  	( .Entity:YellowBlock ~Vec4d:Entity80242600 .Item:Coin 80000000 )
+  1A0:  Call     AssignBlockFlag 	( *Flag_OMO_51 )
+  1B0:  Return
+  1B8:  End
+}
+
+#new:Script $Script_SignPost
+{
+		%Potential future feature: show the current spell info on the sign
+	0:  Call     DisablePlayerInput 	( .True )
+		Call     ShowMessageAtScreenPos 	( $ParalyzeInfo 000000A0 00000028 )
+	8:  Call     DisablePlayerInput 	( .False )
+   38:  Return
+   40: End
+}
+
+#new:String $ParalyzeInfo
+{
+	[DelayOff][Style Sign]Paralyzed enemies take 1[BR]
+	less damage from attacks.[BR]
+	[DelayOn][Wait][END] 
+}
+
+@ $Script_Main_EnterWalk
+{
+	0:  Set  *GB_WorldLocation  .Location:ShyGuysToybox
+   10:  Call     SetSpriteShading 	( FFFFFFFF )
+   20:  Call     SetCamPerspective 	( .Cam:Default 00000003 00000019 00000010 00001000 )
+   40:  Call     SetCamBGColor 	( .Cam:Default 00000000 00000000 00000000 )
+   5C:  Call     SetCamEnabled 	( .Cam:Default .True )
+   70:  Call     MakeNpcs    	( 00000001 $NpcGroupList_80242AAC )   
+		ExecWait $Script_SetupLightBlocks
+   84:  ExecWait $Script_MakeEntities 
+   90:  ExecWait $Script_80241530 
+   9C:  ExecWait $Script_80241BF8 
+   A8:  Set  *Var[0]  $Script_80241618 
+   B8:  Exec     EnterWalk 
+   C4:  Wait     00000001 
+   D0:  Return
+   D8:  End
+}
+
+#new:Script $Script_SetupLightBlocks
+{
+Set *Var[A] 0000006C %model ID (group)
+Set *Var[B] 00000045 %collider ID
+Set *Var[C] .True	 %true = hidden model, false = un-hidden model (use watt to make it disappear)
+Exec $Script_LightBlocks
+Return
+End
+}
+
+%Super block stuff
+@ $Function_8024095C
+{
+   [40]   LI        A0, 396					%330 -> 396
+   [14C]  SLTI      V0, S2, 9				%8 -> 9
+}
+
+@ $???_80241E48
+{
+	00010002 00030004 00090006 00070008 000A0000
+}
+
+@ $???_80241E58
+{
+	001D00E0 001D00E1 001D00E2 001D00E3 001D00E4 001D00E5 001D00E6 001D00E7
+	001D00E8 001D00E9 001D00EA 001D00EB 001D00EC 001D00ED 001D00EE 001D00EF
+	001D01AD 001D01AE
+}

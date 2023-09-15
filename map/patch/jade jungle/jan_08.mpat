@@ -1,0 +1,35 @@
+%Super block stuff
+@ $Function_8024082C
+{
+   [40]   LI        A0, 396					%330 -> 396
+   [14C]  SLTI      V0, S2, 9				%8 -> 9
+}
+
+@ $???_80243E08
+{
+	00010002 00030004 00090006 00070008 000A0000
+}
+
+@ $???_80243E18
+{
+	001D00E0 001D00E1 001D00E2 001D00E3 001D00E4 001D00E5 001D00E6 001D00E7
+	001D00E8 001D00E9 001D00EA 001D00EB 001D00EC 001D00ED 001D00EE 001D00EF
+	001D01AD 001D01AE
+}
+
+@ $Script_MakeEntities
+{
+    0:  Call  MakeEntity        ( .Entity:SuperBlock ~Vec4d:Entity80244448 80000000 )
+   24:  Set   *MapVar[2]  *Var0
+   34:  Call  AssignBlockFlag   ( *GF_JAN08_SuperBlock )
+   44:  Call  AssignScript      ( $Script_80243FC8 )
+   54:  Call  MakeItemEntity    ( .Item:Coin ~Vec3d:Item8024449C .ItemSpawnMode:Fixed_NeverVanish *GF_JAN08_Item_CoinA )
+   78:  Call  MakeItemEntity    ( .Item:Coin ~Vec3d:Item802444C0 .ItemSpawnMode:Fixed_NeverVanish *GF_JAN08_Item_CoinB )
+   9C:  Call  MakeItemEntity    ( .Item:Coin ~Vec3d:Item802444E4 .ItemSpawnMode:Fixed_NeverVanish *GF_JAN08_Item_CoinC )
+   C0:  Call  MakeEntity        ( .Entity:BellbellPlant ~Vec4d:Entity80244508 80000000 )
+   E4:  Call  MakeEntity        ( .Entity:HiddenYellowBlock ~Vec4d:Entity8024452C .Item:BombFruit 80000000 )
+  10C:  Call  AssignBlockFlag   ( *GF_JAN08_HiddenItem_ThunderRage )
+  11C:  Call  MakeEntity        ( .Entity:TrumpetPlant ~Vec4d:Entity80244564 80000000 )
+  140:  Return
+  148:  End
+}

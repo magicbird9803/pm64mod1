@@ -1,0 +1,337 @@
+
+@ $Function_80238B60
+{
+[2C]  LTW	V0, V0 ($Global_ActorTattleTable)
+[38]  LIA	V1, $Global_ActorTattleTable
+}
+
+@ $Function_80238BCC
+{
+[1CC]  LTB	V1, V0 ($Global_ActorOffsetsTable)
+[1EC]  LTB	V1, V0 ($Global_ActorOffsetsTable[1])
+[210]  LTB	A0, V0 ($Global_ActorOffsetsTable[2])
+}
+
+%charge cap (+6)
+@ $Function_80238E74
+{
+[48]  SLTI  V0, V0, 5
+}
+
+@ $Function_80238EDC
+{
+[84] ADDIU V0, V0, 3 % Sets charge to +3
+}
+
+%tattle takes up 0 turns
+@ $Script_8023C5B8
+{
+    0:  Call  GetActorPos   ( .Actor:Partner *Var0 *Var1 *Var2 )
+   1C:  Add   *Var0  0000001E
+   2C:  Call  SetActorSpeed ( .Actor:Partner *Fixed[6.0] )
+   40:  Call  SetAnimation  ( .Actor:Partner FFFFFFFF 00090003 )
+   58:  Call  SetGoalPos    ( .Actor:Partner *Var0 *Var1 *Var2 )
+   74:  Call  RunToGoal     ( .Actor:Partner 00000000 .False )
+   8C:  Call  SetAnimation  ( .Actor:Partner FFFFFFFF 00090001 )
+   A4:  Call  InitTargetIterator ( )
+   B0:  Call  SetGoalToTarget   ( .Actor:Partner )
+   C0:  Call  SetBattleFlagBits ( 00000004 .True )
+   D4:  Call  $Function_80238E04 ( )
+   E0:  Wait  12`
+   EC:  Call  SetCamEnabled ( .Cam:Tattle .True )
+  100:  Call  SetCamFlag80  ( .Cam:Tattle .False )
+  114:  Call  SetCamPerspective ( .Cam:Tattle 00000006 00000019 00000010 00000400 )
+  134:  Call  SetCamViewport    ( .Cam:Tattle 00000089 0000005F 0000008A 00000063 )
+  154:  Call  GetOwnerTarget    ( *VarA *VarB )
+  168:  Call  GetActorPos   ( *VarA *Var0 *Var1 *Var2 )
+  184:  Call  SetGoalPos    ( .Actor:Partner *Var0 *Var1 *Var2 )
+  1A0:  Call  $Function_80238BCC ( )
+  1AC:  Wait  1`
+  1B8:  Call  802CAE50      ( 00000002 *Var0 *Var1 *Var2 )
+  1D4:  Call  802CABE8      ( 00000002 00000000 *Var3 00000064 00000004 )
+  1F4:  Wait  2`
+  200:  Call  PlaySoundAtActor  ( .Actor:Partner 00000282 )
+  214:  Call  SetCamFlag80  ( .Cam:Tattle .True )
+  228:  Wait  10`
+  234:  Call  $Function_80238B60 ( )
+  240:  Call  ActorSpeak    ( *Var0 .Actor:Self 00000001 0009000F 00090001 ) % variable string ID
+  260:  Call  $Function_80238E48 ( )
+  26C:  Wait  12`
+  278:  Call  SetCamEnabled ( .Cam:Tattle .False )
+  28C:  Wait  32`
+  298:  Call  UseBattleCamPreset    ( 00000002 )
+  2A8:  Call  SetBattleFlagBits ( 00000004 .False )
+  2BC:  Call  80280818 ( )
+  2C8:  Call  SetGoalToHome ( .Actor:Partner )
+  2D8:  Call  SetActorSpeed ( .Actor:Partner *Fixed[4.0] )
+  2EC:  Call  SetActorJumpGravity   ( .Actor:Partner *Fixed[1.8] )
+  300:  Call  SetAnimation  ( .Actor:Partner FFFFFFFF 00090003 )
+  318:  Call  RunToGoal     ( .Actor:Partner 00000000 )
+  32C:  Call  SetAnimation  ( .Actor:Partner FFFFFFFF 00090001 )
+		Call $FreeTurn ( )
+  344:  Return
+  34C:  End
+}
+
+
+%make charge not take turn if you can't
+
+@ $Script_8023C90C
+{
+    0:  Call  UseBattleCamPreset    ( 00000037 )
+   10:  Wait  10`
+   1C:  Call  SetAnimation  ( .Actor:Partner FFFFFFFF 00090007 )
+   34:  Call  SetActorDispOffset    ( .Actor:Partner 00000000 00000013 00000000 )
+   50:  Call  GetActorPos   ( .Actor:Partner *Var0 *Var1 *Var2 )
+   6C:  Add   *Var1  0000000F
+   7C:  Call  PlaySoundAtActor      ( .Actor:Partner 0000208F )
+   90:  Call  $Function_802390C8    ( *Var0 *Var1 *Var2 *Fixed[1.2] )
+   AC:  Wait  3`
+   B8:  Call  $Function_802390C8    ( *Var0 *Var1 *Var2 *Fixed[0.8] )
+   D4:  Thread
+   DC:  	Wait  15`
+   E8:  	Call  GetActorPos       ( .Actor:Partner *Var0 *Var1 *Var2 )
+  104:  	Add   *Var1  0000000F
+  114:  	Add   *Var2  FFFFFFFB
+  124:  	Call  PlaySoundAtActor  ( .Actor:Partner 00002003 )
+  138:  	Call  PlayEffect        ( 00000052 00000009 *Var0 *Var1 *Var2 *Fixed[2.0] 00000014 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+  17C:  EndThread
+  184:  Wait  30`
+  190:  Call  SetAnimation  ( .Actor:Partner FFFFFFFF 00090001 )
+  1A8:  Call  SetActorDispOffset    ( .Actor:Partner 00000000 00000000 00000000 )
+  1C4:  Call  UseBattleCamPreset    ( 00000002 )
+  1D4:  Call  MoveBattleCamOver     ( 0000000A )
+  1E4:  Call  $Function_80238E74 ( )
+  1F0:  If  *Var0  ==  00000000
+  200:  	Call  GetActorPos       ( .Actor:Partner *Var0 *Var1 *Var2 )
+  21C:  	Add   *Var0  0000000A
+  22C:  	Add   *Var1  00000019
+  23C:  	Add   *Var2  00000005
+  24C:  	Call  PlaySoundAtActor  ( .Actor:Partner 0000208E )
+  260:  	Call  $Function_80238EDC    ( *Var0 *Var1 *Var2 )
+  278:  	Wait  4`
+  284:  	Call  SetActorJumpGravity   ( .Actor:Partner *Fixed[1.4] )
+  298:  	Call  GetActorPos       ( .Actor:Partner *Var0 *Var1 *Var2 )
+  2B4:  	Call  SetJumpAnimations ( .Actor:Partner 00090004 00000001 00090004 00090004 )
+  2D4:  	Call  SetGoalPos        ( .Actor:Partner *Var0 *Var1 *Var2 )
+  2F0:  	Call  JumpToGoal        ( .Actor:Partner 00000014 .True .True .False )
+  310:  	Call  SetAnimation      ( .Actor:Partner FFFFFFFF 00090001 )
+  328:  	Call  GetMenuSelection  ( *Var0 *Var1 *Var2 )
+  340:  	Switch  *Var2
+  34C:  		Case  ==  00000086
+  358:  			Call  ShowMessageBox    ( 00000024 0000003C )
+  36C:  		Case  ==  00000087
+  378:  			Call  $Function_80239190 ( )
+  384:  			Call  ShowMessageBox    ( *Var0 0000003C )
+  398:  		Case  ==  00000088
+  3A4:  			Call  ShowMessageBox    ( 00000024 0000003C )
+  3B8:  	EndSwitch
+  3C0:  Else
+			%charging is illegal
+  3C8:  	Call  ShowMessageBox    ( 00000008 0000003C )
+			Call $FreeTurn ( )
+  3DC:  EndIf
+  3E4:  Label  0
+  3F0:  Wait  1`
+  3FC:  Call  IsMessageBoxDisplayed ( *Var0 )
+  40C:  If  *Var0  ==  .True
+  41C:  	Goto  0
+  428:  EndIf
+  430:  Return
+  438:  End
+}
+
+
+%this is what calculates the multibounce cap
+%but apparently its missing something that resets the quotient to 200
+%@ $Function_802380E4
+%doesnt matter anymore
+
+
+%multibonk -> megabonk
+%Megabonk = regular + 7 (for missing, it's -4 penalty)
+%	hit:   10, 13, 16
+%	miss:  6, 9, 12
+
+%current problem: levitation
+%goombario gets put slightly off the ground, but it magically fixes itself when doing certain actions
+%however, if I manually set his position, then he sometimes goes below the ground for a split second
+
+@ $Script_8023BB9C
+{
+    0:  Call     LoadActionCommand 	( 00000001 )
+   10:  Call     802A9000 ( )
+   1C:  ExecWait $Script_8023A52C 
+   28:  ExecWait $Script_8023A66C 
+   34:  Call     SetAnimation 	( .Actor:Self 00000001 00090007 )
+   4C:  Call     SetActorDispOffset ( 00000100 00000000 00000012 00000000 )
+   68:  Wait     00000005 
+   74:  Call     SetActorDispOffset ( 00000100 00000000 00000013 00000000 )
+   90:  Wait     00000001 
+   9C:  Call     UseBattleCamPreset 	( 00000034 )
+   AC:  Call     802A9120 ( *Var[A] 00000003 )
+   C0:  Call     UseBattleCamPreset 	( 00000034 )
+   D0:  Call     SetAnimation 	( .Actor:Self 00000001 00090006 )
+   E8:  Call     SetActorDispOffset ( 00000100 00000000 00000009 00000000 )
+  104:  Call     SetGoalToTarget 	( .Actor:Partner )
+  114:  Call     SetJumpAnimations 	( .Actor:Partner 00000000 00090006 00090006 00090006 )
+  134:  Call     PlaySoundAtActor 	( .Actor:Partner 0000200D )
+  148:  Call     $Function_8023817C ( *Var[A] 00000003 )
+  15C:  Call     PartnerTestEnemy 	( *Var[0] 00000080 00000014 00000000 00000001 00000010 )
+  180:  If  *Var[0]  ==  00000006 
+  190:  	Call     SetJumpAnimations 	( .Actor:Partner 00000000 00090006 00090006 00090006 )
+  1B0:  	Call     $Function_80238A20 ( )
+  1BC:  	Thread
+  1C4:  		Call     ShakeCam    	( 00000001 00000000 00000005 *Fixed[1.0] )
+  1E0:  	EndThread
+  1E8:  	Call     PlaySoundAtActor 	( .Actor:Partner 00000162 )
+  1FC:  	Wait     00000014 
+  208:  	ExecWait $Script_80239CA8 
+  214:  	Return
+  21C:  EndIf
+  224:  ChildThread
+  22C:  	Call     SetActorScale 	( .Actor:Partner *Fixed[1.1005859] *Fixed[0.80078125] *Fixed[1.0] )
+  248:  	Wait     00000001 
+  254:  	Call     SetActorScale 	( .Actor:Partner *Fixed[1.3007812] *Fixed[0.5] *Fixed[1.0] )
+  270:  	Wait     00000001 
+  27C:  	Call     SetActorScale 	( .Actor:Partner *Fixed[1.0] *Fixed[1.0] *Fixed[1.0] )
+  298:  EndChildThread
+  2A0:  Wait     00000001 
+		ExecWait $ShakyCam
+  2AC:  Call     802807D0 ( *Var[0] ) %action command success value? : 0 = fail, >0 = not fail?
+  2BC:  Switch  *Var[0] 
+  2C8:  	Case  >  00000000 
+  %2D4:  		Call     $Function_802390B0 ( )
+				Call     $Function_80239068 ( ) %I think this gets the current charge amount, this one also removes the charge
+  2E0:  		Add  *Var[0]  00000001 
+				%x + 7
+				Add *Var[0] 9 %idk how these numbers work, its supposed to be 10 base
+  2F0:  		Call     PartnerDamageEnemy 	( *Var[1] 00000080 00000000 00000000 *Var[0] 00000070 ) %flag 4 is success?
+				Call	 GetActorPos 	( .Actor:Partner *Var[4] *Var[5] *Var[6] )
+				Call	 PlayEffect ( 00000000 *Var[4] *Var[5] *Var[6] ) %steam
+				/%
+				Sub	*Var[4] 00000030
+				Add	*Var[5] 00000045
+				Call	 PlayEffect ( 00000048 00000000 *Var[4] *Var[5] *Var[6] 00000000 00000015 ) %nice text, hope this works
+				%/
+				%ehh
+				Call     PlaySoundAtActor 	( .Actor:Partner 00000000 )				
+  314:  	Default
+  31C:  		Call     $Function_80239068 ( ) %this is also called right before the second hit
+  328:  		Add  *Var[0]  00000001 
+				%x + 7
+				Add *Var[0] 5 %idk what the numbers mean, this is supposed to be 6 damage
+  338:  		Call     PartnerDamageEnemy 	( *Var[1] 00000080 00000000 00000000 *Var[0] 00000030 ) 
+				Call	 GetActorPos 	( .Actor:Partner *Var[4] *Var[5] *Var[6] )
+				Call	 PlayEffect ( 00000000 *Var[4] *Var[5] *Var[6] ) %steam
+				Call     PlaySoundAtActor 	( .Actor:Partner 00000000 )
+				ExecWait $Script_80239CA8
+				Return
+  35C:  EndSwitch
+  % 364:  Call     PlaySoundAtActor 	( .Actor:Partner 00000000 )
+  % 378:  Switch  *Var[1] 
+  % 384:  	CaseOR  ==  00000000 
+  % 390:  	CaseOR  ==  00000002 
+  % 39C:  		ExecWait $Script_80239CA8 
+  % 3A8:  		Return
+  % 3B0:  	EndCaseGroup
+  % 3B8:  	CaseOR  ==  00000001 
+  % 3C4:  	CaseOR  ==  00000003 
+  % 3D0:  	EndCaseGroup
+  % 3D8:  EndSwitch
+		%hopefully this section spawns the "nice" text somewhere
+  3E0:  Thread
+  3E8:  	Call     UseBattleCamPreset 	( 00000032 )
+  3F8:  	Wait     00000005 			
+  %404:  	Call     SetGoalToTarget 	( .Actor:Partner )		%remove to avoid crash
+  414:  	Call     UseBattleCamPreset 	( 00000033 )
+  424:  EndThread
+  42C:  Call     80269524 ( *Var[F] )
+  43C:  Call     80269410 ( )
+  448:  Call     LoadActionCommand 	( 00000001 )
+  458:  Call     802A9000 ( )
+  464:  Call     802694A4 ( 00000000 )
+  474:  Call     802A9120 ( 00000018 00000003 )		%this might be important 
+  488:  Set  *Var[A]  00000018 
+  %498:  Thread
+  %4A0:  	Wait     00000004 
+  %4AC:  	Set  *Var[0]  00000000 
+  %4BC:  	Loop     00000006 
+  %4C8:  		Add  *Var[0]  FFFFFFE2 
+  %4D8:  		Call     SetActorRotation 	( .Actor:Self 00000000 00000000 *Var[0] )
+  %4F4:  		Wait     00000001 
+  %500:  	EndLoop
+  %508:  EndThread
+  510:  Call     SetGoalToHome 	( .Actor:Partner )
+  520:  Call     SetJumpAnimations 	( .Actor:Partner 00000000 00090006 00090006 00090006 )
+  540:  Call     PlaySoundAtActor 	( .Actor:Partner 000000E2 )
+  554:  Call     $Function_8023817C ( *Var[A] 00000003 ) %is this the jump?
+		%Call	 SetActorRotation (.Actor:Self 00000000 00000000 00000000)
+  % 568:  ChildThread
+  % 570:  	Call     SetActorScale 	( .Actor:Partner *Fixed[1.1005859] *Fixed[0.80078125] *Fixed[1.0] )
+  % 58C:  	Wait     00000001 
+  % 598:  	Call     SetActorScale 	( .Actor:Partner *Fixed[1.3007812] *Fixed[0.5] *Fixed[1.0] )
+  % 5B4:  	Wait     00000001 
+  % 5C0:  	Call     SetActorScale 	( .Actor:Partner *Fixed[1.0] *Fixed[1.0] *Fixed[1.0] )
+  % 5DC:  EndChildThread
+  %5E4:  Wait     00000001 
+  %5F0:  Call     $Function_80239068 ( )
+  % 5FC:  Add  *Var[0]  00000001 
+  % 60C:  Call     PartnerDamageEnemy 	( *Var[0] 00000080 00000000 00000000 *Var[0] 00000020 )
+  % 630:  Call     PlaySoundAtActor 	( .Actor:Partner 00000000 )
+  % 644:  Call     80269550 ( *Var[F] )
+  %654:  ExecWait $Script_80239CA8
+%		ExecWait $Script_8023A06C
+		Call     SetAnimation 	( .Actor:Partner FFFFFFFF 00090001 )
+		Thread
+			Wait     00000004 
+			Call     SetActorRotationOffset 	( .Actor:Self 00000000 0000000C 00000000 )
+			Set  *Var[0]  000000B4 
+			Loop     00000003 
+				Add  *Var[0]  0000003C 
+				Call     SetActorRotation 	( .Actor:Self 00000000 00000000 *Var[0] )
+				Wait     00000001 
+			EndLoop
+			Call     SetActorRotation 	( .Actor:Self 00000000 00000000 00000000 )
+			Call     SetActorRotationOffset 	( .Actor:Self 00000000 00000000 00000000 )
+		EndThread
+		Call     SetGoalToHome 	( .Actor:Partner )
+		%Call	 GetGoalPos		( .Actor:Partner *Var[0] *Var[1] *Var[2] )
+		%Call	 SetGoalPos	( .Actor:Partner *Var[0] 00000000 *Var[2] )
+		Call	 AddGoalPos 	( .Actor:Partner 00000000 FFFFFFF8 00000000 ) %to do: fix levitation somehow
+		Call     SetActorJumpGravity 	( .Actor:Partner *Fixed[1.2001953] )
+		Call     $Function_80238000 ( )
+		Call     JumpToGoal  	( .Actor:Partner *Var[0] 00000000 00000001 00000000 )
+		Call     SetAnimation 	( .Actor:Self 00000001 00090007 )
+		Call     SetGoalToHome 	( .Actor:Partner )
+		Call     SetActorSpeed 	( .Actor:Partner *Fixed[8.0] )
+		Call     SetAnimation 	( .Actor:Partner FFFFFFFF 00090003 )
+		Call     RunToGoal   	( .Actor:Partner 00000000 )
+		Call	 GetGoalPos		( .Actor:Partner *Var[0] *Var[1] *Var[2] )		
+		Call	 SetActorPos 	( .Actor:Partner *Var[0] 00000000 *Var[2] )
+		Call     SetAnimation 	( .Actor:Partner FFFFFFFF 00090001 )
+		Call     SetActorDispOffset ( .Actor:Partner 00000000 00000000 00000000 ) %I think this will fix the levitation really
+		Call     UseBattleCamPreset 	( 00000002 )
+		Call     SetGoalToHome 	( .Actor:Partner )
+  660:  Return
+  668:  End
+}
+  
+#new:Script $ShakyCam
+{
+    0:  Call     80254218 ( 0000000B )
+   10:  Thread
+   18:  	Call     ShakeCam    	( 00000001 00000000 00000002 *Fixed[1.0] )
+   34:  	Call     ShakeCam    	( 00000001 00000000 00000002 *Fixed[3.0] )
+   50:  	Call     ShakeCam    	( 00000001 00000000 00000002 *Fixed[6.0] )
+   6C:  	Call     ShakeCam    	( 00000001 00000000 00000002 *Fixed[5.0] )
+   88:  	Call     ShakeCam    	( 00000001 00000000 00000002 *Fixed[4.0] )
+   A4:  	Call     ShakeCam    	( 00000001 00000000 00000002 *Fixed[3.0] )
+   C0:  	Call     ShakeCam    	( 00000001 00000000 00000002 *Fixed[2.0] )
+   DC:  	Call     ShakeCam    	( 00000001 00000000 00000002 *Fixed[1.0] )
+   F8:  	Call     ShakeCam    	( 00000001 00000000 00000002 *Fixed[0.5] )
+  114:  	Call     ShakeCam    	( 00000001 00000000 00000002 *Fixed[0.20019531] )
+  130:  EndThread
+  138:  Return
+  140:  End
+}

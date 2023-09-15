@@ -1,0 +1,2024 @@
+#message:01:038
+{
+	[Style Right]
+	Hey, Dad![BR]
+	You have to go back to work[BR]
+	starting tomorrow? [BR]
+	[Wait][Next]
+	Aw, lame! Now we won't be able[BR]
+	to play together every day![BR]
+	[Pause 10]What a bummer...[BR]
+	[Wait][NEXT]
+	I guess he won't be able to[BR]
+	build that [COLOR:20]Sandbox[COLOR:0A] we've[BR]
+	always wanted...[BR]
+	[Wait][End]
+}
+
+#message:01:039
+{
+	[Style Right]
+	Next time something happens to[BR]
+	Princess Peach, I'm gonna be[BR]
+	the one to protect her![BR]
+	[Wait][Next]
+	I'm gonna be a guard in the[BR]
+	castle and I'm gonna punch the[BR]
+	bad guys in the nose and I'm[BR]
+	gonna tell them to GET OUT![BR]
+	[Wait][Next]
+	It will be even [COLOR:20]Easier[COLOR:0A] than[BR]
+	when you did it![BR]
+	[Wait][Next]
+	I'm gonna do it all by myself!![Wait][End]
+}
+
+#message:01:03C
+{
+	[Style Right]
+	Greetings, old boy![BR]
+	[Pause 10]Here for the festivities at the[BR]
+	castle, eh?[BR]
+	[Wait][Next]
+	I can't say I'm terribly excited[BR]
+	about it, myself.[BR]
+	[Pause 10]My heart yearns to go to the[BR]
+	Crystal Palace! Yearns, I say![BR]
+	[Wait][Next]
+	I'm also yearning to figure out[BR]
+	what this "[COLOR:20]FastMode[COLOR:0A]" code[BR]
+	means![BR]
+	[Wait][Next]
+	So many mysteries aWait me and[BR]
+	my dizzying intellect...[BR]
+	[Wait][Next]
+	Oh, the pain of it all...[BR]
+	[Pause 10]You understand my yearning,[BR]
+	don't you, old boy?[Wait][End]
+}
+
+#message:01:063
+{
+	[Style Right]
+	Being locked in that prison cell[BR]
+	just seems like a bad dream to[BR]
+	me now.[BR]
+	[Wait][Next]
+	Everything worked out fine![BR]
+	[Pause 10]It's so great!![BR]
+	[Pause 10]Thank you, Mario![BR]
+	[Wait][Next]
+	Now all I want to do is sit down[BR]
+	[Pause 10]and eat shaved ice treats all[BR]
+	day and all night...[BR]
+	[PrintRising]until I'm completely stuffed!![BR]
+	[/fx][Pause 10]
+	[Wait][Next]
+	Or, maybe I could always try[BR]
+	some of those "[COLOR:20]Biscuit[COLOR:0A]"s[BR]
+	I keep hearing about...[Wait][End]
+}
+
+#message:0B:0A9
+{
+	[Style Right]
+	The Hammer has got to be[BR]
+	somewhere close by.[BR]
+	[Wait][Next]
+	[SavePos][SetPosX 18][Down 12][ItemIcon itemID=0x166][RestorePos][BR]
+	[SetPosX 63][Down 6]It looks just like this.[BR]
+	[BR]
+	[Up 6][BR]
+	[Wait][Next]
+	Look for bushes that might cover[BR]
+	it up.[BR]
+	[Wait][Next]
+	If "[Color 0x20]![Color 0x0A]" appears over your head,[BR]
+	you can press [A] to search. [Wait][End]
+}
+
+#message:01:067
+{
+	[Style Right]
+	The Star Rod stolen by Bowser[BR]
+	has been returned to its[BR]
+	rightful place in Star Haven.[BR]
+	[Wait][Next]
+	It seems that the Dark Star[BR]
+	has been destroyed[BR]
+	[PAUSE:0A]...for now.[BR]
+	[Wait][Next]
+	Peace has once again returned[BR]
+	to the Mushroom Kingdom.[Wait][End]
+}
+
+
+#message:02:08F
+{
+	[Style Right]
+	Hey, Mario,[BR]
+	[Pause 10]did you know you can[BR]
+	carry up to 10 items?[BR]
+	[Wait][Next]
+	But I also heard about something[BR]
+	that lets you [COLOR:20]carry 20 items...[COLOR:0A][BR]
+	[Wait][Next]
+	When you can't carry any more[BR]
+	items, it's a good idea to[BR]
+	go to a shop like this and [BR]
+	ask them to hold items for you.[BR]
+	[Wait][Next]
+	You can even claim the items[BR]
+	at any other shop.[BR]
+	Pretty convenient, huh?[Wait][End]
+}
+
+#message:02:090
+{
+	[Style Right]
+	Hey, Mario,[BR]
+	[Pause 10]did you know you can[BR]
+	carry up to 10 items?[BR]
+	[Wait][Next]
+	But I also heard about something[BR]
+	that lets you [COLOR:20]carry 20 items...[COLOR:0A][BR]
+	[Wait][Next]
+	When you can't carry any more[BR]
+	items, it's a good idea to[BR]
+	go to a shop like this and [BR]
+	ask them to hold items for you.[BR]
+	[Wait][Next]
+	You can even claim the items[BR]
+	at any other shop.[BR]
+	Pretty convenient, huh?[Wait][End]
+}
+
+#message:02:040
+{
+[STYLE:Right]Hmmm![BR]
+[PAUSE:0A]Noble Mario![BR]
+[Wait][NEXT]
+You have bested me, The Master,[BR]
+the strongest of fighters![BR]
+[Wait][NEXT]
+The pride of my Dojo has been[BR]
+soiled. I could not defeat you[BR]
+without endangering the life[BR]
+of my students.[BR]
+[Wait][NEXT]
+I challenge you to one final[BR]
+battle! One where we do not[BR]
+hold back![BR]
+[Wait][NEXT]
+I don't expect you to accept[BR]
+my challenge. You have already[BR]
+proven your strength.[BR]
+[Wait][NEXT]
+Never-the-less, take this[BR]
+with respect.[BR]
+[Wait][END]
+}
+
+#message:02:043
+{
+[NEXT]
+[PrintRising][SizeJitter]Cough cough...[BR]
+[/fx][/fx][PAUSE:0A]Mario, you have already proven[BR]
+yourself stronger than me.[BR]
+[Wait][NEXT]
+Unless you intend to challenge[BR]
+the results of my forbidden[BR]
+training?[BR]
+[Wait][NEXT]
+I'm afraid I cannot allow my[BR]
+students to witness our final[BR]
+battle.[BR]
+[Wait][NEXT]
+I lack experience with it, so[BR]
+there is a good chance they[BR]
+may get hurt in the fight.[BR]
+[Wait][NEXT]
+If you wish to try, please[BR]
+meet me at the bottom of[BR]
+Shooting Star Summit,[BR]
+near the Star Temple.[BR]
+[Wait][NEXT]
+I must warn you that when I[BR]
+go into that form I lose all[BR]
+control.[BR]
+[Wait][NEXT]
+You should assume it will be[BR]
+a fight to the death. You may[BR]
+wish to...[PAUSE:0A] keep on training[BR]
+instead. Wheeze...[BR]
+[Wait][END]
+}
+
+#message:04:04E
+{
+[STYLE:Right]Ooh... Oh, my! Smells like[BR]
+Tayce T.'s baking a Cake![BR]
+What a tantalizing aroma![BR]
+[Wait][NEXT]The Cakes Tayce T. makes[BR]
+[PAUSE:05]are beyond belief.[BR]
+[PAUSE:0A]I'd love to make one sometime.[BR]
+[Wait][NEXT]But you need Cake Mix to[BR]
+make a Cake, and I don't have[BR]
+enough coins to get some...[Wait][END]
+}
+
+#message:07:094
+{
+[STYLE:Right]Ugh...[BR]
+I told you I'm not a tuna...[BR]
+I'm not even a fish...[BR]
+[Wait][NEXT]And I have a headache from your[BR]
+jumping around on me, too! Do[BR]
+you think you could check my[BR]
+belly?[BR]
+[Wait][NEXT]I can't promise it will be the[BR]
+safest place. I imagine bad[BR]
+things will happen to you.[BR]
+[Wait][NEXT]You should be prepared for the[BR]
+worst. Whatever you have to do[BR]
+make sure you do it fast.[BR]
+That won't stop you, right?[BR]
+[Wait][NEXT]I'm begging you, please...[Wait][END]
+}
+
+#message:08:012
+{
+[STYLE:Right]Hello there, Mario![BR]
+[PAUSE:05]Welcome to the Playroom![BR]
+[Wait][NEXT]To play here, you need a[BR]
+Member Credit.[BR]
+[Wait][NEXT]The kind of game you can play [BR]
+depends on the kind of [BR]
+Member Credit you have.[BR]
+[Wait][NEXT]Per company policy I am[BR]
+required to inform you[BR]
+that savestating is[BR]
+forbidden.[BR]
+[Wait][NEXT]We can't stop you, but I'll[BR]
+lose my job if the Playroom[BR]
+loses too much money.[BR]
+[Wait][NEXT]I know being a hero isn't[BR]
+a lucrative career but[BR]
+I've got a brother to feed[BR]
+too y'know![BR]
+[Wait][Yield][END]
+}
+
+#message:0A:004
+{
+	[Style Right]
+	[Voice Star][DitherFade 217]Bowser...that fiend...[BR]
+	[Wait][Next]
+	When he found out that we were[BR]
+	ignoring his wishes, he came and[BR]
+	stole the Star Rod so he could[BR]
+	grant his own wishes.[BR]
+	[Wait][Next]
+	He even got a hold of the[BR]
+	Dark Star, just to increase his[BR]
+	power even more.[BR]
+	[Wait][Next]
+	He seems content right now,[BR]
+	mainly because he defeated you[BR]
+	and captured the princess.[BR]
+	[Wait][Next]
+	Soon enough, though, I fear he[BR]
+	will wish for more...and then[BR]
+	terrible things will happen.[Wait][End]
+}
+
+#message:0A:006
+{
+	[Style Right]
+	[Voice Star][DitherFade 217]Sadly...[BR]
+	[Wait][Next]
+	...right now you are not strong[BR]
+	enough to challenge Bowser...[BR]
+	[Wait][Next]
+	...the power of the Star Rod[BR]
+	and the Dark Star has made him[BR]
+	all powerful.[BR]
+	He is terrible to behold![Wait][End]
+}
+
+#message:0A:06A
+{
+	[Style Right]
+	[Voice Star]If you use this Power, you can[BR]
+	temporarily negate the powers of[BR]
+	the Star Rod and the Dark Star.[BR]
+	[Pause 5][Wait][Next]
+	[Pause 10]Ah yes! And one more thing,[BR]
+	[Pause 10]I have one final gift which[BR]
+	should come in handy.[Wait][End]
+}
+
+#message:0B:001
+{
+	[Style Right]
+	[Voice Star][DitherFade 217]But Bowser has the Star Rod[BR]
+	and the Dark Star![BR]
+	Now he's mightier than Mario![BR]
+	[Wait][Next]
+	It's hopeless! All is lost![Wait][End]
+}
+
+#message:0C:017
+{
+[STYLE:Right]You don't say? A giant Koopa[BR]
+named Kent C. Koopa is blocking[BR]
+Pleasant Path?[BR]
+[Wait][NEXT]...I remember him! Ever since he[BR]
+was little, he's been able to fall[BR]
+asleep anytime, anywhere.[BR]
+[Wait][NEXT]...I don't think he's like[BR]
+that anymore, though.[Wait][END]
+}
+
+#message:0C:0F1
+{
+[STYLE:Right][PrintRising]What in the...Mario!?[BR]
+[/fx][PAUSE:0A]What're you doing here? [BR]
+[Wait][NEXT]Nothing good, I bet! Good[BR]
+thing I brought backup![BR]
+[PAUSE:05]Everybody, get him![Wait][END]
+}
+
+#message:0C:129
+{
+[STYLE:Right]Yeah! Check that out![BR]
+[PAUSE:05]You've never seen anything like[BR]
+it before, have you? [BR]
+[Wait][NEXT]Your attacks are useless now![BR]
+But that's not the only new[BR]
+skill I learned![Wait][END]
+}
+
+#message:1D:191
+{
+	[Style Narrate]
+	[Pause 5]Mario can now use the Star[BR]
+	Spirit's Power in battle![BR]
+	[Wait][NEXT]
+	The first Star Power, Refresh,[BR]
+	can recover 5 HP and 5 FP, and[BR]
+	remove status ailments, including[BR]
+	[COLOR:20]attack and defense reductions[COLOR:00].[Wait][End]
+}
+
+#message:0D:034
+{
+[STYLE:Right]Luigi, eh, pard...?[BR]
+[PAUSE:05]Nice try, but I reckon that "M" [BR]
+on yer cap isn't fer Luigi![BR]
+[Wait][NEXT]Yer askin' fer it, you big fibber![PAUSE:0A][BR]
+I'm thinkin' yer Mario![PAUSE:0A][BR]
+Prepare fer yer whuppin'![Wait][END]
+}
+
+#message:0D:052
+{
+[STYLE:Right]To get to the desert town, Dry[BR]
+Dry Outpost, just go due east[BR]
+on this path.[BR]
+[Wait][NEXT]I'd be careful not to stray from[BR]
+the path if I were you. You may[BR]
+find some trouble, and you'll[BR]
+definitely get lost.[BR]
+[Wait][NEXT]Even the path isn't that safe,[BR]
+so watch out for enemies.[BR]
+[Wait][NEXT]You better keep a close eye on[BR]
+your [Color:20]Flower Points.[Color:0A] Fighting in[BR]
+the desert will make you slowly[BR]
+lose them.[Wait][END]
+}
+
+#message:0D:053
+{
+[STYLE:Right]To get to the desert town, Dry[BR]
+Dry Outpost, just go due east[BR]
+on this path.[BR]
+[Wait][NEXT]I'd be careful not to stray from[BR]
+the path if I were you. You may[BR]
+find some trouble and you'll[BR]
+definitely get lost.[BR]
+[Wait][NEXT]Even the path isn't that safe,[BR]
+so watch out for enemies.[BR]
+[Wait][NEXT]You better keep a close eye on[BR]
+your [Color:20]Flower Points.[Color:0A] Fighting in[BR]
+the desert will make you slowly[BR]
+lose them.[Wait][END]
+}
+
+#message:0D:057
+{
+[STYLE:Right]Dry Dry Outpost is straight[BR]
+east of here, but the area just[BR]
+up ahead is teeming with Bandits.[BR]
+[Wait][NEXT]If you want a safer route, you[BR]
+may want to take a detour to [BR]
+the north.[BR]
+[Wait][NEXT]I'm having a rest in the shade.[BR]
+[PAUSE:0A]Rule #1 when traveling through a[BR]
+desert: never hurry.[BR]
+[Wait][NEXT]Deserts, especially this desert,[BR]
+are vast and confusing, and if[BR]
+you wander too far afield you'll[BR]
+definitely get lost. [Wait][END]
+}
+
+#message:0D:069
+{
+[STYLE:Right]Hey! Did you know?[BR]
+[PAUSE:0A]The desert is dangerous![BR]
+[Wait][NEXT]If you get caught in a desert[BR]
+whirlwind, it'll blow you away and[BR]
+you'll get lost.[BR]
+[Wait][NEXT]Bandits are out there, too! They[BR]
+appear all of a sudden running[BR]
+really fast, and they steal[BR]
+people's coins![BR]
+[Wait][NEXT]If you take too long fighting[BR]
+them, you'll soon lose all[BR]
+your [Color:20]Flower Points[Color:0A] too. This desert[BR]
+is an unforgiving place.[BR]
+[Wait][NEXT]Hey! Wanna hear more?[Wait][END]
+}
+
+#message:1E:018
+{
+	[Style Choice pos=50,70 size=230,60]
+	[StartChoice]
+	[Option 0]Special Course    80 coins[BR]
+	[Option 1]Ordinary Course  40 coins[BR]
+	[Option 2]Petit Course        20 coins[BR]
+	[EndChoice cancel=3][End]
+}
+
+#message:0D:0A5
+{
+	[Style Right]
+	[PrintGrowing]Keep this quiet...[BR]
+	[/fx][Wait][Next]
+	If this woman casts a spell on[BR]
+	you, it might help you during[BR]
+	battle.[BR]
+	[Wait][Next]
+	For instance, your attack power[BR]
+	might get stronger or you might[BR]
+	get more coins for winning.[BR]
+	[Wait][Next]
+	Other, stranger, things may[BR]
+	happen, as well.[BR]
+	[Wait][Next]
+	The cheaper ones will occur[BR]
+	more frequently, but they[BR]
+	run out faster.[BR]
+	[Wait][Next]
+	But do not rely on this spell. By[BR]
+	no means will it take effect in[BR]
+	every battle.[BR]
+	[Wait][Next]
+	Each spell will happen the same[BR]
+	number of turns apart from each[BR]
+	other.[Wait][End]
+}
+
+#message:0D:0A6
+{
+	[Style Right]
+	[PrintGrowing]Keep this quiet...[BR]
+	[/fx][Wait][Next]
+	If this woman casts a spell on[BR]
+	you, it might help you during[BR]
+	battle.[BR]
+	[Wait][Next]
+	For instance, your attack power[BR]
+	might get stronger or you might[BR]
+	get more coins for winning.[BR]
+	[Wait][Next]
+	Other, stranger, things may[BR]
+	happen, as well.[BR]
+	[Wait][Next]
+	The cheaper ones will occur[BR]
+	more frequently, but they[BR]
+	run out faster.[BR]
+	[Wait][Next]
+	But do not rely on this spell. By[BR]
+	no means will it take effect in[BR]
+	every battle.[BR]
+	[Wait][Next]
+	Each spell will happen the same[BR]
+	number of turns apart from each[BR]
+	other.[Wait][End]
+}
+
+#message:0D:0A7
+{
+	[Style Right]
+	[PrintGrowing]Keep this quiet...[BR]
+	[/fx][Wait][Next]
+	If this woman casts a spell on[BR]
+	you, it might help you during[BR]
+	battle.[BR]
+	[Wait][Next]
+	For instance, your attack power[BR]
+	might get stronger or you might[BR]
+	get more coins for winning.[BR]
+	[Wait][Next]
+	Other, stranger, things may[BR]
+	happen, as well.[BR]
+	[Wait][Next]
+	The cheaper ones will occur[BR]
+	more frequently, but they[BR]
+	run out faster.[BR]
+	[Wait][Next]
+	But do not rely on this spell. By[BR]
+	no means will it take effect in[BR]
+	every battle.[BR]
+	[Wait][Next]
+	Each spell will happen the same[BR]
+	number of turns apart from each[BR]
+	other.[Wait][End]
+}
+
+#message:0D:0A8
+{
+	[Style Right]
+	[PrintGrowing]Keep this quiet...[BR]
+	[/fx][Wait][Next]
+	If this woman casts a spell on[BR]
+	you, it might help you during[BR]
+	battle.[BR]
+	[Wait][Next]
+	For instance, your attack power[BR]
+	might get stronger or you might[BR]
+	get more coins for winning.[BR]
+	[Wait][Next]
+	Other, stranger, things may[BR]
+	happen, as well.[BR]
+	[Wait][Next]
+	The cheaper ones will occur[BR]
+	more frequently, but they[BR]
+	run out faster.[BR]
+	[Wait][Next]
+	But do not rely on this spell. By[BR]
+	no means will it take effect in[BR]
+	every battle.[BR]
+	[Wait][Next]
+	Each spell will happen the same[BR]
+	number of turns apart from each[BR]
+	other.[Wait][End]
+}
+
+#message:0D:0A9
+{
+	[Style Right]
+	[PrintGrowing]Keep this quiet...[BR]
+	[/fx][Wait][Next]
+	If this woman casts a spell on[BR]
+	you, it might help you during[BR]
+	battle.[BR]
+	[Wait][Next]
+	For instance, your attack power[BR]
+	might get stronger or you might[BR]
+	get more coins for winning.[BR]
+	[Wait][Next]
+	Other, stranger, things may[BR]
+	happen, as well.[BR]
+	[Wait][Next]
+	The cheaper ones will occur[BR]
+	more frequently, but they[BR]
+	run out faster.[BR]
+	[Wait][Next]
+	But do not rely on this spell. By[BR]
+	no means will it take effect in[BR]
+	every battle.[BR]
+	[Wait][Next]
+	Each spell will happen the same[BR]
+	number of turns apart from each[BR]
+	other.[Wait][End]
+}
+
+#message:0D:0AA
+{
+	[Style Right]
+	[PrintGrowing]Keep this quiet...[BR]
+	[/fx][Wait][Next]
+	If this woman casts a spell on[BR]
+	you, it might help you during[BR]
+	battle.[BR]
+	[Wait][Next]
+	For instance, your attack power[BR]
+	might get stronger or you might[BR]
+	get more coins for winning.[BR]
+	[Wait][Next]
+	Other, stranger, things may[BR]
+	happen, as well.[BR]
+	[Wait][Next]
+	The cheaper ones will occur[BR]
+	more frequently, but they[BR]
+	run out faster.[BR]
+	[Wait][Next]
+	But do not rely on this spell. By[BR]
+	no means will it take effect in[BR]
+	every battle.[BR]
+	[Wait][Next]
+	Each spell will happen the same[BR]
+	number of turns apart from each[BR]
+	other.[Wait][End]
+}
+
+#message:0E:021
+{
+[STYLE:Right][PrintRising]Ha ha! Yeah, that's right![BR]
+[PAUSE:0A]Let's see how you like the new,[BR]
+improved Jr. Troopa![Wait][END]
+}
+
+#message:0E:066
+{
+[STYLE:Right]Tubba Blubba ran by here a[BR]
+while ago. Sometimes I can[BR]
+hear him stomping around.[BR]
+[Wait][NEXT]I bet he got lost in the[BR]
+forest. Ha![Wait][END]
+}
+
+#message:0E:0D4
+{
+	[Style Right]
+	[Voice Star]... Mario.[BR]
+	[Pause 10]I have one bit of bad news.[BR]
+	[Wait][Next]
+	Unfortunately, Bowser's life[BR]
+	force seems to be getting[BR]
+	stronger all the time.[BR]
+	[Wait][Next]
+	He is slowly learning to use the[BR]
+	full power of the Star Rod and[BR]
+	the Dark Star.[BR]
+	[Wait][Next]
+	We're not even sure if he's[BR]
+	noticing it or not, but there's no[BR]
+	question that it's making him[BR]
+	stronger than before.[BR]
+	[Wait][Next]
+	We will have to be much more[BR]
+	careful in the coming trials.[Wait][End]
+}
+
+#message:0F:03A
+{
+	[Style Right]
+	Oh... Mario!?[BR]
+	[Pause 10]I have to fight Mario?![BR]
+	[Wait][Next]
+	[Wave]Wah ha ha ha ha![/fx][BR]
+	[Wait][Next]
+	What a wimp! I could beat[BR]
+	you with my eyes closed...[Wait][End]
+}
+
+#message:0F:04C
+{
+[STYLE:Right][Wave][PrintRising]Yeeeaaaah![HEART][BR]
+[Wait][NEXT]I got some Lemon Candy![HEART][BR]
+[Wait][NEXT]...But if you wan't that[BR]
+treasure, you'll have to[BR]
+fight me first![HEART][Wait][END]
+}
+
+#message:10:03B
+{
+[STYLE:Right]It's really rare for Mt.[BR]
+Lavalava to erupt.[BR]
+[PAUSE:0A]It really caught me off guard.[BR]
+[Wait][NEXT]It once erupted when the Village[BR]
+Leader and I were kids.[BR]
+[Wait][NEXT]Back then, we had another friend [BR]
+too. He decided to charge into the [BR]
+volcano, while the Village Leader [BR]
+and I went home.[BR]
+[Wait][NEXT]But as soon as we got home, the[BR]
+volcano started erupting![BR]
+[PAUSE:0A][Wait][NEXT]Out of all the dumb things he [BR]
+did over the years, that was the [BR]
+dumbest.[BR]
+[Wait][NEXT]That was when the old leader [BR]
+banished him from the island.[Wait][END]
+}
+
+#message:10:0D1
+{
+[STYLE:Right]That's an Ultra Stone. I found[BR]
+it a long time ago in the depths[BR]
+of this jungle.[BR]
+[Wait][NEXT]Now that you have this stone,[BR]
+when you find a Super Block,[BR]
+[Wait][NEXT]you can upgrade one of your[BR]
+party members from Super Rank[BR]
+to Ultra Rank.[BR]
+[Wait][NEXT]Oh, I almost forgot.[BR]
+[PAUSE:0A]Fighting in the volcano will[BR]
+[Color:20]lower your defense[Color:0A].[BR]
+[Wait][NEXT]You should end battles as soon[BR]
+as you can. [BR]
+[Wait][NEXT]That's all I have to say![BR]
+[PAUSE:0A]I've got to go now.[BR]
+[PAUSE:0A]Over and out.[Wait][END]
+}
+
+#message:11:003
+{
+	[Style Right]
+	A creature named Huff N. Puff[BR]
+	and his followers invaded our[BR]
+	fair land not long ago.[BR]
+	[Wait][Next]
+	These creatures brought clouds[BR]
+	to our sunny sky. It has been[BR]
+	dark and cloudy ever since.[BR]
+	[Wait][Next]
+	The sun doesn't even bother to[BR]
+	rise in the sky anymore.[BR]
+	[Pause 10]We are all weak and fading...[BR]
+	[Wait][Next]
+	Trying to fight in these[BR]
+	conditions will make you [COLOR:20]lose[BR]
+	HP quickly[COLOR:0A].[BR]
+	[Wait][Next]
+	[Pause 5]Oh! I remember something![BR]
+	[Pause 3]The rumor is that Huff N. Puff[BR]
+	is holding somebody captive...[BR]
+	[Pause 5][Wait][Next]
+	[Pause 5]Of course![BR]
+	[Pause 10]It must be the Star Spirit that[BR]
+	you're searching for![Wait][End]
+}
+
+#message:11:005
+{
+[STYLE:Right]Now, Wait a minute...[BR]
+[Wait][NEXT]I think there IS a flower that[BR]
+has a Magical Bean...somewhere.[BR]
+[Wait][NEXT]Umm... [PAUSE:07]I believe...[BR]
+[PAUSE:0A]Her name is Petunia.[BR]
+[Wait][NEXT]Perhaps she is off to the east.[BR]
+It wouldn't hurt to go visit her[BR]
+and ask about it.[BR]
+[Wait][NEXT]I have to warn you though.[BR]
+My eyes may be playing tricks[BR]
+on me, but I think I saw a [COLOR:20]shadowy[BR]
+figure[COLOR:0A] go in that direction too.[BR]
+[Wait][NEXT]The other flowers and Bub-ulbs[BR]
+around here might have some[BR]
+useful information, as well.[BR]
+[PAUSE:0A]I'd say talk to everyone![Wait][END]
+}
+
+#message:11:0A5
+{
+[STYLE:Right]You got some nerve![BR]
+[PAUSE:0A]Picking on my poor, sweet[BR]
+Lakilester![BR]
+[Wait][NEXT][Down:0A][Size:20:20][PrintRising]I'll end you![Wait][END]
+}
+
+#message:11:0A7
+{
+[STYLE:Right]Mario, please forgive us![BR]
+[Wait][NEXT]My Lakilester was just following[BR]
+Huff N. Puff's orders![BR]
+[Yield][END]
+}
+
+#message:11:0A6
+{
+[STYLE:Right]Hey, Wait a minute![BR]
+[Wait][NEXT]It's Spike, remember?[BR]
+[PAUSE:0A]I told you I changed my name[BR]
+last month! C'mon now![BR]
+[Wait][Yield][NEXT]Man... I mean, gee whiz...[BR]
+You're always embarrassing me[BR]
+like this...[BR]
+[Wait][NEXT]Although...for some reason it[BR]
+makes me like you even more...[BR]
+[Wait][NEXT]I mean, what? No!![BR]
+[PAUSE:0A]Did I say that out loud? Forget[BR]
+that I said that![BR]
+[Wait][NEXT]...Anyway![BR]
+[PAUSE:0A]I lost a challenge man-to-man,[BR]
+so we have to settle this.[BR]
+[Wait][NEXT]I have to face the music.[Wait][END]
+}
+
+
+
+#message:12:0F3
+{
+[STYLE:Right]Oh yes... Mario![BR]
+[PAUSE:0A]I'd almost forgotten![BR]
+[Wait][NEXT]There is supposed to be a small[BR]
+shrine somewhere along the path[BR]
+to the Crystal Palace.[BR]
+[Wait][NEXT]A legend has been handed down[BR]
+in this valley regarding the[BR]
+shrine's secret:[BR]
+[Wait][NEXT]"Truth lies not only in the eyes.[BR]
+Sometimes, even walls may lie.[BR]
+[Color:20]When the path lay unseen,[BR]
+light shall reveal it.[Color:0A][BR]
+[Wait][NEXT]Confusing, yes, but you must[BR]
+find this shrine and solve its[BR]
+mystery to reach the Crystal[BR]
+Palace.[BR]
+[Wait][NEXT]Please don't forget it![Wait][END]
+}
+
+#message:12:13D
+{
+	[Style Right]
+	Hey, I heard that![BR]
+	[Pause 10]You're spreading lies, you[BR]
+	impostor![BR]
+	[Wait][Next]
+	I'm the real Bombette![Wait][End]
+}
+
+#message:12:13E
+{
+	[Style Right]
+	Oh, no, no![BR]
+	[Wait][Next]
+	Mario. Look carefully at me and[BR]
+	you'll know.[BR]
+	[Wait][Next]
+	I'm the real Bombette. It can[BR]
+	only be me.[BR]
+	[Pause 10]These others are all liars.[Wait][End]
+}
+
+#message:12:13F
+{
+	[Style Right]
+	I'm the one![BR]
+	[Pause 10]Mario! Me! Don't fall for[BR]
+	these tricks![BR]
+	[Wait][Next]
+	I'll blow you up if you do![Wait][End]
+}
+
+#message:12:140
+{
+	[Style Right]
+	I... I'm the real Bombette...[BR]
+	[Pause 10]Puh... Please... Trust your eyes[BR]
+	and look at me...[BR]
+	[Pause 10]I... I'm not lying...[Wait][End]
+}
+
+#message:12:141
+{
+	[Style Right]
+	Noooo![BR]
+	[Pause 10]I can't bear this![BR]
+	[Wait][Next]
+	Mario! Smash the impostors with[BR]
+	your Hammer![BR]
+	[Wait][Next]
+	All of you pretending to be me! I[BR]
+	can't take it another second![Wait][End]
+}
+
+#message:12:142
+{
+	[Style Right]
+	Oh, that's a nice idea.[BR]
+	[Pause 10]That'll clear all this up.[Wait][End]
+}
+
+#message:12:143
+{
+	[Style Right]
+	Yes, good idea![BR]
+	[Pause 10]I just hate impostors![BR]
+	[Wait][Next]
+	Mario! I'm the real Bombette[BR]
+	so don't you dare hit me![BR]
+	I think the second one from the[BR]
+	right is the most suspicious![Wait][End]
+}
+
+#message:12:144
+{
+	[Style Right]
+	Mario, I'm Bombette![BR]
+	[Pause 10]I'm not ever going to forgive you[BR]
+	if you mess this up.[Wait][End]
+}
+
+#message:12:145
+{
+	[Style Right]
+	I'm Bombette![BR]
+	[Pause 10]If you get this wrong,[BR]
+	I'll never forgive you![Wait][End]
+}
+
+#message:12:146
+{
+	[Style Right]
+	Mario.[BR]
+	[Pause 10]I am Bombette.[Wait][End]
+}
+
+#message:12:147
+{
+	[Style Right]
+	There's no way that Mario will[BR]
+	make a mistake![BR]
+	[Pause 10]We have journeyed so very far[BR]
+	together![BR]
+	[Wait][Next]
+	Isn't that right, Mario?[BR]
+	[Pause 10]You know which one of us is the[BR]
+	real Bombette, don't you?[Wait][End]
+}
+
+#message:12:148
+{
+	[Style Right]
+	Thuh... This is terrible...[BR]
+	[Pause 10]It... It's so clear that I'm the[BR]
+	real Bombette...[Wait][End]
+}
+
+#message:12:149
+{
+	[Style Right]
+	Oh! Mario! You're terrible![BR]
+	[Pause 10]You don't even recognize me![BR]
+	[Pause 10]Oh, I can't bear it![Wait][End]
+}
+
+#message:12:14A
+{
+	[Style Right]
+	Oh! Mario! You're terrible![BR]
+	[Pause 10]You don't even recognize me![BR]
+	[Wait][Yield][Next]
+	Darn it![BR]
+	[Pause 10]I knew I got the colors wrong![Wait][End]
+}
+
+#message:12:161
+{
+	[Style Right]
+	Ouch! How did you do that?![BR]
+	[Pause 10]I got the colors right[BR]
+	this time![BR]
+	[Wait][Yield][Next]
+	Darn it![Wait][End]
+}
+
+
+#message:13:018
+{
+[STYLE:Right]What do you think, genius?[BR]
+[PAUSE:0A]We weren't sent down here to[BR]
+have a tea party![Wait][END]
+}
+
+#message:13:019
+{
+[STYLE:Right][PrintRising]Stop your bellyaching!![BR]
+[PAUSE:0A]Who says we should be afraid of[BR]
+Mario, huh? He's not so bad![BR]
+[/fx][Wait][NEXT]Whatever happens, we can't let[BR]
+him push this switch![BR]
+[Wait][NEXT]Don't you care that King Bowser[BR]
+needs our help?[BR]
+[Wait][NEXT]C'mon!! Take this...plumber!![BR]
+[PAUSE:0A]Show him what you're made of!![Wait][END]
+}
+
+#message:13:03F
+{
+[STYLE:Right][Shake]Grrrraaaaaaaaghhhhhhh!!!![BR]
+[/fx][PAUSE:0A]Cor.... [PAUSE:03]Correct!!![BR]
+[Wait][NEXT][PrintRising]I can't believe it![BR]
+[PAUSE:0A]You got five of my super duper[BR]
+brain-busters right![BR]
+[/fx][Wait][NEXT][Down:08][Size:20:20][Shake]Greaaaghhh!!!!![BR]
+[PAUSE:0A][SizeReset][BR]
+[Wait][Scroll:04]I've been defeated...!![BR]
+[PAUSE:0A]Nahhhh!!!! Get 'em, boys![Wait][END]
+}
+
+#message:13:041
+{
+[STYLE:Right][PrintRising]Gah ha ha ha ha ha ha ha!!!![BR]
+[/fx]Nope, that's wrong, idiot![BR]
+[Wait][NEXT]You made three mistakes![BR]
+[PAUSE:0A]Too bad for you, Mario![BR]
+[Wait][NEXT]As promised, here's your horrible[BR]
+reward![BR]
+[Wait][NEXT][PrintRising]Prepare for battle![BR]
+[PAUSE:0A]Koopa Corp! Attack![Wait][END]
+}
+
+#message:13:043
+{
+[STYLE:Right]Oh, but...no! NO!![BR]
+[PAUSE:0A]You beat the Koopa Corp?!![BR]
+[Wait][NEXT]My last line of defense![BR]
+[PAUSE:0A]My massive army didn't[BR]
+stand up...to Mario![BR]
+[Wait][NEXT][Down:08][Size:20:20][Shake]Groahhhhhhh!!!![BR]
+[PAUSE:0A][SizeReset][BR]
+[Wait][Scroll:04]I concede defeat.[BR]
+[PAUSE:0A]I've been defeated by Mario!!![BR]
+Why? Why? Whyyyyy?[Wait][END]
+}
+
+#message:13:059
+{
+[STYLE:Right]Don't think we're like before![BR]
+[Wait][NEXT]We've increased our power[BR]
+beyond our wildest dreams![BR]
+[Wait][NEXT]After you trounced us, we[BR]
+learned new techniques and[BR]
+trained all day, every day.[BR]
+[Wait][NEXT]We're not just the Koopa Bros....[BR]
+[Wait][NEXT]We're the Super Ultra Mighty[BR]
+Koopa Bros. the Great!![BR]
+[Wait][NEXT]Check out our coolness![Wait][END]
+}
+
+#message:13:05C
+{
+[STYLE:Right]At last! You're mine! It was a[BR]
+pain finding you, you know?[BR]
+[Wait][NEXT]Today, at long last, I'll settle[BR]
+my score with you![BR]
+[Wait][NEXT]Your stupid tricks can't save[BR]
+you now![Wait][END]
+}
+
+#message:13:05D
+{
+[STYLE:Right][PrintRising]Here it comes, Mario!![BR]
+[PAUSE:0A]This is the final fight!!![BR]
+[PAUSE:0A]Only one of us is walking away[BR]
+from this battle![BR]
+[Wait][NEXT]And that one is gonna be me![BR]
+Check out what I have in store[BR]
+for you![Wait][END]
+}
+
+#message:13:063
+{
+[STYLE:Right]Ummmmmmmmmm........[BR]
+[Wait][NEXT]So, since you beat the guy that[BR]
+beat the Koopa Bros., does that[BR]
+mean you beat the Koopa Bros.?[BR]
+[Wait][NEXT]No. You beat him, he beat them...[BR]
+[PAUSE:0A]But you didn't technically...[BR]
+[Wait][NEXT][PrintRising]Arrgaaahhhhhhhhhhh!!!!!!!!!!![BR]
+[/fx][PAUSE:0A][Shake]It's too confusing!![BR]
+[/fx][Wait][NEXT][PAUSE:05].....OK, fine![BR]
+[Wait][NEXT]I guess you would've beat the[BR]
+Koopa Bros if that guy didn't[BR]
+show up.[BR]
+[PAUSE:0A]You can go through.[BR]
+[Wait][NEXT]It's not possible for you to beat[BR]
+King Bowser anyway.[BR]
+[Wait][NEXT]I'll let you have the honor of [BR]
+being beaten personally by the[BR]
+evil King Bowser. Lucky you![Wait][END]
+}
+
+#message:13:069
+{
+[STYLE:Right]Oh, Mario, thank you for coming.[BR]
+[PAUSE:05]It's so good to see you.[BR]
+[Wait][NEXT]All the prisoners got split up so[BR]
+it's just been us five...[BR]
+[Wait][NEXT]Are the others all safe?[BR]
+[PAUSE:0A]Please don't say we're the only[BR]
+ones you've saved....[BR]
+[Wait][NEXT]I hope this whole horrible mess[BR]
+will be over soon so we can have[BR]
+a reunion with everybody![Wait][END]
+}
+
+#message:13:06A
+{
+[STYLE:Right]Oh, Mario, thank you for coming.[BR]
+[PAUSE:05]It's so good to see you.[BR]
+[Wait][NEXT]All the prisoners got split up so[BR]
+it's just been us five...[BR]
+[Wait][NEXT]Are the others all safe?[BR]
+[PAUSE:0A]Please don't say we're the only[BR]
+ones you've saved....[BR]
+[Wait][NEXT]I hope this whole horrible mess[BR]
+will be over soon so we can have[BR]
+a reunion with everybody![Wait][END]
+}
+
+#message:14:002
+{
+	[Style Right]
+	Please, please, Your Vileness![BR]
+	Try to be calm.[BR]
+	[Pause 10]Goomba King is small-time.[BR]
+	[Pause 10]I had a feeling he'd fail.[BR]
+	[Wait][Next]
+	It doesn't matter, because[BR]
+	while you hold the Star Rod[BR]
+	and the Dark Star you are[BR]
+	definitely invincible.[BR]
+	[Wait][Next]
+	You could beat Mario with one[BR]
+	claw tied behind your back.[Wait][End]
+}
+
+#message:14:01C
+{
+	[Style Center]
+	[Voice Bowser]You know, Princess, as long as I[BR]
+	have the Star Rod and the[BR]
+	Dark Star, no one in the[BR]
+	Mushroom Kingdom can touch me.[BR]
+	[Wait][Yield][Next]
+	You know the power that grants[BR]
+	everyone's wishes? It's mine![BR]
+	[Pause 10]Isn't that just wonderful?[Wait][End]
+}
+
+#message:14:04E
+{
+	[Next]
+	[Voice Star]OK, let's continue.[BR]
+	[Wait][Next]
+	[Color 0x00]Day: [CIRCLE]/[CROSS]  Month: [STAR][BR]
+	Cloudy then sunny[BR]
+	[Wait][Next]
+	Today was great, diary! I found[BR]
+	the Dark Star below Toad Town![BR]
+	[Wait][Next]
+	Then I used my castle to lift[BR]
+	Princess Peach's Castle way up[BR]
+	into the sky![BR]
+	[Wait][Next]
+	And then I barged into Peach's[BR]
+	Castle and beat up Mario! Yeah![BR]
+	[Pause 10]Unbelievable, I know! So fun![BR]
+	[Wait][Next]
+	And there's more! After that, I[BR]
+	kidnapped Princess Peach![BR]
+	[Pause 10]I couldn't be happier, diary![BR]
+	[Pause 5]I hope she likes me...[BR]
+	[Pause 10][Wait][Next]
+	[PrintRising][Color 0x0A]...!!![Wait][End]
+}
+
+#message:14:051
+{
+	[Next]
+	[Voice Star][Color 0x00]Day: [CROSS]/[CROSS]  Month: [STAR][BR]
+	Sunny[BR]
+	[Wait][Next]
+	Well, the Koopa Bros. got beaten[BR]
+	by Mario, diary.[BR]
+	[Pause 10]He even set free that stupid[BR]
+	Star Spirit I kept there.[BR]
+	[Wait][Next]
+	I'm so mad I can barely write![BR]
+	[Pause 10]"Ohh, I'm Mario, I'm so big and[BR]
+	strong and good and helpful..."[BR]
+	[Wait][Next]
+	I hate him! But I'm not worried.[BR]
+	[Wait][Next]
+	There's no way Mario can save[BR]
+	the Star Spirit being held[BR]
+	in [Color 0x07]Dry Dry Ruins[Color 0x00].[BR]
+	[Wait][Next]
+	To do that, he'd have to solve[BR]
+	the mystery of the sands and[BR]
+	then find Dry Dry Ruins in [BR]
+	[Color 0x07]Dry Dry Desert[Color 0x00].[BR]
+	[Wait][Next]
+	How would he even know to go to[BR]
+	the desert, anyway?[BR]
+	[Wait][Next]
+	So I'm not worried at all.[BR]
+	[Pause 10]In fact, I'm so calm I'm gonna go[BR]
+	to bed now.[BR]
+	[Pause 10][Wait][End]
+}
+
+#message:14:0AD
+{
+[STYLE:Right]One of the Star Spirits is inside[BR]
+[Color:20]Mt. Lavalava [Color:0A]on [Color:20]Lavalava[BR]
+Island[Color:0A].[BR]
+This island is to the south.[BR]
+[Wait][NEXT]You should tell this to Mario.[BR]
+[Wait][NEXT]But you'd better tell him that[BR]
+there's also a nasty Lava[BR]
+Piranha guarding the Star[BR]
+Spirit.[BR]
+[Wait][NEXT]Also, there's a tough guy who's[BR]
+trying to ambush Mario on the[BR]
+island.[BR]
+[PAUSE:0A]...I think.[BR]
+[Wait][NEXT]He'd better be careful.[BR]
+[PAUSE:0A]I really don't dislike Mario.[BR]
+[PAUSE:0A]That's why I'm telling you this.[Wait][END]
+}
+
+#message:14:100
+{
+[STYLE:Right]OK!  Next![BR]
+[Wait][NEXT][BR]
+[Down:05]            Question 3![BR]
+[Down:05][Wait][Scroll:03]Which type of Dayzee lives[BR]
+in Forever Forest?[BR]
+[Yield][END]
+}
+
+#message:14:101
+{
+[STYLE:Right]A...Layzee Dayzee![PAUSE:28][END]
+}
+
+#message:14:113
+{
+[STYLE:Right]I'm sorry...that's wrong![BR]
+[PAUSE:28][NEXT]The answer was "Layzee Dayzee."[Wait][END]
+}
+
+#message:1E:02E
+{
+[Style Choice pos=95,70 size=180,62][StartChoice][Option:00]Crazee Dayzee[BR]
+[Cursor:01][Option:01]Insanee Dayzee[BR]
+[Cursor:02][Option:02]Layzee Dayzee[BR]
+[EndChoice][END]
+}
+
+#message:14:10C
+{
+[STYLE:Right]Use your map skills on this one![BR]
+[Wait][NEXT]
+[Down:05]            Question 9![BR]
+[Down:05][Wait][Scroll:03][BR]Starting from Toad Town, which[BR]
+direction is Flower Fields?[BR]
+[Yield][END]
+}
+
+#message:14:10D
+{
+[STYLE:Right]Ooh! It's northwest![BR]
+[PAUSE:28][END]
+}
+
+#message:14:119
+{
+[STYLE:Right]I'm sorry...that's wrong![BR]
+[PAUSE:28][NEXT]The answer was "northwest".[Wait][END]
+}
+
+#message:1E:034
+{
+[Style Choice pos=95,70 size=130,62][StartChoice][Option:00]Northwest[BR]
+[Cursor:01][Option:01]Southeast[BR]
+[Cursor:02][Option:02]Northeast[BR]
+[EndChoice][END]
+}
+
+#message:14:132
+{
+	[Style Right]
+	You too?[BR]
+	[Pause 10]Seems like everybody's busy...[BR]
+	[Wait][Next]
+	King Bowser's all ticked off[BR]
+	about something and Kammy[BR]
+	Koopa takes it out on us.[BR]
+	[Wait][Next]
+	It feels like King Bowser[BR]
+	is acting a lot different ever[BR]
+	since he got the Dark Star.[BR]
+	[Wait][End]
+}
+
+#message:14:166
+{
+	[Style Right]
+	[Down 8][Size 32][Voice Bowser]Gwaa ha ha ha!![BR]
+	[SizeReset][BR]
+	[Up 12][Yield][Wait][Scroll 3]Oh, you poor, silly girl![BR]
+	[Wait][Next]
+	I'm invincible with this Star Rod,[BR]
+	didn't you know?[BR]
+	[Pause 10]Mario's no match for me![BR]
+	[Wait][Next]
+	He's history. Get over it.[Wait][End]
+}
+
+#message:16:001
+{
+	[Next]
+	The power of the Stars is[BR]
+	opposed by the power of shadow,[BR]
+	which is what the Dark Star[BR]
+	is made of.[BR]
+	[Wait][NEXT]
+	It seems that the power of the[BR]
+	Stars is matched by the power[BR]
+	of shadow, so there is no way[BR]
+	to destroy it permanently.[BR]
+	[Wait][Yield][End]
+}
+
+#message:16:004
+{
+[NEXT]Have you heard of what's below[BR]
+Toad Town?[BR]
+[PAUSE:0F]A book I read told that there[BR]
+once was a massive empire there.[BR]
+[Wait][NEXT]There's probably still a pipe[BR]
+leading down to that empire, but[BR]
+nobody knows where it is.[BR]
+Even I don't![BR]
+[Wait][NEXT]It's said that the greatest[BR]
+treasures of the empire are still[BR]
+down there, but they're guarded by[BR]
+the strongest enemies in the world.[BR]
+[Wait][NEXT]Why don't you investigate?[BR]
+[Wait][Yield][END]
+}
+
+#message:16:009
+{
+	[Next]
+	Have you seen that Chet Rippo[BR]
+	character around Toad Town?[BR]
+	[Wait][Next]
+	I've heard rumors that if you[BR]
+	talk to him, he will increase [BR]
+	one of your point levels. [BR]
+	[Wait][Next]
+	There are actually 3 other people[BR]
+	who can also change your stats,[BR]
+	but they are quite spread out[BR]
+	around the world.[BR]
+	[Wait][Next]
+	No matter who you talk to,[BR]
+	the only way you can raise your[BR]
+	stats is by lowering other stats[BR]
+	first.[BR]
+	[Wait][Next]
+	So I would suggest giving the[BR]
+	matter a lot of thought before[BR]
+	committing to the deal.[BR]
+	[Wait][Yield][End]
+}
+
+#message:16:00B
+{
+	[Next]
+	At the edge of Dry Dry Desert,[BR]
+	there's a dusty old town called[BR]
+	Dry Dry Outpost.[BR]
+	[Wait][Next]
+	Somewhere in this Dry Dry[BR]
+	Outpost, there's supposedly[BR]
+	a female wizard.[BR]
+	[Wait][Next]
+	If she casts a spell on you,[BR]
+	something good may happen [BR]
+	during battles.[BR]
+	[Pause 10]Why don't you give it a try?[BR]
+	[Wait][Next]
+	Her powers can actually be[BR]
+	predicted, so you should try[BR]
+	to make sure her powers activate[BR]
+	at the best time.[BR]
+	[Wait][Next]
+	By the way, this wizard is said[BR]
+	to be the twin sister of[BR]
+	Merluvlee, the fortune-teller[BR]
+	from Shooting Star Summit.[BR]
+	[Wait][Yield][End]
+}
+
+#message:16:00C
+{
+[NEXT]There's a place called[BR]
+Mt. Rugged. Trust me, there is.[BR]
+[Wait][NEXT]On this mountain, a very rare[BR]
+creature called Whacka lives. [BR]
+[Wait][NEXT]If you hit a Whacka, something[BR]
+called a Whacka's Bump will[BR]
+appear. It's very valuable.[BR]
+[Wait][NEXT]It's been said that if you eat[BR]
+one, you'll be instantly filled[BR]
+with energy.[BR]
+[PAUSE:0A]But...[BR]
+[Wait][NEXT]It's rather sad, actually...[BR]
+Even though Whackas are kind,[BR]
+people keep pummeling them to[BR]
+get the Whacka's Bumps.[BR]
+[Wait][NEXT]That's why the number of[BR]
+Whackas on Mt. Rugged has been[BR]
+declining.[BR]
+[Wait][NEXT]In fact, there's a rumor that[BR]
+there's only one left.[BR]
+[PAUSE:0A]The last Whacka...how tragic.[BR]
+[Wait][NEXT]I've read a legend that the last[BR]
+Whacka would channel the energy[BR]
+of the rest of their kind and[BR]
+take revenge on the entire world.[BR]
+[Wait][Yield][END]
+}
+
+#message:16:00E
+{
+	[Next]
+	I once read about the[BR]
+	Star Temple at the base of[BR]
+	Shooting Star Summit.[BR]
+	[Wait][Next]
+	It's a special place where the[BR]
+	power of the Star Spirits is[BR]
+	amplified.[BR]
+	[Wait][Next]
+	I've heard that the power of[BR]
+	the Star Temple comes from a[BR]
+	connection to a dimension of[BR]
+	light.[BR]
+	[Wait][Next]
+	If that's true, there might[BR]
+	be a gateway to that place[BR]
+	somewhere near the temple...[BR]
+	[Wait][Yield][End]
+}
+
+#message:16:011
+{
+[NEXT]There's a grim guy called[BR]
+Anti-Guy who guards a special[BR]
+treasure chest...[BR]
+[Wait][NEXT]According to a book I read a[BR]
+while back, he is one of a group[BR]
+of five incredibly strong warriors.[BR]
+[Wait][NEXT]They used to live in the empire[BR]
+below Toad Town, but the others'[BR]
+whereabouts are a mystery to[BR]
+this day.[BR]
+[Wait][NEXT]They used to serve a dark power[BR]
+even I know nothing about...[BR]
+[Wait][Yield][END]
+}
+
+#message:16:014
+{
+[NEXT]There are very few normal[BR]
+enemies that are immune to all[BR]
+statuses.[BR]
+[Wait][NEXT]It can sometimes be a good idea[BR]
+to test every status on a[BR]
+new enemy to find what they're[BR]
+weak to.[BR]
+[Wait][NEXT]Even if a certain status only[BR]
+works for one turn, it can[BR]
+still be enough to win the[BR]
+battle.[BR]
+[Wait][NEXT]I believe you may be able[BR]
+to find a special jump badge[BR]
+that will inflict the status[BR]
+an enemy is weak to.[BR]
+[Wait][NEXT]Unfortunately, I have no[BR]
+clue where a badge like that[BR]
+would be.[BR]
+[Wait][Yield][END]
+}
+
+#message:16:016
+{
+	[Next]
+	Ever been to Li'l-Oinks Farm,[BR]
+	near Toad Town Station?[BR]
+	[Wait][Next]
+	On that Farm, no more than[BR]
+	ten Li'l-Oinks can be in the pen[BR]
+	at one time, so[BR]
+	[Wait][Next]
+	when the 11th comes, the first[BR]
+	Li'l-Oink runs away and leaves[BR]
+	the farm.[BR]
+	[Wait][Next]
+	I've heard that the machine[BR]
+	on the farm was created by[BR]
+	some brilliant inventor,[BR]
+	who lives somewhere underground.[BR]
+	[Wait][Yield][End]
+}
+
+#message:16:017
+{
+	[Next]
+	Many items will give you various[BR]
+	positive or negative effects,[BR]
+	usually affecting your attack,[BR]
+	defense, or move costs.[BR]
+	[Wait][Next]
+	However, these effects can[BR]
+	override each other.[BR]
+	[Wait][Next]
+	For example, if you use two[BR]
+	items that increase your attack[BR]
+	power, the effect of the second[BR]
+	item will override the first one.[BR]
+	[Wait][Next]
+	Perhaps you can use this to[BR]
+	your advantage by overriding a[BR]
+	negative effect with a positive[BR]
+	one...[BR]
+	[Wait][Yield][End]
+}
+
+#message:16:019
+{
+[NEXT]You know a Koopa called Mr.[BR]
+Kolorado, the famous explorer[BR]
+and archaeologist?[BR]
+[Wait][NEXT]I have nothing but respect for[BR]
+him. Solving the riddle of the[BR]
+Candy Canes on Pleasant Path,[BR]
+[Wait][NEXT]investigating Dry Dry Ruins[BR]
+in Dry Dry Desert, discovering[BR]
+many new facts..these are but[BR]
+a few of his accomplishments.[BR]
+[Wait][NEXT]Recently, he found a treasure[BR]
+that proves an ancient[BR]
+civilization once existed on[BR]
+Lavalava Island.[BR]
+[Wait][NEXT]According to Mr. Kolorado,[BR]
+a long time ago, people once[BR]
+lived on Lavalava Island.[BR]
+[Wait][NEXT]I heard that these people used[BR]
+to live in the holes dug out of[BR]
+the side of the volcano on[BR]
+Lavalava Island.[BR]
+[Wait][NEXT]But their civilization was[BR]
+destroyed when they uncovered a[BR]
+mysterious, cursed stone deep[BR]
+in the volcano.[BR]
+[Wait][NEXT]Even he couldn't find out what[BR]
+kind of people they were or[BR]
+what the nature of that stone[BR]
+was.[BR]
+[Wait][NEXT]Long after these mysterious[BR]
+people left the island, Yoshis[BR]
+and Ravens arrived, and they've[BR]
+lived in harmony ever since.[BR]
+[Wait][Yield][END]
+}
+
+#message:16:01B
+{
+	[Next]
+	There should be a place called[BR]
+	Flower Fields hidden somewhere[BR]
+	in the world.[BR]
+	[Wait][Next]
+	A very rare Crazee Dayzee,[BR]
+	called an Amazy Dayzee, is said[BR]
+	to live there.[BR]
+	[Wait][Next]
+	Very few people have ever seen[BR]
+	one up close.[BR]
+	[Wait][Next]
+	If you glimpse it,[BR]
+	count yourself lucky.[BR]
+	[Pause 10]I'd sure like to see it once.[BR]
+	[Wait][Next]
+	Although... Perhaps the reason[BR]
+	people haven't been seeing it[BR]
+	up close is that everyone who[BR]
+	has ever done that[BR]
+	[Wait][Next]
+	didn't live to tell the tale.[BR]
+	[Wait][Yield][End]
+}
+
+#message:16:01C
+{
+[NEXT]It's a known fact that Miss[BR]
+Tayce T. is the best cook[BR]
+around. Everyone says so.[BR]
+[Wait][NEXT]I've had the good fortune to[BR]
+try many of her dishes, and[BR]
+believe me, they're heavenly.[BR]
+[Wait][NEXT]If I had to pick a favorite,[BR]
+it would be her Super Shroom[BR]
+Cake.[BR]
+[Wait][NEXT]According to Tayce T.,[BR]
+the recipe calls for Cake Mix[BR]
+and a Super Shroom.[BR]
+[Wait][NEXT]Try it if you get the chance.[BR]
+[PAUSE:0A]I highly recommend it.[BR]
+[Wait][NEXT]There are other types of[BR]
+Shroom Cake too, so you should[BR]
+try to find them all.[BR]
+[Wait][NEXT]Using one when you are under[BR]
+the effect of another will[BR]
+actually combine their effects[BR]
+too![BR]
+[Wait][Yield][END]
+}
+
+#message:16:01F
+{
+	[Next]
+	There's this item known as[BR]
+	a Tasty Tonic, which will[BR]
+	cure any statuses you may[BR]
+	have.[BR]
+	[Wait][Next]
+	It's somewhat of a popular[BR]
+	drink that used to be sold[BR]
+	in stores, but not anymore.[BR]
+	[Wait][Next]
+	Nowadays, the only way to get[BR]
+	some is to use a recipe to make[BR]
+	it.[BR]
+	[Wait][Next]
+	I believe that the recipe calls[BR]
+	for berries of some kind...[BR]
+	[Wait][Yield][End]
+}
+
+#message:16:020
+{
+[NEXT]According to the vast stores of[BR]
+information I've gathered,[BR]
+[Wait][NEXT]there appear to be soldiers[BR]
+called the Koopatrol guarding[BR]
+Bowser's Castle.[BR]
+[Wait][NEXT]They have three ranks. There[BR]
+are basic Koopatrols, Gold[BR]
+Koopatrols, and Dark Koopatrols.[BR]
+[Wait][NEXT]The two elite ranks are well[BR]
+known for their ability to[BR]
+Shell Toss continuously if their[BR]
+attacks aren't guarded.[BR]
+[Wait][NEXT]Perhaps you have a similar attack[BR]
+of your own you can use against[BR]
+them?[BR]
+[Wait][Yield][END]
+}
+
+#message:16:022
+{
+[NEXT]I found a book about the[BR]
+Temple of Darkness the other day.[BR]
+I think it is quite interesting.[BR]
+[Wait][NEXT]
+The Temple was a massive complex[BR]
+built deep underground, so far[BR]
+below that the Star Spirits[BR]
+had no power within it.[BR]
+[Wait][NEXT]
+It housed a large army of[BR]
+dark creatures within its[BR]
+walls.[BR]
+[Wait][NEXT]
+They tried to take over the[BR]
+surface, but were beaten back[BR]
+through the power of the[BR]
+Star Spirits.[BR]
+[Wait][NEXT]
+Since the Star Spirits could[BR]
+not enter the temple, two heroes[BR]
+volunteered to clear the Temple[BR]
+of its strongest beasts.[BR]
+[Wait][NEXT]
+They fought bravely, and managed[BR]
+to defeat the leader of those[BR]
+dark beasts.[BR]
+[Wait][NEXT]
+However, there were too many[BR]
+of them, and they were forced[BR]
+to retreat.[BR]
+[Wait][NEXT]
+They sealed the temple with[BR]
+2 dark keys, intending[BR]
+to come back to finish what[BR]
+they started.[BR]
+[Wait][NEXT]
+But tragically, one of the[BR]
+heroes was struck down, and[BR]
+their key was lost.[BR]
+[Wait][Yield][END]
+}
+
+#message:16:023
+{
+	[NEXT]There was a strange page[BR]
+	in that book about the[BR]
+	Temple of Darkness that I wasn't[BR]
+	sure was in there originally.[BR]
+	[Wait][NEXT]
+	It spoke of a strange prophecy[BR]
+	that said that darkness would[BR]
+	have won if [COLOR:20]some sort of file[COLOR:0A][BR]
+	was named "[COLOR:20]AntiGuy[COLOR:0A]"[BR]
+	[Wait][NEXT]
+	That page was a loose piece[BR]
+	of paper, so I can't tell[BR]
+	if it actually was a part[BR]
+	of the book or not.[BR]
+	[Wait][NEXT]
+	It seems very strange that[BR]
+	so much would change just[BR]
+	by naming a file a certain[BR]
+	thing.[BR]
+	[Wait][Yield][END]
+}
+
+#message:18:010
+{
+[DelayOff][Style Sign]
+[CenterX 255][Color 0x1A][BR]
+[STAR]  Toad Town Underground  [STAR][BR]
+[STAR]             News             [Right 3][STAR][BR]
+[BR]
+[Color 0x18][Color 0x19][BR]
+[Right 50]Bowser's Castle[BR]
+[Right 35]Infiltration Report[BR]
+[BR]
+[Color 0x18][CenterX 0]I sneaked into Bowser's Castle,[BR]
+pretending to be one of his[BR]
+underlings.[BR]
+[BR]
+Braving the dark, I managed to[BR]
+avoid Koopatrols and Hammer[BR]
+Bros.[BR]
+[BR]
+It wasn't easy to climb up the[BR]
+castle, but spying was a piece[BR]
+of cake.[BR]
+[BR]
+There was also this weird Shy Guy
+covered with green fire searching
+for something.
+[BR]
+Anyway, I thought the castle[BR]
+was quite well decorated.[BR]
+Isn't it supposed to be gross?[BR]
+[BR]
+I don't want to go there again.[BR]
+[BR]
+[BR]
+..................... A curious Koopa[BR]
+[DelayOn][Wait][Scroll 4][Wait][Scroll 4][Wait][Scroll 4][Wait][Scroll 4][Wait][Scroll 4][Wait][Scroll 4][DelayOn][Wait][End]
+}
+
+#message:1D:028
+{
+	Negates enemy buffs, including[BR]
+	Bowser's Star Rod power.[End]
+}
+
+#message:1D:029
+{
+	Negates enemy buffs, including[BR]
+	Bowser's Star Rod power.[End]
+}
+
+
+#message:18:019
+{
+	[DelayOff][Style Sign]
+	[CenterX 255][Color 0x1A][BR]
+	[STAR]  Toad Town Underground  [STAR][BR]
+	[STAR]             News             [Right 3][STAR][BR]
+	[BR]
+	[Color 0x18][CenterX 0]Hurrah for Princess Peach![BR]
+	Hurrah for Mario!![BR]
+	Mario was as strong as legend[BR]
+	said he was![BR]
+	He fought beside Goombario,[BR]
+	Kooper, Parakarry, Bombette,[BR]
+	Lady Bow, Watt, Lakilester[BR]
+	and Sushie![BR]
+	[BR]
+	We're gonna party like there's[BR]
+	no tomorrow! Come on![BR]
+	[BR]
+	[BR][Color 0x20]W [Down 3]E[Up 1]             R [Up 3]U [Up 3]L [Up 3]E
+	[BR]     [Down 7]S H A L L          A L L  
+	[BR]                           [Up 10]A L L[Down 10]
+	[BR]                AllToads
+	[BR]our growth is eternal
+	[BR]              [Up 10]we will live forever
+	[BR][Up 10]mushroom kingdom mushroom empire
+	[BR][Up 10]modern paper mario
+	[BR]              [Up 10]secret message
+	[BR][Up 10][START] stop [START] stop
+	[BR][Up 10]   our growth is eternal
+	[BR][Up 10]                we will live forever
+	[BR][Up 10]mushroom empire [Up 10]mushroom kingdom
+	[BR][Up 10]       modern paper mario
+	[BR]        [Up 10]all toads all toads
+	[BR][Up 10]                  stop [START] stop
+	[DelayOn][Wait][Scroll 4][Wait][Scroll 4][Wait][Scroll 4][Wait][Scroll 4][Wait][Scroll 4][DelayOn][Wait][End]
+}
+
+
+
+#message:1D:1A6
+{
+[STYLE:Epilogue][Color:0A]Thus Mario and party[BR]
+unearthed the legendary[BR]
+Dry Dry Ruins deep within[BR]
+Dry Dry Desert.[BR]
+[Wait][NEXT]They smashed Tutankoopa[BR]
+the Pharaoh and freed[BR]
+Mamar, the second of the[BR]
+wish-granting Star Spirits.[BR]
+[Wait][NEXT]But the enemies aWaiting[BR]
+Mario grow ever stronger...[BR]
+and the challenges [BR]
+more difficult.[BR]
+[Wait][NEXT]What's in store for[BR]
+Mario and friends...[BR]
+Where will their adventure[BR]
+take them next?[Wait][END]
+}
+
+#message:21:035
+{
+[STYLE:Right]You search for a Magical Bean[BR]
+that grows a vine into the sky.[BR]
+[Wait][NEXT]To the east of the big tree,[BR]
+I can see a flower being[BR]
+pestered by creatures who dwell[BR]
+under the ground.[BR]
+[Wait][NEXT]The annoyed flower really loves[BR]
+seeds. You help her out.[BR]
+[Wait][NEXT]Your reward would be the precious[BR]
+Magical Bean.[BR]
+[Wait][NEXT]Unfortunately, a nearly-invisible[BR]
+fighter stole that bean.[BR]
+You find him, fight him, and then[BR]
+he will relinquish the bean.[BR]
+[Wait][END]
+}
+
+#message:21:03D
+{
+[STYLE:Right]You travel to a far-off land,[BR]
+a frigid place covered with snow[BR]
+and ice.[BR]
+[Wait][NEXT]You find new strength in the[BR]
+deepest place under Toad Town,[BR]
+after defeating an old enemy.[BR]
+[Wait][NEXT]Using your new ability, you are[BR]
+able to enter a new path.[BR]
+A blue door on a high ledge[BR]
+beckons, but you can't reach it.[BR]
+[Wait][NEXT]There are several things[BR]
+invisible to the naked eye near[BR]
+the door.[BR]
+[Wait][NEXT]With the help of your sparkling[BR]
+companion, you see the way.[Wait][END]
+}
+
+#message:21:042
+{
+[STYLE:Right]You climb the mountain, until[BR]
+you see a large gap.[BR]
+With the help of your sparkling[BR]
+companion, the path is revealed.[BR]
+[Wait][NEXT]You climb up a steep mountain[BR]
+and break the cracked wall[BR]
+beyond the stairs. You enter an[BR]
+icy cave.[BR]
+[Wait][NEXT]The room is filled with crystal[BR]
+pillars, and your eyes deceive[BR]
+you. You think for a moment that[BR]
+it's a dead end.[BR]
+[Wait][NEXT]You don't trust your eyes.[BR]
+You keep moving forward.[BR]
+[PAUSE:0A]You find something helpful once[BR]
+you break the illusion.[Wait][END]
+}
+
+
+
+
+#message:0C:10E
+{
+	[Style Right]
+	[Voice Star]Using a Star Power requires[BR]
+	Star Power. [BR]
+	[Wait][Next]
+	Would you like to listen while I[BR]
+	tell you how to use Star Powers[BR]
+	and Star Power?[BR]
+	[Yield][End]
+}
+
+#message:0C:115
+{
+	[Style Right]
+	[Voice Star]See? You can check to see how[BR]
+	much Star Power you have.[BR]
+	[Wait][Next]
+	See how there's a star on the[BR]
+	right side of the gauge? Each[BR]
+	star marks one unit of Star[BR]
+	Power.[BR]
+	[Wait][Next]
+	So, you have one unit now.[Wait][End]
+}
+
+#message:0C:117
+{
+	[Style Right]
+	[Voice Star]See? Both HP and FP have[BR]
+	recovered 5 points each.[BR]
+	[Wait][Next]
+	You used one unit of Star[BR]
+	Power, so you're empty now.[BR]
+	[Wait][Next]
+	Watch your Star Power gauge[BR]
+	carefully during battle.[Wait][End]
+}
+
+#message:0C:11A
+{
+	[Style Right]
+	[Voice Star]Did you notice that the amount[BR]
+	of Star Power increased a[BR]
+	little bit?[BR]
+	[Wait][Next]
+	Star Power increases little by[BR]
+	little every time it comes around[BR]
+	to Mario's turn. [BR]
+	[Wait][Next]
+	Remember this, because it'll[BR]
+	become very important![Wait][End]
+}
+
+#message:0C:11B
+{
+	[Style Right]
+	[Voice Star]Next, I'm going to teach you[BR]
+	about another Star Power:[BR]
+	Focus.[BR]
+	[Wait][Next]
+	Focus is a Star Power that [BR]
+	enables you to increase Star[BR]
+	Energy a little more than usual[BR]
+	during a turn.[BR]
+	[Wait][Next]
+	Right now, your Star Power is[BR]
+	almost empty, even though you're[BR]
+	slowly refilling it.[BR]
+	[Wait][Next]
+	All right, try the Star Power[BR]
+	Focus now. [Wait][End]
+}
+
+#message:0C:11C
+{
+	[Style Right]
+	[Voice Star]Did you notice how much the[BR]
+	Star Power increased?[BR]
+	[Wait][Next]
+	Focus helps you increase your[BR]
+	Star Power much more quickly.[Wait][End]
+}
+
+#message:0C:11C
+{
+	[Style Right]
+	[Voice Star]Did you notice how much the[BR]
+	Star Power increased?[BR]
+	[Wait][Next]
+	Focus helps you increase your[BR]
+	Star Power much more quickly.[Wait][End]
+}
+

@@ -1,0 +1,94 @@
+@ $Script_UseItem
+{
+    0:  SetConst  *VarA  0000009B
+   10:  ExecWait  $Script_802A1530
+   1C:  Call  InitTargetIterator ( )
+   28:  Call  GetOwnerTarget    ( *Var0 *Var1 )
+   3C:  If  *Var0  ==  .Actor:Player % 0
+   4C:  	Call  PlaySoundAtActor      ( .Actor:Player 00002095 )
+   60:  	Call  SetAnimation  ( .Actor:Player 00000000 00010025 )
+   78:  	Wait  45`
+   84:  	Call  GetActorPos   ( .Actor:Player *Var0 *Var1 *Var2 )
+   A0:  	Add   *Var0  00000000
+   B0:  	Add   *Var1  00000023
+   C0:  	Call  $Function_802A1418    ( *Var0 *Var1 *Var2 00000005 )
+   DC:  	Call  $Function_802A14D8    ( 00000005 )
+   EC:  	Call  GetActorPos   ( .Actor:Player *Var0 *Var1 *Var2 )
+  108:  	Add   *Var1  00000019
+  118:  	Call  802D7520      ( *Var0 *Var1 *Var2 00000005 )
+  134:  	Call  GetActorPos   ( .Actor:Player *Var0 *Var1 *Var2 )
+  150:  	Add   *Var1  00000014
+  160:  	Call  SetAnimation  ( .Actor:Player 00000000 00010032 )
+  178:  	Wait  30`
+  184:  	Call  SetAnimation  ( .Actor:Player 00000000 00010002 )
+  19C:  	Call  GetActorPos   ( .Actor:Player *Var0 *Var1 *Var2 )
+  1B8:  	Call  802D75D8      ( *Var0 *Var1 *Var2 00000005 )
+  1D4:  	Call  InitTargetIterator ( )
+  1E0:  	Call  GetOwnerTarget        ( *Var0 *Var1 )
+  1F4:  	Call  $Function_802A1378    ( 00000000 )
+			Call  $Function_ResetStatus ( )
+  204:  	Wait  20`
+  210:  Else
+  218:  	Set   *VarB  00000000
+  228:  	Set   *VarC  00000000
+  238:  	Set   *VarF  00000000
+  248:  	ExecWait  $Script_802A1AEC
+  254:  EndIf
+  25C:  ExecWait  $Script_802A1960
+  268:  Return
+  270:  End
+}
+
+#new:Function $Function_ResetStatus %set debuff turns to 0, set attack boost and defense boost to 0 (note that the partner buff moves work separately to them)
+{
+	PUSH	RA, A0, A1, S0
+	LIO		A0, 800DC070
+	LW		A0, D8 (A0) %where player actor struct is
+	%SB		R0, 210 (A0) %debuff id
+	%SB		R0, 211 (A0) %debuff turns
+    8:  LAW			S0, 800DC148
+   10:  SW			RA, 14 (SP)
+   14:  LB			V0, 210 (S0)
+   18:  BEQ			V0, R0, .o30
+   1C:  NOP
+   20:  LH			A0, 436 (S0)
+   24:  SB			R0, 211 (S0)
+   28:  JAL			80047898
+   2C:  SB			R0, 210 (S0)
+   .o30									%this part clears the anim stuff and status 0D - was missing before
+    30:  LB			V0, 216 (S0)
+   34:  BEQ			V0, R0, .o0DClear
+   38:  NOP
+   3C:  LW			V0, 440 (S0)
+   40:  SB			R0, 217 (S0)
+   44:  SB			R0, 216 (S0)
+   48:  LW			V0, C (V0)
+   4C:  SW			R0, 3C (V0)
+	.o0DClear
+   30:  LB			V0, 212 (S0)
+   34:  BEQ			V0, R0, .o4C
+   38:  NOP
+   3C:  LH			A0, 436 (S0)
+   40:  SB			R0, 213 (S0)
+   44:  JAL			800479A0
+   48:  SB			R0, 212 (S0)
+        .o4C
+   4C:  LB			V0, 214 (S0)
+   50:  BEQ			V0, R0, .o60
+   54:  NOP
+   58:  SB			R0, 215 (S0)
+   5C:  SB			R0, 214 (S0)
+        .o60
+   60:  LB			V0, 218 (S0)
+   64:  BEQ			V0, R0, .o74
+   68:  NOP
+   6C:  SB			R0, 219 (S0)
+   70:  SB			R0, 218 (S0)
+        .o74
+	SB		R0, 221 (A0)
+	SB		R0, 222 (A0)
+	SAB		R0, $EternalCostIncreases
+	POP		RA, A0, A1, S0
+	JR		RA
+	ORI 	V0, R0, 2
+}

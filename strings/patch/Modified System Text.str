@@ -1,0 +1,346 @@
+#message:0B:0F9
+{
+	Total Deaths:[End]
+}
+
+#message:1D:000
+{
+	[Style Inspect]
+	Hit this block to save your[BR]
+	game progress.[BR]
+	[Wait][Next]
+	When the game is over, your[BR]
+	status will return to what it[BR]
+	was the last time you saved,[BR]
+	and you can continue to play.[BR]
+	[Wait][Next]
+	They come in many different[BR]
+	colors, but they still work[BR]
+	the same.[BR]
+	[Wait][Next]
+	When you find this block along [BR]
+	the way, remember to hit it[BR]
+	to save![Wait][End]
+}
+
+#message:1D:025
+{
+	Recover HP by 20. Survive a[BR]
+	lethal hit this turn (1/battle)[End]
+}
+
+#message:1D:035
+{
+	This young Star Spirit is[BR]
+	pure hearted but strong.[BR]
+	Her power, Smooch,[BR]
+	recovers HP and lets you.[BR]
+	survive one lethal hit[BR]
+	the turn you use it,[BR]
+	but you can only use that[BR]
+	ability once per battle.[BR]
+	[End]
+}
+
+
+#message:1D:087
+{
+The enemy gets an electric charge![END]
+}
+
+#message:1D:07B
+{
+Mario is immobilized![BR]
+He can't move right now!![END]
+}
+
+#message:1D:010
+{
+	Buzzatrice[End]
+}
+
+#message:1D:020
+{
+	Charge Star Power.[End]
+}
+
+#message:1D:021
+{
+	Recover HP & FP by 5. Also[BR]
+	cures all status ailments.[End]
+}
+
+#message:1D:07F
+{
+	Star Power is slightly charged![End]
+}
+
+#message:1D:080
+{
+	Star Power is fully charged![End]
+}
+
+#message:1D:088
+{
+	Mario's dazed![BR]
+	All attacks will miss![End]
+}
+
+#message:1D:090
+{
+	Your enemy's dazed and[BR]
+	their attacks will miss![End]
+}
+
+#message:1D:0DA
+{
+	[Style Upgrade pos=40,35 size=240,42]
+	This is a Super Block.[BR]
+	[Wait][Next]
+	With this, you can upgrade [BR]
+	one of your party members.[BR]
+	[Wait][Next]
+	The member you upgrade[BR]
+	will gain attack power.[BR]
+	[Wait][Next]
+	Their base level move[BR]
+	may [COLOR:20]gain special properties[COLOR:00],[BR]
+	[Wait][Next]
+	...so make sure to read move[BR]
+	descriptions carefully.[BR]
+	[Wait][Next]
+	The party member will also[BR]
+	master a new ability. [BR]
+	[Wait][Next]
+	Which party member do you[BR]
+	want to upgrade?[Wait][End]
+}
+
+#message:1D:18A
+{
+	[Style Narrate]
+	[InputOff]Kooper joined your party!![BR]
+	[InputOn][Wait][Next]
+	[Image index=0 pos=85,97 hasBorder=1 alpha=255 fadeAmount=52]Press [C-DOWN] to make him throw [BR]
+	himself and reach an item or a [BR]
+	switch in the distance.[BR]
+	This [COLOR:07]works in all directions[COLOR:00].[BR]
+	[Wait][Next]
+	While in battle, he can attack[BR]
+	an enemy on the ground with[BR]
+	Shell Toss[BR]
+	[Wait][Next]
+	or attack all enemies on the[BR]
+	ground with Power Shell![BR]
+	[Wait][Next]
+	When you want to switch your[BR]
+	partner, press [Rıght] and select[BR]
+	the member you want to use.[Wait][End]
+}
+
+#message:1D:18B
+{
+	[Style Narrate]
+	[InputOff]Bombette joined your party!![BR]
+	[InputOn][Wait][Next]
+	[Image index=0 pos=85,97 hasBorder=1 alpha=255 fadeAmount=52]Press [C-DOWN] to make Bombette [BR]
+	walk for a short time and then[BR]
+	explode![BR]
+	This [COLOR:07]works in all directions[COLOR:00].[BR]
+	[Wait][Next]
+	She can destroy cracked walls[BR]
+	or rocks and activate switches.[BR]
+	[Wait][Next]
+	Her first strike range will[BR]
+	[COLOR:07]increase when she is upgraded.[COLOR:00][BR]
+	[Wait][Next]
+	While in battle, she can attack[BR]
+	an enemy on the ground with her[BR]
+	Body Slam ability[BR]
+	[Wait][Next]
+	or damage enemies on the ground[BR]
+	with her Bomb attack![Wait][End]
+}
+
+#message:1D:18C
+{
+	[Style Narrate]
+	[InputOff]Parakarry joined your party!![BR]
+	[InputOn][Wait][Next]
+	[Image index=0 pos=85,97 hasBorder=1 alpha=255 fadeAmount=52]Press [C-DOWN] to have him carry Mario[BR]
+	and fly for a short time![BR]
+	This [COLOR:07]works in all directions[COLOR:00].[BR]
+	[Wait][Next]
+	He can carry Mario over short[BR]
+	gaps that he couldn't jump[BR]
+	across by himself.[BR]
+	[Wait][Next]
+	While in battle, he can attack[BR]
+	with Sky Dive or smash into[BR]
+	enemies using his Shell Shot[BR]
+	ability![Wait][End]
+}
+
+#message:1D:18E
+{
+	[Style Narrate]
+	[InputOff]Watt joined your party!![BR]
+	[InputOn][Wait][Next]
+	[Image index=0 pos=85,97 hasBorder=1 alpha=255 fadeAmount=52]Press [C-DOWN] to have her illuminate[BR]
+	the area around you![BR]
+	[Pause 10]With her light, you can see[BR]
+	invisible blocks, too![BR]
+	[Wait][NEXT]
+	She can also [COLOR:07]first strike[COLOR:00][BR]
+	enemies outside of battle.[BR]
+	[Wait][Next]
+	While in battle, she can shock[BR]
+	enemies with Electro Dash or[BR]
+	paralyze them with Power Shock![Wait][End]
+}
+
+#message:1D:192
+{
+	[Style Narrate]
+	[Pause 5]Mario's Star Power goes up[BR]
+	to 2![BR]
+	[Wait][Next]
+	Mario can now use Lullaby,[BR]
+	a new Star Spirit Power![BR]
+	[Wait][Next]
+	With Lullaby, you can make[BR]
+	all enemies fall asleep![Wait][End]
+}
+
+#message:1D:193
+{
+	[Style Narrate]
+	[Pause 5]Mario's Star Power goes up[BR]
+	to 3![BR]
+	[Wait][Next]
+	Mario can now use Star Storm,[BR]
+	a new Star Spirit Power![BR]
+	[Wait][Next]
+	With Star Storm, you can[BR]
+	attack all enemies![Wait][End]
+}
+
+#message:1D:194
+{
+	[Style Narrate]
+	[Pause 5]Mario's Star Power goes up[BR]
+	to 4![BR]
+	[Wait][Next]
+	Mario can now use Chill Out, a[BR]
+	new Star Spirit Power![BR]
+	[Wait][Next]
+	With Chill Out, you can lower the[BR]
+	attack power of all enemies![Wait][End]
+}
+
+#message:1D:195
+{
+	[Style Narrate]
+	[Pause 5]Mario's Star Power goes up[BR]
+	to 5![BR]
+	[Wait][Next]
+	Mario can now use Smooch,[BR]
+	a new Star Spirit Power![BR]
+	[Wait][Next]
+	With Smooch, you can restore[BR]
+	Mario's HP... [BR]
+	[Wait][Next]
+	[COLOR:20]and survive a lethal hit[BR]
+	on that turn (1/battle).[COLOR:00][Wait][End]
+}
+%[COLOR:20]
+
+#message:1D:196
+{
+	[Style Narrate]
+	[Pause 5]Mario's Star Power goes up[BR]
+	to 6![BR]
+	[Wait][Next]
+	Mario can now use Time Out,[BR]
+	a new Star Spirit Power![BR]
+	[Wait][Next]
+	With Time Out, you can stop[BR]
+	time--and stop all enemies[BR]
+	in their tracks![Wait][End]
+}
+
+#message:1D:197
+{
+	[Style Narrate]
+	[Pause 5]Mario's Star Power goes up[BR]
+	to 7![BR]
+	[Wait][Next]
+	Mario can now use Up & Away,[BR]
+	a new Star Spirit Power![BR]
+	[Wait][Next]
+	With Up & Away, you can turn[BR]
+	all enemies into stars![Wait][End]
+}
+
+%I ended up putting this in the map script :P
+#message:1D:1AC
+{
+	[Style Narrate]
+	[InputOff]Buzzatrice joined your party!![BR]
+	[InputOn][Wait][Next]
+	[Image index=0 pos=85,97 hasBorder=1 alpha=255 fadeAmount=52]Press [C-DOWN] to shoot a magic blast[BR]
+	that will instantly defeat weak[BR]
+	enemies.[BR]
+	This [COLOR:07]works in all directions[COLOR:00].[BR]
+	[Wait][Next]
+	While in battle, she can attack[BR]
+	with Magic Blast[BR]
+	[Wait][NEXT]
+	or attack invisible enemies with[BR]
+	Power Beam.[BR]
+	That attack also does increased[BR]
+	damage against buffed enemies.[BR][Wait][End]
+}
+
+%Upgrade stuff
+#message:1D:1AD
+{
+She'll master Rejuvenate to[BR]
+heal Mario for up to 12 HP.[END]
+}
+
+#message:1D:1AE
+{
+She'll master Hustle Spell to[BR]
+give Mario 2 turns.[END]
+}
+
+%Airlift fail message
+#message:1D:1AF
+{
+Only once per battle.[END]
+}
+
+%Not enough HP message
+#message:1D:1B0
+{
+You don't have enough HP![END]
+}
+
+%Stellar nova fail message
+#message:1D:1B1
+{
+Can't stack Stellar Nova.[END]
+}
+
+%Flower coins fail mesage
+#message:1D:1B2
+{
+You don't have enough coins![END]
+}
+
+%Buy which one?
+#message:1D:1B3
+{
+Buy which one?[END]
+}

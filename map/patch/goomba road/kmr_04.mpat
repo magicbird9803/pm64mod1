@@ -1,0 +1,270 @@
+%add jr troopa fight
+%but only let you fight once you unlock the spark city pipe (because the delivery guy shows up here)
+
+%Jr Troopas npc tattle talks about ordering things through mail. Let's incorporate that here
+%	(001A0006)
+%when you beat him, the delivery guy shows up and then you get the badge he has
+
+
+@ $NpcGroupList_80241A5C
+{
+00000001 $NpcGroup_8024167C 02020000 
+00000001 $NpcGroup_8024186C 00000000 
+00000001 $NpcGroup_JrTroopa 46000000 
+00000000 00000000 00000000 
+}
+
+%%
+% Jr Troopa Rematch
+%%
+
+#new:NpcGroup $NpcGroup_JrTroopa
+{
+00000002 $BlankSettings  200.0  0.0  -120.0
+00A40D01 $Script_Init_JrTroopa 00000000 00000000 000000B4 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus ~NoMovement
+00210003 00210007 00210007 00210007 00210003 00210003 00210003 00210003 
+00210003 00210003 00210003 00210003 00210003 00210003 00210003 00210003 
+00000000 00000000 00000000 $JrTroopaTattle % no tattle string
+}
+
+#new:NpcSettings $BlankSettings
+{
+00000000 00200018 00000000 00000000 00000000 00000000 00000000 00000000 
+00000000 00000000 00630000 
+}
+
+#new:Script $Script_Init_JrTroopa
+{
+	Call	BindNpcInteract	( .Npc:Self $Script_Interact )
+	Call	BindNpcIdle		( .Npc:Self $Script_IdleAI )
+	Call	BindNpcDefeat	( .Npc:Self $Script_PostBattle )
+	If    *GB_StoryProgress  <  5F
+		Call     RemoveNpc	( .Npc:Self )
+	EndIf
+	If    *GF_JrTroopaRematch  ==  .True
+		Call     RemoveNpc	( .Npc:Self )
+	EndIf
+	Return
+	End
+}
+
+#new:Script $Script_Interact
+{
+	Call	SpeakToPlayer		( .Npc:Self 0021001A 00210006 00000000 $TauntString )
+	Call	ShowChoice		( 001E001D ) % yes / no
+	If	*Var[0]  ==  0
+		Call	ContinueSpeech	( .Npc:Self 0021001A 00210006 00000000 $AcceptString )
+		Call	DisablePlayerInput	( .True )
+		Call	SetNpcAnimation		( .Npc:Self 0021002B )
+		Wait	25`
+		Set		*MapFlag[0]  .True
+	Else
+		Call     ContinueSpeech	( .Npc:Self 0021001A 00210006 00000000 $DeclineString )
+		Call     GotoMap     	( $ASCII_80243760 00000000 )
+		Wait     00000064 
+	EndIf
+	Return
+	End
+}
+	
+#new:Script $Script_IdleAI
+{
+	Loop
+		If  *MapFlag[0]  ==  .True 
+			Call	StartBossBattle	( .Song:JrTroopaBattle )
+		EndIf
+		Wait	1 
+	EndLoop
+	Return
+	End
+}
+
+#new:Script $Script_PostBattle
+{
+	Call     GetBattleOutcome ( *Var[0] )
+	Switch   *Var[0] 
+		Case     ==  00000000 	% player won
+			Call	SetPlayerPos	( 160` 0` -120` )
+			Call	SetNpcPos		( .Npc:Partner 130` 10` -120` )
+			Call	EnablePartnerAI	( )
+			Call	PlayerFaceNpc	( .Npc:Self 0 )
+			Call	NpcFacePlayer	( .Npc:Self 0 )
+			Call	NpcFaceNpc		( .Npc:Partner .Npc:Self 0 )
+			Call	SetNpcAnimation ( .Npc:Self 00210015 )
+			Wait	45`
+			Call	GetNpcPos		( .Npc:Self *Var[0] *Var[1] *Var[2] )
+			Call	SetNpcAnimation ( .Npc:Self 0021001E )
+			Call	PlaySoundAtNpc	( .Npc:Self .Sound:Jump 00000000 )
+			Call	NpcJump0    	( .Npc:Self *Var[0] *Var[1] *Var[2] 00000010 )
+			Call	SetNpcAnimation ( .Npc:Self 00210003 )
+			Wait	15`
+			Call	SpeakToPlayer 	( .Npc:Self 00210016 00210003 00000000 $DefeatString1 )
+			% walks away a little bit
+			Thread
+				Wait	4
+				Call	UseSettingsFrom ( .Cam:Default 350` 0` 20` )
+				Call	SetPanTarget 	( .Cam:Default 350` 0` 20` )
+				Call	SetCamSpeed 	( .Cam:Default *Fixed[1.0] )
+				Call	PanToTarget 	( .Cam:Default 00000000 00000001 )
+			EndThread
+			Call	SetNpcSpeed		( .Npc:Self *Fixed[2.0] )
+			Call	SetNpcAnimation ( .Npc:Self 00210007 )
+			Call	NpcMoveTo   	( .Npc:Self 350`  20`  0 )
+			Call	SetNpcAnimation	( .Npc:Self 00210003 )
+			Wait	30`
+			Call	SpeakToPlayer 	( .Npc:Self 00210016 00210003 00000000 $DefeatString2 )
+			%Give you a badge :)
+			Set 	*Var2 .Item:LastChance
+			Call	ShowGotItem	( *Var2 00000000 00000000 )		%Last chance
+			Call	AddBadge	( *Var2 *Var7 )			
+			% exit map
+			Call	SetNpcSpeed		( .Npc:Self *Fixed[6.0] )
+			Call	SetNpcAnimation	( .Npc:Self 00210009 )
+			Call	NpcMoveTo		( .Npc:Self 564` 10` 0 )
+			Call	SetNpcPos		( .Npc:Self 0` -1000` 0` )
+			Thread
+				Call     ResetCam    	( .Cam:Default 00000004 )
+			EndThread
+			Set		*MapFlag[0]  .False 
+			Set		*GF_JrTroopaRematch  .True
+			Call	DisablePlayerInput 	( .False )
+		EndSwitch
+	Return
+	End
+}
+
+@ $Script_80242A58
+{
+    0:  Call  SetPlayerAnimation    ( 0006000C )
+   10:  Call  GetPlayerPos      ( *Var5 *Var6 *Var7 )
+   28:  Add   *Var6  00000028
+   38:  Call  MakeItemEntity    ( .Item:Hammer1Icon *Var5 *Var6 *Var7 .ItemSpawnMode:Decoration 00000000 )
+   5C:  Set   *VarC  *Var0
+   6C:  Add   *Var6  00000010
+   7C:  Call  PlayEffect        ( ~FX:GotItemOutline *Var5 *Var6 *Var7 *Fixed[1.0] *Var8 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+   C0:  Call  PlayEffect        ( 00000033 00000009 *Var5 *Var6 *Var7 *Fixed[1.0] 00000064 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+  104:  Exec  $Script_802405B8
+  110:  Thread
+  118:  	Wait  4`
+  124:  	Call  GetPlayerPos  ( *Var3 *Var4 *Var5 )
+  13C:  	Add   *Var4  00000032
+  14C:  	Add   *Var5  00000002
+  15C:  	Add   *Var3  00000008
+  16C:  	Call  PlayEffect    ( 00000011 00000003 *Var3 *Var4 *Var5 00000014 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+  1B0:  	Add   *Var3  FFFFFFF0
+  1C0:  	Call  PlayEffect    ( 00000011 00000003 *Var3 *Var4 *Var5 00000014 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+  204:  EndThread
+  20C:  Loop
+  218:  	Wait  1`
+  224:  	If  *MapFlag[12]  ==  .True
+  234:  		BreakLoop
+  23C:  	EndIf
+  244:  EndLoop
+  24C:  Call  802D7B44  ( *Var8 )
+  25C:  Call  RemoveItemEntity      ( *VarC )
+  26C:  Call  SetPlayerAnimation    ( 00010002 )
+  27C:  Return
+  284:  End
+}
+
+
+%%
+% Embedded Strings
+%%
+
+#string $TauntString
+{
+[STYLE:Right]
+Well, well, well, look who it is.[BR][PAUSE:10]
+What are you doing around here,[BR]
+looking for another fight?[BR]
+[Yield][END]
+}
+
+#string $AcceptString
+{
+[NEXT]
+You've got some kinda nerve![BR]
+Barging into MY playground like[BR]
+you own the place, threatening[BR]
+me in MY own home! Grrrr...[BR]
+[Wait][NEXT]
+But you know, this is where it all[BR]
+began, isn't it?[PAUSE:10] Yeah.[PAUSE:10][BR]
+I can't think of a better place[BR]
+to finally crush you.[Wait][END]
+}
+
+#string $DeclineString
+{
+[NEXT]
+Afraid I'll beat you?[BR]
+Get out of my playground![Wait][END]
+}
+
+#string $DefeatString1
+{
+[STYLE:Right]
+.[PAUSE:10].[PAUSE:10].[PAUSE:40][BR]
+You know,[PAUSE:20] for some reason,[PAUSE:10][BR]
+I'm not even mad.[BR]
+[Wait][END]
+}
+
+#string $DefeatString2
+{
+[STYLE:Right]
+You know, I bought an expensive[BR]
+badge for this, but I didn't[BR]
+have enough BP for it. I guess[BR]
+you can have it.[BR]
+[Wait][NEXT]
+See you around, [PAUSE:10]Mario.[BR]
+[PAUSE:20]
+Take care of the playground[BR]
+for me.[BR]
+[Wait][END]
+}
+
+%Normal tattle, but it doesn't really make sense here
+/%
+#string $JrTroopaTattle
+{
+	[Style Tattle]
+	[EnableCDownNext]That's Jr. Troopa. He used to[BR]
+	boot us out of the forest near[BR]
+	Goomba Village. He thinks he's[BR]
+	pretty tough.[BR]
+	[Wait][Next]
+	As far as I can tell, he goes[BR]
+	around picking fights with people[BR]
+	who are stronger than he is.[BR]
+	Talk about dumb![BR]
+	[Wait][Next]
+	His hobbies are working out and[BR]
+	ordering stuff by mail.[Wait][End]
+}
+%/
+
+#string $JrTroopaTattle
+{
+	[Style Tattle]
+	[EnableCDownNext]That's Jr. Troopa. He used to[BR]
+	boot us out of his playground[BR]
+	down here. He thinks he's[BR]
+	pretty tough.[BR]
+	[Wait][Next]
+	As far as I can tell, he goes[BR]
+	around picking fights with people[BR]
+	who are stronger than he is.[BR]
+	Talk about dumb![BR]
+	[Wait][Next]
+	Although, he won't pick a fight[BR]
+	here unless you talk to him.[BR]
+	[PAUSE:0A]Maybe he's finally learning[BR]
+	that he can't beat you?[BR]
+	[Wait][Next]
+	His hobbies are working out and[BR]
+	ordering stuff by mail.[Wait][End]
+}

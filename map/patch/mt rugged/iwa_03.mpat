@@ -1,0 +1,20 @@
+@ $AISettings_80241C1C
+{
+    1.8 % move speed
+    30` % move time
+    30` % Wait time
+   90.0 % alert radius
+   70.0
+    2`
+    5.0 % chase speed %3 -> 5
+    90`
+    25`
+  120.0 % chase radius
+   70.0
+    1`
+}
+	
+@ $Script_MakeEntities %get a dried fruit to make buzzar easier
+{
+[50] Call MakeEntity ( .Entity:YellowBlock ~Vec4d:Entity8024188C .Item:DriedFruit 80000000 )
+}

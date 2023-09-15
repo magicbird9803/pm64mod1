@@ -1,0 +1,474 @@
+%%
+% NPCs
+%%
+
+#new:NpcGroupList $NpcGroups  /%%/
+{
+00000001 $NpcGroup_Rowf 3A010002
+00000000 00000000 00000000 
+}
+
+%%
+% Rowf
+%%
+
+#new:NpcGroup $NpcGroup_Rowf
+{
+00000001 $BlankSettings ~Vec3f:RowfSpawn
+00A40D01 $InitRowf 00000000 00000000 00000000 
+~NoItems ~NoHP ~NoFP ~NoCoinBonus ~NoMovement
+00A70009 00A70009 00A70009 00A70009 00A70009 00A70009 00A70009 00A70009 
+00A70009 00A70009 00A70009 00A70009 00A70009 00A70009 00A70009 00A70009 
+00000000 00000000 00000000 00000000 % no tattle string
+}
+
+#new:Script $InitRowf
+{
+    0:  Set  *MapFlag[00]  00000000 
+   10:  Call     BindNpcInteract 	( .Npc:Self $RowfInteraction )
+   24:  Return
+   2C:  End
+   
+   #new:Script $RowfInteraction
+   78:  If  *MapFlag[00]  ==  00000001 
+   88:  	Call     SpeakToPlayer 	( 00000001 00A7000C 00A70009 00000000 000A004D ) % You want to trade more? 
+   A8:  Else
+   F8:  		Call     SpeakToPlayer 	( 00000001 00A7000C 00A70009 00000000 000A004B ) % I'm the famous Merlow of Shooting Star Summit. Got ...
+  120:  EndIf
+  128:  Call     ShowChoice  	( 001E0014 ) % Yes No 
+  138:  If  *Var[0]  ==  00000001 
+  148:  	Call     ContinueSpeech 	( 00000001 00A7000C 00A70009 00000000 000A004E ) % Later!
+  168:  	Return
+  170:  EndIf
+  178:  Call     $LoadCoins ( *Var[0] )
+  188:  If  *Var[0]  ==  00000000 
+  198:  	Call     ContinueSpeech 	( 00000001 00A7000C 00A70009 00000000 000A004F ) % Ahhh... I can tell you don't have any Star Pieces. ...
+  1B8:  	Return
+  1C0:  EndIf
+  1C8:  Call     ContinueSpeech 	( 00000001 00A7000C 00A70009 00000000 000A0050 ) % Which Badges do you want to swap for?
+  1E8:  Label    00000000 
+  1F4:  Call     $LoadInventory ( )
+  200:  Wait     0000000A 
+  Call     ShowCoinCounter 	( .True )
+  20C:  If  *Var[0]  ==  FFFFFFFF 
+  21C:  	Call     SpeakToPlayer 	( 00000001 00A7000C 00A70009 00000000 000A0051 ) % Ahh... Did you change your mind? I see...
+  Call     ShowCoinCounter 	( .False )
+  23C:  	Return
+  244:  EndIf
+  24C:  Call     $LoadCoins ( *Var[3] )
+  25C:  If  *Var[3]  <  *Var[1] 
+  26C:  	Call     SpeakToPlayer 	( 00000001 00A7000C 00A70009 00000000 000A0051 ) % Ahh... Did you change your mind? I see...
+  Call     ShowCoinCounter 	( .False )
+  28C:  	Goto     00000000 
+  298:  EndIf
+  2A0:  Call     SetMessageString 	( *Var[4] 00000000 )
+  2B4:  Call     SetMessageValue 	( *Var[1] 00000001 )
+  2C8:  Call     SetMessageValue 	( *Var[5] 00000002 )
+  2DC:  If  *Var[1]  ==  00000001 
+  2EC:  	Call     SpeakToPlayer 	( 00000001 00A7000C 00A70009 00000000 000A0053 ) % I'm going to exchange "" for  Star Piece. The numb ...
+  30C:  Else
+  314:  	Call     SpeakToPlayer 	( 00000001 00A7000C 00A70009 00000000 000A0052 ) % I'm going to exchange "" for  Star Pieces. The num ...
+  334:  EndIf
+  33C:  Set  *Var[3]  *Var[0] 
+  34C:  Call     ShowChoice  	( 001E000D ) % Yes No 
+  35C:  If  *Var[0]  ==  00000001 
+  36C:  	Call     ContinueSpeech 	( 00000001 00A7000C 00A70009 00000000 000A0054 ) % Ahh... Did you change your mind? You're an indecis ...
+  38C:  	Goto     00000000 
+  398:  EndIf
+    Call     $InventoryAvailability ( )
+  2D8:  		If  *Var[0]  ==  00000000 
+  2E8:  			Call     ShowCoinCounter 	( .False )
+  2F8:  			Call     ContinueSpeech 	( 00000001 00A7000C 00A70009 00000000 00080007 ) % Oh, this is unfortunate... You have too much stuff ...
+  318:  			Return
+  320:  		EndIf
+  3A0:  Call     802D0A98 ( )
+  3AC:  Mul  *Var[1]  FFFFFFFF 
+  3BC:  Call     AddCoin 	( *Var[1] )
+  3FC:  Set  *Var[0]  *Var[3] 
+  40C:  Set  *Var[1]  00000002 
+  41C:  ExecWait $GotItem 
+  428:  Call     AddBadge    	( *Var[0] *Var[1] )
+  47C:  Call     $LoadCoins ( *Var[0] )
+		Call     ShowCoinCounter 	( .False )
+  48C:  If  *Var[0]  <=  00000000 
+  49C:  	Call     SpeakToPlayer 	( 00000001 00A7000C 00A70009 00000000 000A0055 ) % All right! These Star Pieces really help round out ...
+  4BC:  	Return
+  4C4:  EndIf
+  4CC:  Call     SpeakToPlayer 	( 00000001 00A7000C 00A70009 00000000 000A0056 ) % All right then, mister. Why don't we swap some mor ...
+  4EC:  Call     ShowChoice  	( 001E000D ) % Yes No 
+  4FC:  If  *Var[0]  ==  00000001 
+  50C:  	Call     ContinueSpeech 	( 00000001 00A7000C 00A70009 00000000 000A0057 ) % You don't want to? Oh well. At least I was able to ...
+  52C:  	Return
+  534:  EndIf
+  53C:  Call     802D0A98 ( )
+  548:  Goto     00000000 
+  554:  Return
+  55C:  End
+}
+  
+#new:BadgeShopInventory $RowfInventory
+{
+.Item:Mystery         1`     0024002B
+.Item:TastyTonic      2`     0024000E
+.Item:DriedShroom     2`     0024000D %you could buy 50 of these for the equivalent of an ultra shroom, but what a waste of time
+.Item:ThunderBolt     5`     00240004
+.Item:FrightJar       5`     0024002A
+.Item:FireFlower      10`    00240000
+.Item:SuperShroom     15`    0024000A
+.Item:ThunderRage     15`    00240002
+.Item:ShootingStar    15`    00240003
+.Item:DizzyDial       25`    00240029
+.Item:POWBlock        25`    00240027
+.Item:MapleSyrup      25`    00240017
+.Item:StopWatch       50`    00240028
+.Item:LifeShroom      150`   0024000C
+.Item:UltraShroom     150`   0024000B
+}
+  
+  %This Function check if Mario have space in his inventory
+  #new:Function $InventoryAvailability 
+{ 
+ 0:  ADDIU     SP, SP, FFE8
+    4:  SW        S0, 10 (SP)
+    8:  SW        RA, 14 (SP)
+    C:  JAL       800E7620
+   10:  DADDU     S0, A0, R0
+   14:  SW        V0, 84 (S0)
+   18:  LW        RA, 14 (SP)
+   1C:  LW        S0, 10 (SP)
+   20:  ADDIU     V0, R0, 2
+   24:  JR        RA
+   28:  ADDIU     SP, SP, 18
+}  
+  
+  #new:Script $GotItem
+{
+    0:  Call     ShowGotItem 	( *Var[0] 00000001 00000000 )
+   18:  Return
+   20:  Return
+   28:  End
+}   
+  
+	%Checking If you have Coins to buy anything
+   #new:Function $LoadCoins 
+{
+    0:  ADDIU     SP, SP, FFE8
+    4:  SW        RA, 10 (SP)
+    8:  LW        V0, C (A0)
+    C:  LAH       A2, 8010F29C
+   14:  JAL       ~Func:set_variable
+   18:  LW        A1, 0 (V0)
+   1C:  LW        RA, 10 (SP)
+   20:  ADDIU     V0, R0, 2
+   24:  JR        RA
+   28:  ADDIU     SP, SP, 18
+}
+   
+   /%
+   %Inventory List
+	#new:Function $LoadInventory
+    0:  ADDIU     SP, SP, FFC8
+    4:  SW        S3, 1C (SP)
+    8:  DADDU     S3, A0, R0
+    C:  SW        S6, 10 (SP)
+   10:  LIA       S6, 8010F28D % This Line load the players coins (The Two LHU commands do a offset to the coins address)
+   18:  SW        RA, 34 (SP)
+   34:  BEQ       A1, R0, .o130
+   38:  SW        S0, 10 (SP)
+   3C:  JAL       8002ACE4
+   40:  ADDIU     A0, R0, 330
+   44:  SW        V0, 78 (S3)
+   48:  DADDU     S5, V0, R0
+   4C:  DADDU     S4, R0, R0
+   50:  DADDU     S2, S4, R0
+   54:  LIO       S7, *Flag_Merlow_Badge_00 
+   5C:  LIA       S8, 8008A680
+   64:  LIA       S1, $RowfInventory
+   6C:  DADDU     S0, S5, R0
+        .o70
+   70:  DADDU     A0, R0, R0
+   74:  JAL       ~Func:get_variable
+   10F5BC78:  ADDU      A1, S2, S7
+   7C:  BNEL      V0, R0, .o108
+   80:  ADDIU     S2, S2, 1 % Related to Inventory Icons?
+   84:  LW        V0, 0 (S1) % Related to Inventory Icons?
+   88:  LIA       A2, 800878E0
+   90:  SLL       V0, V0, 5
+   94:  ADDU      V0, V0, A2
+   98:  LH        V1, 4 (V0) %Related to Inventory Icons
+   9C:  SW        S2, 108 (S0)
+   A0:  LW        V0, 0 (V0)
+   A4:  SLL       V1, V1, 3
+   A8:  ADDU      A0, V1, S8
+   AC:  SW        V0, 84 (S0)
+   B0:  LW        V0, 0 (A0)
+   B4:  SW        V0, 0 (S0)
+   B8:  LHU       V0, F (S6) % This line turn on the available items (Name) 1
+   BC:  LW        V1, 4 (S1) % This line turn on the available items (Name) 2
+   C0:  SLT       V0, V0, V1 % This line is to hide the player stats bar when the NPC is talking?
+   C4:  XORI      V0, V0, 1 % This line turn on the available items (Name) 3
+   C8:  SW        V0, 18C (S0) % Related to track if player have enough coins?
+   CC:  LHU       V0, F (S6) % Related to track if player have enough coins?
+   D0:  LW        V1, 4 (S1) % This line is to hide the player stats bar when the NPC is talking
+   D4:  SLT       V0, V0, V1
+   D8:  BEQ       V0, R0, .oEC
+   DC:  NOP
+   E0:  LW        V0, 4 (A0)
+   E4:  SW        R0, 18C (S0) % This line is to hide the player stats bar when the NPC is talking
+   E8:  SW        V0, 0 (S0)
+        .oEC
+   EC:  LW        V0, 8 (S1) % START: All this lines is about the selected item from the player like icon,slot,name,etc.
+   F0:  SW        V0, 294 (S0)
+   F4:  LW        V0, 4 (S1)
+   F8:  ADDIU     S4, S4, 1
+   FC:  SW        V0, 210 (S0)
+  100:  ADDIU     S0, S0, 4
+  104:  ADDIU     S2, S2, 1
+        .o108
+  108:  SLTI      V0, S2, F % END: All this lines is about the selected item from the player like icon,slot,name,etc.
+  10C:  BNE       V0, R0, .o70
+  110:  ADDIU     S1, S1, C % To spawn the inventory list correctly
+  114:  DADDU     A0, S5, R0
+  118:  ADDIU     V0, R0, 5 % This Line is to make appear the List Box style you want
+  11C:  SW        V0, 318 (A0) % This line is to open the inventory?
+  120:  SW        S4, 324 (A0) % If you erase this line it open the inventory box, but without entries
+  124:  JAL       800F4E40
+  128:  SW        R0, 328 (A0) % This line is to open the inventory?
+  12C:  SW        R0, 70 (S3) % This line is to open the inventory?
+        .o130
+  130:  LW        V0, 70 (S3) % This line make mario select an item
+  134:  LW        S5, 78 (S3)
+  138:  BNE       V0, R0, .o15C % This line is to make the NPC finish the sale, if you erased it you will soft-lock the game
+  13C:  ADDIU     V0, V0, 1 % This line is to make the NPC finish the sale, if you erased it you will soft-lock the game
+  140:  LH        V0, 32C (S5)
+  144:  BEQ       V0, R0, .o16C
+  148:  SW        V0, 74 (S3)
+  14C:  JAL       800F13B0
+  158:  ADDIU     V0, V0, 1
+        .o15C
+  15C:  SW        V0, 70 (S3) % This line is to make the NPC finish the sale, if you erased it you will soft-lock the game
+  160:  SLTI      V0, V0, 14 % This line is to make the NPC finish the sale, if you erased it you will soft-lock the game
+  164:  BEQ       V0, R0, .o174 % This line is to make the NPC finish the sale, if you erased it you will soft-lock the game
+  168:  NOP
+        .o16C
+  16C:  BEQ       R0, R0, .o224
+  170:  DADDU     V0, R0, R0
+        .o174
+  174:  JAL       800F1538 % This line is to hide the player stats bar when the NPC is talking
+  178:  NOP
+  17C:  LW        V1, 74 (S3) % START: All this lines is about the selected item from the player like icon,slot,name,etc. NPC Dialog
+  180:  ADDIU     V0, R0, FF
+  184:  BEQ       V1, V0, .o210
+  188:  ADDIU     V0, V1, FFFF
+  18C:  SLL       V0, V0, 2
+  190:  ADDU      V0, S5, V0
+  194:  LW        S2, 108 (V0)
+  198:  LIA       V0, $RowfInventory
+  1A0:  SLL       V1, S2, 1
+  1A4:  ADDU      V1, V1, S2 
+  1A8:  SLL       V1, V1, 2
+  1AC:  ADDU      V1, V1, V0
+  1B0:  LW        V0, 0 (V1)
+  1B4:  SW        V0, 84 (S3)
+  1B8:  LW        V0, 4 (V1)
+  1BC:  SW        S2, 8C (S3)
+  1C0:  SW        V0, 88 (S3)
+  1C4:  LW        V0, 0 (V1)
+  1C8:  SLL       V0, V0, 5
+  1CC:  LTW       V0, V0 (800878E0) % Item Name Related NPC Dialog
+  1D8:  SW        V0, 94 (S3) % Item Name Related NPC Dialog
+  1DC:  LW        V0, 0 (V1) % Item Name Related NPC Dialog
+  1E0:  SLL       V0, V0, 5 % Item Name Related NPC Dialog
+  1E4:  LTBU      V1, V0 (800878FA)
+  1F0:  SLL       V0, V1, 2
+  1F4:  ADDU      V0, V0, V1
+  1F8:  SLL       V0, V0, 2
+  1FC:  LTB       V0, V0 (8008F072) % END?: All this lines is about the selected item from the player like icon,slot,name,etc. NPC Dialog
+  208:  BEQ       R0, R0, .o218
+  20C:  SW        V0, 98 (S3)
+        .o210
+  210:  ADDIU     V0, R0, FFFF
+  214:  SW        V0, 84 (S3)
+        .o218
+  220:  ADDIU     V0, R0, 2
+        .o224
+  224:  LW        RA, 34 (SP)
+  24C:  JR        RA
+  250:  ADDIU     SP, SP, 38
+  %/
+  
+   #new:Function $Function_LoadingAList
+{
+    0:  ADDIU		SP, SP, FFC8
+    4:  SW			S3, 1C (SP)
+    8:  COPY		S3, A0
+		%SH		  	T0, 1 (SP) % Crasher
+    C:  SW			S6, 28 (SP)
+		LIA       	S6, 8010F28D % This Line load the players coins (The Two LHU commands below do a offset to the coins address)
+   18:  SW			RA, 34 (SP)
+   1C:  SW			S8, 30 (SP)
+   20:  SW			S7, 2C (SP)
+   24:  SW			S5, 24 (SP)
+   28:  SW			S4, 20 (SP)
+   2C:  SW			S2, 18 (SP)
+   30:  SW			S1, 14 (SP)
+   34:  BEQ			A1, R0, .o130
+   38:  SW			S0, 10 (SP)
+   3C:  JAL			8002ACE4
+   40:  ADDIU		A0, R0, 330
+   44:  SW			V0, 78 (S3)
+   48:  COPY		S5, V0
+   4C:  CLEAR		S4
+   50:  COPY		S2, S4
+   54:  LIO       	S7, *Flag_Merlow_Badge_00
+   5C:  LIA       	S8, 8008A680 % Load Elements Icons?
+		LIA    	  	S1, $List_SaveLoadFX % Elements to Show in the List
+		DADDU     	S0, S5, R0
+        .o70
+   70:  CLEAR		A0
+   74:  JAL       	~Func:get_variable % Read *Flag_Merlow_Badge_00 to know what to print in the list?
+   78:  ADDU		A1, S2, S7
+   7C:  BNEL		V0, R0, .o108
+   80:  ADDIU		S2, S2, 1
+   84:  LW	        V0, 0 (S1)		% Load List_SaveLoadFX on v0 to know what Names and Icons to print
+   88:  LIA			A2, 800878E0
+   90:  SLL			V0, V0, 5
+   94:  ADDU		V0, V0, A2
+   98:  LH	        V1, 4 (V0)		% Print Icons from v0
+   9C:  SW			S2, 108 (S0)
+   A0:  LW			V0, 0 (V0)
+   A4:  SLL			V1, V1, 3
+   A8:  ADDU		A0, V1, S8
+   AC:  SW	        V0, 84 (S0) % Load the Elements Names
+   B0:  LW			V0, 0 (A0)
+   B4:  SW	        V0, 0 (S0) % Load the Elements Icons
+   B8:  LHU		    V0, F (S6) % This line load the coins address and turn on/off the elements
+   BC:  LW			V1, 4 (S1)
+   C0:  SLT			V0, V0, V1
+   C4:  XORI		V0, V0, 1
+   C8:  SW			V0, 18C (S0)
+   CC:  LHU		    V0, F (S6) % Related to track if player have enough coins?
+   D0:  LW			V1, 4 (S1)
+   D4:  SLT			V0, V0, V1
+   D8:  BEQ			V0, R0, .oEC
+   DC:  NOP
+   E0:  LW			V0, 4 (A0)
+   E4:  SW			R0, 18C (S0)
+   E8:  SW			V0, 0 (S0)
+        .oEC
+   EC:  LW        	V0, 8 (S1) % Load Elements Descriptions
+   F0:  SW			V0, 294 (S0)
+   F4:  LW        	V0, 4 (S1) % Load Elements Prices?
+   F8:  ADDIU     	S4, S4, 1	 % A NOP make just a blank list
+   FC:  SW			V0, 210 (S0)
+  100:  ADDIU		S0, S0, 4
+  104:  ADDIU		S2, S2, 1
+        .o108
+  108:  SLTI      	V0, S2, 3 % Maximum Amount of Elements in the List
+  10C:  BNE			V0, R0, .o70
+  110:  ADDIU		S1, S1, C
+  114:  COPY		A0, S5
+		%ADDIU     	V0, R0, B % Style List ID - B = Letters for Mario
+		ADDIU     	V0, R0, 6 % Style List ID - 6 = Checking Items (Use while choosing Save/Load/FX)
+		%ADDIU     	V0, R0, 9 % Style List ID - 9 = Claiming Items - 
+  11C:  SW			V0, 318 (A0)
+  120:  SW			S4, 324 (A0)
+  124:  JAL			800F4E40 % Create List JAL
+  128:  SW			R0, 328 (A0)
+  12C:  SW			R0, 70 (S3)
+        .o130
+  130:  LW			V0, 70 (S3)
+  134:  LW			S5, 78 (S3)
+  138:  BNE			V0, R0, .o15C
+  13C:  ADDIU		V0, V0, 1
+  140:  LH			V0, 32C (S5)
+		% The List is on screen?
+		ADDIU		T0, R0, 43 % Check if the list is on screen, if not bypass checking the DPad
+		BNE			V1, T0, .DontCloseList
+		NOP
+		% The player pressed Up DPad while having the list visible?, used to close the list by pressing Up DPad again
+		LABU 	T0, 80074036 % One frame Inputs
+		SLL	 	T0, T0, 28`
+		SRL  	T0, T0, 31` % Move all bits to just leave bit3
+		ADDIU 	T1, R0, 1
+		BNE		T0, T1, .DontCloseList % If the player didn't pressed D Pad Up, bypass adding FF
+		NOP
+		% Playing Closing Sound %
+		ADDIU	A0, R0, CA % XX = Sound ID
+		CLEAR 	A1
+		COPY 	A2, A1 % ADDIU	A2, R0, 18 % Volume
+		JAL 	~Func:play_sound
+		COPY 	A3, A1
+		%
+		ADDIU	V0, R0, FF% If the player pressed D Pad Up, save FF in v0 and close the list
+		%
+		.DontCloseList
+  144:  BEQ			V0, R0, .o16C
+  148:  SW			V0, 74 (S3)
+  14C:  JAL			800F13B0 % This JAL close/open the list
+  150:  NOP
+  154:  LW			V0, 70 (S3)
+  158:  ADDIU		V0, V0, 1
+        .o15C
+  15C:  SW			V0, 70 (S3)
+  160:  SLTI		V0, V0, 14
+  164:  BEQ			V0, R0, .o174
+  168:  NOP
+        .o16C
+  16C:  BEQ			R0, R0, .o224
+  170:  CLEAR		V0
+        .o174
+  174:  JAL       	800F1538 % Looks like everything above this line was about initialize the list,
+%							 	everything below looks like doesn't have anything to do with that.
+  178:  NOP
+  17C:  LW			V1, 74 (S3)
+  180:  ADDIU		V0, R0, FF
+  184:  BEQ			V1, V0, .o210
+  188:  ADDIU		V0, V1, FFFF
+  18C:  SLL			V0, V0, 2
+  190:  ADDU		V0, S5, V0
+  194:  LW			S2, 108 (V0)
+		LIA       	V0, $List_SaveLoadFX
+  1A0:  SLL			V1, S2, 1
+  1A4:  ADDU		V1, V1, S2
+  1A8:  SLL			V1, V1, 2
+  1AC:  ADDU		V1, V1, V0
+  1B0:  LW			V0, 0 (V1)
+  1B4:  SW			V0, 84 (S3)
+  1B8:  LW			V0, 4 (V1)
+  1BC:  SW			S2, 8C (S3)
+  1C0:  SW			V0, 88 (S3)
+  1C4:  LW			V0, 0 (V1)
+  1C8:  SLL			V0, V0, 5
+  1CC:  LTW			V0, V0 (800878E0)
+  1D8:  SW			V0, 94 (S3)
+  1DC:  LW			V0, 0 (V1)
+  1E0:  SLL			V0, V0, 5
+  1E4:  LTBU		V1, V0 (800878FA)
+  1F0:  SLL			V0, V1, 2
+  1F4:  ADDU		V0, V0, V1
+  1F8:  SLL			V0, V0, 2
+  1FC:  LTB			V0, V0 (8008F072)
+  208:  BEQ			R0, R0, .o218
+  20C:  SW			V0, 98 (S3)
+        .o210
+  210:  ADDIU		V0, R0, FFFF
+  214:  SW			V0, 84 (S3)
+        .o218
+  218:  JAL			8002AD2C
+  21C:  LW			A0, 78 (S3)
+  220:  ADDIU		V0, R0, 2
+        .o224
+  224:  LW			RA, 34 (SP)
+  228:  LW			S8, 30 (SP)
+  22C:  LW			S7, 2C (SP)
+  230:  LW			S6, 28 (SP)
+  234:  LW			S5, 24 (SP)
+  238:  LW			S4, 20 (SP)
+  23C:  LW			S3, 1C (SP)
+  240:  LW			S2, 18 (SP)
+  244:  LW			S1, 14 (SP)
+  248:  LW			S0, 10 (SP)
+  24C:  JR			RA
+  250:  ADDIU		SP, SP, 38
+}

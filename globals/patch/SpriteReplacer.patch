@@ -1,0 +1,312 @@
+% 00101BFC --> 802DEB0C
+%#new:Function $Function_spr_load_sprite
+
+@Hook 101BFC
+{
+	PUSH	S0, S1, S2
+	BNE		A1, R0, .end
+	NOP
+	LAB		S0, 800DBE00
+	LI		S1, 8`
+	BEQ		S0, S1, .isshyguy
+	NOP
+	LI		S1, 6`
+	BNE		S0, S1, .checktoad
+	NOP
+	.isshyguy
+	%carve out some sprite exceptions
+	LI		S1, 3D
+	BEQ		A0, S1, .end
+	NOP
+	LI		S1, 3E
+	BEQ		A0, S1, .end
+	NOP
+	LI		S1, 41
+	BEQ		A0, S1, .end
+	NOP
+	LI		S1, EC
+	BEQ		A0, S1, .end
+	NOP
+	%change A0 to 3B
+	ADDI	A0, R0, 3A		%3B - 1
+	BEQ		R0, R0, .end
+	NOP
+	.checktoad
+	LAB		S0, 800DBE00
+	LI		S1, 7`
+	BNE		S0, S1, .end
+	NOP
+	%change A0 to 83
+	ADDI	A0, R0, 82		%83 - 1
+	.end
+	POP		S0, S1, S2
+	%end
+	ADDI	SP, SP -30
+	J		802DEB14
+	SW		S5, 24 (SP)
+}
+
+
+%Avoid out of bounds animations and palettes
+
+% 0010139C --> 802DE2AC
+%#new:Function $Function_spr_update_sprite
+
+@Hook 10139C
+{
+	PUSH	S0, S1, S2, S3, S4
+	LAB		S0, 800DBE00
+	LI		S1, 8`
+	BEQ		S0, S1, .isshyguy
+	NOP
+	LI		S1, 6`
+	BNE		S0, S1, .checktoad
+	NOP
+	.isshyguy
+	%
+	%carve out some sprite exceptions
+	COPY	S2, A1
+	SRL		S2, S2, 8
+	ANDI	S2, S2, FF00
+	LI		S1, 3D
+	%
+	BEQ		S2, S1, .end
+	NOP
+	LI		S1, 3E
+	BEQ		S2, S1, .end
+	NOP
+	LI		S1, 41
+	BEQ		S2, S1, .end
+	NOP
+	LI		S1, EC
+	BEQ		S2, S1, .end
+	NOP
+	%
+	%Hardcode palette <= 5
+	%use modulo so sprites use the colors more "equally"
+	LI		S1, 8`
+	BEQ		S0, S1 .setanti
+	NOP
+	COPY	S2, A1
+	ANDI	S2, S2, FF00
+	SRL		S2, S2, 8
+	LI		S3, 6`			%mod (5 + 1)
+	DIV		S2, S3
+	NOP
+	NOP
+	MFHI	S2
+	NOP
+	NOP
+	SLL		S2, S2, 8
+	ADDI	S3, R0, FFFF
+	ORI		S4, R0, FF00
+	SUB		S3, S3, S4
+	AND		A1, A1, S3
+	ADD		A1, A1, S2
+	BEQ		R0, R0, .setanim
+	NOP
+	.setanti	
+	LI		S2, 0500
+	ADDI	S3, R0, FFFF
+	ORI		S4, R0, FF00
+	SUB		S3, S3, S4
+	AND		A1, A1, S3
+	ADD		A1, A1, S2	
+	.setanim
+	%Hardcode animation <= 0x15
+	COPY	S2, A1
+	ANDI	S2, S2, 00FF
+	LI		S3, 16			%mod (0x15 + 1)
+	DIV		S2, S3
+	NOP
+	NOP
+	MFHI	S2
+	NOP
+	NOP
+	ADDI	S3, R0, FFFF
+	ORI		S4, R0, 00FF
+	SUB		S3, S3, S4
+	AND		A1, A1, S3
+	ADD		A1, A1, S2	
+	BEQ		R0, R0, .end
+	NOP
+	.checktoad	
+	LI		S1, 7`
+	BNE		S0, S1, .end
+	NOP	
+	%Hardcode palette <= 5
+	%use modulo so sprites use the colors more "equally"
+	COPY	S2, A1
+	ANDI	S2, S2, FF00
+	SRL		S2, S2, 8
+	LI		S3, 5`			%mod (4 + 1)
+	DIV		S2, S3
+	NOP
+	NOP
+	MFHI	S2
+	NOP
+	NOP
+	SLL		S2, S2, 8
+	ADDI	S3, R0, FFFF
+	ORI		S4, R0, FF00
+	SUB		S3, S3, S4
+	AND		A1, A1, S3
+	ADD		A1, A1, S2
+	%Hardcode animation <= 8
+	COPY	S2, A1
+	ANDI	S2, S2, 00FF
+	LI		S3, 9`			%mod (8 + 1)
+	DIV		S2, S3
+	NOP
+	NOP
+	MFHI	S2
+	NOP
+	NOP
+	ADDI	S3, R0, FFFF
+	ORI		S4, R0, 00FF
+	SUB		S3, S3, S4
+	AND		A1, A1, S3
+	ADD		A1, A1, S2	
+	.end
+	POP		S0, S1, S2, S3, S4
+	%end
+	ADDIU     SP, SP, -40
+	J		802DE2B4
+	SW        S5, 2C (SP)
+}    
+
+
+%Fix the sprites again but for the extra sprites
+
+/%
+	%Need to clamp V1
+	
+	%1020FC --> 802DF00C
+	%$Function_spr_load_npc_extra_anims
+
+   70:  ANDI      V0, V1, FF
+   74:  SLL       V0, V0, 2
+%/
+
+@Hook 10216C
+{
+	PUSH	S0, S1, S2, S3, S4
+	LAB		S0, 800DBE00
+	LI		S1, 8`
+	BEQ		S0, S1, .isshyguy
+	NOP
+	LI		S1, 6`
+	BNE		S0, S1, .checktoad
+	NOP
+	.isshyguy
+	%
+	%carve out some sprite exceptions
+	COPY	S2, V1
+	SRL		S2, S2, 8
+	ANDI	S2, S2, FF00
+	LI		S1, 3D
+	%
+	BEQ		S2, S1, .end
+	NOP
+	LI		S1, 3E
+	BEQ		S2, S1, .end
+	NOP
+	LI		S1, 41
+	BEQ		S2, S1, .end
+	NOP
+	LI		S1, EC
+	BEQ		S2, S1, .end
+	NOP
+	%	
+	%Hardcode palette <= 5
+	%use modulo so sprites use the colors more "equally"	
+	LI		S1, 8`
+	BEQ		S0, S1 .setanti
+	NOP	
+	COPY	S2, V1
+	ANDI	S2, S2, FF00
+	SRL		S2, S2, 8
+	LI		S3, 6`			%mod (5 + 1)
+	DIV		S2, S3
+	NOP
+	NOP
+	MFHI	S2
+	NOP
+	NOP
+	SLL		S2, S2, 8
+	ADDI	S3, R0, FFFF
+	ORI		S4, R0, FF00
+	SUB		S3, S3, S4
+	AND		V1, V1, S3
+	ADD		V1, V1, S2
+	BEQ		R0, R0, .setanim
+	NOP
+	.setanti	
+	LI		S2, 0500
+	ADDI	S3, R0, FFFF
+	ORI		S4, R0, FF00
+	SUB		S3, S3, S4
+	AND		V1, V1, S3
+	ADD		V1, V1, S2		
+	.setanim
+	%Hardcode animation <= 0x15
+	COPY	S2, V1
+	ANDI	S2, S2, 00FF
+	LI		S3, 16			%mod (0x15 + 1)
+	DIV		S2, S3
+	NOP
+	NOP
+	MFHI	S2
+	NOP
+	NOP
+	ADDI	S3, R0, FFFF
+	ORI		S4, R0, 00FF
+	SUB		S3, S3, S4
+	AND		V1, V1, S3
+	ADD		V1, V1, S2	
+	BEQ		R0, R0, .end
+	NOP
+	.checktoad	
+	LI		S1, 7`
+	BNE		S0, S1, .end
+	NOP	
+	%Hardcode palette <= 5
+	%use modulo so sprites use the colors more "equally"
+	COPY	S2, V1
+	ANDI	S2, S2, FF00
+	SRL		S2, S2, 8
+	LI		S3, 5`			%mod (4 + 1)
+	DIV		S2, S3
+	NOP
+	NOP
+	MFHI	S2
+	NOP
+	NOP
+	SLL		S2, S2, 8
+	ADDI	S3, R0, FFFF
+	ORI		S4, R0, FF00
+	SUB		S3, S3, S4
+	AND		V1, V1, S3
+	ADD		V1, V1, S2
+	%Hardcode animation <= 8
+	COPY	S2, V1
+	ANDI	S2, S2, 00FF
+	LI		S3, 9`			%mod (8 + 1)
+	DIV		S2, S3
+	NOP
+	NOP
+	MFHI	S2
+	NOP
+	NOP
+	ADDI	S3, R0, FFFF
+	ORI		S4, R0, 00FF
+	SUB		S3, S3, S4
+	AND		V1, V1, S3
+	ADD		V1, V1, S2	
+	.end
+	POP		S0, S1, S2, S3, S4
+	%end
+	ANDI      V0, V1, FF
+	J		802DF084
+	SLL       V0, V0, 2
+}

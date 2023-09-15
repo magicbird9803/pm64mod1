@@ -1,0 +1,12 @@
+%move dizzy stomp to flower fields
+%dizzy stomp isn't that good, but I don't have anything else to put in the new tree
+
+@ $Script_80244CFC
+{
+	0:  Set  *Var[A]  .Item:UltraShroom
+   10:  Set  *Var[B]  00000002 
+   20:  Set  *Flag_KZN_10  00000001 
+   30:  ExecWait $Script_80244C1C 
+   3C:  Return
+   44:  End
+}

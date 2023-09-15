@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Map background="" textures="kpa_tex">
+	<ModelTree>
+		<Node name="Root" id="0"/>
+	</ModelTree>
+	<ColliderTree>
+		<Node name="Root" id="0"/>
+	</ColliderTree>
+	<ZoneTree>
+		<Node name="Root" id="0"/>
+	</ZoneTree>
+	<MarkerTree>
+		<Node name="Root" id="6">
+			<Node name="Entrances" id="3">
+				<Node name="Entry0" id="FFFFFFFF"/>
+				<Node name="Entry1" id="0"/>
+				<Node name="Entry2" id="1"/>
+				<Node name="Entry3" id="2"/>
+			</Node>
+			<Node name="NPCs" id="5">
+				<Node name="NPC_80241DF0" id="4"/>
+			</Node>
+		</Node>
+	</MarkerTree>
+	<LightSets>
+		<LightSet name="Lights_None" a="0" b="0">
+		</LightSet>
+	</LightSets>
+	<Models>
+		<Model ver="2" type="ROOT" lightset="0">
+			<MapObject ver="1" name="Root" id="0"/>
+			<BoundingBox empty="true" min="0,0,0" max="0,0,0"/>
+			<PropertyList>
+			</PropertyList>
+		</Model>
+	</Models>
+	<Colliders>
+		<Collider ver="0" flags="0">
+			<MapObject ver="1" name="Root" id="0"/>
+			<HitObject type="ROOT"/>
+		</Collider>
+	</Colliders>
+	<Zones>
+		<Zone ver="0">
+			<MapObject ver="1" name="Root" id="0"/>
+			<HitObject type="ROOT"/>
+		</Zone>
+	</Zones>
+	<Markers>
+		<Marker ver="3" type="Root">
+			<MapObject ver="1" name="Root" id="6"/>
+		</Marker>
+		<Marker ver="3" type="Group">
+			<MapObject ver="1" name="NPCs" id="5"/>
+		</Marker>
+		<Marker ver="3" type="NPC" pos="0,-1000,0" yaw="0.000000">
+			<MapObject ver="1" name="NPC_80241DF0" id="4"/>
+			<Movement type="Stationary" data="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0"/>
+			<Sprite sprite="83" palette="0" animations="1,2,3,3,1,1,6,6,3,3,3,3,3,3,3,3"/>
+		</Marker>
+		<Marker ver="3" type="Group">
+			<MapObject ver="1" name="Entrances" id="3"/>
+		</Marker>
+		<Marker ver="3" type="Entry" pos="0,0,59" yaw="180.000000">
+			<MapObject ver="1" name="Entry3" id="2"/>
+		</Marker>
+		<Marker ver="3" type="Entry" pos="150,0,150" yaw="270.000000">
+			<MapObject ver="1" name="Entry2" id="1"/>
+		</Marker>
+		<Marker ver="3" type="Entry" pos="0,200,150" yaw="0.000000">
+			<MapObject ver="1" name="Entry1" id="0"/>
+		</Marker>
+		<Marker ver="3" type="Entry" pos="-195,0,150" yaw="90.000000">
+			<MapObject ver="1" name="Entry0" id="FFFFFFFF"/>
+		</Marker>
+	</Markers>
+</Map>

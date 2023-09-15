@@ -1,0 +1,446 @@
+%
+
+
+%Start = 800878E0 (entry 0 has information???)
+%	Note: item 0x00 is considered "empty" so any item manipulating things never treat this as an item
+
+%Around 8008A6C0		(entry 16F start)
+
+%0E7, 134, 14A, 14B = HP Plus
+
+%0F8, 135, 14D, 14E = FP Plus
+
+%16F = FP Plus template
+
+%Each entry gets 0x20 bytes
+
+#new:Data $Entry16FData
+{
+002F00E1 016F0032 00000000 01540000
+002F00E2 002F00E2 10405B00 00000000
+}
+
+#export:Function $MagicConvertHPPlus
+{
+	PUSH	RA, S0, S1, S2, S3, S4
+	LI 		S0, 800878E0
+	LI		S1, .Item:FPPlusTemplate				%around that
+	SLL		S1, S1, 5				%2^5 = 0x20
+	ADD		S1, S0, S1
+	JAL		$ModifyEntry
+	LI		S2, .Item:HPPlusA %0E7
+	JAL		$ModifyEntry
+	LI		S2, .Item:HPPlusB %134
+	JAL		$ModifyEntry
+	LI		S2, .Item:HPPlusC %14A
+	JAL		$ModifyEntry
+	LI		S2, .Item:HPPlusX %14B	
+	POP		RA, S0, S1, S2, S3, S4
+	JR		RA
+	NOP
+}
+
+#export:Function $MagicConvertHPDrain
+{
+	PUSH	RA, S0, S1, S2, S3, S4
+	LI 		S0, 800878E0
+	LI		S1, .Item:FPDrainTemplate				%around that
+	SLL		S1, S1, 5				%2^5 = 0x20
+	ADD		S1, S0, S1
+	JAL		$ModifyEntry
+	LI		S2, .Item:HPDrain
+	LI		S1, .Item:MegaFPDrainTemplate				%around that
+	SLL		S1, S1, 5				%2^5 = 0x20
+	ADD		S1, S0, S1
+	JAL		$ModifyEntry
+	LI		S2, .Item:MegaHPDrain
+	POP		RA, S0, S1, S2, S3, S4
+	JR		RA
+	NOP
+}
+
+#export:Function $MagicConvertRefund
+{
+	PUSH	RA, S0, S1, S2, S3, S4
+	LI 		S0, 800878E0
+	LI		S1, .Item:ItemFinderTemplate				%around that
+	SLL		S1, S1, 5				%2^5 = 0x20
+	ADD		S1, S0, S1
+	JAL		$ModifyEntry
+	LI		S2, .Item:Refund
+	POP		RA, S0, S1, S2, S3, S4
+	JR		RA
+	NOP
+}
+
+#export:Function $MagicConvertEasyFlee
+{
+	PUSH	RA, S0, S1, S2, S3, S4
+	LI 		S0, 800878E0
+	LI		S1, .Item:EasyFleeTemplate				%around that
+	SLL		S1, S1, 5				%2^5 = 0x20
+	ADD		S1, S0, S1
+	JAL		$ModifyEntry
+	LI		S2, .Item:MoneyMoney
+	POP		RA, S0, S1, S2, S3, S4
+	JR		RA
+	NOP
+}
+
+#export:Function $CheckMagicConvertPeachItems
+{
+	PUSH	RA, S0, S1, S2, S3, S4
+	LAB		S0, 800DBD70		%story progress
+	%59
+	SLTI	S0, S0, 59		%chapter 7 ish (don't need to be precise, you can only get the stuff as mario in endgame anyway)
+	BNE		S0, R0, .end
+	NOP
+	JAL		$MagicConvertPeachBakingItems
+	NOP
+	.end
+	POP		RA, S0, S1, S2, S3, S4
+	JR		RA
+	NOP	
+}
+
+#export:Function $MagicConvertPeachBakingItems
+{
+	PUSH	RA, S0, S1, S2, S3, S4
+	LI 		S0, 800878E0
+	LI		S1, .Item:BakingSugar	%around that
+	SLL		S1, S1, 5				%2^5 = 0x20
+	ADD		S1, S0, S1
+	LI		S2, 24					%store the 24-XXX string instead
+	SB		S2, 15 (S1)
+	%
+	LI		S1, .Item:BakingSalt	%around that
+	SLL		S1, S1, 5				%2^5 = 0x20
+	ADD		S1, S0, S1
+	LI		S2, 24					%store the 24-XXX string instead
+	SB		S2, 15 (S1)
+	%
+	LI		S1, .Item:BakingCream	%around that
+	SLL		S1, S1, 5				%2^5 = 0x20
+	ADD		S1, S0, S1
+	LI		S2, 24					%store the 24-XXX string instead
+	SB		S2, 15 (S1)
+	%
+	LI		S1, .Item:BakingStrawberry	%around that
+	SLL		S1, S1, 5				%2^5 = 0x20
+	ADD		S1, S0, S1
+	LI		S2, 24					%store the 24-XXX string instead
+	SB		S2, 15 (S1)
+	%
+	LI		S1, .Item:BakingButter	%around that
+	SLL		S1, S1, 5				%2^5 = 0x20
+	ADD		S1, S0, S1
+	LI		S2, 24					%store the 24-XXX string instead
+	SB		S2, 15 (S1)
+	%	
+	LI		S1, .Item:BakingCleanser	%around that
+	SLL		S1, S1, 5				%2^5 = 0x20
+	ADD		S1, S0, S1
+	LI		S2, 24					%store the 24-XXX string instead
+	SB		S2, 15 (S1)
+	%	
+	LI		S1, .Item:BakingFlour	%around that
+	SLL		S1, S1, 5				%2^5 = 0x20
+	ADD		S1, S0, S1
+	LI		S2, 24					%store the 24-XXX string instead
+	SB		S2, 15 (S1)
+	%	
+	LI		S1, .Item:BakingMilk	%around that
+	SLL		S1, S1, 5				%2^5 = 0x20
+	ADD		S1, S0, S1
+	LI		S2, 24					%store the 24-XXX string instead
+	SB		S2, 15 (S1)
+	%	
+	POP		RA, S0, S1, S2, S3, S4
+	JR		RA
+	NOP
+}
+
+%this function ignores calling conventions don't use it anywhere else
+#new:Function $ModifyEntry
+{
+	PUSH	RA, S0, S1, S2, S3, S4
+	SLL		S2, S2, 5				%2^5 = 0x20
+	ADD		S2, S0, S2
+	%S0 = item table start (entry 0)
+	%S1 = 16F data
+	%S2 = () data
+	%
+	%Loops are overrated
+	LW		S3, 0 (S1)
+	SW		S3, 0 (S2)
+	LW		S3, 4 (S1)
+	SW		S3, 4 (S2)
+	LW		S3, 8 (S1)
+	SW		S3, 8 (S2)
+	LW		S3, C (S1)
+	SW		S3, C (S2)
+	LW		S3, 10 (S1)
+	SW		S3, 10 (S2)
+	LW		S3, 14 (S1)
+	SW		S3, 14 (S2)
+	LW		S3, 18 (S1)
+	SW		S3, 18 (S2)
+	LW		S3, 1C (S1)
+	SW		S3, 1C (S2)
+	POP		RA, S0, S1, S2, S3, S4
+	JR		RA
+	NOP	
+}
+
+/%
+#export:Function $HustleDrinkSet
+{
+	PUSH	RA, S0, S1, S2, S3, S4
+	%LI 	S0, 800878E0
+	%LI		S1, .Item:HustleDrink	
+	%SLL	S1, S1, 5				%2^5 = 0x20
+	%ADD	S0, S0, S1
+	LI		S0, 80088B18
+	LHU		S1, 0 (S0)	
+	%
+	ORI		S1, S1, 4
+	LAB		S2, 800DC0F8	%double/triple dip items left
+	BEQ		S2, R0, .no
+	NOP
+	ANDI	S1, S1, FFFB	%FFFF - 4
+	.no
+	SH		S1, 0 (S0)	
+	POP		RA, S0, S1, S2, S3, S4	
+	JR		RA
+	NOP	
+}
+%/
+
+%rewrite peach kitchen "shop" to say "Buy which item?"
+@Hook 8DF40
+{
+	PUSH	RA, A1, A2, A3
+	LAB		A3, 800740AB
+	LI		A2, 4				%peaches castle
+	BNE		A3, A2, .no
+	NOP
+	LI		A0, 001D01B3
+	BEQ		R0, R0, .end
+	NOP
+	.no
+	LI		A0, 001D0065
+	.end
+	POP		RA, A1, A2, A3
+	J		800F4A98
+	NOP
+}
+
+
+
+
+%Magic convert dojo items
+#export:Function $MagicConvertKeyItems
+{
+	PUSH	RA, A0, A1, A2, S0, S1, S2
+	LI		S0, 8010F304
+	LI		S1, 0
+	.looptop
+	%Loop through all key items (0x40 space)
+	LI 		A0, $KeyItemReplaceTable
+	.looptoptwo
+	%check the entire table
+	LW		A1, 0 (A0)
+	LW		A2, 4 (A0)
+	BEQ		A1, R0, .endlooptwo
+	NOP
+	%now do stuff to key item
+	LHU		S2, 0 (S0)
+	BEQ		S2, A1, .replace
+	NOP
+	BEQ		R0, R0, .looptoptwo
+	ADDI	A0, A0, 8
+	.replace
+	SH		A2, 0 (S0)
+	.endlooptwo
+	ADDI	S0, S0, 2	%+2 bytes
+	ADDI	S1, S1, 1
+	SLTI	A1, S1, 20
+	BEQ		A1, R0, .end
+	NOP
+	BEQ		R0, R0, .looptop
+	NOP
+	.end
+	POP		RA, A0, A1, A2, S0, S1, S2
+	%Delete the function call because nested loops could be kinda slow
+	SW		R0, FFF8 (RA)		%Return addresses are +0x8 past function call
+	JR		RA
+	NOP
+}
+
+
+#new:Data $KeyItemReplaceTable
+{
+	0000000A .Item:FirstDegreeCardB
+	0000000B .Item:SecondDegreeCardB
+	0000000C .Item:ThirdDegreeCardB
+	0000000D .Item:FourthDegreeCardB
+	0000000E .Item:DiplomaB
+	0000001C .Item:BooWeightB
+	0000001D .Item:BooPortraitB
+	00000022 .Item:BooRecordB
+	0000005C .Item:KootTheTapeB
+	0000006E .Item:KootKoopaLegendsB
+	0000006F .Item:KootMerluvleeAutographB
+	00000070 .Item:KootEmptyWalletB
+	00000071 .Item:KootLuigiAutographB
+	00000073 .Item:KootOldPhotoB
+	00000074 .Item:KootGlassesB
+	00000076 .Item:KootPackageB
+	00000077 .Item:KootRedJarB
+	00000000 00000000
+}
+
+#export:Function $MagicConvertConsumableItems
+{
+	PUSH	RA, A0, A1, A2, S0, S1, S2
+	%check if in battle
+	LAW 	S0, 8009A600
+	ORI 	S1, R0, 0005
+	BEQ 	S0, S1, .end
+	NOP
+	%
+	LI		S0, 8010F444
+	LI		S1, 0
+	.looptop
+	%Loop through all key items (0x40 space)
+	LI 		A0, $ItemReplaceTable
+	.looptoptwo
+	%check the entire table
+	LW		A1, 0 (A0)
+	LW		A2, 4 (A0)
+	BEQ		A1, R0, .endlooptwo
+	NOP
+	%now do stuff to key item
+	LBU		S2, 0 (S0)
+	BEQ		S2, A1, .replace
+	NOP
+	BEQ		R0, R0, .looptoptwo
+	ADDI	A0, A0, 8
+	.replace
+	SB		A2, 0 (S0)
+	.endlooptwo
+	ADDI	S0, S0, 1	%+1 byte
+	ADDI	S1, S1, 1
+	SLTI	A1, S1, 14
+	BEQ		A1, R0, .end
+	NOP
+	BEQ		R0, R0, .looptop
+	NOP
+	.end
+	POP		RA, A0, A1, A2, S0, S1, S2
+	JR		RA
+	ORI		V0, R0, 2
+}
+
+#new:Data $ItemReplaceTable
+{
+	.Item:MoltenShroom .Item:ObsidianShroom
+	00000000 00000000
+}
+
+
+
+%Name of Star Token
+%do this dynamically because I can
+#export:Function $SetNameOfStarToken
+{
+	PUSH	RA, S0, S1, S2, S3, S4
+	LI 		S0, 800878E0
+	LI		S1, .Item:StarToken 	%around that
+	SLL		S1, S1, 5				%2^5 = 0x20
+	ADD		S1, S0, S1
+	%LB		S2, 3 (S1)
+	LI		S2, D8
+	LAB		S3, 800DBD81			%get token count - 1
+	ADDI	S3, S3, FFFF
+	ADD		S2, S2, S3
+	SB		S2, 3 (S1)
+	POP		RA, S0, S1, S2, S3, S4
+	JR		RA
+	NOP
+}
+
+
+
+#export:Function $MagicConvertStellarCoins
+{
+	PUSH	RA, S0, S1, S2, S3, S4
+	LI 		S0, 800878E0
+	LI		S1, .Item:StellarCoinsTemplate				%around that
+	SLL		S1, S1, 5				%2^5 = 0x20
+	ADD		S1, S0, S1
+	JAL		$ModifyEntry
+	LI		S2, .Item:FlowerHealth
+	POP		RA, S0, S1, S2, S3, S4
+	JR		RA
+	NOP
+}
+
+#new:Data $BadgeReplaceTable
+{
+	.Item:DefenseFocus .Item:DefenseFocusImpostor
+	00000000 00000000
+}
+
+#export:Function $MagicConvertBadges
+{
+	PUSH	RA, A0, A1, A2, S0, S1, S2
+	LI		S0, 8010F344
+	LI		S1, 0
+	.looptop
+	%Loop through all key items (0x40 space)
+	LI 		A0, $BadgeReplaceTable
+	.looptoptwo
+	%check the entire table
+	LW		A1, 0 (A0)
+	LW		A2, 4 (A0)
+	BEQ		A1, R0, .endlooptwo
+	NOP
+	%now do stuff to key item
+	LHU		S2, 0 (S0)
+	BEQ		S2, A1, .replace
+	NOP
+	BEQ		R0, R0, .looptoptwo
+	ADDI	A0, A0, 8
+	.replace
+	SH		A2, 0 (S0)
+	.endlooptwo
+	ADDI	S0, S0, 2	%+2 bytes
+	ADDI	S1, S1, 1
+	SLTI	A1, S1, 80		%128 slots (but 256 bytes)
+	BEQ		A1, R0, .end
+	NOP
+	BEQ		R0, R0, .looptop
+	NOP
+	.end
+	POP		RA, A0, A1, A2, S0, S1, S2
+	%Delete the function call because nested loops could be kinda slow
+	SW		R0, FFF8 (RA)		%Return addresses are +0x8 past function call
+	JR		RA
+	NOP
+}
+
+
+#export:Function $MagicConvertCrazyFlower
+{
+	PUSH	RA, S0, S1, S2, S3, S4
+	LI 		S0, 800878E0
+	LI		S1, .Item:CrazyFlowerTemplate				%around that
+	SLL		S1, S1, 5				%2^5 = 0x20
+	ADD		S1, S0, S1
+	JAL		$ModifyEntry
+	LI		S2, .Item:PityFlower
+	POP		RA, S0, S1, S2, S3, S4
+	JR		RA
+	NOP
+}

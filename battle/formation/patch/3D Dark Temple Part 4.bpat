@@ -1,0 +1,129 @@
+#import newenemy/DarkTraveller.bpat
+#import newenemy/DarkShieldbearer.bpat
+#import newenemy/DarkCollective.bpat
+#import newenemy/DarkAspirant.bpat
+#import newenemy/DarkRevenant.bpat
+#import newenemy/DarkSummoner.bpat
+#import newenemy/DarkReplicator.bpat
+
+%First section with the dark bosses
+
+
+%To do: fix map
+#new:StageTable $StageTable
+{
+"pit_12" $Stage_Pit1
+"tem_03" $Stage_Temple
+00000000 00000000 
+}
+
+#new:Stage $Stage_Pit1
+{
+"kpa_tex"
+"pit_b01_shape"
+"pit_b01_hit"
+$Script_BeforeBattle_Normal
+$Script_AfterBattle_Normal
+00000000 
+00000000 
+00000000 
+00000000 
+00000000 
+}
+
+#new:Stage $Stage_Temple
+{
+"kpa_tex"
+"tem_b07_shape"
+"tem_b07_hit"
+$Script_BeforeBattle_Temple
+$Script_AfterBattle_Temple
+00000000 
+00000000 
+00000000 
+00000000 
+00000000 
+}
+
+#new:Script $Script_BeforeBattle_Temple
+{
+	Return
+	End
+}
+
+#new:Script $Script_AfterBattle_Temple
+{
+	Return
+	End
+}
+
+%got rid of the anti-SE stuff
+%to make it not a total pain to get through the pit
+#new:Script $Script_BeforeBattle_Normal
+{
+	Return
+	End
+}
+
+#new:Script $Script_AfterBattle_Normal
+{
+	Return
+	End
+}
+
+#new:Formation $Formation_00
+{
+$DarkTraveller 00000002 00000010 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_01
+{
+$DarkShieldbearer 00000002 00000010 00000000 00000000 00000000 00000000
+}
+
+#new:Vector3D $AtomicBooPos
+{
+50` 20` 0`
+}
+
+#new:Formation $Formation_02
+{
+$DarkCollective $AtomicBooPos 00000010 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_03
+{
+$DarkAspirant 00000006 0000000A 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_04
+{
+$DarkRevenant 00000002 0000000A 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_05
+{
+$DarkSummoner $DarkSummonerPos 0000007F 00000000 00000000 00000000 00000000
+$PerfectBit	$PerfectBitPos 0000007E 00000000 00000000 00000000 00000000
+$ShieldedBit $ShieldedBitPos 0000007D 00000000 00000000 00000000 00000000
+$ViscousBit $ViscousBitPos 0000007C 00000000 00000000 00000000 00000000
+$SturdyBit $SturdyBitPos 0000007B 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_06
+{
+$DarkReplicator 00000003 0000000A 00000000 00000000 00000000 00000000
+}
+
+
+#new:FormationTable $FormationTable
+{
+00000000 00000001 $Formation_00 $Stage_Temple 00000000
+00000000 00000001 $Formation_01 $Stage_Temple 00000000
+00000000 00000001 $Formation_02 $Stage_Temple 00000000
+00000000 00000001 $Formation_03 $Stage_Temple 00000000
+00000000 00000001 $Formation_04 $Stage_Temple 00000000
+00000000 00000005 $Formation_05 $Stage_Temple 00000000
+00000000 00000001 $Formation_06 $Stage_Temple 00000000
+00000000 00000000 00000000 00000000 00000000 % unused
+}

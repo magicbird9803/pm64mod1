@@ -1,0 +1,90 @@
+%2 dark koopatrols here now in chapter 4 and 5 (Not in the chapter 6 one because I don't really know how sneaky parasol works yet)
+%They move f a s t
+%Speed = 9
+
+@ $NpcGroup_80242358
+{
+	00000000 $NpcSettings_80241BE0 ~Vec3f:NPC_80242358 % 0 -500 0
+	00000D0D $Script_Init_8024229C 00000000 00000000 00000000
+	~NoDrops
+	~Movement:NPC_80242358
+	00580201 00580204 00580206 00580206 00580201 00580201 00580210 00580210
+	0058020C 0058020B 0058020D 00580201 00580201 00580201 00580201 00580201
+	00000000 00000000 $ExtraAnimationList_DarkKoopatrol 00000000 % no tattle string
+	%
+	% $NpcGroup_80242358[1F0]
+	00000001 $NpcSettings_80241BE0 ~Vec3f:NPC_80242548 % 0 -500 0
+	00000D0D $Script_Init_802422F0 00000000 00000000 00000000
+	~NoDrops
+	~Movement:NPC_80242548
+	00580201 00580204 00580206 00580206 00580201 00580201 00580210 00580210
+	0058020C 0058020B 0058020D 00580201 00580201 00580201 00580201 00580201
+	00000000 00000000 $ExtraAnimationList_DarkKoopatrol 00000000 % no tattle string
+}
+
+@ $Script_Init_8024229C
+{
+    0:  Call  SetNpcAnimation   ( .Npc:Self 00580205 )
+   14:  Call  SetNpcPos ( .Npc:Self FFFFFF10 00000000 00000000 )
+   30:  Call  BindNpcIdle       ( .Npc:Self $Script_Idle_80241E14 )
+   44:  Return
+   4C:  End
+}
+
+@ $Script_Init_802422F0
+{
+    0:  Call  SetNpcAnimation   ( .Npc:Self 00580205 )
+   14:  Call  SetNpcPos ( .Npc:Self 00000000 00000000 000000F0 )
+   30:  Call  BindNpcIdle       ( .Npc:Self $Script_Idle_80242058 )
+   44:  Return
+   4C:  End
+}
+
+#new:ExtraAnimationList $ExtraAnimationList_DarkKoopatrol
+{
+	00580202 00580205 00580207 00580209 FFFFFFFF
+}
+
+@ $Script_Idle_80241E14
+{
+   [6C]  Call  BindNpcAI ( .Npc:Self $Script_NpcAI_Discover_DarkKoopatrol )
+   [BC]  Call  SetNpcSpeed   ( .Npc:Self *Fixed[9.0] )	%2 -> 9!
+}
+
+@ $Script_Idle_80242058
+{
+   [6C]  Call  BindNpcAI ( .Npc:Self $Script_NpcAI_Discover_DarkKoopatrol )
+   [BC]  Call  SetNpcSpeed   ( .Npc:Self *Fixed[9.0] )	%2 -> 9!
+}
+
+%the script for kicking you back to your room
+#new:Script $Script_NpcAI_Discover_DarkKoopatrol
+{
+    0:  Call  DisablePlayerInput    ( .True )
+   10:  SetGroup  00000000
+   1C:  Call  SetTimeFreezeMode ( 00000001 )
+   2C:  Call  PlaySoundAtNpc    ( .Npc:Self 00000262 00000000 )
+   44:  Call  ShowEmote ( .Npc:Self .Emote:Exclamation 00000000 00000014 00000001 00000000 00000000 00000000 00000000 )
+   74:  Call  NpcFacePlayer     ( .Npc:Self 00000005 )
+   88:  Wait  20`
+   94:  Call  PlayerFaceNpc     ( .Npc:Self 00000000 )
+   A8:  Call  SetPlayerAnimation    ( 000C0005 )
+   B8:  Call  SetNpcAnimation   ( .Npc:Self 00580202 )
+   CC:  Call  SpeakToPlayer     ( .Npc:Self 00580209 00580202 00000000 00140174 ) % What?! Princess Peach!
+   EC:  Call  $Function_80240728    ( FFFFFFFF *Var3 *Var0 *Var2 )
+  108:  If  *Var3  !=  00000000
+  118:  	Call  SetNpcAnimation   ( .Npc:Self 00580207 )
+  12C:  	Call  SetNpcSpeed       ( .Npc:Self *Fixed[15.0] )	%They still move too fast here
+  140:  	Call  NpcMoveTo ( .Npc:Self *Var0 *Var2 00000000 )
+  15C:  	Call  SetNpcAnimation   ( .Npc:Self 00580202 )
+  170:  EndIf
+  178:  Call  SpeakToPlayer ( .Npc:Self 00580209 00580202 00000000 00140175 ) % You know you're not allowed to leave the room! I'm ...
+  198:  Call  SetPlayerAnimation    ( 000C0017 )
+  1A8:  Wait  20`
+  1B4:  Call  GotoMapSpecial        ( $ASCII_802435F8 0000000B 0000000D ) % kkj_14
+  1CC:  Wait  100`
+  1D8:  Call  DisablePlayerInput    ( .False )
+  1E8:  Call  SetTimeFreezeMode     ( 00000000 )
+  1F8:  Return
+  200:  End
+}

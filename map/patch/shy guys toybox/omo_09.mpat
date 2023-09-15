@@ -1,0 +1,314 @@
+% SpyGuy settings
+@ $AISettings_80247710
+{
+    1.5 	% move speed
+    60` 	% move time
+    15` 	% Wait time
+	180.0	% alert radius (was 90.0)
+	50.0	
+    3`
+    3.8		% chase speed
+    8`
+    1`
+	300.0	% chase radius (was 140.0)
+	60.0
+    1`
+}
+
+% SpyGuy projectile settings
+@ $AISettings_802477E8
+{
+    16.0 	% move speed (was 8.0)
+    0` 		% move time
+    0` 		% Wait time
+    4.0 	% alert radius
+    0.5
+    -1`
+    0.0 	% chase speed
+    0`
+    0`
+    0.0 	% chase radius
+    0.0
+	0`
+}
+
+
+%Blue coins :)
+%	1 blue coin is worth 5 regular coins
+%	In total here they are 60 regular coins
+@ $Script_MakeEntities
+{
+    0:  Call  MakeItemEntity    ( .Item:HeartPiece ~Vec3d:Item802471B8 .ItemSpawnMode:Fixed_NeverVanish *GF_OMO09_Item_CoinA )
+   24:  Call  MakeItemEntity    ( .Item:HeartPiece ~Vec3d:Item802471DC .ItemSpawnMode:Fixed_NeverVanish *GF_OMO09_Item_CoinB )
+   48:  Call  MakeItemEntity    ( .Item:HeartPiece ~Vec3d:Item80247200 .ItemSpawnMode:Fixed_NeverVanish *GF_OMO09_Item_CoinC )
+   6C:  Call  MakeItemEntity    ( .Item:HeartPiece ~Vec3d:Item80247224 .ItemSpawnMode:Fixed_NeverVanish *GF_OMO09_Item_CoinD )
+   90:  Call  MakeItemEntity    ( .Item:HeartPiece ~Vec3d:Item80247248 .ItemSpawnMode:Fixed_NeverVanish *GF_OMO09_Item_CoinE )
+   B4:  Call  MakeItemEntity    ( .Item:HeartPiece ~Vec3d:Item8024726C .ItemSpawnMode:Fixed_NeverVanish *GF_OMO09_Item_CoinF )
+   D8:  Call  MakeItemEntity    ( .Item:StarPiece ~Vec3d:Item80247290 .ItemSpawnMode:Fixed_NeverVanish *GF_OMO09_Item_StarPiece )
+   FC:  Call  MakeItemEntity    ( .Item:HeartPiece ~Vec3d:Item802472B4 .ItemSpawnMode:Fixed_NeverVanish *GF_OMO09_Item_CoinG )
+  120:  Call  MakeItemEntity    ( .Item:HeartPiece ~Vec3d:Item802472D8 .ItemSpawnMode:Fixed_NeverVanish *GF_OMO09_Item_CoinH )
+  144:  Call  MakeItemEntity    ( .Item:HeartPiece ~Vec3d:Item802472FC .ItemSpawnMode:Fixed_NeverVanish *GF_OMO09_Item_CoinI )
+  168:  Call  MakeItemEntity    ( .Item:HeartPiece ~Vec3d:Item80247320 .ItemSpawnMode:Fixed_NeverVanish *GF_OMO09_Item_CoinJ )
+  18C:  Call  MakeItemEntity    ( .Item:HeartPiece ~Vec3d:Item80247344 .ItemSpawnMode:Fixed_NeverVanish *GF_OMO09_Item_CoinK )
+  1B0:  Call  MakeItemEntity    ( .Item:HeartPiece ~Vec3d:Item80247368 .ItemSpawnMode:Fixed_NeverVanish *GF_OMO09_Item_CoinL )
+  1D4:  Call  MakeEntity        ( .Entity:MultiCoinBrick ~Vec4d:Entity8024738C 80000000 )
+  1F8:  Call  AssignBlockFlag   ( *GF_OMO09_MultiCoinBrick )
+  208:  Call  UseDynamicShadow  ( .True )
+  218:  Call  MakeEntity        ( .Entity:Chest ~Vec4d:Entity802473D0 00000000 80000000 )
+  240:  Call  AssignFlag        ( *GF_OMO09_Chest_Dictionary )
+  250:  Call  AssignScript      ( $Script_8024715C )
+  260:  If  *GF_OMO09_Defeated_MysteryNoteThief  ==  .True
+  270:  	If  *GF_OMO09_Item_MysteryNote  ==  .False
+  280:  		Call  MakeItemEntity    ( .Item:MysteryNote ~Vec3d:Item80247438 .ItemSpawnMode:Fixed_NeverVanish *GF_OMO09_Item_MysteryNote )
+  2A4:  	EndIf
+  2AC:  EndIf
+  2B4:  Return
+  2BC:  End
+}
+
+%To do: figure out how the conveyers work
+%	Clue 1: Each direction has one collider (all the Rightward conveyers have 1 collider to share, same for left, up, down)
+%	Problem: There are no ~Collider references to them in the scripts, so they are probably controlled with asm
+%$Script_80243AB0 controls tex panning
+%$Function_80240078 might control the conveyer stuff
+
+%To do: figure out how that wall that you can pass through with transparency works
+
+
+%I hope these puffs don't phase through the ground too much
+
+%Add puffs here
+#import NPC_Puff.mpat
+
+%these IDs should be unused
+#new:NpcGroup $NpcGroup_Puff1
+{
+0000001C $NpcSettings_Puff ~Vec3f:NPC_Puff1
+00000C00 00000000 00000000 00000000 0000005A 
+~İtems:5:SuperShroom:A
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:0:3
+~Movement:NPC_Puff1
+007D0000 007D0000 007D0005 007D0005 007D0000 007D0000 007D0006 007D0006
+007D0005 007D0001 007D0001 007D0001 007D0001 007D0001 007D0001 007D0001 
+00000003 00000000 00000000 00000000 % no tattle string
+}
+
+#new:NpcGroup $NpcGroup_Puff2
+{
+0000001D $NpcSettings_Puff ~Vec3f:NPC_Puff2
+00000C00 00000000 00000000 00000000 0000005A 
+~İtems:5:SuperShroom:A
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:0:3
+~Movement:NPC_Puff2
+007D0000 007D0000 007D0005 007D0005 007D0000 007D0000 007D0006 007D0006
+007D0005 007D0001 007D0001 007D0001 007D0001 007D0001 007D0001 007D0001 
+00000003 00000000 00000000 00000000 % no tattle string
+}
+
+#new:NpcGroup $NpcGroup_Puff3
+{
+0000001E $NpcSettings_Puff ~Vec3f:NPC_Puff3
+00000C00 00000000 00000000 00000000 0000005A 
+~İtems:5:SuperShroom:A
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:0:3
+~Movement:NPC_Puff3
+007D0000 007D0000 007D0005 007D0005 007D0000 007D0000 007D0006 007D0006
+007D0005 007D0001 007D0001 007D0001 007D0001 007D0001 007D0001 007D0001 
+00000003 00000000 00000000 00000000 % no tattle string
+}
+
+
+@ $NpcGroupList_80249D6C %replace formation 12-0A with 10-29
+{
+00000001 $NpcGroup_80248380 12080005 
+00000001 $NpcGroup_80248760 10290005 
+00000001 $NpcGroup_80248950 10290005 
+00000001 $NpcGroup_80248B40 10290005 
+00000001 $NpcGroup_80248D30 10290005 
+00000001 $NpcGroup_80248F20 10290005 
+00000001 $NpcGroup_802493BC 10090001 
+00000004 $NpcGroup_802495AC 10190001 
+00000001 $NpcGroup_Puff1 101F0001 
+00000001 $NpcGroup_Puff2 10200001 
+00000001 $NpcGroup_Puff3 10210001 
+00000000 00000000 00000000 
+}
+
+@ $NpcGroupList_80249DD8
+{
+00000001 $NpcGroup_80248570 12090005 
+00000001 $NpcGroup_80248760 10290005 
+00000001 $NpcGroup_80248950 10290005 
+00000001 $NpcGroup_80248B40 10290005 
+00000001 $NpcGroup_80248D30 10290005 
+00000001 $NpcGroup_80248F20 10290005 
+00000001 $NpcGroup_802493BC 10090001 
+00000004 $NpcGroup_802495AC 10190001 
+00000001 $NpcGroup_Puff1 101F0001 
+00000001 $NpcGroup_Puff2 10200001 
+00000001 $NpcGroup_Puff3 10210001 
+00000000 00000000 00000000 
+}
+
+@ $NpcGroupList_80249E44
+{
+00000001 $NpcGroup_80248570 12090005 %+ koopatrol
+00000001 $NpcGroup_80248760 10290005 
+00000001 $NpcGroup_80248950 10290005 
+00000001 $NpcGroup_80248B40 10290005 
+00000001 $NpcGroup_80248D30 10290005 
+00000001 $NpcGroup_80248F20 10290005 
+00000001 $NpcGroup_802493BC 10090001 
+00000004 $NpcGroup_802495AC 10190001 
+00000001 $NpcGroup_Puff1 101F0001 
+00000001 $NpcGroup_Puff2 10200001 
+00000001 $NpcGroup_Puff3 10210001 
+00000000 00000000 00000000 
+}
+
+@ $Script_Init_802480CC
+{
+	Switch *GB_OMO_PeachChoice3
+		Case == 00000001 % Koopatrol
+			Call     BindNpcIdle 	( .Npc:Self $Script_Idle_80247E48 )
+			Call     BindNpcDefeat 	( .Npc:Self $Script_Defeat_80247FE4 )
+		Case == 00000002 % Super Soda
+			Call	SetNpcPos   	( .Npc:Self 0` -1000` 0` )
+			If	*Flag_OMO_31 == .False %this makes it so that it only triggers once
+				Exec	$Script_Ambush %because the only time this init script is run with this flag false
+			EndIf					   %is if you come here the first time (or any time where you don't open the chest)
+		Default
+			Call     SetNpcPos   	( .Npc:Self 0` -1000` 0` )
+	EndSwitch
+	Return
+	End
+}
+
+#new:Script $Script_Ambush
+{
+	% monitor whether chest has been opened
+	Label 0
+	Wait	1`
+	If	*Flag_OMO_31 == .False
+		Goto 0
+	EndIf
+	% monitor player position
+	Label 1
+	Wait	1` 
+	Call	GetPlayerPos    ( *Var[0] *Var[1] *Var[2] )
+	If		*Var[0]  >  -875`
+		Goto 1
+	EndIf
+	% ambush
+	Call	DisablePlayerInput	( .True )
+	Call	GetPlayerPos    ( *Var[0] *Var[1] *Var[2] )
+	Thread
+		Call	DisablePartnerAI 	( 00000000 )
+		Add		*Var[0]  10`
+		If	*Var[2] < -100
+			Add		*Var[2]  40`
+		Else
+			Sub		*Var[2]  40`
+		EndIf
+		Call	SetNpcSpeed		( .Npc:Partner *Fixed[2.0] )
+		Call	NpcMoveTo		( .Npc:Partner *Var[0] *Var[2] 0 )
+		Call	EnablePartnerAI ( )
+	EndThread
+	Add		*Var[0]  200`
+	Call	SetNpcPos   	( FFFFFFFF *Var[0] *Var[1] *Var[2] )
+	Call	SpeakToPlayer		( FFFFFFFF 00580108 00580101 00000002 $AmbushString )
+	Thread
+		Wait	5`
+		Call	SetPlayerAnimation	( 0001002A )
+		Call	PlaySoundAtPlayer	( 00000263 00000000 )
+		Call	ShowEmote        	( 00000000 .Emote:Question 00000000 0000001E 00000000 00000000 00000000 00000000 00000000 )
+	EndThread
+	Call	SetNpcSpeed		( FFFFFFFF *Fixed[4.0] )
+	Call	SetNpcAnimation ( FFFFFFFF 00580106 )
+	Sub		*Var[0]  150`
+	Call	NpcMoveTo   	( FFFFFFFF *Var[0] *Var[2] 0 )
+	Call	SetNpcAnimation ( FFFFFFFF 00580101 )
+	Wait	10`
+	Call	PlaySoundAtPlayer	( 00000262 00000000 )
+	Call	ShowEmote   		( 00000000 .Emote:Exclamation 00000000 0000001E 00000000 00000000 00000000 00000000 00000000 )
+	Call	PlayerFaceNpc	( FFFFFFFF 00000000 )
+	Call	SpeakToPlayer		( FFFFFFFF 00580108 00580101 00000000 $ChallengeString )
+	Wait 	10`
+	Call	DisablePlayerInput 	( .False )
+	Call	StartBossBattle		( .Song:SpecialBattle )
+	Return
+	End
+}
+
+#string $AmbushString
+{
+[STYLE:Right][Down:0A][Size:18:18][SizeJitter]STOP Right THERE![PAUSE:1C][END]
+}
+
+#string $ChallengeString
+{
+[STYLE:Right]Thought you could avoid me, huh?[PAUSE:10][BR]
+Well I hope you enjoyed that[BR]
+Super Soda because it's the[BR]
+last one you'll ever have.[Wait][END]
+}
+
+%koopatrol is now a gold koopatrol
+@ $NpcGroup_80248570
+{
+00000006 $NpcSettings_80247A8C ~Vec3f:NPC_80248570 % 1900 150 -30
+00440F00 $Script_Init_802480CC 00000000 00000000 0000010E 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus
+~Movement:NPC_80248570
+00580101 00580104 00580106 00580106 00580101 00580101 00580110 00580110
+0058010C 0058010B 0058010D 00580101 00580101 00580101 00580101 00580101 % .Sprite:WorldKoopatrol
+00000000 00000000 00000000 00000000 % no tattle string
+}
+
+%pokey is now an frost pokey
+@ $NpcGroup_80248380
+{
+00000005 $NpcSettings_80247B14 ~Vec3f:NPC_80248380 % 1900 150 -30
+00440F00 $Script_Init_80248058 00000000 00000000 0000010E 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus
+~Movement:NPC_80248380
+00310204 00310208 00310208 00310208 00310204 00310204 0031020C 0031020C
+00310208 00310208 00310208 00310208 00310208 00310208 00310208 00310208 % .Sprite:Pokey
+00000000 00000000 00000000 00000000 % no tattle string
+}
+
+@ $Script_Idle_80247E48
+{
+	0:  Label    00000000 
+    C:  Wait     00000001 
+   18:  Call     GetPlayerPos 	( *Var[0] *Var[1] *Var[2] )
+   30:  If  *Var[0]  <  0000073A 
+   40:  	Goto     00000000 
+   4C:  EndIf
+   54:  If  *Var[1]  <  00000096 
+   64:  	Goto     00000000 
+   70:  EndIf
+   78:  Call     DisablePlayerInput 	( .True )
+   88:  Call     $Function_802435CC ( )
+   94:  Call     GetNpcPos   	( .Npc:Self *Var[0] *Var[1] *Var[2] )
+   B0:  Call     802CC3EC ( 00000000 *Fixed[5.0] *Var[0] *Var[1] *Var[2] 0000012C *Fixed[13.0] *Fixed[-9.5] )
+   DC:  If  *GB_OMO_PeachChoice3  ==  00000000 
+   EC:  	Call     SpeakToPlayer 	( 00000005 00310204 00310204 00000000 000F003E ) % !!!!!!!!
+  10C:  Else
+  114:  	Call     SpeakToPlayer 	( 00000006 00580108 00580101 00000000 000F003F ) % Yes!! I thought you'd come! Now I get to defeat yo ...
+  134:  EndIf
+  13C:  Thread
+  144:  	Call     $Function_802435E8 ( )
+  150:  	Call     ResetCam    	( .Cam:Default *Fixed[4.0] )
+  164:  EndThread
+  16C:  Call     DisablePlayerInput 	( .False )
+  17C:  Call     StartBossBattle 	( .Song:SpecialBattle )
+  18C:  Return
+  194:  End
+}

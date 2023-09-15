@@ -1,0 +1,163 @@
+/%
+@ $Script_802A2694
+{
+    0:  ExecWait  $Script_802A2184
+    C:  Call  PlayerTestEnemy   ( *Var0 ~Flags:DamageType:Jump 00000000 00000000 00000001 00000000 )
+   30:  If  *Var0  ==  .HitResult:Miss % 6
+   40:  	ExecWait  $Script_802A1FEC
+   4C:  	Return
+   54:  EndIf
+   5C:  Wait  1`
+   68:  Call  DidActionSucceed  ( *Var0 )
+   78:  Switch  *Var0
+   84:  	Case  >  .False
+   90:  		Call  SetActorSounds    ( .Actor:Player .ActorSound:Hurt 0000015A 00000000 )
+   AC:  		Call  PlayerDamageEnemy ( *Var0 ~Flags:DamageType:Jump 00000000 ~DebuffType:Shrink:3:75` 00000001 00000050 )
+   D0:  	Default
+   D8:  		Call  SetActorSounds    ( .Actor:Player .ActorSound:Hurt 0000015B 00000000 )
+   F4:  		Call  PlayerDamageEnemy ( *Var0 ~Flags:DamageType:Jump 00000000 ~DebuffType:Shrink:3:75` 00000001 00000030 )
+  118:  EndSwitch
+  120:  Switch  *Var0
+  12C:  	CaseOR  ==  .HitResult:Hit % 0
+  138:  	CaseOR  ==  00000002 % 2
+  144:  		ExecWait  $Script_802A19B0
+  150:  		Return
+  158:  	EndCaseGroup
+  160:  	CaseOR  ==  00000001 % 1
+  16C:  	CaseOR  ==  00000003 % 3
+  178:  	EndCaseGroup
+  180:  EndSwitch
+  188:  ChildThread
+  190:  	Call  UseBattleCamPreset    ( 0000001B )
+  1A0:  	Wait  5`
+  1AC:  	Call  SetGoalToTarget       ( .Actor:Player )
+  1BC:  	Call  UseBattleCamPreset    ( 00000023 )
+  1CC:  EndChildThread
+  1D4:  Call  80269524  ( *VarF )
+  1E4:  Call  CloseActionCommandInfo ( )
+  1F0:  Call  LoadActionCommand ( .ActionCommand:Jump )
+  200:  Call  802A9000 ( )
+  20C:  Call  802694A4  ( 00000000 )
+  21C:  Call  802A9120  ( 00000018 00000003 )
+  230:  Call  SetGoalToTarget   ( .Actor:Player )
+  240:  Call  SetJumpAnimations ( .Actor:Player 00000000 00010007 00010008 0001000C )
+  260:  Call  80274A18  ( 00000018 00000003 )
+  274:  Wait  1`
+  280:  Call  PlaySoundAtActor  ( .Actor:Player 0000015A )
+  294:  Call  PlayerDamageEnemy ( *Var0 ~Flags:DamageType:Jump 00000000 ~DebuffType:Shrink:3:100` 00000001 000000E0 )
+  2B8:  Call  80269550  ( *VarF )
+  2C8:  ExecWait  $Script_802A15D8
+  2D4:  Return
+  2DC:  End
+}
+
+@ $Script_802A2978
+{
+    0:  ExecWait  $Script_802A2184
+    C:  Call  PlayerTestEnemy   ( *Var0 ~Flags:DamageType:Jump 00000000 00000000 00000001 00000000 )
+   30:  If  *Var0  ==  .HitResult:Miss % 6
+   40:  	ExecWait  $Script_802A1FEC
+   4C:  	Return
+   54:  EndIf
+   5C:  Wait  1`
+   68:  Call  DidActionSucceed  ( *Var0 )
+   78:  Switch  *Var0
+   84:  	Case  >  .False
+   90:  		Call  PlaySoundAtActor  ( .Actor:Player 0000015B )
+   A4:  		Call  PlayerDamageEnemy ( *Var0 ~Flags:DamageType:Jump 00000000 ~DebuffType:Shrink:3:75` 00000002 00000050 )
+   C8:  	Default
+   D0:  		Call  PlaySoundAtActor  ( .Actor:Player 0000015B )
+   E4:  		Call  PlayerDamageEnemy ( *Var0 ~Flags:DamageType:Jump 00000000 ~DebuffType:Shrink:3:75` 00000002 00000030 )
+  108:  EndSwitch
+  110:  Switch  *Var0
+  11C:  	CaseOR  ==  .HitResult:Hit % 0
+  128:  	CaseOR  ==  00000002 % 2
+  134:  		ExecWait  $Script_802A19B0
+  140:  		Return
+  148:  	EndCaseGroup
+  150:  	CaseOR  ==  00000001 % 1
+  15C:  	CaseOR  ==  00000003 % 3
+  168:  	EndCaseGroup
+  170:  EndSwitch
+  178:  Call  80269524  ( *VarF )
+  188:  ChildThread
+  190:  	Call  UseBattleCamPreset    ( 0000001B )
+  1A0:  	Wait  5`
+  1AC:  	Call  SetGoalToTarget       ( .Actor:Player )
+  1BC:  	Call  UseBattleCamPreset    ( 00000023 )
+  1CC:  EndChildThread
+  1D4:  Call  CloseActionCommandInfo ( )
+  1E0:  Call  LoadActionCommand ( .ActionCommand:Jump )
+  1F0:  Call  802A9000 ( )
+  1FC:  Call  802694A4  ( 00000000 )
+  20C:  Call  802A9120  ( 00000025 00000003 )
+  220:  Call  SetGoalToTarget   ( .Actor:Player )
+  230:  Call  EnablePlayerBlur  ( 00000001 )
+  240:  Call  SetJumpAnimations ( .Actor:Player 00000000 00010007 0001000A 0001000B )
+  260:  Call  802752AC  ( 00000014 00000004 )
+  274:  Wait  7`
+  280:  Call  802752AC  ( 00000003 00000005 )
+  294:  Call  EnablePlayerBlur  ( 00000000 )
+  2A4:  Wait  1`
+  2B0:  Call  PlaySoundAtActor  ( .Actor:Player 0000015B )
+  2C4:  Call  PlayerDamageEnemy ( *Var0 ~Flags:DamageType:Jump 00000000 ~DebuffType:Shrink:3:100` 00000002 000000E0 )
+  2E8:  Call  80269550  ( *VarF )
+  2F8:  ExecWait  $Script_802A15D8
+  304:  Return
+  30C:  End
+}
+
+@ $Script_802A2C8C
+{
+    0:  ExecWait  $Script_802A2184
+    C:  Call  PlayerTestEnemy   ( *Var0 ~Flags:DamageType:Jump 00000000 00000000 00000001 00000000 )
+   30:  If  *Var0  ==  .HitResult:Miss % 6
+   40:  	ExecWait  $Script_802A1FEC
+   4C:  	Return
+   54:  EndIf
+   5C:  Wait  1`
+   68:  Call  DidActionSucceed  ( *Var0 )
+   78:  Switch  *Var0
+   84:  	Case  >  .False
+   90:  		Call  PlaySoundAtActor  ( .Actor:Player 0000015C )
+   A4:  		Call  PlayerDamageEnemy ( *Var0 ~Flags:DamageType:Jump 00000000 ~DebuffType:Shrink:3:75` 00000003 00000050 )
+   C8:  	Default
+   D0:  		Call  PlaySoundAtActor  ( .Actor:Player 0000015C )
+   E4:  		Call  PlayerDamageEnemy ( *Var0 ~Flags:DamageType:Jump 00000000 ~DebuffType:Shrink:3:75` 00000003 00000030 )
+  108:  EndSwitch
+  110:  Switch  *Var0
+  11C:  	CaseOR  ==  .HitResult:Hit % 0
+  128:  	CaseOR  ==  00000002 % 2
+  134:  		ExecWait  $Script_802A19B0
+  140:  		Return
+  148:  	EndCaseGroup
+  150:  	CaseOR  ==  00000001 % 1
+  15C:  	CaseOR  ==  00000003 % 3
+  168:  	EndCaseGroup
+  170:  EndSwitch
+  178:  Call  80269524  ( *VarF )
+  188:  ChildThread
+  190:  	Call  UseBattleCamPreset    ( 0000001C )
+  1A0:  	Wait  5`
+  1AC:  	Call  SetGoalToTarget       ( .Actor:Player )
+  1BC:  	Call  UseBattleCamPreset    ( 00000023 )
+  1CC:  EndChildThread
+  1D4:  Call  CloseActionCommandInfo ( )
+  1E0:  Call  LoadActionCommand ( .ActionCommand:Jump )
+  1F0:  Call  802A9000 ( )
+  1FC:  Call  802694A4  ( 00000000 )
+  20C:  Call  802A9120  ( 00000019 00000003 )
+  220:  Call  SetGoalToTarget   ( .Actor:Player )
+  230:  Call  EnablePlayerBlur  ( 00000001 )
+  240:  Call  SetJumpAnimations ( .Actor:Player 00000000 00010007 00010007 0001000C )
+  260:  Call  80275F00  ( 00000019 00000004 )
+  274:  Call  EnablePlayerBlur  ( 00000000 )
+  284:  Wait  1`
+  290:  Call  PlaySoundAtActor  ( .Actor:Player 0000015C )
+  2A4:  Call  PlayerDamageEnemy ( *Var0 ~Flags:DamageType:Jump 00000000 ~DebuffType:Shrink:3:100` 00000003 000000E0 )
+  2C8:  Call  80269550  ( *VarF )
+  2D8:  ExecWait  $Script_802A15D8
+  2E4:  Return
+  2EC:  End
+}
+%/

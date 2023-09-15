@@ -1,0 +1,93 @@
+@ $Script_UsePower
+{
+    0:  ExecWait  $Script_802A16F0
+		If *GameByte[00A] == 5
+			Call $ShowCustomMessage	( 002F002A 0000005A )
+			Call     UseBattleCamPreset 	( 00000002 )
+			ExecWait  $Script_802A247C
+			Return
+		EndIf
+		Set *VarF 7`
+		Call	$Function_CheckStellarNova ( *VarE )
+		If *VarE > 0`
+			Mul *VarF 2`
+		EndIf				
+    C:  SetConst  *Var0  001B0001
+   1C:  ExecWait  $Script_802A1E20
+   28:  Call  SetNpcAnimation       ( 00000064 001B0002 )
+   3C:  Wait  16`
+   48:  Call  UseBattleCamPreset    ( 00000003 )
+   58:  Thread
+   60:  	Set   *Var0  00000000
+   70:  	Loop  0000000A
+   7C:  		Call  PlaySound ( 00000259 )
+   8C:  		Call  $Function_802A1518 ( )
+   98:  		Wait  5`
+   A4:  		Add   *Var0  00000001
+   B4:  		Call  PlaySound ( 0000025A )
+   C4:  		Call  $Function_802A1518 ( )
+   D0:  		Wait  5`
+   DC:  		Add   *Var0  00000001
+   EC:  	EndLoop
+   F4:  EndThread
+   FC:  Thread
+  104:  	Set   *Var0  00000000
+  114:  	Wait  50`
+  120:  	Loop  0000000A
+  12C:  		Call  PlaySound ( 0000025C )
+  13C:  		Add   *Var0  00000001
+  14C:  		Wait  5`
+  158:  		Call  PlaySound ( 0000025D )
+  168:  		Add   *Var0  00000001
+  178:  		Wait  5`
+  184:  	EndLoop
+  18C:  EndThread
+  194:  Thread
+  19C:  	Loop  0000000A
+  1A8:  		Wait  7`
+  1B4:  		Call  ShakeCam      ( .Cam:Battle 00000000 00000005 *Fixed[1.0] )
+  1D0:  		Call  StartRumble   ( 00000008 )
+  1E0:  	EndLoop
+  1E8:  EndThread
+  1F0:  Wait  90`
+  1FC:  Call  InitTargetIterator ( )
+  208:  Label  0
+  214:  Call  SetGoalToTarget   ( .Actor:Self )
+  224:  Call  ItemCheckHit      ( *Var0 ~Flags:DamageType:0 00000000 00000000 00000000 )
+  244:  If  *Var0  ==  .HitResult:Miss % 6
+  254:  	Goto  1
+  260:  EndIf
+  268:  Call  GetGoalPos        ( .Actor:Self *Var0 *Var1 *Var2 )
+  284:  Call  $Function_802A1628    ( *Var0 *Var1 *Var2 )
+  29C:  Call  ItemDamageEnemy   ( *Var0 ~Flags:DamageType:IgnoreDefense|NoContact|Unblockable|Cosmic 00000000 *VarF 00000020 )
+  2BC:  Label  1
+  2C8:  Wait  10`
+  2D4:  Call  ChooseNextTarget  ( .Iter:Next *Var0 )
+  2E8:  If  *Var0  !=  FFFFFFFF
+  2F8:  	Goto  0
+  304:  EndIf
+  30C:  Wait  20`
+  318:  ExecWait  $Script_802A202C
+  324:  Call  80276EFC ( )
+  330:  ExecWait  $Script_802A247C
+  33C:  Return
+  344:  End
+}
+
+#new:Function $Function_CheckStellarNova
+{
+PUSH	S1, A1, A2, T0, RA
+COPY	S1, A0
+%get
+LAB		A0, $StellarNovaBoolean
+%reset
+SAB		R0, $StellarNovaBoolean
+COPY	A2, A0
+COPY	A0, S1
+JAL		~Func:set_variable
+LW		A1, 0 (S0) %get argument
+NOP
+POP		S1, A1, A2, T0, RA
+JR		RA
+ADDIU	V0, R0, 2 	
+}

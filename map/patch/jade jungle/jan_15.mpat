@@ -1,0 +1,154 @@
+@ $NpcGroup_80241194
+{
+00000001 $NpcSettings_802405C0 ~Vec3f:NPC_80241384 % 325 0 0
+00040800 $Script_Init_802410E8 00000000 00000000 0000010E 
+~İtems:64:LifeShroom:A
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:3:40 ~FP:30:40:3:40 ~FP:50:40:3:40 ~FP:80:40:3:40 ~FP:100:30:3:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:0:2
+~Movement:NPC_80241384
+00420103 00420105 00420106 00420106 00420101 00420101 00420109 00420107
+00420103 00420103 00420103 00420103 00420103 00420103 00420103 00420103 % recolored spear guy
+00000000 00000000 00000000 00000000 % no tattle string
+}
+/%
+00000000 $NpcSettings_802405C0 ~Vec3f:NPC_80241194 % 365 0 -45
+00040800 $Script_Init_802410E8 00000000 00000000 0000010E 
+~İtems:5:FireFlower:A
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:3:40 ~FP:30:40:3:40 ~FP:50:40:3:40 ~FP:80:40:3:40 ~FP:100:30:3:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:0:2
+~Movement:NPC_80241194
+{AnimationTable:NPC_80241194 % .Sprite:PutridPiranha
+00000000 00000000 00000000 00000000 % no tattle string
+% 
+% $NpcGroup_80241194[1F0]
+00000001 $NpcSettings_802405C0 ~Vec3f:NPC_80241384 % 325 0 0
+00040800 00000000 00000000 00000000 0000010E 
+~İtems:5:FireFlower:A
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:3:40 ~FP:30:40:3:40 ~FP:50:40:3:40 ~FP:80:40:3:40 ~FP:100:30:3:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:0:2
+~Movement:NPC_80241384
+{AnimationTable:NPC_80241384 % .Sprite:PutridPiranha
+00000000 00000000 00000000 00000000 % no tattle string
+% 
+% $NpcGroup_80241194[3E0]
+00000002 $NpcSettings_802405C0 ~Vec3f:NPC_80241574 % 375 0 45
+00040800 00000000 00000000 00000000 0000010E 
+~İtems:5:FireFlower:A
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:3:40 ~FP:30:40:3:40 ~FP:50:40:3:40 ~FP:80:40:3:40 ~FP:100:30:3:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:0:2
+~Movement:NPC_80241574
+{AnimationTable:NPC_80241574 % .Sprite:PutridPiranha
+00000000 00000000 00000000 00000000 % no tattle string
+%/
+
+@ $NpcGroupList_80241B44
+{
+00000001 $NpcGroup_80241194 15030005 
+00000001 $NpcGroup_80241764 00000000 
+00000001 $NpcGroup_80241954 00000000 
+00000000 00000000 00000000 
+}
+
+@ $Script_Idle_802409F4
+{
+	0:  If  *Flag_JAN_3A  ==  00000000 
+   10:  	Label    00000000 
+   1C:  	Call     GetPlayerPos 	( *Var[0] *Var[1] *Var[2] )
+   34:  	If  *Var[0]  <  00000022 
+   44:  		Wait     00000001 
+   50:  		Goto     00000000 
+   5C:  	EndIf
+   64:  	Call     DisablePlayerInput 	( .True )
+   74:  	Call     ShowMessageAtScreenPos	( $PhalanxFar 00000140 0000003C ) % Grraahahahoho! 
+   8C:  	Set  *Flag_JAN_3A  00000001 
+   9C:  	Call     DisablePlayerInput 	( .False )
+   AC:  EndIf
+   %B4:  Exec     $Script_802407CC *Var[9] 
+   C4:  Call     AwaitPlayerApproach 	( 00000190 FFFFFFF6 00000087 )
+   DC:  Call     DisablePlayerInput 	( .True )
+   %EC:  Kill     *Var[9] 
+   F8:  Wait     0000000F 
+		Call     SpeakToPlayer  	( 00000001 00420110 00420103 00000000 $PhalanxFight ) % time to fight
+		Call	 SetNpcAnimation	( 00000001 0042010E ) 
+  65C:  Call     DisablePlayerInput 	( .False )
+  66C:  Call     StartBossBattle 	( .Song:SpecialBattle )
+  67C:  Return
+  684:  End
+}
+
+
+%would cause problems  
+/%
+@ $Script_80241080
+{
+	0:  Call     GetBattleOutcome 	( *Var[0] )
+   10:  Switch  *Var[0] 
+   1C:  	Case  ==  .Outcome:PlayerWon % 0
+   28:  		Set  *GB_StoryProgress  00000013 
+				%Call     SpeakToPlayer  	( 00000001 00420107 00420103 00000000 $PhalanxLose )
+   38:  	Case  ==  .Outcome:PlayerLost % 1
+   44:  	Case  ==  .Outcome:PlayerFled % 2
+   50:  EndSwitch
+   58:  Return
+   60:  End
+%/
+
+#new:Script $Script_PhalanxDefeat
+{
+Call GetBattleOutcome (*Var[0])
+Switch *Var[0]
+	Case == 00000000
+		Call    SpeakToPlayer  	( 00000001 00420107 00420103 00000000 $PhalanxLose )
+		Call	NpcMoveTo ( 00000001 415` 0` *Fixed[1.0] ) %this speed value is weird
+		Set  *GB_StoryProgress  .Story:Ch5_DefeatedPiranhasMiniboss		%have to do this
+		%Call	DisablePlayerInput 	( .False )
+		Call	RemoveNpc   	( 00000001 )
+EndSwitch
+Return
+End
+}
+
+@ $Script_Init_802410E8
+{
+	0:  If  *GB_StoryProgress  <  00000013 
+   10:  	Call     BindNpcIdle 	( .Npc:Self $Script_Idle_802409F4 )
+   24:  	Call     BindNpcHit  	( .Npc:Self $Script_Hit_80241080 )
+			Call	 BindNpcDefeat  ( .Npc:Self $Script_PhalanxDefeat )
+   38:  Else
+   %40:  	Call     SetNpcPos   	( 00000000 00000000 FFFFFC18 00000000 )
+   5C:  	Call     SetNpcPos   	( 00000001 00000000 FFFFFC18 00000000 )
+   %78:  	Call     SetNpcPos   	( 00000002 00000000 FFFFFC18 00000000 )
+   94:  EndIf
+   9C:  Return
+   A4:  End  
+}
+
+#string $PhalanxFar
+{
+[STYLE:Right]Took you long enough![Wait][END]
+}
+
+#string $PhalanxFight
+{
+[STYLE:Right]I knew you'd come here[BR]
+eventually![BR]
+[Wait][NEXT]You're trying to save the[BR]
+Star Spirits, Right?[BR]
+[PAUSE:0A]Well, that's not happening[BR]
+on my watch![BR]
+[Wait][END]
+}
+
+#string $PhalanxLose
+{
+[STYLE:Right]You may have beaten me, but[BR]
+you'll never beat the others![BR]
+[Wait][NEXT]
+Even if you save the Star[BR]
+Spirits, it won't be enough![BR]
+[Wait][END]
+}

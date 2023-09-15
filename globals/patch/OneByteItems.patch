@@ -1,0 +1,1301 @@
+
+%reprogram this to what flag you are using
+
+%Returns if flag is active (Stone flag 2)
+
+#export:Function $InventoryFlag
+{
+PUSH 	T0, RA
+LAB 	T0, 800DBDA2 %GameByte[032]
+ANDI	T0, T0, 8	 %Flag 8
+BEQ		T0, R0, .end
+ORI		V0, R0, 0
+ORI		V0, R0, 1
+.end
+POP 	T0, RA
+JR		RA			
+NOP
+}
+
+%#export $InventoryFlag
+
+%I didn't change a lot of code to make the switch between 10 and 20 items
+%Code changed
+%	Empty item slot count (Used by shopkeepers)
+%	Adding items from script
+%	Adding items from item entities
+%	The "too many items" dialogue (make sure you toss the right item even with a shorter menu)
+
+
+
+%Make items take up 1 byte
+%This will double the available space for items in inventory and shop inventory
+%
+
+%replace LH / LHU with LBU
+%make sure that addresses count up by 1 instead of 2 (or down by -1 instead of -2)
+%Pay close attention to item counts
+
+
+%Items are usually referenced as "1B4 + (register)" (with the register starting at 8010F290 and going up)
+%Storage items are usually referenced as "1C8 + (register)" (with the register starting at 8010F290 and going up)
+
+%methodology: search through the libraries for 1B4 / 1C8, then use context to see if it is actually doing item stuff
+%	then change all the lines for moving indices by +2 or 0-2
+%	then change all the lines checking for a capacity of 10 or 32
+
+
+%Find all references to 8010F444 (there are 3) because there are always exceptions to the rule
+
+
+%there is a function for clearing out all player data that touches item data
+%it doesn't really matter here
+
+%also the demo uses items but the demo is gone I think
+
+%Setup item popup = 800E6C44
+
+%800E6C44 + 24 = 800E6C68
+%800F4 + 24 = 80118
+@Function 80118
+{
+LBU        V0, 1B4 (A3)
+}
+
+
+%800E6C44 + 8C = 800E6CD0
+%800F4 + 8C = 80180
+@Function 80180
+{
+SLTI      V0, A2, 14			%A -> 14
+}
+
+%800E6C44 + 94 = 800E6CD8
+%800F4 + 94 = 80188
+@Function 80188
+{
+ADDIU     A3, A3, 1				%2 -> 1
+}
+
+
+%Add item = 800E7574
+@Hook 80A4C
+{
+	PUSH	  RA
+	JAL		  $InventoryFlag
+	NOP
+	BNE		  V0, R0, .flag
+	NOP
+	.noflag
+	%Sort first to make sure everything is set up correctly
+	PUSH	   A0, A1, A2, A3, T0, V0, V1	%this is everything the sorting function uses
+	JAL		   800E76CC
+	NOP
+	POP		   A0, A1, A2, A3, T0, V0, V1
+	ADDIU	  A0, A0, A				%offset start of search by 10
+	.noflagtop
+	LBU       V0, 1B4 (A0)
+	BEQ		  V0, R0, .end
+	ADDIU	  V0, R0, A
+	ADDIU	  V1, V1, 1
+	SLTI	  V0, V1, A
+	BNE		  V0, R0, .noflagtop
+	ADDIU	  A0, A0, 1
+	ADDIU	  V0, R0, A
+	BEQ		  R0, R0, .end
+	NOP
+	.flag
+	LBU       V0, 1B4 (A0)
+	BEQ		  V0, R0, .end
+	ADDIU	  V0, R0, 14
+	ADDIU	  V1, V1, 1
+	SLTI	  V0, V1, 14
+	BNE		  V0, R0, .noflagtop
+	ADDIU	  A0, A0, 1
+	ADDIU	  V0, R0, 14
+	BEQ		  R0, R0, .end
+	NOP
+	.end
+	POP		  RA
+	J		  800E75BC			%BEQ		  V1, V0, 800E75D4
+	NOP
+}
+/%
+%800E7574 + 28 = 800E759C
+%80A24 + 28 = 80A4C
+@Function 80A4C
+{
+	LBU        V0, 1B4 (A0)
+}
+
+%800E7574 + 30 = 800E75A4
+%80A24 + 30 = 80A54
+@Function 80A54
+{
+	LI        V0, 14		%A -> 14
+}
+
+%800E7574 + 38 = 800E75AC
+%80A24 + 38 = 80A5C
+@Function 80A5C
+{
+	SLTI      V0, V1, 14 	%A -> 14
+}
+
+%800E7574 + 40 = 800E75B4
+%80A24 + 40 = 80A64
+@Function 80A64
+{
+	ADDIU     A0, A0, 1
+	LI        V0, 14		%A -> 14
+}
+%/
+
+
+%800E7574 + 54 = 800E75C8
+%80A24 + 54 = 80A78
+@Function 80A78
+{
+	SB        S1, 1B4 (V0)	%putting the new item into the open spot found?
+}
+
+%Get item count
+%800E75EC + 10 = 800E75FC
+%80A9C + 10 = 80AAC
+@Function 80AAC
+{
+LBU        V0, 1B4 (V1)
+}
+
+%800E75EC + 20 = 800E760C
+%80A9C + 20 = 80ABC
+@Function 80ABC
+{
+SLTI      V0, A0, 14		%A -> 14
+}
+
+%800E75EC + 28 = 800E7614
+%80A9C + 28 = 80AC4
+@Function 80AC4
+{
+ADDIU     V1, V1, 1
+}
+
+%Find empty item count
+%this just counts the items and subtracts that from the maximum
+%80AD0 + 10 = 80AE0
+%800E7620 + 10 = 800E7630
+/%
+@Function 80AE0
+{
+	LI        V1, 14		%A -> 14
+}
+%/
+@Hook 80AE0
+{
+	PUSH	V0, RA				%RA is not actually needed since it gets popped from the stack
+	JAL		  $InventoryFlag
+	NOP
+	BEQ		V0, R0, .end
+	LI      V1, A			
+	LI      V1, 14			
+	.end
+	POP		V0, RA
+	J 		800E7638
+	LW		RA		10 (SP)
+}
+
+
+%Find item = 800E7644
+%Checks for key items too so I have to be careful
+/%
+{
+    0:  SLL       V0, A0, 5
+    4:  LTHU      V0, V0 (800878F8)
+   10:  LA        V1, 8010F290
+   18:  ANDI      V0, V0, 8
+   1C:  BEQ       V0, R0, .o54
+   20:  CLEAR     A1
+        .o24
+   24:  LH        V0, 74 (V1)
+   28:  BEQL      V0, A0, .o44
+   2C:  SLTI      V1, A1, 20
+   30:  ADDIU     A1, A1, 1
+   34:  SLTI      V0, A1, 20
+   38:  BNE       V0, R0, .o24
+   3C:  ADDIU     V1, V1, 2
+   40:  SLTI      V1, A1, 20
+        .o44
+   44:  BEQ       V1, R0, .o80
+   48:  LI        V0, FFFF
+   4C:  JR        RA
+   50:  COPY      V0, A1
+        .o54
+   54:  LH        V0, 1B4 (V1)
+   58:  BEQL      V0, A0, .o74
+   5C:  LI        V1, A
+   60:  ADDIU     A1, A1, 1
+   64:  SLTI      V0, A1, A
+   68:  BNE       V0, R0, .o54
+   6C:  ADDIU     V1, V1, 2
+   70:  LI        V1, A
+        .o74
+   74:  BEQ       A1, V1, .o80
+   78:  LI        V0, FFFF
+   7C:  COPY      V0, A1
+        .o80
+   80:  JR        RA
+   84:  NOP
+}
+%/
+
+%800E7644 + 54 = 800E7698
+%80AF4 + 54 = 80B48
+@Function 80B48
+{
+	LBU        V0, 1B4 (V1)
+}
+
+%800E7644 + 5C = 800E76A0
+%80AF4 + 5C = 80B50
+@Function 80B50
+{
+	LI        V1, 14		%A -> 14
+}
+
+%800E7644 + 64 = 800E76A8
+%80AF4 + 64 = 80B58
+@Function 80B58
+{
+	SLTI      V0, A1, 14	%A -> 14
+}
+
+%800E7644 + 6C = 800E76B0
+%80AF4 + 6C = 80B60
+@Function 80B60
+{
+	ADDIU     V1, V1, 1
+}
+
+%800E7644 + 70 = 800E76B4
+%80AF4 + 70 = 80B64
+@Function 80B64
+{
+	LI        V1, 14		%A -> 14
+}
+
+%Sort Items
+%This one is more complex
+/%
+% 00080B7C --> 800E76CC
+#new:Function $Function_sort_items
+{
+    0:  LI        A2, 8				%A2 = 8 (item index?)
+    4:  LA        T0, 8010F290		%Get player data pointer
+    C:  ADDIU     A3, T0, 10		%Removed item pointer
+        .o10
+   10:  LH        V0, 1B4 (A3)		%Load the second to last item
+   14:  BEQL      V0, R0, .o60		%if 9th item is 0, skip to o60
+   18:  ADDIU     A2, A2, FFFF		%Subtract 1 from item index
+   1C:  LI        A0, 9				%A0 = 9 (final item index?)
+   20:  SLT       V0, A2, A0		%V0 = (A2 < A0)
+   24:  BEQL      V0, R0, .o60		%if A2 >= A0, skip to o60
+   28:  ADDIU     A2, A2, FFFF		%Subtract 1 from item index
+   2C:  COPY      A1, A3			%A1 = A3 (16 + player pointer)
+   30:  ADDIU     V1, T0, 12		%V1 = player pointer + 18
+        .o34
+   34:  LH        V0, 1B4 (V1)		%Load an item from V1
+   38:  BNEL      V0, R0, .o50		%If item is not 0, skip to o60
+   3C:  ADDIU     A0, A0, FFFF		%Subtract 1 from other index
+   40:  LHU       V0, 1B4 (A1)		%Load from A1 (9th item)
+   44:  SH        V0, 1B4 (V1)		%Load an item from V1
+   48:  BEQ       R0, R0, .o5C		%Skip to 5C
+   4C:  SH        R0, 1B4 (A1)		%Set ninth item to 0
+        .o50
+   50:  SLT       V0, A2, A0		%V0 = (A2 < A0)
+   54:  BNE       V0, R0, .o34		%If A2 >= A0, go back to o34
+   58:  ADDIU     V1, V1, FFFE		%Subtract V1 (item pointer?) by 2
+        .o5C
+   5C:  ADDIU     A2, A2, FFFF		%Subtract A2 by 1
+        .o60
+   60:  BGEZ      A2, .o10			%If A2 >= 0, go back to start
+   64:  ADDIU     A3, A3, FFFE		%Subtract A3 by 2
+   68:  JR        RA
+   6C:  NOP
+}
+%So what does this thing actually do?
+%it pushes all the items to the end so that all of the empty space is at the start
+%while also preserving the item order
+%/
+%How about I just override all of it
+@Function 80B7C
+{
+    0:  LI        A2, 12				%8 -> 18 (get the 18th item instead of the 8th)
+    4:  LA        T0, 8010F290		
+    C:  ADDIU     A3, T0, 12			%16 -> 18 (8 * 2 -> 18 * 1)
+        .o10
+   10:  LBU       V0, 1B4 (A3)			%lh -> lbu	
+   14:  BEQL      V0, R0, .o60
+   18:  ADDIU     A2, A2, FFFF
+   1C:  LI        A0, 13				%9 -> 19 
+   20:  SLT       V0, A2, A0
+   24:  BEQL      V0, R0, .o60
+   28:  ADDIU     A2, A2, FFFF
+   2C:  COPY      A1, A3
+   30:  ADDIU     V1, T0, 13			%18 -> 19 (19th item instead of 9th) (Remember that I made items half size!)
+        .o34
+   34:  LBU       V0, 1B4 (V1)			%lh -> lbu
+   38:  BNEL      V0, R0, .o50
+   3C:  ADDIU     A0, A0, FFFF
+   40:  LBU       V0, 1B4 (A1)			%lhu -> lbu (why was it an lhu in the first place?)
+   44:  SB        V0, 1B4 (V1)			%sh -> sb
+   48:  BEQ       R0, R0, .o5C
+   4C:  SB        R0, 1B4 (A1)			%sh -> sb
+        .o50
+   50:  SLT       V0, A2, A0
+   54:  BNE       V0, R0, .o34
+   58:  ADDIU     V1, V1, FFFF			%-2 -> -1
+        .o5C
+   5C:  ADDIU     A2, A2, FFFF
+        .o60
+   60:  BGEZ      A2, .o10
+   64:  ADDIU     A3, A3, FFFF			%-2 -> -1
+   68:  JR        RA
+   6C:  NOP
+}
+
+
+%Store item = 800E77C4
+/%
+    0:  CLEAR     V1					%set V1 to 0
+    4:  LA        A2, 8010F290			%get player data pointer
+    C:  COPY      A1, A2				%also put it in A1
+        .o10
+   10:  LH        V0, 1C8 (A1)			%load a shop storage item
+   14:  BEQ       V0, R0, .o30			%if it is 0, skip to 30
+   18:  LI        V0, 20				%V0 = 20
+   1C:  ADDIU     V1, V1, 1				%increment V1
+   20:  SLTI      V0, V1, 20			%check if V1 < 32
+   24:  BNE       V0, R0, .o10			%if V0 is less than 32, go back to 10
+   28:  ADDIU     A1, A1, 2				%increment A1 by 2
+   2C:  LI        V0, 20
+        .o30							%either you found an opening or you found nothing
+   30:  BEQ       V1, V0, .o48			%if V1 == 32, go to end and return -1 (fail to put items in)
+   34:  SLL       V0, V1, 1				%V0 = V1 * 2
+   38:  ADDU      V0, A2, V0			%V0 = A2 + V0
+   3C:  SH        A0, 1C8 (V0)			%now store your original item into this empty spot you found
+   40:  JR        RA			
+   44:  COPY      V0, V1				%return the index of the slot used
+        .o48
+   48:  JR        RA
+   4C:  LI        V0, FFFF
+%/
+
+@Function 80C74
+{
+    0:  CLEAR     V1					
+    4:  LA        A2, 8010F290			
+    C:  COPY      A1, A2				
+        .o10
+   10:  LBU       V0, 1C8 (A1)			%lh -> lbu
+   14:  BEQ       V0, R0, .o30			
+   18:  LI        V0, 40				%V0 = 20 -> 40
+   1C:  ADDIU     V1, V1, 1				
+   20:  SLTI      V0, V1, 40			%check if V1 < 32 -> 64
+   24:  BNE       V0, R0, .o10			
+   28:  ADDIU     A1, A1, 1				%increment A1 by 2 -> 1
+   2C:  LI        V0, 40				%20 -> 40
+        .o30							
+   30:  BEQ       V1, V0, .o48			
+   34:  SLL       V0, V1, 0				%V0 = V1 * 2 -> V1 * 1
+   38:  ADDU      V0, A2, V0			
+   3C:  SB        A0, 1C8 (V0)			%sh -> sbu
+   40:  JR        RA			
+   44:  COPY      V0, V1				
+        .o48
+   48:  JR        RA
+   4C:  LI        V0, FFFF
+}
+
+/%
+%80C74 + 10 = 80C84
+%800E77C4 + 10 = 800E77D4
+@Function 80C84
+{
+LBU		V0, 1C8 (A1)
+}
+
+%80C74 + 18 = 80C6C
+%800E77C4 + 18 = 800E77DC
+@Function 80C8C
+{
+LI        V0, 40	%64 items! (64 bytes)
+}
+
+%80C74 + 20 = 80C94
+%800E77C4 + 20 = 800E77E4
+@Function 80C94
+{
+SLTI      V0, V1, 40	%64 items!
+}
+
+%80C74 + 28 = 80C9C
+%800E77C4 + 28 = 800E77E8
+@Function 80C9C
+{
+ADDIU	A1, A1, 1
+}
+
+%80C74 + 2C = 80CA0
+%800E77C4 + 2C = 800E77F0
+@Function 80CA0
+{
+LI        V0, 40
+}
+
+%80C74 + 34 = 80CA8
+%800E77C4 + 34 = 800E77F8
+@Function 80CA8
+{
+NOP						%remove an sll
+}
+
+%80C74 + 3C = 80CB0
+%800E77C4 + 3C = 800E7800
+@Function 80CB0
+{
+SB		A0, 1C8 (V0)
+}
+%/
+
+%Get stored count = 800E7814
+/%
+{
+    0:  CLEAR     A0
+    4:  COPY      A1, A0
+    8:  LA        V1, 8010F290
+        .o10
+   10:  LH        V0, 1C8 (V1)
+   14:  BNEL      V0, R0, .o1C
+   18:  ADDIU     A1, A1, 1
+        .o1C
+   1C:  ADDIU     A0, A0, 1
+   20:  SLTI      V0, A0, 20
+   24:  BNE       V0, R0, .o10
+   28:  ADDIU     V1, V1, 2
+   2C:  JR        RA
+   30:  COPY      V0, A1
+}
+%/
+%80CC4 + 10
+%800E7814 + 10
+@Function 80CD4
+{
+	LBU		V0, 1C8 (V1)
+}
+
+%80CC4 + 20
+%800E7814 + 20
+@Function 80CE4
+{
+	SLTI      V0, A0, 40				%20 -> 40
+}
+
+%80CC4 + 28
+%800E7814 + 28
+@Function 80CEC
+{
+	ADDIU	V1, V1, 1
+}
+
+%Stored empty count
+%Note that setting this to a lower value will limit the capacity of the shop storage to this value, since the game uses this to see if you can put stuff in storage or not
+%80CF8 + 10 = 80D08
+%800E7848 + 10 = 800E7858
+@Function 80D08
+{
+	LI        V1, 20					%20 -> 40	(revert to 20 because of crashes)
+}
+
+%This one didn't get caught by the 1B4 check
+%use consumable
+
+%838B0 + 2C = 838DC
+%800EA400 + 2C = 800EA42C
+%do not sll
+@Function 838DC
+{
+	SLL 		V0, S1, 0
+}
+
+%838B0 + 38 = 838E8
+%800EA400 + 38 = 800EA438
+@Function 838E8
+{
+	LTBU       S1, V0 (8010F444)		%LTH -> LTBU (will this work?)
+}
+
+%This one too!
+%Remove consumable
+%8392C + 10 = 8393C
+%800EA47C + 10 = 800EA48C
+@Function 8393C
+{
+	NOP		  %SLL V0, V0, 1
+	STB       R0, V0 (8010F444)
+}
+
+
+%Item entity update = 801356DC
+%this function is giant
+%I also have some other patches in this function to make other stuff work, but they won't get in the way of stuff here
+%801356DC + 264 = 80135940
+%CBDDC + 264 = CC040
+/%
+@Function CC040
+{
+	LBU        V0, 1B4 (V1)
+}
+%/
+%this is quite complicated
+%hopefully there is no code that tries to jump inside what this overlaps
+@Hook CC040
+{
+	PUSH	   RA
+	JAL		   $InventoryFlag	%V0 gets immediately loaded so no need to push or pop it
+	NOP
+	BNE		   V0, R0, .flag
+	NOP
+	%
+	.noflag
+	%Sort first to make sure everything is set up correctly
+	PUSH	   A0, A1, A2, A3, T0, V0, V1	%this is everything the sorting function uses
+	JAL		   800E76CC
+	NOP
+	POP		   A0, A1, A2, A3, T0, V0, V1
+	ADDIU	   V1, V1, A			%offset the start of the search by 10
+	.noflagtop
+	LBU        V0, 1B4 (V1)
+	BEQ		   V0, R0, .end 		%80135960
+	SLTI	   V0, A0, A
+	ADDIU	   A0, A0, 1
+	SLTI	   V0, A0, A
+	BNE		   V0, R0, .noflagtop
+	ADDIU	   V1, V1, 1
+	SLTI	   V0, A0, A
+	%
+	BEQ		   R0, R0, .end
+	NOP
+	.flag
+	%
+	LBU        V0, 1B4 (V1)
+	BEQ		   V0, R0, .end 		%80135960
+	SLTI	   V0, A0, 14
+	ADDIU	   A0, A0, 1
+	SLTI	   V0, A0, 14
+	BNE		   V0, R0, .flag
+	ADDIU	   V1, V1, 1
+	SLTI	   V0, A0, 14
+	%
+	.end
+	POP		  RA
+	J		  80135960		%BEQZ V0, 80135A18
+	NOP
+}
+
+/%
+%801356DC + 26C = 80135948
+%CBDDC + 26C = CC048
+@Function CC048
+{
+	SLTI      V0, A0, 14		%A -> 14
+}
+
+%801356DC + 274 = 80135950
+%CBDDC + 274 = CC050
+%274:  SLTI      V0, A0, A
+@Function CC050
+{
+	SLTI      V0, A0, 14		%A -> 14
+}
+
+%801356DC + 27C = 80135958
+%CBDDC + 27C = CC058
+@Function CC058
+{
+	ADDIU     V1, V1, 1			%2 -> 1
+}
+
+%801356DC + 280 = 8013595C
+%CBDDC + 280 = CC05C
+@Function CC05C
+{
+	SLTI      V0, A0, 14		%A -> 14
+}
+%/
+
+
+%801356DC + 288 = 80135964
+%CBDDC + 288 = CC064
+@Function CC064
+{
+	SLL		  V0, A0, 0			%remove an sll
+}
+
+%801356DC + 294 = 80135970
+%CBDDC + 294 = CC070
+@Function CC070
+{
+	SB        V1, 1B4 (V0)
+}
+
+%801356DC + 98C = 80136068
+%CBDDC + 98C = CC768
+@Function CC768
+{
+	LBU        V0, 1B4 (A2)
+}
+
+%801356DC + 9B4 = 80136090
+%CBDDC + 9B4 = CC790
+@Function CC790
+{
+	LBU        V0, 1B4 (A2)
+}
+
+%801356DC + 9D8 = 801360B4
+%CBDDC + 9D8 = CC7B4
+@Function CC7B4
+{
+	SLTI	  V0, A0, 14		%A -> 14
+}
+
+%801356DC + 9E0 = 801360BC
+%CBDDC + 9E0 = CC7BC
+@Function CC7BC
+{
+	ADDIU     A2, A2, 1			%2 -> 1
+}
+
+%801356DC + B68 = 80136244
+%CBDDC + B68 = CC944
+@Function CC944
+{
+	ADDIU     V0, V1, FFFE		%-2 -> -2	(Fixes the "too many items" item removal)
+}
+
+%801356DC + B78 = 80136248
+%CBDDC + B78 = CC948
+@Function CC948
+{
+	NOP							%remove an sll
+}
+
+%801356DC + B78 = 80136254
+%CBDDC + B78 = CC954
+/%
+@Function CC954
+{
+	SB        R0, 1B4 (V0)
+}
+%/
+%if flag: remove normally
+%if no flag: remove at 10 + index
+@Hook CC950
+{
+	PUSH	  RA, S0
+	PUSH	  V0					%not so sure about this
+	JAL		  $InventoryFlag
+	NOP
+	COPY	  S0, V0
+	POP		  V0
+	BNE		  S0, R0, .store2
+	NOP
+	SB        R0, 1BE (V0)			% + A
+	.store2
+	BEQ		  S0, R0, .sort
+	NOP
+	SB        R0, 1B4 (V0)
+	.sort
+	JAL		  800E76CC
+	NOP
+	POP		  RA, S0
+	J		  80136258
+	NOP
+}
+
+%Pause load items
+%"pause_items_load_items"
+%8024A4DC + 38 = 8024A514
+%13D81C + 38 = 13D854
+@Function 13D854
+{
+	LBU        V0, 1B4 (A2)
+}
+
+%8024A4DC + 3C = 8024A518
+%13D81C + 3C = 13D858
+@Function 13D858
+{
+	LBU       V1, 1B4 (A2)		%another case where they use LHU for items for some reason
+}
+
+%8024A4DC + 54 = 8024A530
+%13D81C + 54 = 13D870
+@Function 13D870
+{
+	SLTI      V0, A0, 14		%A -> 14
+}
+
+%8024A4DC + 5C = 8024A538
+%13D81C + 5C = 13D878
+@Function 13D878
+{
+	ADDIU     A2, A2, 1			%2 -> 1
+}
+
+
+%Find life shroom
+%watch out for the hook at 80261214! (it's not here)
+%802611E8 + 6C = 80261254
+%18FAC8 + 6C = 18FB34
+@Function 18FB34
+{
+	NOP			%no, earlier hook already deleted the life shroom so this would instead delete item -1
+	%SB        R0, 1B4 (V0)
+}
+
+
+%???
+%this one didn't get caught in the ctrl f search
+%80263350
+%191C30
+@Function 191C30
+{
+	LBU		  V0, 1B4 (S0)
+}
+
+%802633AC
+%191C8C
+@Function 191C8C
+{
+	SLTI	  V0, S2, 14		%A -> 14
+}
+
+%802633B4
+%191C94
+@Function 191C94
+{
+	ADDIU	  S0, S0, 1
+}
+
+
+%80263378
+%191C58
+@Function 191C58
+{
+	LBU		  V0, 1B4 (S0)
+}
+
+
+%Load item script
+%80267ED0 + 48 = 80267F18
+%1967B0 + 48 = 1967F8
+@Function 1967F8
+{
+	LBU        V0, 1B4 (A1)
+}
+
+%80267ED0 + 50 = 80267F20
+%1967B0 + 50 = 196800
+@Function 196800
+{
+	SLL		   V1, S0, 0		%get rid of an sll
+}
+
+%80267ED0 + 54 = 80267F24
+%1967B0 + 54 = 196804
+@Function 196804
+{
+	ADDIU     A1, A1, 1			%2 -> 1
+}
+
+%80267ED0 + 68 = 80267F38
+%1967B0 + 68 = 196818
+%Freebie code needs this spot
+/%
+@Function 196818
+{
+	SB        R0, 1B4 (V0)
+}
+%/
+
+
+
+%Make shop popup
+
+%7E17D4 + 58 = 7E182C
+%80280954 + 58 = 802809AC
+@Function 7E182C
+{
+	LI        S4, 40		%20 -> 40
+}
+
+%7E17D4 + 64 = 7E1838
+%80280954 + 64 = 802809B8
+@Function 7E1838
+{
+	LI        S4, 14		%A -> 14
+}
+
+%7E17D4 + 6C = 7E1840
+%80280954 + 6C = 802809C0
+@Function 7E1840
+{
+	LI        S4, 14		%A -> 14
+}
+
+%7E17D4 + A8 = 7E187C
+%80280954 + A8 = 802809FC
+@Function 7E187C
+{
+	LBU		A0, 1B4 (S1)
+	LBU     A0, 1C8 (S1)
+}
+
+%7E17D4 + 110 = 7E18E4
+%80280954 + 110 = 80280A64
+%ADDIU	S1, S1, 2
+@Function 7E18E4
+{
+	ADDIU	S1, S1, 1
+}
+
+
+%Shop dialogue (actually it controls most of the shop stuff)
+
+%7E1A50 + 380 = 7E1DD0
+%80280BD0 + 380	= 80280F50
+@Function 7E1DD0
+{
+	NOP							%remove an sll
+}
+
+%7E1A50 + 388 = 7E1DD8
+%80280BD0 + 388	= 80280F58
+@Function 7E1DD8
+{
+	LBU		A0, 1B4 (V0)
+}
+
+%7E1A50 + 428 = 7E1E78
+%80280BD0 + 428	= 80280FF8
+@Function 7E1E78
+{
+	NOP							%remove an sll
+}
+
+%7E1A50 + 434 = 7E1E84
+%80280BD0 + 434	= 80281004
+@Function 7E1E84
+{
+	LBU       A0, 1B4 (V0)
+}
+
+%7E1A50 + 444 = 7E1E94
+%80280BD0 + 444	= 80281014
+@Function 7E1E94
+{
+	NOP							%remove an sll
+}
+
+%7E1A50 + 450 = 7E1EA0
+%80280BD0 + 450	= 80281020
+@Function 7E1EA0
+{
+	SB        R0, 1B4 (V0)
+}
+
+%7E1A50 + 588 = 7E1FD8
+%80280BD0 + 588	= 80281158
+@Function 7E1FD8
+{
+	NOP							%remove an SLL
+}
+
+%7E1A50 + 594 = 7E1FE4
+%80280BD0 + 594	= 80281164
+@Function 7E1FE4
+{
+	LBU        A0, 1B4 (V0)
+}
+
+%7E1A50 + 5A4 = 7E1FF4
+%80280BD0 + 5A4	= 80281174
+@Function 7E1FF4
+{
+	NOP							%remove an SLL
+}
+
+ 
+%7E1A50 + 5AC = 7E1FFC
+%80280BD0 + 5AC	= 8028117C
+@Function 7E1FFC
+{
+	SB        R0, 1B4 (V0)
+}
+
+%7E1A50 + 6E0 = 7E2130
+%80280BD0 + 6E0	= 802812B0
+@Function 7E2130
+{
+	NOP							%remove an SLL
+}
+
+%7E1A50 + 6EC = 7E213C
+%80280BD0 + 6EC	= 802812BC
+@Function 7E213C
+{
+	LBU		A0, 1C8 (V0)
+}
+
+%7E1A50 + 6FC = 7E214C
+%80280BD0 + 6FC	= 802812A8
+@Function 7E214C
+{
+	NOP							%remove an SLL
+}
+
+%7E1A50 + 704 = 7E2154
+%80280BD0 + 704	= 802812D4
+@Function 7E2154
+{
+	SB		R0, 1C8 (V0)
+}
+
+
+%Allocate more memory to make bigger item menus work?
+%7E26E0 + 78 = 7E2758
+%80281860 + 78 = 802818D8
+/%
+@Function 7E2758
+{
+	LI        A0, 35C 	%35C -> 6B8	(Does not work) 	(This somehow breaks regular shop item buying (how??))
+}
+%/
+
+
+%???
+%NO! this is the move text color!
+%418DD4
+%802A4044
+/%
+@Function 418DD4 % 802A4044
+{
+ADDIU	T0, R0, 000A			%Color A = gray, Color 14 = white with black outline
+}
+%/
+
+%Updating battle menu state?
+%this is realy long
+%41A718 + 9DC = 41B0F4
+%802A5988 + 9DC = 802A6364
+@Function 41B0F4
+{
+	LBU        V0, 1B4 (S1)
+}
+
+%41A718 + 9F0 = 41B108
+%802A5988 + 9F0 = 802A6378
+@Function 41B108
+{
+	LBU       V1, 1B4 (S1)		%another one that was originally LHU
+}
+
+%41A718 + A10 = 41B128
+%802A5988 + A10 = 802A6398
+@Function 41B128
+{
+	SLTI      V0, S3, 14		%A -> 14
+}
+
+%41A718 + A18 = 41B130
+%802A5988 + A18 = 802A63A0
+@Function 41B130
+{
+	ADDIU     S1, S1, 1			%2 -> 1
+}
+
+%41A718 + 1450 = 41BB68
+%802A5988 + 1450 = 802A6DD8
+@Function 41BB68
+{
+	LBU        V0, 1B4 (S2)
+}
+
+%41A718 + 1490 = 41BBA8
+%802A5988 + 1490 = 802A6E18
+@Function 41BBA8
+{
+	LBU       V0, 1B4 (S2)		%another one originally LHU
+}
+
+%41A718 + 14B0 = 41BBC8
+%802A5988 + 14B0 = 802A6E38
+@Function 41BBC8
+{
+	LBU       V1, 1B4 (S2)
+}
+
+%41A718 + 14F4 = 41BC0C
+%802A5988 + 14F4 = 802A6E7C
+@Function 41BC0C
+{
+	SLTI      V0, S3, 14		%A -> 14
+}
+
+%41A718 + 14FC = 41B130
+%802A5988 + 14FC = 802A6E84
+@Function 41BC14
+{
+	ADDIU     S2, S2, 1			%2 -> 1
+}
+ 
+%41A718 + 1720 = 41BE38
+%802A5988 + 1720 = 802A70A8
+@Function 41BE38
+{
+	LBU        V0, 1B4 (S2)
+}
+
+%41A718 + 1760 = 41BE78
+%802A5988 + 1760 = 802A70E8
+@Function 41BE78
+{
+	LBU       V0, 1B4 (S2)		%was LHU
+}
+  
+%41A718 + 1780 = 41BE98
+%802A5988 + 1780 = 802A7108
+@Function 41BE98
+{
+	LBU        V1, 1B4 (S2)
+}
+
+%41A718 + 17C4 = 41BEDC
+%802A5988 + 17C4 = 802A714C
+@Function 41BEDC
+{
+	SLTI      V0, S3, 14		%A -> 14
+}
+
+%41A718 + 17CC = 41BEE4
+%802A5988 + 17CC = 802A7154
+@Function 41BEE4
+{
+	ADDIU     S2, S2, 1			%2 -> 1
+}
+ 
+%it just keeps going
+
+%41A718 + 1D00 = 41C418
+%802A5988 + 1D00 = 802A7688
+@Function 41C418
+{
+	LBU        V0, 1B4 (S2)	
+}
+
+%41A718 + 1D40 = 41C458
+%802A5988 + 1D40 = 802A76C8
+@Function 41C458
+{
+	LBU       V0, 1B4 (S2)		%was LHU
+}
+
+%41A718 + 1D60 = 41C478
+%802A5988 + 1D60 = 802A76E8
+@Function 41C478
+{
+	LBU        V1, 1B4 (S2)
+}
+ 
+%41A718 + 1DA4 = 41BE38
+%802A5988 + 1DA4 = 802A772C
+@Function 41C4BC
+{
+	SLTI      V0, S3, 14		%A -> 14
+}
+
+%41A718 + 1DAC = 41BE38
+%802A5988 + 1DAC = 802A7734
+@Function 41C4C4
+{
+	ADDIU     S2, S2, 1			%2 -> 1
+}
+
+
+%Update partner menu?
+%Is this code even used though?
+%I don't care, I'm modifying it anyway
+%41CF58 + BE8 = 41DB40
+%802A81C8 + BE8 = 802A8DB0
+@Function 41DB40
+{
+	LBU        V0, 1B4 (A2)
+}
+
+%41CF58 + C1C = 41DB74
+%802A81C8 + C1C = 802A8DE4
+@Function 41DB74
+{
+	LBU        V0, 1B4 (A2)
+}
+
+%41CF58 + C44 = 41DB9C
+%802A81C8 + C44 = 802A8E0C
+@Function 41DB9C
+{
+	SLTI      V0, S1, 14		%A -> 14
+}
+
+%41CF58 + C4C = 41DBA4
+%802A81C8 + C4C = 802A8E14
+@Function 41DBA4
+{
+	ADDIU     A2, A2, 1			%2 -> 1
+}
+
+
+%RemoveItemAt
+%FB23C + 14 = FB250
+%802D688C + 14 = 802D68A0
+@Function FB250
+{	
+	SLL		  V0, V0, 0
+	STB       R0, V0 (8010F444)
+}
+
+
+
+%when is this used?
+
+%Problem: this always returns item 0
+
+%ShowConsumableChoicePopup
+%FAFEC + AC = FB098
+%802D663C + AC = 802D66E8
+@Function FB098
+{
+	LBU        A0, 1B4 (A3)
+}
+
+%FAFEC + EC = FB0D8
+%802D663C + EC = 802D6728
+@Function FB0D8
+{
+	LBU        V1, 1B4 (A3)
+}
+
+%FAFEC + 130 = FB11C
+%802D663C + 130 = 802D676C
+@Function FB11C
+{
+	SLTI      V0, T0, 14 		%A -> 14
+}
+
+%FAFEC + 138 = FB124
+%802D663C + 138 = 802D6774
+@Function FB124
+{
+	ADDIU     A3, A3, 1			%2 -> 1
+}
+
+%FAFEC + 1E0 = FB1CC
+%802D663C + 1E0 = 802D681C
+@Function FB1CC
+{
+	SLL		  V0, V1, 0			%remove an sll
+}
+
+%FAFEC + 1EC = FB1D8
+%802D663C + 1EC = 802D6828
+@Function FB1D8
+{
+	LBU        V1, 1B4 (V0)
+}
+
+
+%Find Item (api function)
+%FB4C8 + 38 = FB500
+%802D6B18 + 38 = 802D6B50
+@Function FB500
+{
+	LBU        V0, 1B4 (A0)
+}
+
+%FB4C8 + 40 = FB508
+%802D6B18 + 40 = 802D6B58
+@Function FB508
+{
+	LI        V0, 14			%A -> 14
+}
+
+%FB4C8 + 48 = FB510
+%802D6B18 + 48 = 802D6B60
+@Function FB510
+{
+	SLTI      V0, V1, 14		%A -> 14
+}
+
+%FB4C8 + 50 = FB518
+%802D6B18 + 50 = 802D6B68
+@Function FB518
+{
+	ADDIU     A0, A0, 1			%2 -> 1
+	LI        V0, 14			%A -> 14
+}
+
+%Remove item (api function)
+%FB54C + 40 = FB58C
+%802D6B9C + 40 = 802D6BDC
+@Function FB58C
+{
+	LBU        V0, 1B4 (A0)
+}
+
+%FB54C + 48 = FB594
+%802D6B9C + 48 = 802D6BE4
+@Function FB594
+{
+	LI        V0, 14			%A -> 14
+}
+
+%FB54C + 50 = FB59C
+%802D6B9C + 50 = 802D6BEC
+@Function FB59C
+{
+	SLTI      V0, V1, 14		%A -> 14
+}
+
+%FB54C + 58 = FB5A4
+%802D6B9C + 58 = 802D6BF4
+@Function FB5A4
+{
+	ADDIU     A0, A0, 1			%2 -> 1
+	LI        V0, 14			%A -> 14
+}
+
+%FB54C + 70 = FB5BC
+%802D6B9C + 70 = 802D6C0C
+@Function FB5BC
+{
+	SLL		  V0, V1, 0			%remove an sll
+}
+
+%FB54C + 78 = FB5C4
+%802D6B9C + 78 = 802D6C14
+@Function FB5C4
+{
+	SB        R0, 1B4 (V0)
+}
+

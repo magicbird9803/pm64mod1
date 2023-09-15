@@ -1,0 +1,4 @@
+@ $Script_MakeEntities
+{
+	[0]		Call  MakeEntity    ( .Entity:GiantChest ~Vec4d:Entity80242A70 .Item:Hammer3Icon 80000000 )
+}

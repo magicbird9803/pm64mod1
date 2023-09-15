@@ -1,0 +1,250 @@
+@ $NpcGroup_802457D8
+{
+00000004 $NpcSettings_80242000 ~Vec3f:NPC_802457D8 % -70 0 55
+00842C00 $Script_Init_80245784 00000000 00000000 0000010E 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus
+~Movement:NPC_802457D8
+00580201 00580204 00580206 00580206 00580201 00580201 00580210 00580210
+0058020C 0058020B 0058020D 00580201 00580201 00580201 00580201 00580201 
+00000000 00000000 00000000 00000000 % no tattle string
+}
+
+@ $NpcGroupList_802459C8
+{
+00000004 $NpcGroup_80244E98 00000000 
+00000001 $NpcGroup_802457D8 2505000E 
+00000000 00000000 00000000 
+}
+
+%so if you don't get the greed stone at the start of the game, he reappears here
+#new:NpcGroupList $NpcGroupList_WithYoshi
+{
+00000004 $NpcGroup_80244E98 00000000 
+00000001 $NpcGroup_802457D8 2505000E 
+00000001 $NpcGroup_Yoshi 00000000
+00000000 00000000 00000000 
+}
+
+#new:NpcGroup $NpcGroup_Yoshi
+{
+00000030 $YoshiSettings ~Vec3f:NPC_Yoshi %???
+00000D0D $Script_Init_Yoshi 00000000 00000000 00000080 %???
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus
+~Movement:NPC_Yoshi
+%~AnimationTable:NPC_GreedYoshi
+% 00C30101 00C30102 00C30103 00C30103 00C30101 00C30101 00C3010B 00C3010C %animation table
+% 00C30101 00C30101 00C30101 00C30101 00C30101 00C30101 00C30101 00C30101 
+%
+00EC0001 00EC0002 00EC0003 00EC0003 00EC0001 00EC0001 00EC000B 00EC000C %animation table
+00EC0001 00EC0001 00EC0001 00EC0001 00EC0001 00EC0001 00EC0001 00EC0001  %thanks star rod
+00000000 00000000 00000000 001A0122 % now has a tattle string
+}
+
+#new:NpcSettings $YoshiSettings
+{
+00000000 00300018 00000000 00000000 00000000 00000000 00000000 00000000 
+00000000 00000000 00630000 
+}
+
+#new:Script $Script_Init_Yoshi
+{
+	Call     BindNpcInteract	( .Npc:Self $Script_Interact )
+	Call     SetNpcPos   	( .Npc:Self 170` 00000000 -50` )
+	Call     InterpNpcYaw 	( .Npc:Self 0000005A 00000000 ) %hope this is the Right direction
+	Return
+	End
+}
+
+#new:Script $Script_IdleAI
+{
+	Return
+	End
+}
+
+#new:Script $Script_Interact
+{
+	Call	 DisablePlayerInput ( .True )
+	Call     SpeakToPlayer 	( 00000030 00EC0004 00EC0001 00000000 $CantBribe )
+	Call	 DisablePlayerInput ( .False )
+	Return
+	End
+}
+
+@ $Script_Main_EnterWalk
+{
+	0:  Set  *GB_WorldLocation  .Location:BowsersCastle
+   10:  Call     SetSpriteShading 	( FFFFFFFF )
+   20:  Call     SetCamPerspective 	( .Cam:Default 00000003 00000019 00000010 00001000 )
+   40:  Call     SetCamBGColor 	( .Cam:Default 00000000 00000000 00000000 )
+   5C:  Call     SetCamLeadPlayer 	( .Cam:Default .False )
+   70:  Call     SetCamEnabled 	( .Cam:Default .True )
+		Call	 $Function_HasGreedStone ( *Var[0] )
+		If ( *Var[0] == 0 )
+			Call     MakeNpcs    	( 00000001 $NpcGroupList_WithYoshi )
+		Else
+   84:  	Call     MakeNpcs    	( 00000001 $NpcGroupList_802459C8 )
+		EndIf
+   98:  ExecWait $Script_MakeEntities 
+   A4:  Set  *Var[0]  $Script_80241DBC 
+   B4:  Exec     EnterWalk 
+   C0:  Wait     00000001 
+   CC:  Exec     $Script_80241960 
+   D8:  Call     ModifyColliderFlags 	( 00000000 ~Collider:o297 7FFFFE00 )
+   F0:  Return
+   F8:  End
+}
+
+@ $Script_MakeEntities
+{
+    0:  If  *GF_KPA95_UnlockedDoor  ==  .False
+   10:  	Call  MakeEntity    ( .Entity:Padlock ~Vec4d:Entity80241B38 80000000 )
+   34:  	Set   *MapVar[0]  *Var0
+   44:  	BindLock  $Script_802419D8 .Trigger:WallPressA 00004000 $ItemList_802419D0 00000000 00000001
+   64:  Else
+   6C:  	Bind  $Script_80241C10 .Trigger:WallPressA ~Collider:deilittn 00000001 00000000
+   88:  EndIf
+   90:  If  *GF_KPA95_Defeated_Guard  ==  .True
+   A0:  	Call  MakeItemEntity    ( .Item:PrisonKey1 ~Vec3d:Item80241BC8 .ItemSpawnMode:Fixed_NeverVanish *GF_KPA95_Item_PrisonKey1 )
+   C4:  EndIf
+		Call  MakeEntity        ( .Entity:SuperBlock ~Vec4d:SuperBlockPos 80000000 )
+		Set   *MapVar[9]  *Var0															
+		Call  AssignBlockFlag   ( *GF_KPA_SuperBlock )								
+		Call  AssignScript      ( $Script_HitSuperBlock )   
+   CC:  Return
+   D4:  End
+}
+
+@ $Script_HitSuperBlock %in sam_08 = $Script_80241CA8
+{
+    0:  If  *GF_KPA_SuperBlock  ==  .True
+   10:  	Return
+   18:  EndIf
+   20:  Call  IsStartingConversation    ( *Var0 )
+   30:  If  *Var0  ==  .True
+   40:  	Return
+   48:  EndIf
+   50:  Call  $Function_80240D08 ( )
+   5C:  If  *Var0  ==  .True
+   6C:  	Return
+   74:  EndIf
+   7C:  Call  ModifyGlobalOverrideFlags ( 00000001 00200000 )
+   90:  Call  $Function_Enable_40_At_8009A650 ( )
+   9C:  Call  DisablePlayerInput    ( .True )
+   AC:  Call  DisablePartnerAI      ( 00000000 )
+   BC:  Call  SetNpcFlagBits        ( .Npc:Partner 00000100 .True )
+   D4:  Call  $Function_80240480    ( *MapVar[9] *Var9 )
+   E8:  Call  FindKeyItem   ( .Item:UltraStone *VarC )
+   FC:  Call  $Function_80240120 ( )
+  108:  If  *Var0  ==  FFFFFFFF
+  118:  	Call  ShowMessageAtScreenPos    ( 001D00DC 000000A0 00000028 ) % You have no member you can upgrade now.
+  130:  	Wait  10`
+  13C:  	Call  $Function_80240510        ( *Var9 )
+  14C:  	Call  DisablePlayerInput        ( .False )
+  15C:  	Call  EnablePartnerAI ( )
+  168:  	Call  ModifyGlobalOverrideFlags ( 00000000 00200000 )
+  17C:  	Call  $Function_Disable_40_At_8009A650 ( )
+  188:  	Return
+  190:  EndIf
+  198:  If  *GF_Tutorial_SuperBlock  ==  .False
+  1A8:  	Set   *GF_Tutorial_SuperBlock  .True
+  1B8:  	Call  ShowMessageAtScreenPos    ( 001D00DA 000000A0 00000028 ) % This is a Super Block. With this, you can upgrade  ...
+  1D0:  Else
+  1D8:  	Call  ShowMessageAtScreenPos    ( 001D00DB 000000A0 00000028 ) % With this, you can upgrade one of your party membe ...
+  1F0:  EndIf
+  1F8:  Call  $Function_BuildUpgradePopupMenu ( )
+  204:  If  *Var0  ==  FFFFFFFF
+  214:  	Call  $Function_80240510        ( *Var9 )
+  224:  	Call  DisablePlayerInput        ( .False )
+  234:  	Call  EnablePartnerAI ( )
+  240:  	Call  ModifyGlobalOverrideFlags ( 00000000 00200000 )
+  254:  	Call  $Function_Disable_40_At_8009A650 ( )
+  260:  	Return
+  268:  EndIf
+  270:  Set   *VarA  *Var0
+  280:  Set   *VarB  *Var1
+  290:  Call  EnablePartnerAI ( )
+  29C:  Call  GetCurrentPartnerID   ( *Var0 )
+  2AC:  If  *Var0  !=  *VarB
+  2BC:  	Call  $Function_SwitchPartner    ( *VarB )
+  2CC:  Else
+  2D4:  	Call  802CF56C  ( 00000002 )
+  2E4:  EndIf
+  2EC:  Wait  10`
+  2F8:  Call  ShowMessageAtScreenPos    ( 001D00DF 000000A0 00000028 ) % Do you want to upgrade this member?
+  310:  Call  ShowChoice    ( 001E000D ) % Yes No
+  320:  Call  CloseMessage ( )
+  32C:  If  *Var0  !=  00000000
+  33C:  	Call  $Function_80240510        ( *Var9 )
+  34C:  	Call  DisablePlayerInput        ( .False )
+  35C:  	Call  EnablePartnerAI ( )
+  368:  	Call  ModifyGlobalOverrideFlags ( 00000000 00200000 )
+  37C:  	Call  $Function_Disable_40_At_8009A650 ( )
+  388:  	Return
+  390:  EndIf
+  398:  ExecWait  $Script_UpgradeSoundsAndEffects
+  3A4:  Call  $Function_80240068    ( *VarB *VarD )
+  3B8:  Set   *GF_KPA_SuperBlock  .True
+  3C8:  Call  $Function_80240510    ( *Var9 )
+  3D8:  Call  $Function_GetPartnerNameString ( )
+  3E4:  If  *VarD  ==  00000001
+  3F4:  	Call  ShowMessageAtScreenPos    ( 001D00DD 000000A0 00000028 ) % is upgraded to Super-rank!
+  40C:  Else
+  414:  	Call  ShowMessageAtScreenPos    ( 001D00DE 000000A0 00000028 ) % is upgraded to Ultra-rank!
+  42C:  EndIf
+  434:  Call  DisablePlayerInput        ( .False )
+  444:  Call  EnablePartnerAI ( )
+  450:  Call  ModifyGlobalOverrideFlags ( 00000000 00200000 )
+  464:  Call  $Function_Disable_40_At_8009A650 ( )
+  470:  Return
+  478:  End
+}
+
+@ $Script_UpgradeSoundsAndEffects
+{
+    0:  Wait  10`
+    C:  Call  PlaySound ( 0000212D )
+   1C:  Call  $Function_80240544    ( *MapVar[9] )
+   2C:  Wait  85`
+   38:  Thread
+   40:  	Call  PlaySound ( 0000212E )
+   50:  	Call  $Function_80240B38    ( 00000046 00000046 )
+   64:  	Wait  27`
+   70:  	Call  PlaySound ( 0000208E )
+   80:  	Call  $Function_80240B38    ( 00000032 00000032 )
+   94:  EndThread
+   9C:  Thread
+   A4:  	Wait  3`
+   B0:  	Call  $Function_8024003C    ( *MapVar[9] )
+   C0:  EndThread
+   C8:  Thread
+   D0:  	Wait  47`
+   DC:  	Call  $Function_802405A8 ( )
+   E8:  	Call  $Function_80240C78 ( )
+   F4:  	Wait  5`
+  100:  	Call  $Function_80240CC0 ( )
+  10C:  	Wait  5`
+  118:  	Call  $Function_80240C78 ( )
+  124:  EndThread
+  12C:  Wait  3`
+  138:  Call  $Function_80240600    ( *MapVar[9] )
+  148:  Wait  30`
+  154:  Return
+  15C:  End
+}
+
+#import SuperBlock.mpat
+
+
+#string $CantBribe
+{
+[STYLE:Right]I've been trying to bribe[BR]
+that guy for a while now,[BR]
+but apparently he was[BR]
+too high and mighty to take it.[BR]
+[Wait][NEXT]I have literally infinite [BR]
+money and that guy still [BR]
+said no![BR]
+[Wait][NEXT]How could anyone say no[BR]
+to infinite money![BR]
+[Wait][END]
+}

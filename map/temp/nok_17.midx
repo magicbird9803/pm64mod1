@@ -1,0 +1,16 @@
+$Script_Main#Script_Main#0#80240000#D8
+$Start#Unknown#0#80240000#0
+$MapTattle#String#D8#802400D8#68
+$Script_ExitWalk_Entry1#Script#140#80240140#40
+$Script_ExitWalk_Entry0#Script#180#80240180#40
+$Header#Header#1C0#802401C0#40
+$Script_CreateExitTriggers#Script#200#80240200#38
+$Function_Init#Function_Init#238#80240238#2C
+$Script_SetupMusic#Script#264#80240264#2C
+$Script_EnterMap#Script#290#80240290#28
+$EntryList#EntryList#2B8#802402B8#20
+$Function_GetTattle#Function#2D8#802402D8#14
+$ASCII_"sam_16"_Literal#ASCII#2EC#802402EC#C
+$ASCII_"nok_16"_Literal#ASCII#2F8#802402F8#C
+$ASCII_"trd_tex"_Literal#ASCII#304#80240304#8
+$End#Unknown#310#80240310#27CF0

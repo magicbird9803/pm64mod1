@@ -1,0 +1,1548 @@
+%old life shroom recipes now give sweet shrooms
+%old sweet shroom recipes now give super shroom cakes
+%New recipe: gold melon -> healthy juice
+
+%New item recipe: Ultra shroom cake = ultra shroom + cake mix
+%New item recipe: Gold shroom = Gold shroom + (honey syrup / maple syrup / jammin jelly)
+%	(still in recipe list)
+%
+
+%let's figure out how the recipe table works
+
+%$Function_80242C44 determines the recipe for a singular item
+%it gets the variables
+%checks for item = 95 (mystery)
+%	if rand(0,1000) > 500
+%		set a2 = D2 (mistake)
+%	else
+%		does some weird complicated stuff, then loads into A2 a value from $IntTable_8024909C, then goes to the return
+%so we're not cooking a mystery, what now?
+%	load into V1 the address of $???_80248A98
+%		A0 seems to be the loop index?
+%	loop through the array ($???_80248A98) until the you find a value that equals S0
+%	regardless of whether you succeed or fail, go to below
+%check V0 => 1D
+%if V0 == 0 (didn't find item?), go to o124
+%	clear A0 otherwise
+%if A1 == 0, go to o118 (A1 is one of the variable's addresses?)
+%	else, load table byte A0 out of $ByteTable_80248CD0
+%	then go to o124
+%o118
+%	load table byte A0 out of $ByteTable_80248CB0
+%o124
+%	load into V1 the address of $???_80248B10 (recipe outputs)
+%	set V0 to A0 * 8
+%	V0 += V1
+%	load into S0 the stuff at V0
+%	load into A2 the stuff at V0 + 4
+%return
+%	S0 -> *Var[7]
+%	A2 -> *Var[6] (i think)
+
+%$Function_80242DBC determines the 2 ingredient recipes
+%it gets the variables, like the function above
+%loop through the ingredient lists
+%	indexes the ingredients are then at A0 and A1
+%	if either A0 or A1 => 1D
+%		goto oF4
+%	else
+%		if A1 => A0, goto oD4, and set V1 = A1 * 8
+%		else, set V1 = A1 * 8
+%			then	V0 -= A1
+%					V0 *= 4
+%					V0 += A1
+%					goto oE8, and V0 += A0
+%						(single step: V0 = 29 * A1 + A0)
+%.oD4
+%	set V0 = A0 * 8
+%	V0 -= A0
+%	V0 *= 4
+%	V0 += A0
+%	V0 += A1
+%						(single step: V0 = 29 * A0 + A1)
+%.oE8
+%	load into V1 the V0 element from table $ByteTable_80248CF0
+%	(this is getting the recipe)
+%.oF4
+%	if V1 < 0, goto .oFC (invalid recipes are negative?)
+%	clear V1 otherwise
+%.oFC
+%	if V1 != 0, goto .o154, (but first put value of S0 into A0)
+%	else, load into A0 the address of $???_8024903C
+%	A3 = A0 + 60
+%	then it does something weird
+%		checks if S0 = the first element of table $???_8024903C (BF) (special shake ID)
+%			if isn't, goto .o128
+%		checks if A2 = second element of $???_8024903C (8D) (dried shroom ID)
+%			if it is, goto .o13C
+%	then loads address of $???_80248B10 (output table) to V0
+%	sets V1 = V1 * 8
+%	adds V1 to V0
+%	load into S0 the stuff at V0
+%	load into A2 the stuff at V0 + 4
+%return
+%	S0 -> *Var[7]
+%	A2 -> *Var[6] (i think)
+
+%$IntTable_8024909C contains all possible mystery outputs
+%when choosing one, it picks a random number then loads from the table
+
+%so I think that some recipes change based on whether you have the frying pan or not (*Flag_MAC_98)
+%some of the single ingredients would output a mistake, but then output something else
+
+%$???_8024903C contains bonus recipes that don't use the normal system
+%3 word sets: first two are ingredients (item IDs), the third is an output (indexed)
+
+%$ByteTable_80248CF0 is used for 2 ingredient recipes
+%I think it's a 29 x 29 table
+
+%$ByteTable_80248CD0 is used to determine outputs for single-ingredient recipes
+%$ByteTable_80248CB0 too?
+
+%$???_80248B10 contains recipe outputs? (each one is two 8-hex digit words, first one specified the message, second specifies output)
+
+%$???_80248A98 contains ingredients? (I think all the items on the list are possible ingredients)
+
+
+%How recipes work
+%Single ingredient
+%	First, it checks if the item is a mystery
+%		Then, theres a 50% chance of returning a mistake
+%		If it is not a mistake, it chooses a random item from
+%		a table ($IntTable_8024909C, see below)
+%		if you want to add or remove stuff from this table, you'll have to modify the function somehow
+%		unfortunately, it isn't a simple rand(23) call
+%	If it isn't then it tries to find the item in the ingredient list ($???_80248A98)
+%		If it isn't found, it returns a mistake
+%		If it is found, it uses the index of the item in the ingredient list,
+%			...then checks a bytetable based on whether she has the frying pan or not
+%				(The recipe table for no pan has slightly different recipes (some items that would return something return mistakes instead))
+%			Ex. The ultra shroom is the third item in the ingredient list, so to determine what to make out of it,
+%				the game checks the third byte in the byte table selected, which is the byte 1A.
+%		After getting something from the byte table, it uses that value to find the output
+%			Ex. For our ultra shroom, it finds the item 26 (hex 1A) in the output table,
+%				which is item B8, aka shroom steak
+%			(Note that the output table is 0 indexed!)
+
+%Two ingredients
+%	There are two different systems
+%	The complicated one
+%		find ingredients in the ingredient table
+%			if it can't, skip to the simple case
+%		once you have the indices, use them to go into the 29 x 29 table and get a value
+%		use that value obtained and read from the output table
+%	The simple one	
+%		it checks the two item IDs against two item IDs from a table
+%		if that item combo is found, go into the output table to output an item
+
+%The simple one is much easier to add recipes too, since we don't have to reformat a giant, hard to read table
+
+%How to change recipes
+
+%Same inputs, but different output (i.e. changing life shroom to sweet shroom)
+%	Simply find where in the output table the original output item was, and then change it.
+%	You can also change the value before it to change the message
+
+%New ingredient (maybe you want a hustle drink recipe)
+%	Add it to the recipe list
+%	Inside the recipe functions, the game assumes there are 29 possible ingredients (hex 1D), so change that number
+%	Then, modify the recipe table
+%	if you're adding one for a two ingredient recipe, change the simple method, not the complicated one
+%		(don't change the hardcoded number of ingredients (29) or else you might cause problems)
+%	I don't think you want to try to make the table bigger
+%	so for changing the simple method, just add the two ingredient item IDs, then the index of the output item
+
+%screw this I'm going to just import the better cooking script
+
+% COOKING OVERHAUL
+% By JaThePlayer
+
+#define .InstantCooking .False % Set to .True to make Tayce T immediately give you the cooked item
+
+#define .CookbookItemID .Item:Cookbook % Item that needs to be delivered to Tayce T to get access to two item cooking
+
+% Tayce T's reactions:
+#define .rMistake 0 % Oh... I'm so sorry. This recipe didn't work out.
+#define .rNormal 1 % Here you are! This recipe's not too bad. 
+#define .rDelicious 2 % All done! It smells delicious! 
+#define .rSpecialty 3 % Oh, sweet success! This dish is one of my specialties...
+#define .rIdk 4 % OK, all finished! ...I don't exactly know what it is...
+% If you want more, define them in $Script_80249684
+
+% Item1, Item2(FFFFFFFF if it's a 1 item recipe), Out
+#new:IntTable $IntTable_RecipeTable
+{
+.Item:Apple .Item:CakeMix .Item:ApplePie
+.Item:Egg .Item:CakeMix .Item:BigCookie
+.Item:Goomnut .Item:CakeMix .Item:BigCookie
+.Item:RedBerry .Item:CakeMix .Item:BigCookie
+.Item:YellowBerry .Item:CakeMix .Item:BigCookie
+.Item:BlueBerry .Item:CakeMix .Item:BigCookie
+.Item:KoopaLeaf .Item:Goomnut .Item:BlandMeal
+.Item:KoopaLeaf .Item:RedBerry .Item:BlandMeal
+.Item:KoopaLeaf .Item:YellowBerry .Item:BlandMeal
+.Item:KoopaLeaf .Item:BlueBerry .Item:BlandMeal
+.Item:StrangeLeaf .Item:Goomnut .Item:BlandMeal
+.Item:StrangeLeaf .Item:DriedPasta .Item:BlandMeal
+.Item:IcedPotato .Item:Mushroom .Item:BlandMeal
+.Item:IcedPotato .Item:VoltShroom .Item:BlandMeal
+.Item:IcedPotato .Item:SuperShroom .Item:BlandMeal
+.Item:IcedPotato .Item:LifeShroom .Item:BlandMeal
+.Item:IcedPotato .Item:CakeMix .Item:BlandMeal
+.Item:IcedPotato .Item:Egg .Item:BlandMeal
+.Item:IcedPotato .Item:Coconut .Item:BlandMeal
+.Item:IcedPotato .Item:DriedPasta .Item:BlandMeal
+.Item:FireFlower .Item:Goomnut .Item:BlandMeal
+.Item:FireFlower .Item:VoltShroom .Item:BlandMeal
+.Item:FireFlower .Item:SuperShroom .Item:BlandMeal
+.Item:FireFlower .Item:LifeShroom .Item:BlandMeal
+.Item:FriedShroom .Item:PotatoSalad .Item:BlandMeal
+.Item:Egg .Item:Mushroom .Item:BlandMeal
+.Item:Egg .Item:VoltShroom .Item:BlandMeal
+.Item:Egg .Item:SuperShroom .Item:BlandMeal
+.Item:Egg .Item:LifeShroom .Item:BlandMeal
+.Item:Egg .Item:DriedPasta .Item:BlandMeal
+.Item:DriedPasta .Item:Goomnut .Item:BlandMeal
+.Item:DriedPasta .Item:Coconut .Item:BlandMeal
+.Item:DriedPasta .Item:Mushroom .Item:BlandMeal
+.Item:DriedPasta .Item:VoltShroom .Item:BlandMeal
+.Item:DriedPasta .Item:SuperShroom .Item:BlandMeal
+.Item:DriedPasta .Item:LifeShroom .Item:BlandMeal
+.Item:DriedPasta .Item:RedBerry .Item:BlandMeal
+.Item:DriedPasta .Item:YellowBerry .Item:BlandMeal
+.Item:DriedPasta .Item:BlueBerry .Item:BlandMeal
+.Item:Egg .Item:StrangeLeaf .Item:BoiledEgg
+.Item:Egg .Item:StinkyHerb .Item:BoiledEgg
+.Item:CakeMix FFFFFFFF .Item:Cake
+.Item:Coconut .Item:CakeMix .Item:CocoPop
+.Item:PotatoSalad .Item:ShroomSteak .Item:DeluxeFeast
+.Item:WhackasBump .Item:StrangeLeaf .Item:DeluxeFeast
+.Item:StrangeLeaf FFFFFFFF .Item:DizzyDial
+.Item:StrangeLeaf .Item:VoltShroom .Item:DizzyDial
+.Item:StrangeLeaf .Item:StinkyHerb .Item:DizzyDial
+.Item:FireFlower .Item:Egg .Item:EggMissile
+.Item:VoltShroom .Item:CakeMix .Item:ElectroPop
+.Item:DriedFruit .Item:StrangeLeaf .Item:FireFlower
+.Item:CakeMix .Item:FireFlower .Item:FirePop
+.Item:Egg FFFFFFFF .Item:FriedEgg
+.Item:DriedShroom FFFFFFFF .Item:FriedShroom
+.Item:Mushroom FFFFFFFF .Item:FriedShroom
+.Item:SuperShroom FFFFFFFF .Item:FriedShroom
+.Item:DriedShroom .Item:Mushroom .Item:FriedShroom
+.Item:DriedShroom .Item:FireFlower .Item:FriedShroom
+.Item:FireFlower .Item:IcedPotato .Item:FrozenFries
+.Item:SpecialShake .Item:StinkyHerb .Item:HealthyJuice
+.Item:SpecialShake .Item:DriedShroom .Item:HealthyJuice
+.Item:SpecialShake .Item:StrangeLeaf .Item:HealthyJuice
+.Item:CakeMix .Item:HoneySyrup .Item:HoneyCandy
+.Item:Mushroom .Item:HoneySyrup .Item:HoneyShroom
+.Item:SuperShroom .Item:HoneySyrup .Item:HoneySuper
+.Item:LifeShroom .Item:HoneySyrup .Item:HoneySuper
+.Item:VoltShroom .Item:HoneySyrup .Item:HoneySuper
+.Item:UltraShroom .Item:HoneySyrup .Item:HoneyUltra
+.Item:DriedShroom .Item:SuperShroom .Item:HotShroom
+.Item:Mushroom .Item:SuperShroom .Item:HotShroom
+.Item:DriedShroom .Item:VoltShroom .Item:HotShroom
+.Item:Mushroom .Item:VoltShroom .Item:HotShroom
+.Item:SuperShroom .Item:VoltShroom .Item:HotShroom
+.Item:Mushroom .Item:FireFlower .Item:HotShroom
+.Item:LifeShroom FFFFFFFF .Item:HotShroom
+.Item:VoltShroom FFFFFFFF .Item:HotShroom
+.Item:CakeMix .Item:JamminJelly .Item:JellyPop
+.Item:Mushroom .Item:JamminJelly .Item:JellyShroom1
+.Item:SuperShroom .Item:JamminJelly .Item:JellySuper
+.Item:LifeShroom .Item:JamminJelly .Item:JellySuper
+.Item:VoltShroom .Item:JamminJelly .Item:JellySuper
+.Item:UltraShroom .Item:JamminJelly .Item:JellyUltra
+.Item:CakeMix .Item:KoopaLeaf .Item:KookyCookie
+.Item:CakeMix .Item:StinkyHerb .Item:KookyCookie
+.Item:CakeMix .Item:MapleSyrup .Item:KookyCookie
+.Item:KoopaLeaf .Item:DriedPasta .Item:Koopasta
+.Item:KoopaLeaf FFFFFFFF .Item:KoopaTea
+.Item:Lemon .Item:CakeMix .Item:LemonCandy
+.Item:SuperShroom .Item:KoopaLeaf .Item:SweetShroom		%Life shroom -> Sweet shroom
+.Item:VoltShroom .Item:KoopaLeaf .Item:SweetShroom		%Life shroom -> Sweet shroom
+.Item:UltraShroom .Item:KoopaLeaf .Item:SweetShroom		%Life shroom -> Sweet shroom
+.Item:LifeShroom .Item:KoopaLeaf .Item:SweetShroom		%Life shroom -> Sweet shroom
+.Item:SuperShroom .Item:Goomnut .Item:SweetShroom		%Life shroom -> Sweet shroom
+.Item:VoltShroom .Item:Goomnut .Item:SweetShroom		%Life shroom -> Sweet shroom
+.Item:UltraShroom .Item:Goomnut .Item:SweetShroom		%Life shroom -> Sweet shroom
+.Item:LifeShroom .Item:Goomnut .Item:SweetShroom		%Life shroom -> Sweet shroom
+.Item:SuperShroom .Item:StrangeLeaf .Item:SweetShroom	%Life shroom -> Sweet shroom	
+.Item:UltraShroom .Item:StrangeLeaf .Item:SweetShroom	%Life shroom -> Sweet shroom
+.Item:LifeShroom .Item:StrangeLeaf .Item:SweetShroom	%Life shroom -> Sweet shroom
+.Item:Lime .Item:CakeMix .Item:LimeCandy
+.Item:Mushroom .Item:MapleSyrup .Item:MapleShroom
+.Item:SuperShroom .Item:MapleSyrup .Item:MapleSuper
+.Item:LifeShroom .Item:MapleSyrup .Item:MapleSuper
+.Item:VoltShroom .Item:MapleSyrup .Item:MapleSuper
+.Item:UltraShroom .Item:MapleSyrup .Item:MapleUltra
+.Item:Goomnut FFFFFFFF .Item:NuttyCake
+.Item:IcedPotato FFFFFFFF .Item:PotatoSalad
+.Item:Mushroom .Item:CakeMix .Item:ShroomCake				%Shroom cake is a bit different now
+.Item:SuperShroom .Item:CakeMix .Item:SuperShroomCake		%super shroom cake 
+.Item:UltraShroom FFFFFFFF .Item:ShroomSteak
+.Item:UltraShroom .Item:Mushroom .Item:ShroomSteak
+.Item:UltraShroom .Item:SuperShroom .Item:ShroomSteak
+.Item:LifeShroom .Item:Mushroom .Item:ShroomSteak
+.Item:LifeShroom .Item:SuperShroom .Item:ShroomSteak
+.Item:LifeShroom .Item:UltraShroom .Item:ShroomSteak
+.Item:VoltShroom .Item:UltraShroom .Item:ShroomSteak
+.Item:DriedShroom .Item:UltraShroom .Item:ShroomSteak
+.Item:DriedShroom .Item:LifeShroom .Item:ShroomSteak
+.Item:RedBerry .Item:StrangeLeaf .Item:SleepySheep
+.Item:YellowBerry .Item:StrangeLeaf .Item:SleepySheep
+.Item:BlueBerry .Item:StrangeLeaf .Item:SleepySheep
+.Item:DriedPasta FFFFFFFF .Item:Spaghetti
+.Item:Melon FFFFFFFF .Item:SpecialShake
+.Item:Melon .Item:Lime .Item:SpecialShake
+.Item:Melon .Item:Lemon .Item:SpecialShake
+.Item:Melon .Item:HoneySyrup .Item:SpecialShake
+.Item:Melon .Item:MapleSyrup .Item:SpecialShake
+.Item:Melon .Item:JamminJelly .Item:SpecialShake
+.Item:Melon .Item:Apple .Item:SpecialShake
+.Item:Melon .Item:RedBerry .Item:SpecialShake
+.Item:Melon .Item:YellowBerry .Item:SpecialShake
+.Item:Melon .Item:BlueBerry .Item:SpecialShake
+.Item:Melon .Item:KoopaLeaf .Item:SpecialShake
+.Item:Melon .Item:StrangeLeaf .Item:SpecialShake
+.Item:JamminJelly .Item:Coconut .Item:SpecialShake
+.Item:JamminJelly .Item:Lime .Item:SpecialShake
+.Item:JamminJelly .Item:Lemon .Item:SpecialShake
+.Item:JamminJelly .Item:HoneySyrup .Item:SpecialShake
+.Item:JamminJelly .Item:MapleSyrup .Item:SpecialShake
+.Item:JamminJelly .Item:Apple .Item:SpecialShake
+.Item:JamminJelly .Item:RedBerry .Item:SpecialShake
+.Item:JamminJelly .Item:YellowBerry .Item:SpecialShake
+.Item:JamminJelly .Item:BlueBerry .Item:SpecialShake
+.Item:FireFlower FFFFFFFF .Item:SpicySoup
+.Item:StrangeLeaf .Item:CakeMix .Item:StrangeCake
+.Item:HoneySyrup FFFFFFFF .Item:SuperSoda
+.Item:MapleSyrup FFFFFFFF .Item:SuperSoda
+.Item:Apple FFFFFFFF .Item:SuperSoda
+.Item:BlueBerry FFFFFFFF .Item:SuperSoda
+.Item:RedBerry FFFFFFFF .Item:SuperSoda
+.Item:YellowBerry FFFFFFFF .Item:SuperSoda
+.Item:JamminJelly FFFFFFFF .Item:SuperSoda
+.Item:HoneySyrup .Item:MapleSyrup .Item:SuperSoda
+.Item:HoneySyrup .Item:KoopaLeaf .Item:SuperSoda
+.Item:Lime .Item:MapleSyrup .Item:SuperSoda
+.Item:Apple .Item:MapleSyrup .Item:SuperSoda
+.Item:Lime .Item:KoopaLeaf .Item:SuperSoda
+.Item:Lime .Item:Lemon .Item:SuperSoda
+.Item:Lime .Item:BlueBerry .Item:SuperSoda
+.Item:Lime .Item:RedBerry .Item:SuperSoda
+.Item:Lime .Item:YellowBerry .Item:SuperSoda
+.Item:Lime .Item:Apple .Item:SuperSoda
+.Item:Lemon .Item:BlueBerry .Item:SuperSoda
+.Item:Lemon .Item:RedBerry .Item:SuperSoda
+.Item:Lemon .Item:YellowBerry .Item:SuperSoda
+.Item:Lemon .Item:MapleSyrup .Item:SuperSoda
+.Item:Lemon .Item:KoopaLeaf .Item:SuperSoda
+.Item:Lemon .Item:Apple .Item:SuperSoda
+.Item:Apple .Item:BlueBerry .Item:SuperSoda
+.Item:Apple .Item:RedBerry .Item:SuperSoda
+.Item:Apple .Item:YellowBerry .Item:SuperSoda
+.Item:JamminJelly .Item:KoopaLeaf .Item:SuperSoda
+.Item:YellowBerry .Item:BlueBerry .Item:SuperSoda
+.Item:YellowBerry .Item:RedBerry .Item:SuperSoda
+.Item:BlueBerry .Item:RedBerry .Item:SuperSoda
+.Item:Coconut .Item:BlueBerry .Item:SuperSoda
+.Item:Coconut .Item:RedBerry .Item:SuperSoda
+.Item:Coconut .Item:YellowBerry .Item:SuperSoda
+.Item:Coconut .Item:Apple .Item:SuperSoda
+.Item:Coconut .Item:Melon .Item:SuperSoda
+.Item:Coconut .Item:KoopaLeaf .Item:SuperSoda
+.Item:BlueBerry .Item:MapleSyrup .Item:SuperSoda
+.Item:RedBerry .Item:MapleSyrup .Item:SuperSoda
+.Item:YellowBerry .Item:MapleSyrup .Item:SuperSoda
+.Item:KoopaLeaf .Item:MapleSyrup .Item:SuperSoda
+.Item:Coconut .Item:MapleSyrup .Item:SuperSoda
+.Item:CakeMix .Item:UltraShroom .Item:UltraShroomCake		%Ultra shroom cake
+.Item:CakeMix .Item:LifeShroom .Item:SuperShroomCake	%Super shroom cake
+.Item:RedBerry .Item:HoneySyrup .Item:TastyTonic
+.Item:YellowBerry .Item:HoneySyrup .Item:TastyTonic
+.Item:BlueBerry .Item:HoneySyrup .Item:TastyTonic
+.Item:Apple .Item:HoneySyrup .Item:TastyTonic
+.Item:Lemon .Item:HoneySyrup .Item:TastyTonic
+.Item:Lime .Item:HoneySyrup .Item:TastyTonic
+.Item:Coconut .Item:HoneySyrup .Item:TastyTonic
+.Item:Lime FFFFFFFF .Item:TastyTonic
+.Item:Lemon FFFFFFFF .Item:TastyTonic
+.Item:BubbleBerry FFFFFFFF .Item:TastyTonic
+.Item:Coconut FFFFFFFF .Item:TastyTonic
+.Item:DriedFruit .Item:VoltShroom .Item:ThunderRage
+.Item:Mushroom .Item:KoopaLeaf .Item:VoltShroom
+.Item:Mushroom .Item:Goomnut .Item:VoltShroom
+.Item:Mushroom .Item:StrangeLeaf .Item:VoltShroom
+.Item:Mushroom .Item:DriedFruit .Item:VoltShroom
+.Item:SuperShroom .Item:DriedFruit .Item:VoltShroom
+.Item:UltraShroom .Item:DriedFruit .Item:VoltShroom
+.Item:LifeShroom .Item:DriedFruit .Item:VoltShroom
+.Item:Melon .Item:CakeMix .Item:YoshiCookie
+.Item:WhackasBump FFFFFFFF .Item:YummyMeal
+.Item:DriedFruit .Item:DriedPasta .Item:YummyMeal
+.Item:DriedFruit .Item:IcedPotato .Item:YummyMeal
+.Item:FireFlower .Item:UltraShroom .Item:YummyMeal
+.Item:DriedPasta .Item:UltraShroom .Item:YummyMeal
+.Item:Egg .Item:UltraShroom .Item:YummyMeal
+.Item:IcedPotato .Item:UltraShroom .Item:YummyMeal
+.Item:StrangeLeaf .Item:IcedPotato .Item:YummyMeal
+.Item:HotShroom .Item:PotatoSalad .Item:YummyMeal
+.Item:Spaghetti .Item:PotatoSalad .Item:YummyMeal
+%new
+.Item:GoldenMelon FFFFFFFF .Item:HealthyJuice		%direct recipe for healthy juice
+.Item:Mistake        FFFFFFFF .Item:BigMistake			%Big mistake :)
+.Item:BigMistake        FFFFFFFF .Item:BigMistake			%It just makes another one (I don't have the item slots to make bigger mistakes)
+.Item:DarkLeaf .Item:DarkShroom .Item:LeafShroom							%Leaf shroom
+.Item:BubbleBerry .Item:StrangeLeaf .Item:RepelGel		%in order to fix the recipe system I have to make a repel gel recipe (*though I could just alter the table again)
+.Item:CakeMix 	.Item:ShootingStar .Item:StarCake
+.Item:DualShroom .Item:JamminJelly .Item:DualJelly
+.Item:HalfShroom .Item:JamminJelly .Item:HalfJelly
+.Item:GoldenMelon .Item:CakeMix .Item:YoshiCake
+.Item:DarkLeaf .Item:CakeMix .Item:DarkCake
+%1.3 recipes
+.Item:DualShroom .Item:CakeMix .Item:DualShroomCake
+.Item:HalfShroom .Item:CakeMix .Item:HalfShroomCake
+.Item:DarkLeaf FFFFFFFF .Item:DarkTea
+.Item:DarkShroom FFFFFFFF .Item:ObsidianShroom
+.Item:ObsidianShroom FFFFFFFF .Item:ObsidianShroom		%it like hardens immediately back into an obsidian shroom again :P
+.Item:DarkShroom .Item:CakeMix .Item:DarkShroomCake
+.Item:DarkLeaf .Item:HoneySyrup .Item:DarkPop
+.Item:GoldenShroom .Item:CakeMix .Item:GoldenShroomCake
+.Item:GoldenShroom .Item:GoldenMelon .Item:GoldenMeal
+.Item:GoldenShroom .Item:DarkLeaf .Item:DualityShake
+.Item:BakingStrawberry .Item:CakeMix .Item:StrawberryPop
+.Item:DriedFruit FFFFFFFF .Item:DryJuice
+.Item:StrangeLeaf .Item:KoopaLeaf .Item:StrangeTea
+%1.4 recipes
+.Item:MiracleJelly .Item:GoldenShroom .Item:MiracleGolden
+.Item:MiracleJelly .Item:DarkShroom .Item:TradeoffShake
+.Item:BombFruit FFFFFFFF .Item:BombJuice
+%1.4 (A + B) = (vanilla) recipes
+.Item:ShroomBunch FFFFFFFF .Item:HotShroom
+%Various (A + B) = (vanilla) recipes
+.Item:SuperBunch	FFFFFFFF .Item:HotShroom
+.Item:Melon .Item:BakingStrawberry .Item:SpecialShake
+.Item:JamminJelly .Item:BakingStrawberry .Item:SpecialShake
+.Item:BakingCleanser FFFFFFFF .Item:Cake
+.Item:BakingCleanser .Item:BakingCleanser .Item:Cake
+70707070 70707070 70707070 % end of table
+70707070 70707070 70707070 % end of table (please)
+}
+
+/%
+Full new recipe list
+All vanilla ingredients
+||Mistake|| = ||Big Mistake||
+||Cake Mix|| + ||Super Shroom|| = ||Super Shroom Cake||
+||Cake Mix|| + ||Ultra Shroom|| = ||Ultra Shroom Cake||
+||Bubble Berry|| + ||Strange Leaf|| = ||Repel Gel||
+||Cake Mix|| + ||Shooting Star|| = ||Star Cake||
+
+1 nonvanilla ingredient (first one)
+||Golden Melon|| = ||Healthy Juice||
+||Golden Melon|| + ||Cake Mix|| = ||Yoshi Cake||
+||Dual Shroom|| + ||Jammin Jelly|| = ||Dual Jelly||
+||Half Shroom|| + ||Jammin Jelly|| = ||Half Jelly||
+||Dark Leaf|| + ||Cake Mix|| = ||Dark Cake||
+
+2 nonvanilla ingredients
+||Dark Leaf|| + ||Dark Shroom|| = ||Leaf Shroom||
+
+Note that all recipes that produced Life Shrooms now produce Sweet Shrooms instead
+%/
+
+
+
+%reads aroubd 8024F534 ish
+
+% ReactionIndex - Item
+% If an item isn't present here, it defaults to .rNormal (1)
+#new:IntTable $IntTable_ItemReactions
+{
+.rMistake   .Item:Mistake
+.rMistake   .Item:BigMistake
+.rDelicious .Item:BlandMeal
+.rDelicious .Item:BigCookie
+.rDelicious .Item:YoshiCake
+.rDelicious .Item:StrangeCake
+.rDelicious .Item:SpecialShake 
+.rDelicious .Item:YummyMeal
+.rDelicious .Item:SuperShroomCake		%now super shroom cake
+.rDelicious .Item:UltraShroomCake		%now ultra shroom cake
+.rDelicious .Item:GoldenShroomCake		%now ultra shroom cake
+.rSpecialty .Item:DeluxeFeast
+.rSpecialty .Item:HealthyJuice
+.rIdk       .Item:DizzyDial 
+.rIdk       .Item:SleepySheep 
+.rIdk       .Item:ThunderRage
+.rIdk       .Item:FireFlower 
+.rIdk		.Item:RepelGel
+.rIdk 		.Item:BombJuice
+FFFFFFFF FFFFFFFF % End of table
+}
+
+% ItemID - ScriptPtr
+% If a specified item is cooked on its own, the corresponding script will be called instead of the regular script
+% The replacement script should change *Var6 to choose which item should be the result of the cooking
+#new:IntTable $SpecialCookingResultHandlers
+{
+    .Item:Mystery $Script_HandleMysteryCooked
+    FFFFFFFF FFFFFFFF % end of table
+}
+
+/%
+    If you add recipes to items previously uncookable, add the ItemID of said item to $RecipesDiscovedIDs and a flag in $RecipesDiscovedFlags
+    Then, in kmr_20.mpat, change $DataTable_80252DC0 to be the same as $RecipesDiscovedFlags, and increase the counter in the @ $Function_802421A0 hook
+%/
+% indexes for discovered Recipe flags (RecipesDiscovedFlags) The numbers are ItemID's
+@ $RecipesDiscovedIDs {
+000000B0 000000B1 000000B2 000000B3 000000B4 000000B5 000000B6 000000B7 
+000000B8 000000B9 00000087 000000BD 000000BB 000000BE 000000BF 000000BC 
+000000C0 000000C1 000000C2 000000C3 000000C4 000000C5 000000C6 000000C7 
+000000C8 000000C9 000000CA 000000CB 000000CC 000000CD 000000CE 000000CF 
+000000D0 000000D1 000000D2 000000D3 000000D4 000000D5 000000D6 000000D7 
+000000D8 000000D9 000000DA 00000089 0000009A 0000009B 00000097 000000BA 
+0000008B 0000008F 00000082 00000080 000000DB 00000007 00000055 00000072
+0000007E 0000007F 00000026 00000018 00000001 00000002 00000003 00000004
+00000005 00000006 0000000C 0000000D 0000000E 0000001C 0000000A 0000000B
+0000006F 00000070 0000006E 00000000
+}
+
+%what is in the list?
+%B0 = spicy soup
+%B1 = apple pie
+%B2 = honey ultra
+%B3 = maple ultra
+%B4 = jelly ultra
+%B5 = koopasta
+%B6 = fried shroom
+%B7 = shroom cake
+
+%B8 = shroom steak
+%B9 = hot shroom
+%87 = super shroom cake (*this position used to be sweet shroom)
+%BD = bland meal
+%BB = yummy meal
+%BE = deluxe feast
+%BF = special shake
+%BC = healthy juice
+
+%C0 = big cookie
+%C1 = cake
+%C2 = mistake
+%C3 = koopa tea
+%C4 = honey super
+%C5 = maple super
+%C6 = jelly super
+%C7 = spaghetti
+
+%C8 = egg missile
+%C9 = fried egg
+%CA = honey shroom
+%CB = honey candy
+%CC = electro pop
+%CD = fire pop
+%CE = lime candy
+%CF = coco pop
+
+%D0 = lemon candy
+%D1 = jelly pop
+%D2 = strange cake
+%D3 = kooky cookie
+%D4 = frozen fries
+%D5 = potato salad
+%D6 = nutty cake
+%D7 = maple shroom
+
+%D8 = boiled egg
+%D9 = yoshi cookie
+%DA = jelly shroom
+%89 = tasty tonic
+%9A = dizzy dial
+%9B = super soda
+%97 = repel gel
+%BA = sweet shroom
+
+%8B = volt shroom
+%8F = sleepy sheep
+%82 = thunder rage
+%80 = fire flower
+%DB = ultra shroom cake
+%7 = big mistake
+%55 = leaf shroom
+%72 = star cake
+
+%0x71 is a placeholder for another item (not counted in recipe count)
+
+%Problem: 56 entries but there are less recognized recipes (~54)
+%	Items not recognized as real recipes
+%		Mistake
+%		Super soda?
+%		
+
+% discovered Recipe flags - mirrored in kmr_20 as $DataTable_80252DC0, these are locations of GlobalFlags[136-169]
+@ $RecipesDiscovedFlags
+{
+	*GF_MAC02_DiscoveredRecipe_01 *GF_MAC02_DiscoveredRecipe_02 *GF_MAC02_DiscoveredRecipe_03 *GF_MAC02_DiscoveredRecipe_04
+	*GF_MAC02_DiscoveredRecipe_05 *GF_MAC02_DiscoveredRecipe_06 *GF_MAC02_DiscoveredRecipe_07 *GF_MAC02_DiscoveredRecipe_08
+	*GF_MAC02_DiscoveredRecipe_09 *GF_MAC02_DiscoveredRecipe_0A *GF_MAC02_DiscoveredRecipe_0B *GF_MAC02_DiscoveredRecipe_0C
+	*GF_MAC02_DiscoveredRecipe_0D *GF_MAC02_DiscoveredRecipe_0E *GF_MAC02_DiscoveredRecipe_0F *GF_MAC02_DiscoveredRecipe_10
+	*GF_MAC02_DiscoveredRecipe_11 *GF_MAC02_DiscoveredRecipe_12 *GF_MAC02_DiscoveredRecipe_13 *GF_MAC02_DiscoveredRecipe_14
+	*GF_MAC02_DiscoveredRecipe_15 *GF_MAC02_DiscoveredRecipe_16 *GF_MAC02_DiscoveredRecipe_17 *GF_MAC02_DiscoveredRecipe_18
+	*GF_MAC02_DiscoveredRecipe_19 *GF_MAC02_DiscoveredRecipe_1A *GF_MAC02_DiscoveredRecipe_1B *GF_MAC02_DiscoveredRecipe_1C
+	*GF_MAC02_DiscoveredRecipe_1D *GF_MAC02_DiscoveredRecipe_1E *GF_MAC02_DiscoveredRecipe_1F *GF_MAC02_DiscoveredRecipe_20
+	*GF_MAC02_DiscoveredRecipe_21 *GF_MAC02_DiscoveredRecipe_22 *GF_MAC02_DiscoveredRecipe_23 *GF_MAC02_DiscoveredRecipe_24
+	*GF_MAC02_DiscoveredRecipe_25 *GF_MAC02_DiscoveredRecipe_26 *GF_MAC02_DiscoveredRecipe_27 *GF_MAC02_DiscoveredRecipe_28
+	*GF_MAC02_DiscoveredRecipe_29 *GF_MAC02_DiscoveredRecipe_2A *GF_MAC02_DiscoveredRecipe_2B *GF_MAC02_DiscoveredRecipe_2C
+	*GF_MAC02_DiscoveredRecipe_2D *GF_MAC02_DiscoveredRecipe_2E *GF_MAC02_DiscoveredRecipe_2F *GF_MAC02_DiscoveredRecipe_30
+	*GF_MAC02_DiscoveredRecipe_31 *GF_MAC02_DiscoveredRecipe_32 *GF_MAC02_DiscoveredRecipe_33 *GF_MAC02_DiscoveredRecipe_34
+	*GF_MAC02_DiscoveredRecipe_35 *GF_MAC02_DiscoveredRecipe_36 *GF_MAC02_DiscoveredRecipe_37 *GF_MAC02_DiscoveredRecipe_38 
+	*GF_MAC02_DiscoveredRecipe_39 *GF_MAC02_DiscoveredRecipe_3A *GF_MAC02_DiscoveredRecipe_3B *GF_MAC02_DiscoveredRecipe_3C
+	*GF_MAC02_DiscoveredRecipe_3D *GF_MAC02_DiscoveredRecipe_3E *GF_MAC02_DiscoveredRecipe_3F *GF_MAC02_DiscoveredRecipe_40
+	*GF_MAC02_DiscoveredRecipe_41 *GF_MAC02_DiscoveredRecipe_42 *GF_MAC02_DiscoveredRecipe_43 *GF_MAC02_DiscoveredRecipe_44
+	*GF_MAC02_DiscoveredRecipe_45 *GF_MAC02_DiscoveredRecipe_46 *GF_MAC02_DiscoveredRecipe_47 *GF_MAC02_DiscoveredRecipe_48
+	*GF_MAC02_DiscoveredRecipe_49 *GF_MAC02_DiscoveredRecipe_4A *GF_MAC02_DiscoveredRecipe_4B *GF_MAC02_DiscoveredRecipe_4C
+	00000000
+}
+
+%for some stupid reason, this function puts literally everything in the stack
+/%
+@ $Function_80242F60
+{
+	[0]   ADDIU     SP, SP, -308	%was -200 earlier 	
+    [4]   SW        RA, 300 (SP)
+	[24]  ADDIU     A0, V0, 120		%D0 -> 100
+	[54]  ADDIU     V1, SP, 130		%E0 -> 110
+	[60]  ADDIU     A0, V0, 120		%D0 -> 100
+	[94]  ADDIU     A1, SP, 130		%E0 -> 110 (must be multiple of 0x10)
+	[C4]  SLTI      V0, A0, 48
+    [D0]  LW        RA, 300 (SP)
+    [DC]  ADDIU     SP, SP, 308	
+}
+%/
+
+%screw this, rewrite it to actually make sense
+@ $Function_80242F60
+{
+	PUSH	  	RA, S0, S1, S2, S3, S4
+	LW        	V0, C (A0)
+	JAL       	~Func:get_variable
+	LW        	A1, 0 (V0)
+	COPY      	S4, V0
+	%S4 = V0	
+	LA        	S0, $RecipesDiscovedIDs	
+	LA        	S1, $RecipesDiscovedFlags
+	.looptop
+	LW			S3, 0 (S0)
+	BNE			S3, S4, .postcheck
+	NOP
+	%success, set flag to 1
+	CLEAR     	A0
+	LW		  	A1, 0 (S1)
+	JAL       	~Func:set_variable
+	LI        	A2, 1
+	BEQ			R0, R0, .end
+	NOP
+	.postcheck
+	%post check
+	ADDI	  	S0, S0, 4
+	ADDI	  	S1, S1, 4
+	LW		  	S2, 0 (S1)
+	BEQ			S2, R0, .end
+	NOP
+	BEQ			R0, R0, .looptop
+	NOP
+	.end
+	POP			RA, S0, S1, S2, S3, S4
+	JR			RA
+	LI			V0, 2
+}
+
+
+% MYSTERY
+#define .mysteryMistakeChance 500` % chance for a mystery to turn into a mistake, multiplied by 10
+#define .mysteryMistakeItem .Item:Mistake
+#define .mysteryItemCount 23` % How many items are in $IntTable_8024909C
+
+% ItemID's that a mystery can turn into if it's not a mistake.
+% Be sure to update .mysteryItemCount!
+@ $IntTable_8024909C
+{
+	.Item:FireFlower .Item:TastyTonic .Item:SuperSoda .Item:SleepySheep .Item:LifeShroom .Item:DizzyDial .Item:VoltShroom .Item:FriedShroom
+	.Item:Koopasta .Item:SpicySoup .Item:KoopaTea .Item:Spaghetti .Item:FriedEgg .Item:BoiledEgg .Item:PotatoSalad .Item:HoneyShroom
+	.Item:BlandMeal .Item:ThunderRage .Item:EggMissile .Item:ApplePie .Item:KookyCookie .Item:BigCookie .Item:SpecialShake
+}
+
+/%
+  DON'T TOUCH ANYTHING PAST THIS POINT UNLESS YOU KNOW WHAT YOU'RE DOING!
+%/
+
+#new:Script $Script_HandleMysteryCooked 
+{
+    % *Var6 -> ItemID of cooked item
+    Declare *RandomNumber
+
+    % Try to turn into a mistake
+    Call RandInt ( 1000` *RandomNumber )
+    If *RandomNumber > .mysteryMistakeChance
+        Set *Var6 .mysteryMistakeItem
+        Return
+    EndIf
+
+    % Turn into a random item from the table
+    Call RandInt ( 10000` *RandomNumber )
+    Mod *RandomNumber .mysteryItemCount
+    Add *RandomNumber 1`
+
+    UseIntBuffer $IntTable_8024909C
+    Loop *RandomNumber
+        Get1Int *Var6 % ItemID
+    EndLoop
+
+    Return
+    End
+}
+
+#new:Script $TayceT_WalkToCook 
+{
+    If .InstantCooking == .False
+        ExecWait $Script_802490F8
+    EndIf
+    Return
+    End
+}
+
+%The frying pan / cake script
+@ $Script_8024926C
+{
+    0:  If  *GF_MAC02_TayceT_HoldingCake  ==  .True
+   10:  	Call  $Function_80243088    ( *Var0 )
+   20:  	If  *Var0  !=  00000000
+   30:  		Call  SpeakToPlayer ( 00000000 00AA0004 00AA0001 00000000 0004001A ) % Here's the Cake!
+   50:  		Set   *Var0  000000C1
+   60:  		Set   *Var1  00000000
+   70:  		ExecWait  $Script_80246154
+   7C:  		Call  AddItem       ( .Item:Cake *Var0 )
+   90:  		Call  SpeakToPlayer ( 00000000 00AA0004 00AA0001 00000000 0004001B ) % This is my most delicious Cake. One taste of it wo ...
+   B0:  		Set   *GB_StoryProgress  .Story:Ch4_GotTayceTsCake
+   C0:  	Else
+   C8:  		Call  SpeakToPlayer ( 00000000 00AA0004 00AA0001 00000000 0004001C ) % Oh, my... You're carrying too much. You can't poss ...
+   E8:  		Set   *GF_MAC02_TayceT_HoldingCake  .True
+   F8:  	EndIf
+  100:  	Return
+  108:  EndIf
+  110:  Call  SpeakToPlayer ( 00000000 00AA0004 00AA0006 00000000 00040017 ) % Oh...hello there, hon. Thank you for coming to vis ...
+  130:  Set   *Var0  $???_80249264
+  140:  Set   *Var1  00000000
+  150:  ExecWait  $Script_802488C4
+  15C:  Switch  *Var0
+  168:  	Case  ==  00000000
+  174:  	Case  ==  FFFFFFFF
+  180:  		Call  SpeakToPlayer ( 00000000 00AA0004 00AA0006 00000000 00040018 ) % But...you aren't going to give me back my Frying P ...
+  1A0:  	Default
+  1A8:  		Call  SpeakToPlayer ( 00000000 00AA0005 00AA0001 00000000 00040019 ) % Oh, Mario! My dear, dear Frying Pan! You saved it  ...
+  1C8:  		ExecWait  $Script_802490F8
+  1D4:  		Call  $Function_80243088    ( *Var0 )
+  1E4:  		If  *Var0  !=  00000000
+  1F4:  			Call  SpeakToPlayer ( 00000000 00AA0004 00AA0001 00000000 0004001A ) % Here's the Cake!
+  214:  			Set   *Var0  000000C1
+  224:  			Set   *Var1  00000000
+  234:  			ExecWait  $Script_80246154
+  240:  			Call  AddItem       ( .Item:Cake *Var0 )
+  254:  			Call  SpeakToPlayer ( 00000000 00AA0004 00AA0001 00000000 0004001B ) % This is my most delicious Cake. One taste of it wo ...
+  274:  			Set   *GB_StoryProgress  .Story:Ch4_GotTayceTsCake
+  284:  		Else
+  28C:  			Call  SpeakToPlayer ( 00000000 00AA0004 00AA0001 00000000 0004001C ) % Oh, my... You're carrying too much. You can't poss ...
+  2AC:  			Set   *GF_MAC02_TayceT_HoldingCake  .True
+  2BC:  		EndIf
+  2C4:  EndSwitch
+  2CC:  Return
+  2D4:  End
+}
+
+@ $Script_Interact_8024A034
+{
+    0:  If  *GB_StoryProgress  >=  .Story:Ch3_StarSpritDeparted % FFFFFFF3
+   10:  	If  *GB_StoryProgress  <  .Story:Ch4_GotTayceTsCake % FFFFFFFD
+   20:  		ExecWait  $Script_8024926C
+   2C:  		Return
+   34:  	EndIf
+   3C:  EndIf
+   44:  Call  FindKeyItem   ( .Item:Cookbook *Var0 )
+   58:  If  *Var0  ==  FFFFFFFF
+   68:  	ExecWait  $Script_80249684
+   74:  Else
+   7C:  	ExecWait  $Script_80249550
+   88:  EndIf
+   90:  Return
+   98:  End
+}
+
+
+
+%Allow access to new items?
+@ $Function_802430D0
+{
+    0:  LI        A0, D9		%5A		%??? table has this many entries *Good thing to know: this is another way the game filters out key items from regular inventory?
+    4:  LA        V1, $End[6CC] %$End[4D0]
+    C:  LI        V0, DF		%DA
+        .o10
+   10:  SW        V0, 0 (V1)
+   14:  ADDIU     V1, V1, FFFC
+   18:  ADDIU     A0, A0, FFFF
+   1C:  BGEZ      A0, .o10
+   20:  ADDIU     V0, V0, FFFF
+   24:  SAW       R0, $End[6D0]
+   2C:  JR        RA
+   30:  LI        V0, 2
+}
+
+% Tayce T's "give cookbook" script
+% Completely changed to fix the bug that made Tayce T stop working after obtaining the cookbook
+@ $Script_80249550
+{
+  Call  SpeakToPlayer ( 00000000 00AA0004 00AA0001 00000000 0004001D ) % Oh, my! Oh, good heavens!! That book you have! It  ...
+  Set   *GF_MAC02_TayceT_HasCookbook  .True
+  Call  FindKeyItem   ( .CookbookItemID *Var0 )
+  Call  RemoveKeyItemAt ( *Var0 )
+  Call  SpeakToPlayer ( 00000000 00AA0004 00AA0001 00000000 00040020 ) % Ooh! I can have it? Oh, how delightful! With this  ...
+  Return
+  End
+}
+
+
+#new:String $AllRecipes
+{
+	[Style Right]
+	Wow! It looks like I've made[BR]
+	everything in this cookbook![BR]
+	I couldn't have done it without[BR]
+	you, Mario.[BR]
+	[Wait][Next]
+	I think I should give you[BR]
+	something special for that.[HEART][Wait][End]
+}
+
+% some label definitions, don't edit!
+#define .lOneItemCook 5
+#define .lHandleCook 6
+% Tayce T's talk script
+@ $Script_80249684 {
+        %Set *GF_MAC02_TayceT_HasCookbook 1 % debug
+    0:  Call     DisablePlayerInput 	( .True )
+   10:  If  *Flag_MAC_96  ==  00000000 
+            % met first time
+   20:  	Set  *Flag_MAC_96  00000001 
+   30:  	Set  *AreaFlag[001]  00000001 
+   40:  	Call     SpeakToPlayer 	( 00000000 00AA0004 00AA0001 00000000 00040000 ) % Oh my goodness, it's Mario! My name is Tayce T. I  ...
+   60:  Else
+   68:  	If  *AreaFlag[001]  ==  00000000 
+   78:  		Call     SpeakToPlayer 	( 00000000 00AA0004 00AA0001 00000000 00040001 ) % Oh, it's Mario! Hi there! Would you like me to coo ...
+   98:  		Set  *AreaFlag[001]  00000001 
+   A8:  	Else
+   B0:  		Call     SpeakToPlayer 	( 00000000 00AA0004 00AA0001 00000000 00040002 ) % Yes, honey? Would you like me to cook you somethin ...
+   D0:  	EndIf
+   D8:  EndIf
+   E0:  Call     $Function_80243040 ( *Var[0] )
+   F0:  If  *Var[0]  <=  00000000 
+  100:  	Call     ContinueSpeech 	( 00000000 00AA0004 00AA0001 00000000 00040003 ) % Oh my. You don't have any ingredients for me. I ca ...
+  120:  	Goto     00000009 
+  12C:  EndIf
+  134:  Call     ShowChoice  	( 001E0010 ) % Yes No 
+  144:  If  *Var[0]  ==  00000001 
+  154:  	Call     ContinueSpeech 	( 00000000 00AA0004 00AA0001 00000000 00040004 ) % Oh, that's too bad. I was so excited to show you m ...
+  174:  	Goto     00000009 
+  180:  EndIf
+  188:  Call     ContinueSpeech 	( 00000000 00AA0004 00AA0001 00000000 00040005 ) % Which ingredient would you like me to use?
+  1A8:  Label    00000001 
+  1B4:  Set  *Var[3]  00000000 
+  1C4:  Call     $Function_802430D0 ( )
+  1D0:  Set  *Var[0]  $End[368] 
+  1E0:  Set  *Var[1]  00000000 
+  1F0:  ExecWait $Script_80248A48 
+  1FC:  Switch  *Var[0] 
+  208:  	Case  ==  00000000 
+  214:  	Case  ==  FFFFFFFF 
+  220:  		Call     SpeakToPlayer 	( 00000000 00AA0004 00AA0001 00000000 00040006 ) % You don't want me to cook? 
+  240:  		Call     ShowChoice  	( 001E0009 ) % Don't Cook Cook 
+  250:  		If  *Var[0]  ==  00000000 
+  260:  			Call     ContinueSpeech 	( 00000000 00AA0004 00AA0001 00000000 00040004 ) % Oh, that's too bad. I was so excited to show you m ...
+  280:  			Goto     00000009 
+  28C:  		EndIf
+  294:  		Call     802D0A98 ( )
+  2A0:  		Set  *Var[3]  00000001 
+  2B0:  	Default
+  2B8:  		Set  *Var[8]  *Var[0] 
+  2C8:  		Call     AddItem     	( *Var[0] *Var[1] )
+  2DC:  EndSwitch
+  2E4:  If  *Var[3]  ==  00000001 
+  2F4:  	Goto     00000001 
+  300:  EndIf
+  308:  If  *GF_MAC02_TayceT_HasCookbook  ==  .False 
+  318:  	Goto     .lOneItemCook 
+  324:  EndIf
+  32C:  Call     $Function_80243040 ( *Var[0] )
+  33C:  If  *Var[0]  <  00000002 
+  34C:  	Goto     .lOneItemCook  
+  358:  EndIf
+  360:  Call     SpeakToPlayer 	( 00000000 00AA0004 00AA0001 00000000 00040007 ) % Would you like me to use another ingredient? 
+  380:  Call     ShowChoice  	( 001E0010 ) % Yes No 
+  390:  Call     802D0A98 ( )
+  39C:  If  *Var[0]  ==  00000001 
+  3AC:  	Goto     .lOneItemCook  
+  3B8:  EndIf
+  3C0:  Label    00000002 
+  3CC:  Call     RemoveItem  	( *Var[8] *Var[0] )
+  3E0:  Set  *Var[3]  00000000 
+  3F0:  Call     $Function_802430D0 ( )
+  3FC:  Set  *Var[0]  $End[368] 
+  40C:  Set  *Var[1]  00000000 
+  41C:  ExecWait $Script_80248A48 
+  428:  Call     AddItem     	( *Var[8] *Var[1] )
+  43C:  Switch  *Var[0] 
+  448:  	Case  ==  00000000 
+  454:  	Case  ==  FFFFFFFF 
+  460:  		Call     SpeakToPlayer 	( 00000000 00AA0004 00AA0001 00000000 00040008 ) % What's the matter, honey? 
+  480:  		Call     ShowChoice  	( 001E0008 ) % Make with one Choose the second Stop 
+  490:  		If  *Var[0]  ==  00000000 
+  4A0:  			Call     802D0A98 ( )
+  4AC:  			Goto     .lOneItemCook  
+  4B8:  		EndIf
+  4C0:  		If  *Var[0]  ==  00000002 
+  4D0:  			Call     ContinueSpeech 	( 00000000 00AA0004 00AA0001 00000000 00040004 ) % Oh, that's too bad. I was so excited to show you m ...
+  4F0:  			Goto     00000009 
+  4FC:  		EndIf
+  504:  		Call     802D0A98 ( )
+  510:  		Set  *Var[3]  00000001 
+  520:  	Default
+  528:  		Set  *Var[9]  *Var[0] 
+  538:  		Call     AddItem     	( *Var[0] *Var[1] )
+  54C:  		If  *Var[8]  ==  *Var[9] 
+  55C:  			Call     SpeakToPlayer 	( 00000000 00AA0004 00AA0001 00000000 00040009 ) % This is the same kind as the first ingredient. Ple ...
+  57C:  			Set  *Var[3]  00000001 
+  58C:  		EndIf
+  594:  EndSwitch
+  59C:  If  *Var[3]  ==  00000001 
+  5AC:  	Goto     00000002 
+  5B8:  EndIf
+  5C0:  Set  *Var[0]  *Var[8] 
+  5D0:  Call     $Function_80241874 ( *Var[0] )
+  5E0:  Call     SetMessageString 	( *Var[0] 00000000 )
+  5F4:  Set  *Var[1]  *Var[9] 
+  604:  Call     $Function_80241874 ( *Var[1] )
+  614:  Call     SetMessageString 	( *Var[1] 00000001 )
+  628:  Call     SpeakToPlayer 	( 00000000 00AA0004 00AA0001 00000000 0004000B ) % Then I shall cook with  and . 
+  648:  Call     ShowChoice  	( 001E0010 ) % Yes No 
+  658:  If  *Var[0]  ==  00000001 
+  668:  	Call     ContinueSpeech 	( 00000000 00AA0004 00AA0001 00000000 0004000C ) % Oh my. You don't want me to cook now? Well, come b ...
+  688:  	Goto     00000009 
+  694:  EndIf
+  % Cook double item recipe:
+  %69C:  Call     $Function_80242DBC ( *Var[6] *Var[7] *Var[8] *Var[9] )
+        ExecWait $Script_Get2ItemRecipe
+  6B8:  Call     RemoveItem  	( *Var[8] *Var[0] )
+  6CC:  Call     RemoveItem  	( *Var[9] *Var[0] )
+  6E0:  Goto     .lHandleCook
+  % One Item
+  6EC:  Label    .lOneItemCook 
+  6F8:  Set  *Var[0]  *Var[8] 
+  708:  Call     $Function_80241874 ( *Var[0] )
+  718:  Call     SetMessageString 	( *Var[0] 00000000 )
+  72C:  Call     SpeakToPlayer 	( 00000000 00AA0004 00AA0001 00000000 0004000A ) % Then I shall cook with . 
+  74C:  Call     ShowChoice  	( 001E0010 ) % Yes No 
+  75C:  If  *Var[0]  ==  00000001 
+  76C:  	Call     ContinueSpeech 	( 00000000 00AA0004 00AA0001 00000000 0004000C ) % Oh my. You don't want me to cook now? Well, come b ...
+  78C:  	Goto     00000009 
+  798:  EndIf
+  %7A0:  Call     $Function_80242C44 ( *Var[6] *Var[7] *Var[8] *Flag_MAC_98 ) % GetOneItemRecipe
+        ExecWait $Script_Get1ItemRecipe
+  7BC:  Call     RemoveItem  	( *Var[8] *Var[0] )
+  % End, give the item
+  % *Var[6] -> Received item
+  % *Var[7] -> Reaction
+  7D0:  Label    .lHandleCook 
+  7DC:  Call     ContinueSpeech 	( 00000000 00AA0004 00AA0001 00000000 0004000D ) % I'll whip something special up just for you, honey ...
+  7FC:  ExecWait $TayceT_WalkToCook 
+  808:  Switch  *Var[7] 
+  814:  	Case  ==  .rMistake
+  820:  		Call     SpeakToPlayer 	( 00000000 00AA0004 00AA0001 00000000 00040012 ) % Oh... I'm so sorry. This recipe didn't work out. O ...
+  840:  	Case  ==  .rDelicious 
+  84C:  		Call     SpeakToPlayer 	( 00000000 00AA0004 00AA0001 00000000 0004000F ) % All done! It smells delicious! 
+  86C:  	Case  ==  .rSpecialty 
+  878:  		Call     SpeakToPlayer 	( 00000000 00AA0004 00AA0001 00000000 00040010 ) % Oh, sweet success! This dish is one of my specialt ...
+  898:  	Case  ==  .rIdk 
+  8A4:  		Call     SpeakToPlayer 	( 00000000 00AA0004 00AA0001 00000000 00040013 ) % OK, all finished! ...I don't exactly know what it  ...
+  8C4:  	Default % .rNormal
+  8CC:  		Call     SpeakToPlayer 	( 00000000 00AA0004 00AA0001 00000000 00040011 ) % Here you are! This recipe's not too bad. 
+  8EC:  EndSwitch
+  8F4:  Call     ContinueSpeech 	( 00000000 00AA0004 00AA0001 00000000 00040014 ) % Here, please!
+  914:  Call     $Function_80242F60 ( *Var[6] ) % Handles unlocked recipe flags - uses $???_8024E470, which is copied in kmr_20 as $???_80252DC0
+  924:  Set  *Var[0]  *Var[6] 
+  934:  Set  *Var[1]  00000000 
+  944:  ExecWait $Script_80246154 % ShowGotItem
+  950:  Call     AddItem     	( *Var[6] *Var[0] )
+		%Check all recipes
+		If *GF_MAC02_DiscoveredAllRecipes == .False
+			%check using the missing recipe function
+			Call	 $Function_UnusedItem ( *Var2 )
+			If *Var2 == FFFFFFFF
+				Call     SpeakToPlayer 	( 00000000 00AA0004 00AA0001 00000000 $AllRecipes ) % Oh, it's Mario! Hi there! Would you like me to coo ...
+				Set *GF_MAC02_DiscoveredAllRecipes .True
+				Set 	*Var2 .Item:ItemSaver
+				Call	ShowGotItem	( *Var2 00000000 00000000 )		%Last chance
+				Call	AddBadge	( *Var2 *Var7 )								
+			EndIf
+			/%
+			Call 	$Function_CountRecipes ( *Var0 )
+			If *Var0 >= 72`
+				Call     SpeakToPlayer 	( 00000000 00AA0004 00AA0001 00000000 $AllRecipes ) % Oh, it's Mario! Hi there! Would you like me to coo ...
+				Set *GF_MAC02_DiscoveredAllRecipes .True
+				Set 	*Var2 .Item:ItemSaver
+				Call	ShowGotItem	( *Var2 00000000 00000000 )		%Last chance
+				Call	AddBadge	( *Var2 *Var7 )								
+			EndIf
+			%/
+		Else
+  964:  	Call     SpeakToPlayer 	( 00000000 00AA0004 00AA0001 00000000 00040015 ) % Come back anytime, hon. I look forward to it!
+		EndIf
+  984:  Label    00000009 
+  990:  Call     DisablePlayerInput 	( .False )
+  9A0:  Return
+  9A8:  End
+}
+
+@ $Script_MakeEntities
+{
+    0:  Call  GetEntryID    ( *Var0 )
+   10:  If  *Var0  ==  ~Entry:Entry5
+   20:  	If  *GF_MAC02_UnlockedHouse  ==  .False
+   30:  		Call  MakeEntity    ( .Entity:Padlock ~Vec4d:Entity80245E20 80000000 )
+   54:  		Set   *MapVar[0]  *Var0
+   64:  		BindLock  $Script_80245C58 .Trigger:WallPressA 00004000 $ItemList_80245C50 00000000 00000001
+   84:  	EndIf
+   8C:  EndIf
+   94:  Call  MakeItemEntity    ( .Item:OddKey ~Vec3d:Item80245E84 .ItemSpawnMode:Fixed_NeverVanish *GF_MAC02_Item_OddKey )
+   B8:  Call  MakeEntity        ( .Entity:HiddenPanel ~Vec4d:Entity80245EA8 ~Model:o236 80000000 )
+   E0:  Call  AssignPanelFlag   ( *GF_MAC02_HiddenPanel )
+   F0:  Call  MakeEntity        ( .Entity:Signpost ~Vec4d:Entity80245EE0 80000000 )
+  114:  Call  AssignScript      ( $Script_80245D60 )
+		Call  MakeEntity  		( .Entity:Signpost ~Vec4d:RecipeSign 80000000 )
+		Call	 AssignScript ( $Script_SignPost )
+  124:  Bind  $Script_80245DA8 .Trigger:WallPressA ~Collider:sign 00000001 00000000
+  140:  Return
+  148:  End
+}
+
+#new:Script $Script_SignPost
+{
+	0:  Call     DisablePlayerInput 	( .True )
+		Call 	$Function_CountRecipes ( *Var1 )
+		Call	 SetMessageValue ( *Var1 0 )
+		%If *Var1 < 40`
+		%	Call     ShowMessageAtScreenPos 	( $RecipeCountNoHint 000000A0 00000028 )
+		%	Goto 1
+		%EndIf
+		Call	 $Function_UnusedItem ( *Var2 )
+		If *Var2 == FFFFFFFF
+			Call     ShowMessageAtScreenPos 	( $RecipeCountComplete 000000A0 00000028 )			
+		Else
+			Call     $Function_80241874 ( *Var2 )			%Get name of item at var0
+			Call     SetMessageString 	( *Var2 00000001 )
+			Call	 $Function_UnusedItemIngredient1 ( *Var2 )
+			If *Var2 == FFFFFFFF
+				Call     ShowMessageAtScreenPos 	( $RecipeCountHint 000000A0 00000028 )
+			Else
+				Call     $Function_80241874 ( *Var2 )			%Get name of item at var0
+				Call     SetMessageString 	( *Var2 00000002 )
+				Call	 $Function_UnusedItemIngredient2 ( *Var2 )
+				If *Var2 == FFFFFFFF
+					Call     ShowMessageAtScreenPos 	( $RecipeCountHintOneIng 000000A0 00000028 )
+				Else
+					Call     $Function_80241874 ( *Var2 )			%Get name of item at var0
+					Call     SetMessageString 	( *Var2 00000003 )
+					Call     ShowMessageAtScreenPos 	( $RecipeCountHintTwoIng 000000A0 00000028 )
+				EndIf
+			EndIf
+		EndIf
+		Label 1
+	8:  Call     DisablePlayerInput 	( .False )
+   38:  Return
+   40: End
+}
+
+#new:String $RecipeCountNoHint
+{
+	[DelayOff][Style Sign]Recipes: [Color:23][Var 0][Color:0A]/75[BR]
+	Get to 40 recipes in order to[BR]
+	unlock access to recipe hints.[BR]
+	[DelayOn][Wait][END] 
+}
+
+#new:String $RecipeCountHint
+{
+	[DelayOff][Style Sign]Recipes: [Color:23][Var 0][Color:0A]/75[BR]
+	Missing recipe: [Var 1][BR]
+	[DelayOn][Wait][END] 
+}
+
+#new:String $RecipeCountHintOneIng
+{
+	[DelayOff][Style Sign]Recipes: [Color:23][Var 0][Color:0A]/75[BR]
+	Missing recipe: [Var 1][BR]
+	Cook with [Var 2] alone.[BR]
+	[DelayOn][Wait][END] 
+}
+
+#new:String $RecipeCountHintTwoIng
+{
+	[DelayOff][Style Sign]Recipes: [Color:23][Var 0][Color:0A]/75[BR]
+	Missing recipe: [Var 1][BR]
+	Cook with [Var 2] and[BR]
+	[Var 3][BR]
+	[DelayOn][Wait][END] 
+}
+
+#new:String $RecipeCountComplete
+{
+	[DelayOff][Style Sign]Recipes: [Color:1D][Var 0][Color:0A]/75[BR]
+	[DelayOn][Wait][END] 
+}
+
+
+% in *Var[6] -> Item
+% out *Var[7] -> Reaction index
+#new:Script $Script_GetReaction
+{
+    UseIntBuffer $IntTable_ItemReactions
+    Loop 
+        Get1Int *Var[7] % Reaction Index
+        Get1Int *Var[D] % Item
+        If *Var[D] == *Var[6]
+            Return
+        EndIf
+        If *Var[D] == FFFFFFFF % End of table
+            Set *Var[7] .rNormal
+            Return
+        EndIf
+    EndLoop
+    Return
+    End
+}
+
+% out *Var[6] -> Received item
+% out *Var[7] -> Reaction
+% in *Var[8] -> Item used for cooking
+#new:Script $Script_Get1ItemRecipe
+{
+    % Var[8] -> used ItemID
+
+    % Check if there's a special handler for this ItemID
+    UseIntBuffer $SpecialCookingResultHandlers
+    Loop
+        Get1Int *Var[D] % item
+        If *Var[D] == FFFFFFFF % end of table
+            BreakLoop
+        EndIf
+        Get1Int *Var[7] % Script
+        If *Var[D] == *Var[8]
+            % Custom handler exists, just use that
+            ExecWait *Var[7]
+            ExecWait $Script_GetReaction % Sets *Var[7] to reactionID
+            Return
+        EndIf
+    EndLoop
+    
+    UseIntBuffer $IntTable_RecipeTable
+    % 1 Item
+    Loop
+        Get1Int *Var[D] % Item1
+        If *Var[D] == 70707070
+            % End of table, no recipe :(
+            Set *Var[6] .Item:Mistake
+            Set *Var[7] 0
+            Return
+        EndIf
+        If *Var[D] == FFFFFFFF
+            % End of table, no recipe :(
+            Set *Var[6] .Item:Mistake
+            Set *Var[7] 0
+            Return
+        EndIf
+        Get1Int *Var[7] % Item2, not used but we still need to check for FFFFFFFF
+        Get1Int *Var[6] % Received item
+        If *Var[D] == *Var[8]
+        If *Var[7] == FFFFFFFF
+            % Recipe exists:
+            ExecWait $Script_GetReaction % Sets *Var[7]
+            Return
+        EndIf
+        EndIf
+    EndLoop
+    Return
+    End
+}
+
+% out *Var[6] -> Received item
+% out *Var[7] -> Reaction
+% in *Var[8] -> Item used for cooking
+% in *Var[9] -> 2nd Item used for cooking
+#new:Script $Script_Get2ItemRecipe {
+    UseIntBuffer $IntTable_RecipeTable
+    % 2 Items
+    Loop
+        Get1Int *Var[D] % Item1
+        If *Var[D] == 70707070
+            % End of table, no recipe :(
+            Set *Var[6] .Item:Mistake
+            Set *Var[7] 0
+            Return
+        EndIf
+        If *Var[D] == FFFFFFFF
+            % End of table, no recipe :(
+            Set *Var[6] .Item:Mistake
+            Set *Var[7] 0
+            Return
+        EndIf
+        Get1Int *Var[E] % Item 2
+        Get1Int *Var[6] % Received item
+        If *Var[D] == *Var[8] % Item1 == Item1
+            If *Var[E] == *Var[9] % Item2 == Item2
+                % Recipe exists:
+                ExecWait $Script_GetReaction % Sets *Var[7]
+                Return
+            EndIf
+        EndIf
+        If *Var[D] == *Var[9] % Item1 == Item2
+            If *Var[E] == *Var[8] % Item2 == Item1
+                % Recipe exists:
+                ExecWait $Script_GetReaction % Sets *Var[7]
+                Return
+            EndIf
+        EndIf
+    EndLoop
+    Return
+    End
+}
+
+
+
+
+% ====================================================
+% Chuck Quizmo will continue asking questions so long
+% as another is available.
+%
+% The existing script is modified by adding two labels
+% for flow control and new code to check for the next
+% question after the player recieves a star piece.
+% ====================================================
+
+@ $Script_80247890
+{
+	0:  If  *GB_CompletedQuizzes  >  0000003F
+   10:  	Set   *Var0  00000000
+   20:  	Return
+   28:  EndIf
+   30:  Call  GetPlayerPos  ( *Array[1] *Array[2] *Array[3] )
+   48:  Call  NpcFacePlayer ( .Npc:Self 00000010 )
+   5C:  If  *GB_CompletedQuizzes  ==  0000003F
+   6C:  	Call  SpeakToPlayer ( .Npc:Self 00AF0004 00AF0001 00000000 0008000A ) % Kaaaa-wiiiizzz! It's everyone's favorite quizmaste ...
+   8C:  Else
+   94:  	If  *GF_Met_ChuckQuizmo  ==  .True
+   A4:  		Call  SpeakToPlayer ( .Npc:Self 00AF0004 00AF0001 00000000 00080009 ) % Kaaaa-wiiiizzz! It's everyone's favorite quizmaste ...
+   C4:  	Else
+   CC:  		Call  SpeakToPlayer ( .Npc:Self 00AF0004 00AF0001 00000000 00080008 ) % Kaaaa-wiiiizzz! Chuck Quizmo's the name, and quizz ...
+   EC:  		Set   *GF_Met_ChuckQuizmo  .True
+   FC:  	EndIf
+  104:  EndIf
+  10C:  Call  ShowChoice    ( 001E000D ) % Yes No
+  11C:  If  *Var0  ==  00000001
+  12C:  	Call  ContinueSpeech    ( .Npc:Self 00AF0004 00AF0001 00000000 0008000C ) % Uh, oh. Not up to it, huh? Maybe another time! Wel ...
+  14C:  	ExecWait  $Script_80246244
+  158:  	Set   *Var0  00000000
+  168:  	Return
+  170:  EndIf
+  178:  Set   *GF_Quizmo_TakingQuiz  .True
+  188:  Call  $Function_802418D8 ( )
+  194:  Call  $Function_80241BEC ( )
+  1A0:  Exec  $Script_802462F4
+  1AC:  Call  DisablePartnerAI  ( 00000000 )
+  1BC:  Call  SetNpcFlagBits    ( .Npc:Partner 00000200 .False )
+  1D4:  Call  SetNpcFlagBits    ( 0000000C 00000200 .False )
+  1EC:  Call  SetNpcFlagBits    ( .Npc:Partner 00000148 .True )
+  204:  Call  SetNpcFlagBits    ( 0000000C 00000100 .True )
+  21C:  Call  SetNpcAnimation   ( .Npc:Partner 00000106 )
+  230:  Exec  $Script_80246A1C *Var1
+  240:  Call  ContinueSpeech    ( .Npc:Self 00AF0004 00AF0001 00000000 0008000B ) % Then let's go to the question!
+  260:  Call  PlaySound ( 00000089 )
+  270:  Loop
+  27C:  	DoesScriptExist  *Var1 *Var0
+  28C:  	If  *Var0  ==  00000000
+  29C:  		BreakLoop
+  2A4:  	EndIf
+  2AC:  	Wait  1`
+  2B8:  EndLoop
+  2C0:  Call  $Function_80241F30 ( )
+  2CC:  Loop  00000005
+  2D8:  	Call  GetPlayerPos  ( *Var0 *Var1 *Var2 )
+  2F0:  	Add   *Var1  00000001
+  300:  	Call  SetPlayerPos  ( *Var0 *Var1 *Var2 )
+  318:  	Wait  2`
+  324:  EndLoop  
+    	Label	0	% new label for multiple questions
+  32C:  Set   *Var0  002C0000
+  33C:  Add   *Var0  *GB_CompletedQuizzes
+  34C:  Call  SpeakToPlayer ( .Npc:Self 00AF0005 00AF0006 00000000 *Var0 ) % variable string ID
+  36C:  Call  SetPlayerAnimation    ( .PlayerAnim:Question )
+  37C:  Set   *Var0  002D0000
+  38C:  Add   *Var0  *GB_CompletedQuizzes
+  39C:  Call  PlaySound     ( 0000008E )
+  3AC:  Call  ShowChoice    ( *Var0 ) % variable string ID
+  3BC:  Kill  *Var1
+  3C8:  Call  StopSound     ( 0000008E )
+  3D8:  Exec  $Script_80246A90
+  3E4:  Wait  15`
+  3F0:  Call  PlaySound     ( 0000008D )
+  400:  Call  $Function_80242230    ( *Var0 )
+  410:  Set   *Array[4]  00000000
+  %420:  Call  $Function_80242824 ( )
+  42C:  Wait  40`
+  438:  Call  $Function_80241EAC ( )
+  444:  Thread
+  44C:  	Wait  110`
+  458:  	Call  CloseChoice ( )
+  464:  	Set   *Array[4]  00000000
+  474:  EndThread
+  47C:  If  *Var0  ==  00000001
+  48C:  	Call  SetNpcAnimation   ( 0000000C 00AF0007 )
+  4A0:  	Set   *Array[4]  00000001
+  4B0:  	Thread
+  4B8:  		Call  $Function_802421FC    ( 00000001 )
+  4C8:  		Wait  6`
+  4D4:  		Wait  6`
+  4E0:  		Wait  6`
+  4EC:  		Call  $Function_802421FC    ( 00000002 )
+  4FC:  	EndThread
+  504:  	Thread
+  50C:  		Call  PlaySound ( 0000021C )
+  51C:  		Wait  6`
+  528:  		Call  PlaySound ( 0000021C )
+  538:  		Wait  6`
+  544:  		Call  PlaySound ( 0000021C )
+  554:  		Wait  6`
+  560:  		Call  PlaySound ( 0000021C )
+  570:  	EndThread
+  578:  	Call  PlaySound ( 0000008A )
+  588:  	Call  $Function_802422C8 ( )
+  594:  	Thread
+  59C:  		Wait  15`
+  5A8:  		Call  GetPlayerPos  ( *Var0 *Var1 *Var2 )
+  5C0:  		Add   *Var1  00000032
+  5D0:  		Call  $Function_80242440    ( 00000000 00000000 00000053 *Var0 *Var2 )
+  5F0:  		Call  PlayEffect    ( ~FX:Steam:Ring *Var0 *Var1 *Var2 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+  634:  		Call  PlayEffect    ( ~FX:Confetti:Burst2 *Var0 *Var1 *Var2 00000001 0000003C 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+  678:  		Wait  15`
+  684:  		Add   *Var1  FFFFFFFD
+  694:  		Call  $Function_80242440    ( 00000000 00000000 0000003A *Var0 *Var2 )
+  6B4:  		Call  PlayEffect    ( ~FX:Steam:Ring *Var0 *Var1 *Var2 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+  6F8:  		Call  PlayEffect    ( ~FX:Confetti:Burst2 *Var0 *Var1 *Var2 00000001 0000003C 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+  73C:  		Wait  15`
+  748:  		Add   *Var1  0000001E
+  758:  		Call  $Function_80242440    ( 00000000 00000000 0000005D *Var0 *Var2 )
+  778:  		Call  PlayEffect    ( ~FX:Steam:Ring *Var0 *Var1 *Var2 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+  7BC:  		Call  PlayEffect    ( ~FX:Confetti:Burst2 *Var0 *Var1 *Var2 00000001 0000003C 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+  800:  		Wait  15`
+  80C:  	EndThread
+  814:  	Wait  20`
+  820:  	Exec  $Script_80247730 *Var1
+  830:  	Add   *GB_CompletedQuizzes  00000001
+  840:  	If  *GB_CompletedQuizzes  >  0000003F
+  850:  		Call  ContinueSpeech    ( .Npc:Self FFFFFFFF FFFFFFFF 00000000 00080010 ) % Correct!! Congratulations! This is my last prize!  ...
+  870:  		Call  SetNpcAnimation   ( 0000000C 00AF0006 )
+  884:  		Loop
+  890:  			DoesScriptExist  *Var1 *Var0
+  8A0:  			If  *Var0  ==  00000000
+  8B0:  				BreakLoop
+  8B8:  			EndIf
+  8C0:  			Wait  1`
+  8CC:  		EndLoop
+  8D4:  		Call  SetNpcAnimation   ( 0000000C 00AF0005 )
+  8E8:  		Set   *Var0  0000015C
+  8F8:  		Set   *Var1  00000003
+  908:  		ExecWait  $Script_80246154
+  914:  		Call  AddStarPieces     ( 00000001 )
+  924:  		Call  $Function_802421FC    ( 0000000F )
+  934:  		Call  $Function_802422B0 ( )
+  940:  		Call  SetMessageValue   ( *GB_CompletedQuizzes 00000000 )
+  954:  		Call  SpeakToPlayer     ( .Npc:Self 00AF0004 00AF0001 00000000 00080011 ) % You've managed to correctly answer all questions.  ...
+  974:  	Else
+  97C:  		Call  ContinueSpeech    ( .Npc:Self FFFFFFFF FFFFFFFF 00000000 0008000E ) % Correct! Congratulations! Here's your Star Piece!
+  99C:  		Call  SetNpcAnimation   ( 0000000C 00AF0006 )
+  9B0:  		Loop
+  9BC:  			DoesScriptExist  *Var1 *Var0
+  9CC:  			If  *Var0  ==  00000000
+  9DC:  				BreakLoop
+  9E4:  			EndIf
+  9EC:  			Wait  1`
+  9F8:  		EndLoop
+  A00:  		Call  SetNpcAnimation   ( 0000000C 00AF0005 )
+  A14:  		Set   *Var0  0000015C
+  A24:  		Set   *Var1  00000001
+  A34:  		ExecWait  $Script_80246154
+  A40:  		Call  AddStarPieces     ( 00000001 )
+  A50:  		Call  $Function_802421FC    ( 0000000F )
+  A60:  		Call  $Function_802422B0 ( )
+  A6C:  		Call  SetMessageValue   ( *GB_CompletedQuizzes 00000000 )
+  A80:  		If  *GB_CompletedQuizzes  ==  00000001
+  A90:  			Call  SetMessageString  ( 8014C294 00000001 )
+  AA4:  		Else
+  AAC:  			Call  SetMessageString  ( 8014C290 00000001 )
+  AC0:  		EndIf
+  AC8:  		Call  SpeakToPlayer ( .Npc:Self 00AF0004 00AF0001 00000000 0008000F ) % You've correctly answered question so far. Good lu ...
+% ====================================================
+			% new: multiple quizzes can be completed at a time
+				Wait	10`
+				Call	$Function_IsNextQuestionAvailable ( )
+				If  *Var[0]  ==  00000000 
+					Call     SpeakToPlayer	( .Npc:Self 00AF0004 00AF0001 00000000 0008004A ) % Looks like that's it for now ...
+					Set      *Var[0] 00000001 
+					Goto	1
+				EndIf
+				Call     SpeakToPlayer		( .Npc:Self 00AF0004 00AF0001 00000000 00080049 ) % But we're not done yet ...
+				Call     ShowChoice			( 001E000D ) % Yes No 
+				If	*Var[0] ==  00000001 
+					Call     ContinueSpeech 	( .Npc:Self 00AF0004 00AF0001 00000000 0008000C ) % Uh, oh. Not up to it, huh? Maybe another time! Wel ...
+					Set      *Var[0] 00000001 
+					Goto	1
+				EndIf
+				Call     ContinueSpeech 	( .Npc:Self 00AF0004 00AF0001 00000000 0008000B ) % Then let's go to the question!
+				Thread
+					Call     $Function_80242440 ( *Array[1] *Array[3] 0000006C *Var[0] *Var[1] )
+					SetF     *Var[2] *Array[1] 
+					AddF     *Var[2] *Var[0] 
+					SetF     *Var[3] *Array[3] 
+					AddF     *Var[3] *Var[1] 
+					Call     SetNpcAnimation 	( .Npc:Partner 00000102 )
+					Call     NpcMoveTo   		( .Npc:Partner *Var[2] *Var[3] 00000028 )
+					Call     SetNpcAnimation 	( .Npc:Partner 00000106 )
+					Call     NpcFacePlayer 		( .Npc:Partner 00000000 )
+				EndThread
+				Call     $Function_80242440 ( *Array[1] *Array[3] 00000053 *Var[0] *Var[1] )
+				SetF     *Var[3] *Var[0] 
+				SetF     *Var[4] *Var[1] 
+				AddF     *Var[3] *Array[1]
+				AddF     *Var[4] *Array[3]
+				Call     PlayerMoveTo 	( *Var[3] *Var[4] 40` )
+				Loop     00000005 
+					Call     GetPlayerPos 	( *Var[0] *Var[1] *Var[2] )
+					Add      *Var[1] 00000001 
+					Call     SetPlayerPos 	( *Var[0] *Var[1] *Var[2] )
+					Wait     00000002 
+				EndLoop
+				Goto	0
+		%/new
+		% ====================================================
+  AE8:  	EndIf
+  AF0:  	Set   *Var0  00000001
+  B00:  Else
+  B08:  	Call  SetNpcAnimation   ( 0000000C 00AF0009 )
+  B1C:  	Set   *Array[4]  00000002
+  B2C:  	Call  PlaySound ( 0000021D )
+  B3C:  	Call  PlaySound ( 0000008B )
+  B4C:  	Exec  $Script_802477E0 *Var1
+  B5C:  	Call  GetPlayerPos      ( *Var2 *Var3 *Var4 )
+  B74:  	Call  PlayEffect        ( ~FX:DeadLeaves:Gust1 *Var2 *Var3 *Var4 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+  BB8:  	Call  ContinueSpeech    ( .Npc:Self FFFFFFFF FFFFFFFF 00000000 0008000D ) % Oops! Tough luck, pal! Wrong answer! Better luck n ...
+  BD8:  	Call  SetNpcAnimation   ( 0000000C 00AF000A )
+  BEC:  	Loop
+  BF8:  		DoesScriptExist  *Var1 *Var0
+  C08:  		If  *Var0  ==  00000000
+  C18:  			BreakLoop
+  C20:  		EndIf
+  C28:  		Wait  1`
+  C34:  	EndLoop
+  C3C:  	Set   *Var0  00000000
+  C4C:  EndIf
+    	Label	1	% new label for multiple questions
+  C54:  Call  $Function_80242230    ( FFFFFFFF )
+  C64:  Call  EnablePartnerAI ( )
+  C70:  Thread
+  C78:  	Wait  30`
+  C84:  	Call  PlaySound ( 0000008F )
+  C94:  EndThread
+  C9C:  Thread
+  CA4:  	Wait  45`
+  CB0:  	Call  StopSound ( 00000089 )
+  CC0:  EndThread
+  CC8:  Call  $Function_802422E4 ( )
+  CD4:  Call  $Function_80242148 ( )
+  CE0:  ExecWait  $Script_80246244
+  CEC:  Exec  $Script_8024658C
+  CF8:  Call  $Function_80241D38 ( )
+  D04:  Call  $Function_802418EC ( )
+  D10:  Set   *GF_Quizmo_TakingQuiz  .False
+  D20:  Return
+  D28:  End
+}
+
+% Since we never loaded the O/X icon, don't try to free it.
+@ $Function_80242148[9C]
+{
+	NOP
+}
+
+#new:Function $Function_IsNextQuestionAvailable
+{
+	PUSH	RA, S0, S1
+	DADDU	S1, A0, R0
+	DADDU	A0, R0, R0
+	LIO		A1, *GB_CompletedQuizzes
+	JAL		~Func:get_variable
+	RESERVED
+	DADDU	A0, R0, R0
+	DADDU	S0, V0, R0
+	LIO		A1, *GB_StoryProgress
+	JAL		~Func:get_variable
+	RESERVED
+	DADDU	A1, V0, R0
+	LIA		A0, $QuizRequirements
+    .FindStoryProgress
+	LW		V0, 0 (A0)
+	SLT		V0, A1, V0
+	BNE		V0, R0, .CompareQuizIndex
+	NOP
+	BEQ		R0, R0, .FindStoryProgress
+	ADDIU	A0, A0, 8
+	.CompareQuizIndex
+	LW		V0, 4 (A0)
+	SLT		V0, S0, V0
+	SW		V0, 84 (S1)
+	.Done
+	POP		RA, S0, S1
+	JR		RA
+	ADDIU	V0, R0, 2
+}
+
+@ $QuizRequirements
+{
+% if (story progress) < (col 1), the player can complete up to (col 2) quizzes
+FFFFFF94 00000000 % < chapter 1 start
+FFFFFFB4 00000006 % < chapter 2 start
+FFFFFFCA 0000000C % < chapter 3 start
+FFFFFFF2 00000012 % < chapter 4 start
+00000006 0000001A % < chapter 5 start
+00000027 00000022 % < chapter 6 start
+0000003A 0000002A % < chapter 7 start
+00000058 00000034 % < chapter 8 start
+0000005F 00000040 % end game
+00000060 00000040 % all
+}
+
+@ $QuizAnswers
+{
+01010200 01000200 01020001 01020200 
+02010202 01000201 00010201 00020100 
+02000102 00000001 00020002 02010001
+02020102 02010102 00020102 01000201
+}

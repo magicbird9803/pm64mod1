@@ -1,0 +1,377 @@
+
+#new:Header $Header
+{
+[MainScript] $Script_Main
+[EntryList] $EntryList
+[EntryCount] 00000002
+[Background] 80200000
+[MapTattle]   $Function_GetTattle 
+}
+
+#new:Function $Function_GetTattle
+{
+	ADDIU     SP, SP, FFE8
+	LIO       V0, $MapTattle
+	JR        RA
+	ADDIU     SP, SP, 18
+}
+
+#string $MapTattle
+{
+[Style Tattle][EnableCDownNext]This place looks really weird...[BR]
+Is this some kind of debug map?[BR]
+[Wait][NEXT]I get the feeling that we[BR]
+really shouldn't be in here.[BR]
+[Wait][NEXT]Maybe we should get out of[BR]
+here before something weird[BR]
+jumps out at us.[BR]
+[Wait][NEXT]We probably shouldn't touch[BR]
+anything either, in case[BR]
+some weird debug things happen.[BR]
+[Wait][END]
+}
+
+#import EnterViaPipe.mpat
+#import ExitViaPipe.mpat
+
+#import NPC_Bzzap.mpat
+#import NPC_Clubba.mpat
+#import NPC_Gulpit.mpat
+#import NPC_DryBones.mpat
+#import Pit_AI.mpat
+
+#new:EntryList $EntryList
+{
+~Vec4f:Entry0
+~Vec4f:Entry1
+}
+
+#new:Script $Script_SetMusic
+{
+Call     SetMusicTrack 	( 00000000 .Song:CaveTheme 00000000 00000008 ) %New music maybe
+Return
+End
+}
+
+#new:Script_Main $Script_Main
+{
+Set  *GB_WorldLocation .Location:ToadTownTunnels%2D %hope this doesn't crash the game when trying to display world map
+Call	SetSpriteShading 	( FFFFFFFF )
+Call	SetCamPerspective	( .Cam:Default  3  25` 16` 4096` )	% default type, half vertical FOV, near clip, and far clip
+Call	SetCamBGColor   	( .Cam:Default  0  0  0 ) 			% color values are RGB bytes; (0,0,0) is black, (255`,255`,255`) is white, etc.
+Call	SetCamEnabled 	 	( .Cam:Default  .True )				% enabled?
+Call	SetCamLeadPlayer 	( .Cam:Default  .False )			% lead player motion?
+Exec     $Script_SetMusic
+Call     MakeNpcs           ( 00000001 $NpcGroup_Enemies)
+Call  MakeEntity    ( .Entity:RedSwitch ~Vec4d:SwitchA 80000000 )
+Call  AssignAreaFlag    ( 00000004 )
+Bind  $Script_SwitchTrigger1 .Trigger:AreaFlagSet *AreaFlag[004] 00000001 00000000
+Call  MakeEntity    ( .Entity:RedSwitch ~Vec4d:SwitchB 80000000 )
+Call  AssignAreaFlag    ( 00000005 )
+Bind  $Script_SwitchTrigger2 .Trigger:AreaFlagSet *AreaFlag[005] 00000001 00000000
+Call  MakeEntity    ( .Entity:RedSwitch ~Vec4d:SwitchC 80000000 )
+Call  AssignAreaFlag    ( 00000006 )
+Bind  $Script_SwitchTrigger3 .Trigger:AreaFlagSet *AreaFlag[006] 00000001 00000000
+Call     MakeItemEntity ( .Item:DualShroomCake ~Vec3d:ItemA 00000011 *GF_CAV13_GoldenShroom )
+Call     MakeItemEntity ( 0000016D ~Vec3d:ItemB 00000011 *GF_CAV13_GoldenShroom )
+Call     MakeItemEntity ( 0000016E ~Vec3d:ItemC 00000011 *GF_CAV13_GoldenShroom )
+%entry 0 = side pipe
+%entry 1 = loading zone
+Call     GetEntryID  	( *Var[0] )
+If (*Var[0] == 0) 
+	Set		*Var[A] $Script_MakeExits 
+	Set 	*Var[B] ~Collider:o89
+	Exec $Script_EnterHorizontalPipe %the script executes the script in *Var[A]
+Else
+	Set		*Var[0] $Script_MakeExits 
+	Exec EnterWalk
+EndIf
+Return
+End
+}
+
+#new:Script $Script_SwitchTrigger1
+{
+	Call	$Function_EquipAllBadges ( )
+	Return
+	End
+}
+
+#new:Script $Script_SwitchTrigger2
+{
+	Call 	$Function_NegateAllRecipeFlags ( )
+	Return
+	End
+}
+
+#new:Script $Script_SwitchTrigger3
+{
+	Call 	$Function_SetAllRecipeFlags ( )
+	Return
+	End
+}
+
+
+#new:Script $Script_Init_Enemy
+{
+Return
+End
+}
+
+#new:NpcGroup $NpcGroup_Bzzrk
+{
+00000000 $NpcSettings_Bzzap ~Vec3f:Bzzap % -50 55 90
+00002D00 $Script_Init_Enemy 00000000 00000000 0000005A 
+~İtems:64:MapleSyrup:6:HoneySyrup:4
+~HP:20:70:3:50 ~HP:30:60:3:50 ~HP:50:50:3:40 ~HP:80:40:3:40 ~HP:100:30:3:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:1:4
+~Movement:Bzzap
+004B0102 004B0102 004B0103 004B0103 004B0101 004B0102 004B0106 004B0106
+004B0104 004B0102 004B0101 004B0101 004B0101 004B0101 004B0101 004B0101 
+00000003 00000000 00000000 00000000 % no tattle string
+}
+
+#new:NpcGroup $NpcGroup_DarkBubble
+{
+00000001 $NpcSettings_Bubble ~Vec3f:Bubble
+00000D00 $Script_Init_Enemy 00000000 00000000 0000005A 
+~İtems:64:StoneCap:A
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:1:4
+~Movement:Bubble
+00460301 00460302 00460303 00460303 00460301 00460301 00460307 00460307 
+00460304 00460301 00460301 00460301 00460301 00460301 00460301 00460301 
+00000002 00000000 00000000 00000000 % no tattle string
+}
+
+#new:NpcGroup $NpcGroup_Koopatrol
+{
+00000002 $NpcSettings_Koopatrol ~Vec3f:Koopa % 550 30 -145
+00842C00 $Script_Init_Enemy 00000000 00000000 0000010E 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus
+~Movement:Koopa
+00580001 00580004 00580006 00580006 00580001 00580001 00580010 00580010 
+0058000C 0058000B 0058000D 00580001 00580001 00580001 00580001 00580001  % .Sprite:WorldKoopatrol
+00000000 00000000 00000000 00000000 % no tattle string
+}
+
+#new:NpcGroup $NpcGroup_DarkClubba
+{
+00000008 $NpcSettings_ClubbaA ~Vec3f:Clubba % -200 0 180
+00000C00 $Script_Init_Enemy 00000000 00000000 0000010E 
+~İtems:64:SuperShroom:A
+~HP:20:70:3:50 ~HP:30:60:3:50 ~HP:50:50:3:40 ~HP:80:40:3:40 ~HP:100:30:3:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:2:3
+~Movement:Clubba
+00390302 00390303 00390304 00390304 00390302 00390302 0039030C 0039030C
+00390311 00390312 00390307 00390308 00390301 00390302 00390302 00390302 % .Sprite:WorldClubba
+00000002 00000000 $ExtraAnimationList_ClubbaA 00000000 % no tattle string
+% 
+% $NpcGroup_80241E08[1F0]
+00000009 $NpcSettings_ClubbaB 0.0 -1000.0 0.0 % 0 -1000 0
+00800D00 $Script_Init_Enemy 00000000 00000000 00000000 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus
+~Movement:Clubba
+00390302 00390303 00390304 00390304 00390302 00390302 0039030C 0039030C
+00390311 00390312 00390307 00390308 00390301 00390302 00390302 00390302  % .Sprite:WorldClubba
+00000000 00000000 $ExtraAnimationList_ClubbaB 00000000 % no tattle string
+}
+
+#new:NpcGroup $NpcGroup_Gulpit
+{
+0000000A $NpcSettings_GulpitA ~Vec3f:Gulpit % -345 0 115
+00000C00 00000000 00000000 00000000 0000005A 
+~İtems:5:Pebble:2:SuperShroom:8
+~HP:20:70:3:50 ~HP:30:60:3:50 ~HP:50:50:3:40 ~HP:80:40:3:40 ~HP:100:30:3:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:1:4
+~Movement:Gulpit
+00520001 00520002 00520003 00520003 00520001 00520001 0052000B 0052000B
+00520004 00520004 00520001 00520001 00520001 00520001 00520001 00520001 % .Sprite:Gulpit
+00000003 00000000 $ExtraAnimationList_GulpitA 00000000 % no tattle string
+% 
+% $NpcGroup_80241B70[1F0]
+0000000B $NpcSettings_GulpitB 0.0 -1000.0 0.0 % 0 -1000 0
+00800D00 00000000 00000000 00000000 00000000 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus
+~Movement:Gulpit
+00520001 00520002 00520003 00520003 00520001 00520001 0052000B 0052000B
+00520004 00520004 00520001 00520001 00520001 00520001 00520001 00520001 % .Sprite:Gulpit
+00000000 00000000 $ExtraAnimationList_GulpitB 00000000 % no tattle string
+}
+
+#new:NpcGroup $NpcGroup_DryBones
+{
+	00000004 $NpcSettings_DryBones ~Vec3f:DryBones % -10 0 100
+	00000800 00000000 00000000 00000000 0000005A
+	~İtems:5:SuperShroom:A ~HP:Standard:2 ~FP:Standard:4 ~CoinBonus:0:4
+	~Movement:DryBones
+	00530002 00530003 00530004 00530004 00530002 00530002 00530007 00530007
+	00530005 00530006 00530002 00530002 00530002 00530002 00530002 00530002
+	00000000 00000000 00000000 00000000 % no tattle string
+	%
+	% $NpcGroup_80242200[1F0]
+	00000005 $NpcSettings_DryBone 0.0 -1000.0 0.0 % 0 -1000 0
+	00800D00 00000000 00000000 00000000 0000005A
+	~NoDrops
+	~Movement:DryBone
+	00540000 00540000 00540000 00540000 00540000 00540000 00540000 00540000
+	00540000 00540000 00540000 00540000 00540000 00540000 00540000 00540000
+	00000000 00000000 00000000 00000000 % no tattle string
+	%
+	% $NpcGroup_80242200[3E0]
+	00000006 $NpcSettings_DryBone 0.0 -1000.0 0.0 % 0 -1000 0
+	00800D00 00000000 00000000 00000000 0000005A
+	~NoDrops
+	~Movement:DryBone
+	00540000 00540000 00540000 00540000 00540000 00540000 00540000 00540000
+	00540000 00540000 00540000 00540000 00540000 00540000 00540000 00540000
+	00000000 00000000 00000000 00000000 % no tattle string
+	%
+	% $NpcGroup_80242200[5D0]
+	00000007 $NpcSettings_DryBone 0.0 -1000.0 0.0 % 0 -1000 0
+	00800D00 00000000 00000000 00000000 0000005A
+	~NoDrops
+	~Movement:DryBone
+	00540000 00540000 00540000 00540000 00540000 00540000 00540000 00540000
+	00540000 00540000 00540000 00540000 00540000 00540000 00540000 00540000
+	00000000 00000000 00000000 00000000 % no tattle string
+}
+
+%these parameters don't seem to change much
+@ $Script_NpcAI_ClubbaA
+{
+	0:  Call     SetSelfVar 	( 00000000 *GameByte[030] ) %0		(ram = 800DBDA0)
+   14:  Call     SetSelfVar 	( 00000001 *GameByte[031] ) %5
+   28:  Call     SetSelfVar 	( 00000002 *GameByte[032] ) %8
+   3C:  Call     SetSelfVar 	( 00000003 *GameByte[033] ) %C
+   50:  Call     $Function_8024061C_Clubba ( $AISettings_Clubba )
+   60:  Return
+   68:  End
+}
+
+@ $Script_NpcAI_Bzzap
+{
+		Set *Var[0] *GameByte[030]
+		Mul *Var[0] 10
+	0:  Call     SetSelfVar 	( 00000000 *Var[0] ) %0
+		Set *Var[0] *GameByte[031]
+		Mul *Var[0] 10
+   14:  Call     SetSelfVar 	( 00000005 *Var[0] ) %FFFFFD8A aka -630 dec / -276 hex
+		Set *Var[0] *GameByte[032]
+		Mul *Var[0] 10
+   28:  Call     SetSelfVar 	( 00000006 *Var[0] ) %32
+		Set *Var[0] *GameByte[033]
+		Mul *Var[0] 10
+   3C:  Call     SetSelfVar 	( 00000001 *Var[0] ) %C8
+   50:  Call     $Function_8024162C_Bzzap ( $AISettings_Bzzap )
+   60:  Return
+   68:  End
+}
+
+@ $Script_NpcAI_Koopatrol
+{
+	0:  Call     SetSelfVar 	( 00000002 *GameByte[030] ) %5
+   14:  Call     SetSelfVar 	( 00000003 *GameByte[031] ) %4
+   28:  Call     SetSelfVar 	( 00000005 *GameByte[032] ) %A
+   3C:  Call     SetSelfVar 	( 00000007 *GameByte[033] ) %5
+   50:  Call     $Function_DoAI_ShellEnemy ( $AISettings_Koopatrol )
+   60:  Return
+   68:  End
+}
+
+@ $Script_NpcAI_Bubble
+{
+	0:  Call     SetSelfVar 	( 00000000 *GameByte[030] ) %1
+   14:  Call     SetSelfVar 	( 00000005 *GameByte[031] ) %0
+   28:  Call     SetSelfVar 	( 00000006 *GameByte[032] ) %0
+   3C:  Call     SetSelfVar 	( 00000001 *GameByte[033] ) %96
+   50:  Call     $Function_NEW12124 ( $AISettings_Bubble )
+   60:  Return
+   68:  End
+}
+
+@ $Script_NpcAI_GulpitA
+{
+	0:  Call     SetSelfVar 	( 00000000 *GameByte[030] ) %0
+   14:  Call     SetSelfVar 	( 00000001 *GameByte[031] ) %5
+   28:  Call     SetSelfVar 	( 00000002 *GameByte[032] ) %D
+   3C:  Call     SetSelfVar 	( 00000003 *GameByte[033] ) %1E
+   50:  Call     $Function_DoAI_Gulpit ( $AISettings_Gulpit )
+   60:  Return
+   68:  End
+}
+
+@ $Script_NpcAI_DryBones
+{
+    0:  Call  SetSelfVar    ( 00000000 *GameByte[030] )	%0
+   14:  Call  SetSelfVar    ( 00000001 *GameByte[031] )	%F
+   28:  Call  SetSelfVar    ( 00000002 *GameByte[032] ) %A
+   3C:  Call  SetSelfVar    ( 00000003 *GameByte[033] ) %2
+   50:  Call  $Function_80241064_DryBones    ( $AISettings_DryBones )
+   60:  Return
+   68:  End
+}
+
+@ $Script_NpcAI_DryBone
+{
+    0:  Call  SetSelfVar    ( 00000000 *GameByte[034] ) %0
+   14:  Call  SetSelfVar    ( 00000001 *GameByte[035] ) %3
+   28:  Call  SetSelfVar    ( 00000002 *GameByte[036] ) %F
+   3C:  Call  SetSelfVar    ( 00000003 *GameByte[037] ) %F
+   50:  Call  $Function_802406CC_DryBones    ( $AISettings_DryBone )
+   60:  Return
+   68:  End
+}
+   
+#new:NpcGroupList $NpcGroup_Enemies
+{
+00000001 $NpcGroup_Bzzrk 18290000 
+00000001 $NpcGroup_DarkBubble 3A020000
+00000001 $NpcGroup_Koopatrol 223F0000
+00000002 $NpcGroup_DarkClubba 3B040000
+00000002 $NpcGroup_Gulpit 1D120000
+00000004 $NpcGroup_DryBones 223D0000
+00000000 00000000 00000000
+}
+
+#new:Script $Script_MakeExits
+{
+	Bind     $Script_ExitViaPipe .Trigger:WallPush ~Collider:o89 00000001 00000000
+	Bind     $Script_Entry1 .Trigger:FloorAbove ~Collider:lz 00000001 00000000
+	Return
+    End
+}
+	
+#new:Script $Script_ExitViaPipe %$Script_802445CC
+{
+	0:  SetGroup 0000001B 
+		Set *Var[A] 00000000 		%entry id
+		Set *Var[B] ~Collider:o89	%collider id
+		Set *Var[C]	$Script_Entry0 	%script
+   3C:  ExecWait $Script_HorizontalPipe 
+   48:  Return
+   50:  End
+}
+   
+#new:Script $Script_Entry0
+{
+	0:  Call     GotoMap     	( "tik_26" 00000001 ) 
+   14:  Wait     00000064 
+   20:  Return
+   28:  End
+}
+   
+#new:Script $Script_Entry1
+{
+	0:  SetGroup 0000001B 
+    C:  Call     UseExitHeading ( 0000003C 00000001 )
+   20:  Exec     ExitWalk 
+   2C:  Call     GotoMap     	( "cav_01" 00000000 )
+   40:  Wait     00000064 
+   4C:  Return
+   54:  End
+}

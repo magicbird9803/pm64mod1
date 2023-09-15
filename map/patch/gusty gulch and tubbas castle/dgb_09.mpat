@@ -1,0 +1,116 @@
+@ $NpcGroupList_8024533C
+{
+00000002 $NpcGroup_80244920 0F060001 %also a red clubba
+00000002 $NpcGroup_80244D6C 0F060001 %now a red clubba :)
+00000001 $NpcGroup_8024514C 00000000 
+00000000 00000000 00000000 
+}
+
+@ $ExtraAnimationList_802440BC
+{
+00390200 00390202 00390203 00390204 0039020C 00390207 00390208 00390211 
+00390212 FFFFFFFF 
+}
+
+@ $AISettings_802441B8
+{
+    2.0 % move speed (doubled)
+    120` % move time
+    30` % Wait time
+  100.0 % alert radius
+   40.0
+    10`
+    5.0 % chase speed	make him as fast as the other red clubbas for consistency
+    90`
+    15`
+  200.0 % chase radius
+  160.0
+    1`
+}
+
+@ $Script_NpcAI_802441E8
+{
+	0:  Call     SetSelfVar 	( 00000000 00000000 )
+   14:  Call     SetSelfVar 	( 00000001 00000004 )
+   28:  Call     SetSelfVar 	( 00000002 00000007 )
+   3C:  Call     SetSelfVar 	( 00000003 00000006 )
+   50:  Call     $Function_802410D4 ( $AISettings_802441B8 )
+   60:  Return
+   68:  End
+}
+
+@ $Script_NpcAI_8024411C
+{
+	0:  Call     SetSelfVar 	( 00000000 00000000 )
+   14:  Call     SetSelfVar 	( 00000001 00000004 )
+   28:  Call     SetSelfVar 	( 00000002 00000007 )
+   3C:  Call     SetSelfVar 	( 00000003 00000006 )
+   50:  Call     $Function_8024061C ( $AISettings_802440EC )
+   60:  Return
+   68:  End
+}
+
+@ $AISettings_802443AC
+{
+    2.0 % move speed
+    90` % move time
+    30` % Wait time
+  240.0 % alert radius
+    0.0
+    1`
+    8.0 % chase speed  5.3 -> 8.0
+    180`
+    1`
+  240.0 % chase radius
+    0.0
+    1`
+}
+
+%each clubba is 2 npcs
+%one is the sleeping form and the other is the not-sleeping form?
+
+@ $NpcGroup_80244D6C
+{
+00000002 $NpcSettings_80244258 ~Vec3f:NPC_80244D6C % 310 0 88
+00000D00 $Script_Init_80244D00 00000000 00000000 0000010E 
+~İtems:5:SuperShroom:A
+~HP:20:70:3:50 ~HP:30:60:3:50 ~HP:50:50:3:40 ~HP:80:40:3:40 ~HP:100:30:3:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:2:3
+~Movement:NPC_80244D6C
+00390202 00390203 00390204 00390204 00390202 00390202 0039020C 0039020C
+00390211 00390212 00390207 00390208 00390201 00390202 00390202 00390202 % .Sprite:WorldClubba
+00000002 00000000 $ExtraAnimationList_802440BC 00000000 % no tattle string
+% 
+% $NpcGroup_80244D6C[1F0]
+00000003 $NpcSettings_8024432C ~Vec3f:NPC_80244F5C % 0 -1000 0
+00800D00 00000000 00000000 00000000 00000000 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus
+~Movement:NPC_80244F5C
+00390202 00390203 00390204 00390204 00390202 00390202 0039020C 0039020C
+00390211 00390212 00390207 00390208 00390201 00390202 00390202 00390202 % .Sprite:WorldClubba
+00000000 00000000 $ExtraAnimationList_802440E4 00000000 % no tattle string
+}
+
+@ $NpcGroup_80244920
+{
+00000000 $NpcSettings_8024418C ~Vec3f:NPC_80244920 % -350 0 180
+00000D00 00000000 00000000 00000000 0000010E 
+~İtems:5:SuperShroom:A
+~HP:20:70:3:50 ~HP:30:60:3:50 ~HP:50:50:3:40 ~HP:80:40:3:40 ~HP:100:30:3:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:2:3
+~Movement:NPC_80244920
+00390202 00390203 00390204 00390204 00390202 00390202 0039020C 0039020C
+00390211 00390212 00390207 00390208 00390201 00390202 00390202 00390202 % .Sprite:WorldClubba
+00000002 00000000 $ExtraAnimationList_802440BC 00000000 % no tattle string
+% 
+% $NpcGroup_80244920[1F0]
+00000001 $NpcSettings_8024432C ~Vec3f:NPC_80244B10 % 0 -1000 0
+00800D00 00000000 00000000 00000000 00000000 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus
+~Movement:NPC_80244B10
+00390202 00390203 00390204 00390204 00390202 00390202 0039020C 0039020C
+00390211 00390212 00390207 00390208 00390201 00390202 00390202 00390202 % .Sprite:WorldClubba
+00000000 00000000 $ExtraAnimationList_802440E4 00000000 % no tattle string
+}

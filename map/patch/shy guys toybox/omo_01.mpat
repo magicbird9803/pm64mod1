@@ -1,0 +1,97 @@
+%wanted to put a spyguy here but there are problems
+
+%^ time to do it
+%past shadeblade didnt leave me any code so I have to rewrite everything
+
+@ $NpcGroupList_80242310
+{
+	00000001 $NpcGroup_802417A0 10000001
+	00000001 $NpcGroup_80241A00 10020001
+	00000001 $NpcGroup_80241C60 10020001
+	00000001 $NpcGroup_80241EC0 10010001
+	00000001 $NpcGroup_80242120 10050001
+	00000003 $NpcGroup_SpyGuy 101B0001
+	00000000 00000000 00000000
+}
+
+#import NPC_SpyGuy.mpat
+
+#new:NpcGroup $NpcGroup_SpyGuy
+{
+	00000005 $NpcSettings_SpyGuy ~Vec3f:NPC_SpyGuy % 200 0 30
+	00000C00 00000000 00000000 00000000 0000010E
+	~İtems:5:FireFlower:2:ThunderRage:2:ThunderBolt:2:DustyHammer:2:Pebble:2
+	~HP:Standard:3 ~FP:Standard:2 ~CoinBonus:0:3
+	~Movement:NPC_SpyGuy
+	003F0002 003F0004 003F0005 003F0004 003F0002 003F0002 003F000B 003F000B
+	003F0015 003F0016 003F0002 003F0002 003F0002 003F0002 003F0002 003F0002
+	00000001 00000000 00000000 00000000 % no tattle string
+	%
+	% $NpcGroup_80247068[1F0]
+	00000006 $NpcSettings_Rock_SpyGuy 0.0 -1000.0 0.0
+	00800D00 00000000 00000000 00000000 0000005A
+	~NoDrops
+	~Movement:NPC_SpyGuyRock	%0 radius circles
+	003F0010 003F0010 003F0010 003F0010 003F0010 003F0010 003F0010 003F0010
+	003F0010 003F0010 003F0010 003F0010 003F0010 003F0010 003F0010 003F0010
+	00000000 00000000 00000000 00000000 % no tattle string
+	%
+	% $NpcGroup_80247068[3E0]
+	00000007 $NpcSettings_Rock_SpyGuy 0.0 -1000.0 0.0
+	00800D00 00000000 00000000 00000000 0000005A
+	~NoDrops
+	~Movement:NPC_SpyGuyRock
+	003F0010 003F0010 003F0010 003F0010 003F0010 003F0010 003F0010 003F0010
+	003F0010 003F0010 003F0010 003F0010 003F0010 003F0010 003F0010 003F0010
+	00000000 00000000 00000000 00000000 % no tattle string
+}
+
+
+%drop cool new items insteaed
+@ $Script_Init_80241990
+{
+    0:  Call  BindNpcDefeat ( .Npc:Self $Script_Defeat_802415C0 )
+   14:  Set   *Var0  00000001
+   24:  Set   *Var1  .Item:SuperBunch
+   34:  Set   *Var2  00000000
+   44:  Set   *Var3  00000000
+   54:  Exec  $Script_8024138C
+   60:  Return
+   68:  End
+}
+
+@ $Script_Init_80241BF0
+{
+    0:  Call  BindNpcDefeat ( .Npc:Self $Script_Defeat_802415C0 )
+   14:  Set   *Var0  00000002
+   24:  Set   *Var1  .Item:MiniSoda
+   34:  Set   *Var2  00000000
+   44:  Set   *Var3  00000000
+   54:  Exec  $Script_8024138C
+   60:  Return
+   68:  End
+}
+
+@ $Script_Init_80241E50
+{
+    0:  Call  BindNpcDefeat ( .Npc:Self $Script_Defeat_802415C0 )
+   14:  Set   *Var0  00000003
+   24:  Set   *Var1  .Item:ShroomTrio
+   34:  Set   *Var2  00000000
+   44:  Set   *Var3  00000000
+   54:  Exec  $Script_8024138C
+   60:  Return
+   68:  End
+}
+
+@ $Script_Init_802420B0
+{
+    0:  Call  BindNpcDefeat ( .Npc:Self $Script_Defeat_802415C0 )
+   14:  Set   *Var0  00000004
+   24:  Set   *Var1  .Item:ShroomCake
+   34:  Set   *Var2  00000000
+   44:  Set   *Var3  00000000
+   54:  Exec  $Script_8024138C
+   60:  Return
+   68:  End
+}

@@ -1,0 +1,204 @@
+%Ultra blooper before you enter chapter 7
+%Good luck!
+%he is small and 50 hp, but has very high regen and damage
+
+%*GF_TIK21_UltraBlooper
+
+/%
+@ $Script_802419AC
+{
+    0:  Bind  $Script_ExitWalk_802417CC .Trigger:FloorAbove ~Collider:deiliw 00000001 00000000
+   1C:  If  *GB_StoryProgress  >=  .Story:Ch7_InvitedToStarbornValley % 3D
+   2C:  	Bind  $Script_ExitDoubleDoor_80241828 .Trigger:WallPressA ~Collider:tte 00000001 00000000
+   48:  Else
+   50:  	Bind  $Script_80241964 .Trigger:WallPressA ~Collider:tte 00000001 00000000
+   6C:  EndIf
+   74:  Bind  $Script_8024190C .Trigger:FloorTouch ~Collider:o49 00000001 00000000
+   90:  Return
+   98:  End
+}
+%/
+
+%Now do the cutscene here
+@ $Script_ExitDoubleDoor_80241828
+{
+		If *GF_TIK21_UltraBlooper == .False
+			ExecWait $Script_BossFight
+			Return
+		EndIf
+    0:  SetGroup  0000001B
+    C:  Call  DisablePlayerInput    ( .True )
+   1C:  Call  DisablePlayerInput    ( .True )
+   2C:  Set   *Var0  ~Entry:Entry1
+   3C:  Set   *Var1  ~Collider:tte
+   4C:  Set   *Var2  ~Model:o46
+   5C:  Set   *Var3  ~Model:o47
+   6C:  Exec  ExitDoubleDoor
+   78:  Wait  17`
+   84:  Call  GotoMap   ( $ASCII_80242708 00000000 ) % tik_22
+   98:  Wait  100`
+   A4:  Return
+   AC:  End
+}
+
+#import NPC_Boo.mpat
+
+#new:NpcGroup $NPC_Boo
+{
+00000001 $NpcSettings_BooEnemy ~Vec3f:boo
+00000D00 00000000 00000000 00000000 0000005A 
+~İtems:8:SuperShroom:F:RepelGel:1
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:0:3
+~Movement:boo
+00950001 00950002 00950003 00950003 00950001 00950001 00950006 00950006 
+00950012 00950001 00950001 00950001 00950001 00950001 00950001 00950001 
+00000002 00000000 00000000 00000000 
+}
+
+
+#new:Script $Script_Init_Blooper
+{
+   10:  Call     BindNpcIdle 	( .Npc:Self $Script_Idle )
+   24:  Call     BindNpcDefeat 	( .Npc:Self $Script_Defeat )
+  11C:  Return
+  124:  End  
+}
+  
+#new:Script $Script_BossFight
+{
+Call     DisablePlayerInput 	( .True )
+Call     SetMusicTrack 	( 00000000 .Song:BlooperTheme 00000000 00000008 )
+Wait 10`
+Call     ShowMessageAtScreenPos 	( $Blooper 000000A0 00000028 ) % BLOOPER!
+Set *MapFlag[5] .True
+Return
+End
+}
+  
+%lol
+#new:String $Blooper
+{
+	[Style Center]
+	[Shake][Size 8][PrintRising]BLOOPER![Wait][End]
+}
+
+#new:Script $Script_Idle
+{
+		Label 0
+		If *MapFlag[5] == .False
+			Wait 1`
+			Goto 0
+		EndIf
+		Wait	 50`
+		Call     InterpPlayerYaw 	( 270` 00000000 )		
+		Wait	 50`
+		Call     InterpPlayerYaw 	( 90` 00000000 )
+		Wait	 25`
+		Call     InterpPlayerYaw 	( 270` 00000000 )		
+  1A0:  Call     PlaySoundAtNpc ( .Npc:Self 000003DC 00000000 )
+  1B8:  Call     PlaySoundAtNpc ( .Npc:Self 000003E7 00000000 )
+  1EC:  Call     SetNpcAnimation 	( .Npc:Self 00510101 )
+	    Call     SetNpcJumpscale 	( .Npc:Self *Fixed[1.1] )
+  214:  Call     NpcJump0    	( .Npc:Self 325` 20` 0` 00000008 )
+  234:  Call     SetNpcAnimation 	( .Npc:Self 00510101 )
+  248:  Call     ShakeCam    	( .Cam:Default 00000000 00000005 *Fixed[1.0] )
+  264:  Wait     00000003
+		Set *GF_TIK21_UltraBlooper .True
+		Call     StartBossBattle 	( .Song:SpecialBattle )
+	Return
+	End
+}
+
+#new:Script $Script_Defeat
+{
+  Call     SetNpcAnimation  ( .Npc:Self 00500004 )
+  Call     PlaySoundAtNpc ( .Npc:Self 000003DD 00000000 )
+  Call     PlaySoundAtNpc ( .Npc:Self 000003E7 00000000 )
+  Call     SetNpcAnimation  ( .Npc:Self 00510102 )
+  Call     SetNpcJumpscale  ( .Npc:Self *Fixed[1.1] )
+  Call     ShakeCam     ( .Cam:Default 00000000 00000005 *Fixed[1.0] )
+  Call     NpcJump0      ( .Npc:Self -44` 165` 0` 0000000A )
+  Wait     00000005
+  Call     SetNpcPos     ( .Npc:Self 00000000 -1000` 00000000 )
+  Call     SetMusicTrack		( 00000000 .Song:ToadTownTunnels 00000000 00000008 )
+	Call     DisablePlayerInput	( .False )
+	Call     PanToTarget     ( .Cam:Default 00000000 00000000 )
+	Call     EnablePartnerAI 	( )	
+	Return
+	End
+}
+
+#new:NpcGroupList $NpcGroupList_Blooper
+{
+00000001 $NPC_Blooper 1B050000 
+00000001 $NPC_Boo	  1C040000
+00000000 00000000 00000000 
+}
+
+#new:NpcGroupList $NpcGroupList_NoBlooper
+{
+00000001 $NPC_Boo	  1C050000
+00000000 00000000 00000000 
+}
+
+
+%what is causing all these stupid nan errors ugggh
+#new:NpcGroup $NPC_Blooper
+{
+00000000 $NpcSettings_Blooper ~Vec3f:UltraBlooper
+00000D00 $Script_Init_Blooper 00000000 00000000 0000005A 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus
+~Movement:UltraBlooper
+00510101 00510101 00510101 00510101 00510101 00510101 00510103 00510102
+00510100 00510100 00510100 00510100 00510100 00510100 00510100 00510100
+00000002 00000000 00000000 00000000
+}
+
+
+#new:NpcSettings $NpcSettings_Blooper
+{
+00000000 00180018 00000000 00000000 00000000 00000000 00000000 00000000 
+00000000 00000000 00630000 
+}
+
+@ $Script_Main
+{
+    0:  Set   *GB_WorldLocation  .Location:ToadTownTunnels
+   10:  Call  SetSpriteShading  ( .Shading:tik_21 )
+   20:  Call  SetCamPerspective ( .Cam:Default 00000003 00000019 00000010 00001000 )
+   40:  Call  SetCamBGColor     ( .Cam:Default 00000000 00000000 00000000 )
+   5C:  Call  SetCamEnabled     ( .Cam:Default .True )
+   70:  Call  SetCamLeadPlayer  ( .Cam:Default .False )
+		If *GF_TIK21_UltraBlooper == .False
+			Call     MakeNpcs       ( 00000001 $NpcGroupList_Blooper )
+		Else
+			Call     MakeNpcs       ( 00000001 $NpcGroupList_NoBlooper )
+		EndIf
+   84:  ExecWait  $Script_MakeEntities
+   90:  Exec  $Script_802409D0
+   9C:  Call  UseDoorSounds     ( .DoorSounds:Basic )
+   AC:  Exec  $Script_802423B8
+   B8:  Call  SetTexPanner      ( ~Model:mizu 00000000 )
+   CC:  Thread
+   D4:  	Set   *Var0  00000000
+   E4:  	Set   *Var1  00000000
+   F4:  	Set   *Var2  FFFFFF38
+  104:  	Set   *Var3  FFFFFF9C
+  114:  	Set   *Var4  FFFFFE0C
+  124:  	Set   *Var5  00000000
+  134:  	Set   *Var6  00000001
+  144:  	Set   *Var7  00000001
+  154:  	Set   *Var8  00000001
+  164:  	Set   *Var9  00000000
+  174:  	Set   *VarA  00000000
+  184:  	Set   *VarB  00000000
+  194:  	Set   *VarC  00000000
+  1A4:  	Exec  $Script_UpdateTexturePan_80240A00
+  1B0:  EndThread
+  1B8:  Wait  1`
+  1C4:  Exec  $Script_EnterDoubleDoor_80241A4C
+  1D0:  Return
+  1D8:  End
+}

@@ -1,0 +1,17 @@
+@ $Script_802420FC
+{
+    0:  Set   *VarA  .Item:BooWeightB % 1C
+   10:  Set   *VarB  00000001
+   20:  Set   *GB_StoryProgress  .Story:Ch3_GotWeight
+   30:  Set   *GF_OBK07_Chest_Weight  .True
+   40:  ExecWait  $Script_8024201C
+   4C:  ExecWait  $Script_8024493C
+   58:  Return
+   60:  End
+}
+
+@ $ItemList_80243090
+{
+	.Item:BooRecordB
+	00000000
+}

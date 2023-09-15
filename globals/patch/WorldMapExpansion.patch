@@ -1,0 +1,16 @@
+%What if I were to add more world map locations?
+%	Ok its probably not going to work but how much work can it be?
+
+
+%Some data ends up around 800ADE78 persistently
+%	wait thats stack stuff
+%	Hm map methods are super complicated so it looks like it just uses one big massive function so it ends up being persistent
+%	some DMA arguments? and the current text
+
+%Big ol mega function 80125F68
+%	Wow it pushes stack pointer a full 150
+
+
+%802502B8 is start of table	(each entry is 0x14 bytes)
+
+%80250560 = table endpoint?

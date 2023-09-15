@@ -1,0 +1,247 @@
+%Eight star power
+
+%Not really used in this mod
+
+%	Would require resizing parts of the stat bar and pause menu to make it fit
+
+
+%	Normally...
+%8 max star power does not cause problems (*other than the bar going outside of the status bar)
+%8 star power crashes due to nonexistent icons
+
+
+%Original game uses tables to store all the star / bar icon scripts
+%You have to increase the size of them
+
+%Function = 81564 --> 800E80B4
+%  C90:  LA        V0, $???_800F7FB0
+@Function 821F4
+{
+	LA        V0, $BarIcons
+}
+
+%  EF8:  LTW       A1, T1 ($IntTable_800F7FCC)
+@Function 8245C
+{
+	LTW       A1, T1 ($StarIcons)
+}
+
+%Pause menu is complicated
+%Function = 138CC0 --> 80245980
+%   9C8:  LTW       A1, S0 ($IntTable_8024F434)
+@Function 139688
+{
+	LTW       A1, S0 ($BarIcons)
+}
+
+%    A3C:  LTW       A1, S0 ($IntTable_8024F434)
+@Function 1396FC
+{
+	LTW       A1, S0 ($BarIcons)
+}
+
+%    AB0:  LTW       A1, S0 ($IntTable_8024F434)
+@Function 139770
+{
+	LTW       A1, S0 ($BarIcons)
+}
+
+%     B24:  LTW       A1, S0 ($IntTable_8024F434)
+@Function 1397E4
+{
+	LTW       A1, S0 ($BarIcons)
+}
+
+%   B98:  LTW       A1, S0 ($IntTable_8024F434)
+@Function 139858
+{
+	LTW       A1, S0 ($BarIcons)
+}
+
+%   C0C:  LTW       A1, S0 ($IntTable_8024F434)
+@Function 1398CC
+{
+	LTW       A1, S0 ($BarIcons)
+}
+
+%   C80:  LTW       A1, S0 ($IntTable_8024F434)
+@Function 139940
+{
+	LTW       A1, S0 ($BarIcons)
+}
+
+%  CF4:  LTW       A1, S0 ($IntTable_8024F450)
+@Function 1399B4
+{
+	LTW       A1, S0 ($StarIcons)
+}
+
+
+%	bar icons used for the star power bars
+% 00091460 --> 800F7FB0
+#new:Data $BarIcons
+{
+	%$HudElementScript_80108298 $HudElementScript_801082E8 $HudElementScript_801082C0 $HudElementScript_80108310 $HudElementScript_80108338 $HudElementScript_80108360 $HudElementScript_80108388
+	80108298 801082E8 801082C0 80108310 80108338 80108360 80108388 $IconScript_OrangeBar	%Use yellow for the last one, idk
+}
+
+%	star icons for star power
+% 0009147C --> 800F7FCC
+#new:Data $StarIcons
+{
+	%$HudElementScript_801083D8 $HudElementScript_80108428 $HudElementScript_80108400 $HudElementScript_80108450 $HudElementScript_80108478 $HudElementScript_801084A0 $HudElementScript_801084C8
+	801083D8 80108428 80108400 80108450 80108478 801084A0 801084C8 $IconScript_OrangeStar %Use yellow for the last one, idk
+}
+
+%to make different color stars you have to make new hud element scripts
+/%
+#new:HudElementScript $HudElementScript_80108298
+{
+	SetVisible
+	SetTileSize ( .IconSize:8x8 )
+	Loop
+		SetCI       ( 60` $IntTable_80100700 $IntTable_80100720 )
+	Restart
+	End
+}
+
+
+#new:HudElementScript $HudElementScript_801083D8
+{
+	SetVisible
+	SetTileSize ( .IconSize:8x8 )
+	Loop
+		SetCI       ( 60` $IntTable_80100900 $IntTable_80100920 )
+	Restart
+	End
+}
+%/
+
+
+#new:Data $Icon_OrangeBar
+{ ~RasterFile:CI-4:OrangeBar.png }
+
+#new:Data $Palette_OrangeBar
+{ ~PaletteFile:CI-4:OrangeBar.png }
+
+#new:Data $Icon_OrangeStar
+{ ~RasterFile:CI-4:OrangeStar.png }
+
+#new:Data $Palette_OrangeStar
+{ ~PaletteFile:CI-4:OrangeStar.png }
+
+
+#new:Data $IconScript_OrangeBar {
+	00000008 
+	00000013 00000008 00000008
+	00000004 
+	00000002 0000003C $Icon_OrangeBar $Palette_OrangeBar
+	00000003 
+	00000000
+}
+
+#new:Data $IconScript_OrangeStar {
+	00000008 
+	00000013 00000008 00000008
+	00000004 
+	00000002 0000003C $Icon_OrangeStar $Palette_OrangeStar
+	00000003 
+	00000000
+}
+
+
+
+%Cap number of star power moves loaded to 7
+%(otherwise it tries to load past them, tries to load Star Beam, peach beam, ...)
+@Hook 41B240
+{	
+	LB		V1, 28E (S5)
+	PUSH	T0, T1
+	LI		T0, 8`
+	BLT		V1, T0 .good
+	NOP
+	LI		V1, 7`
+	.good
+	POP		T0, T1
+	J		802A64B8
+	ADDIU	V0, R0, 155
+}
+
+@Hook 41B2E8
+{
+	LB		V0, 28E (S5)
+	PUSH	T0, T1
+	LI		T0, 8`
+	BLT		V0, T0 .good
+	NOP
+	LI		V0, 7`
+	.good
+	POP		T0, T1
+	J		802A6560
+	ADDIU	S3, S3, 1
+}
+
+%sidenote: I have to make it so that SP Plus can only be used when you have all 7 star spirits (not really but it simplifies the code a lot)
+
+
+%SP Plus
+%put a hook around where HP Plus and FP Plus are evaluated
+
+/%
+#export:Data $HasSPPlus
+{
+	00000000
+}
+%/
+
+%800DBD70 + 101
+%800DBE71
+
+@Hook 80D44
+{
+	PUSH 	T0, T1, A0
+	JAL     $IsBadgeEquipped
+	ORI		A0, R0, .Item:SPPlus
+	LI		T1, 8`
+	LB		T0, 28E (S0)
+	BNE		T0, T1 .checkdiffnormal		%note that 8 is impossible, so assume that HasSPPlus is true
+	NOP
+	LI		T0, 1
+	BNE		A0, T0 .diff
+	NOP
+	BEQ		R0, R0, .end
+	NOP
+	.checkdiffnormal
+	LAB		T0, 800DBE71
+	BNE		A0, T0 .diff
+	NOP
+	BEQ		R0, R0, .end
+	NOP
+	.diff
+	SAB		A0, 800DBE71
+	%values disagree, A0 is correct one
+	BNE		A0, R0 .higher
+	NOP
+	LB		T0, 28E (S0)
+	ADDI	T0, T0, FFFF
+	SB		T0, 28E (S0)
+	BEQ		R0, R0, .capenforce
+	NOP
+	.higher
+	LB		T0, 28E (S0)
+	ADDI	T0, T0, 0001
+	SB		T0, 28E (S0)	
+	.capenforce
+	
+	%enforce cap on star power
+	SLL		T0, T0, 8
+	LHU		T1, 290 (S0)
+	BLT		T1, T0 .end
+	NOP
+	SH		T0, 290 (S0)	
+	.end
+	POP		T0, T1, A0
+	LBU		V1, 4 (S0)
+	J 		800E789C
+	ADDU	V1, V1, A0
+}

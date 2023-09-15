@@ -1,0 +1,59 @@
+@ $Script_MakeEntities
+{
+	0:  If  *GB_StoryProgress  >=  FFFFFFC2 
+   10:  	Call     MakeEntity  	( .Entity:HealingBlock ~Vec4d:Entity80245590 00000006 80000000 )
+			Call     MakeEntity  	( .Entity:HiddenYellowBlock ~Vec4d:Entity_HiddenBlock .Item:ThunderRage 80000000 )
+			Call     AssignBlockFlag 	( *GameFlag[353] )
+   38:  EndIf
+   40:  Return
+   48:  End
+}
+
+@ $Script_Interact_80244DA8
+{
+    0:  Set   *Var0  00000005
+   10:  Call  $Function_80240B98 ( )
+   1C:  If  *Var0  ==  00000000
+   2C:  	Call  SpeakToPlayer ( .Npc:Self 00830404 00830401 00000000 000D00EE ) % Aargh! No more time! Too bad!! Please try again ne ...
+   4C:  	Wait  10`
+   58:  	Call  GetNpcPos     ( .Npc:Self *Var0 *Var1 *Var2 )
+   74:  	Call  PlaySoundAtNpc    ( .Npc:Self .Sound:SmokeBurst 00000000 )
+   8C:  	Call  PlayEffect    ( ~FX:BigSmokePuff *Var0 *Var1 *Var2 00000001 00000001 00000001 00000001 00000000 00000000 00000000 00000000 00000000 00000000 )
+   D0:  	Call  SetNpcPos     ( .Npc:Self 00000000 FFFFFC18 00000000 )
+   EC:  	Set   *GF_TradingEvent2_Active  .False
+   FC:  	Return
+  104:  EndIf
+  10C:  Call  $Function_80240BD4 ( )
+  118:  If  *Var0  ==  00000000
+  128:  	Call  SpeakToPlayer ( .Npc:Self 00830404 00830401 00000000 000D00EF ) % Hello! I'm the Toad from the trading event. How ar ...
+  148:  	Return
+  150:  EndIf
+  158:  Call  SpeakToPlayer ( .Npc:Self 00830404 00830401 00000000 000D00F0 ) % Hello! I'm the Toad from the trading event. How ar ...
+  178:  Set   *Var0  00000000
+  188:  Set   *Var1  00000002
+  198:  ExecWait  $Script_80244188
+  1A4:  Switch  *Var0
+  1B0:  	Case  ==  FFFFFFFF
+  1BC:  		Call  SpeakToPlayer ( .Npc:Self 00830404 00830401 00000000 000D00F4 ) % Hello? You don't want the item?
+  1DC:  		Return
+  1E4:  	Case  ==  000000D6
+  1F0:  		Call  SpeakToPlayer ( .Npc:Self 00830404 00830401 00000000 000D00F1 ) % Congratulations! This is the item for today!
+  210:  		Set   *Var0  .Item:SuperBunch
+  220:  		Set   *Var1  00000000
+  230:  		ExecWait  $Script_802441DC
+  23C:  		Call  AddItem       ( *Var0 *Var1 )
+  250:  		Wait  10`
+  25C:  		Call  SpeakToPlayer ( .Npc:Self 00830404 00830401 00000000 000D00F2 ) % Use it wisely! See you again at the next trading e ...
+  27C:  		Wait  10`
+  288:  		Call  GetNpcPos     ( .Npc:Self *Var0 *Var1 *Var2 )
+  2A4:  		Call  PlaySoundAtNpc    ( .Npc:Self .Sound:SmokeBurst 00000000 )
+  2BC:  		Call  PlayEffect    ( ~FX:BigSmokePuff *Var0 *Var1 *Var2 00000001 00000001 00000001 00000001 00000000 00000000 00000000 00000000 00000000 00000000 )
+  300:  		Call  SetNpcPos     ( .Npc:Self 00000000 FFFFFC18 00000000 )
+  31C:  		Set   *GF_TradingEvent2_Active  .False
+  32C:  		Add   *GB_TradingEvent_Count  00000001
+  33C:  	Default
+  344:  		Call  SpeakToPlayer ( .Npc:Self 00830404 00830401 00000000 000D00F3 ) % Wrong! Sorry. That's not the Right item. As a pena ...
+  364:  EndSwitch
+  36C:  Return
+  374:  End
+}

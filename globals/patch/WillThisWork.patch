@@ -1,0 +1,53 @@
+%Trying to see if function pointers as enemy names/tattles works (instead of putting string IDs)
+%Will This Work???
+%The answer is no
+%But I did get TattleSwitch.patch to work, which does similar things
+
+/%
+#new:Function $Function_GetSpecialName
+{
+	ADDIU     SP, SP, FFE8
+	LIO       V0, $SpecialTattle
+	JR        RA
+	ADDIU     SP, SP, 18
+}
+
+
+#new:Function $Function_GetSpecialTattle
+{
+	ADDIU     SP, SP, FFE8
+	LIO       V0, $SpecialTattle
+	JR        RA
+	ADDIU     SP, SP, 18
+}
+
+#string $SpecialName
+{
+Function pointers work[WAIT][END]
+}
+
+#string $SpecialTattle
+{
+I can't believe this works![WAIT][END]
+}
+
+#export $Function_GetSpecialName
+#export $Function_GetSpecialTattle
+%/
+
+
+%Alternate test: Figure out which order Star Rod puts functions in (so then I can put some stuff at the very beginning of new stuff)
+
+/%
+#new:Function $Function_GetSpecialTattle
+{
+	ADDIU	  V0, R0, 2	
+	ADDIU	  V0, R0, 2
+	ADDIU	  V0, R0, 2
+	ADDIU	  V0, R0, 2
+	ADDIU	  V0, R0, 2
+	ADDIU	  V0, R0, 2		%This should be very easy to find with memory searching
+	JR        RA
+	ADDIU	  V0, R0, 2
+}
+%/

@@ -1,0 +1,105 @@
+#new:StageTable $StageTable
+{
+"tst_21" $Stage_Cave1
+00000000 00000000 
+}
+
+#new:Stage $Stage_Cave1
+{
+"omo_tex"
+"tst_b01_shape"
+"tst_b01_hit"
+$Script_BeforeBattle_NormalCave
+$Script_AfterBattle_NormalCave
+00000000 
+00000000 
+00000000 
+00000000 
+00000000 
+}
+
+#new:Script $Script_BeforeBattle_NormalCave
+{
+	Return
+	End
+}
+
+#new:Script $Script_AfterBattle_NormalCave
+{
+	Return
+	End
+}
+
+
+#import newenemy/EmberGuy.bpat
+#import newenemy/RedFuzzy.bpat
+
+#new:Formation $Formation_00
+{
+$EmberGuy 00000001 0000000A 00000000 00000000 00000000 00000000
+$EmberGuy 00000002 00000009 00000000 00000000 00000000 00000000
+$EmberGuy 00000003 00000008 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_01
+{
+$RedFuzzy 00000002 0000000A 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_02
+{
+$RedFuzzy 00000002 0000000A 00000000 00000000 00000000 00000000
+}
+
+#new:FormationTable $FormationTable
+{
+00000000 00000003 $Formation_00 $Stage_Cave1 00000000
+00000000 00000001 $Formation_01 $Stage_Cave1 00000000
+00000000 00000001 $Formation_02 $Stage_Cave1 00000000
+00000000 00000000 00000000 00000000 00000000 % unused
+}
+
+@ $RedFuzzy
+{
+[PartsCount]   2`s 
+}
+
+@ $PartsTable_RFuzzy %$PartsTable_80218478
+{
+00820000 01000000 001400FF $IdleAnimations_RFuzzy $DefenseTable_RFuzzy 00000000 00000000 00F60000 00000000 		%what does 00820000 do? (maybe no single target but yes multi) (Wrong: no target flag overshadows multitarget flag)
+00000001 02000000 001400FF $IdleAnimations_RFuzzy $DefenseTable_RFuzzy 00000020 00000000 00F60000 00000000 		%illusory event flag but is targettable
+}
+
+@ $Script_TrySummon_RF
+{
+	%get rid of this for testing
+	Return
+	End
+}
+
+@ $EmberGuy
+{
+	[MaxHP]        36`b 
+}
+
+@ $Boost {
+	Call	 GetActorHP ( .Actor:Self *VarE )
+	If *VarE == 0 %don't do it at 0 hp (though it probably does death event instead)
+		Return
+	EndIf
+	%Call     GetLastElement ( *Var[E] )
+	%If  *Var[E]  &  0000000C	%water + ice flags
+		Label  0 %Wait for some flags (present in original spyguy weapon switch script)
+		Call  GetBattleFlags    ( *Var0 )
+		If  *Var0  &  00000100
+			Wait  1`
+			Goto  0
+		EndIf
+		%get angry and attack!
+		Call	SetActorFlagBits ( .Actor:Self 00040000 .True )
+		ExecWait $Script_TakeTurn_EmberGuy	%hope this doesn't come with extra baggage
+		Call	SetActorFlagBits ( .Actor:Self 00040000 .False )
+	%EndIf
+	Return
+	End
+}

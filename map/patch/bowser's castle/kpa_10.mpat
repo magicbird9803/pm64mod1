@@ -1,0 +1,8 @@
+@ $Script_MakeEntities
+{
+    0:  Call  MakeEntity        ( .Entity:SavePoint ~Vec4d:Entity80240EB0 80000000 )
+   24:  Call  MakeEntity        ( .Entity:YellowBlock ~Vec4d:Entity80240ED4 .Item:GoldenShroom 80000000 )
+   4C:  Call  AssignBlockFlag   ( *GF_KPA10_ItemBlock_LifeShroom )
+   5C:  Return
+   64:  End
+}

@@ -1,0 +1,130 @@
+%Planned place for the floor 100 boss (Dark Mario)
+%His AI and moves are probably going to take up a lot of space
+%I might have to migrate one of the other pit bosses if there's not enough space in those files
+
+%Dark Mario
+%Prevents usage of star powers
+%	*Current lore reason is that it's too deep for the star spirits to reach you
+%	*Actual reason is that it would probably break the implementation of defense here
+%HP = Mario's HP * 2
+%Atk = dependent on Mario's badges
+%Def = dependent on Mario's badges
+%	(for Dark Mario, the danger threshold is 10 hp)
+%	(...and the peril threshold is 2 hp)
+%	since I'm a mad lad, I'm going to program last stand and such
+
+#new:StageTable $StageTable
+{
+"pit_12" $Stage_Pit1
+00000000 00000000 
+}
+
+#new:Stage $Stage_Pit1
+{
+"kpa_tex"
+"pit_b01_shape"
+"pit_b01_hit"
+$Script_BeforeBattle_Normal
+$Script_AfterBattle_Normal
+00000000 
+00000000 
+00000000 
+00000000 
+00000000 
+}
+
+%got rid of the anti-SE stuff
+%to make it not a total pain to get through the pit
+#new:Script $Script_BeforeBattle_Normal
+{
+	Return
+	End
+}
+
+#new:Script $Script_AfterBattle_Normal
+{
+	Return
+	End
+}
+
+#new:Vector3D $Vector3_AirPartnerPos
+{
+	130` 30` 25`
+}
+
+#import newenemy/DarkMario.bpat
+#import newenemy/DarkPartners.bpat
+
+#new:Formation $Formation_00
+{
+$DarkMario 00000002 0000000A 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_01
+{
+$DarkMario 00000002 0000000A 00000000 00000000 00000000 00000000
+$DarkGoombario 00000003 00000009 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_02
+{
+$DarkMario 00000002 0000000A 00000000 00000000 00000000 00000000
+$DarkKooper 00000003 00000009 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_03
+{
+$DarkMario 00000002 0000000A 00000000 00000000 00000000 00000000
+$DarkBombette 00000003 00000009 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_04
+{
+$DarkMario 00000002 0000000A 00000000 00000000 00000000 00000000
+$DarkParakarry $Vector3_AirPartnerPos 00000009 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_05
+{
+$DarkMario 00000002 0000000A 00000000 00000000 00000000 00000000
+$DarkBow $Vector3_AirPartnerPos 00000009 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_06
+{
+$DarkMario 00000002 0000000A 00000000 00000000 00000000 00000000
+$DarkWatt $Vector3_AirPartnerPos 00000009 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_07
+{
+$DarkMario 00000002 0000000A 00000000 00000000 00000000 00000000
+$DarkSushie 00000003 00000009 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_08
+{
+$DarkMario 00000002 0000000A 00000000 00000000 00000000 00000000
+$DarkLakilester $Vector3_AirPartnerPos 00000009 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_09
+{
+$DarkMario 00000002 0000000A 00000000 00000000 00000000 00000000
+$DarkBuzzatrice $Vector3_AirPartnerPos 00000009 00000000 00000000 00000000 00000000
+}
+
+#new:FormationTable $FormationTable
+{
+00000000 00000001 $Formation_00 $Stage_Pit1 00000000
+00000000 00000002 $Formation_01 $Stage_Pit1 00000000
+00000000 00000002 $Formation_02 $Stage_Pit1 00000000
+00000000 00000002 $Formation_03 $Stage_Pit1 00000000
+00000000 00000002 $Formation_04 $Stage_Pit1 00000000
+00000000 00000002 $Formation_05 $Stage_Pit1 00000000
+00000000 00000002 $Formation_06 $Stage_Pit1 00000000
+00000000 00000002 $Formation_07 $Stage_Pit1 00000000
+00000000 00000002 $Formation_08 $Stage_Pit1 00000000
+00000000 00000002 $Formation_09 $Stage_Pit1 00000000
+00000000 00000000 00000000 00000000 00000000 % unused
+}

@@ -1,0 +1,148 @@
+ #string:22:006
+{
+[STYLE:Right]I see...a Dizzy Stomp Badge.
+[Wait][NEXT]In the dark cave below Toad
+Town, there lies a massive 
+dungeon.
+[Wait][NEXT]After defeating 20 floors
+of enemies, you are rewarded
+with this Badge.[Wait][END]
+}
+
+#string:22:01D
+{
+[STYLE:Right]I see...an FP Plus Badge.
+[Wait][NEXT]It's inside a hidden room on the
+second floor of Tubba Blubba's
+Castle.
+[Wait][NEXT]You push aside a large clock and
+go in the hole. Inside, you pull
+out a drawer on the right
+dresser.
+[Wait][NEXT]You climb up and a Paratroopa
+carries you to the bed. You then
+climb up to the top shelf.
+[Wait][NEXT]From there you find your way 
+into the hidden room.[Wait][END]
+}
+
+#string:22:02A
+{
+[STYLE:Right]I see...a Power Plus Badge.
+[Wait][NEXT]You are asked to deliver letters
+by many people and you receive
+the Badge when you complete
+your last delivery.[Wait][END]
+}
+
+#string:22:02B
+{
+[STYLE:Right]I see...a Power Plus Badge.
+[Wait][NEXT]It is in the treasure chest
+protected by the Anti Guy in 
+the Toy Box.
+[Wait][NEXT]He may be too strong for you 
+to fight.
+[PAUSE:0A]He loves Lemon Candy. When you
+give it to him, he disappears.
+[Wait][NEXT]...Maybe.[Wait][END]
+}
+
+#string:22:02F
+{
+[STYLE:Right]I see...a Danger Saver Badge.
+[Wait][NEXT]Near the signboard located on
+the path from Goomba Village to
+Toad Town,
+[Wait][NEXT]you see a red ? Block.
+[PAUSE:0A]When you smash it from below, 
+the Badge appears.[Wait][END]
+}
+
+#string:22:030
+{
+[STYLE:Right]I see...a Mega Rush Badge.
+[Wait][NEXT]Deep within Forever Forest, you
+take the path in front of a
+laughing rock.
+[Wait][NEXT]A red ? Block is waiting in the
+forest clearing.[Wait][END]
+}
+
+#string:22:037
+{
+[STYLE:Right]I see...a Feeling Fine Badge.
+[Wait][NEXT]In the dark cave below Toad
+Town, there lies a massive 
+dungeon.
+[Wait][NEXT]After defeating 70 floors
+of enemies, you are rewarded
+with this Badge.[Wait][END]
+}
+
+#string:22:039
+{
+[STYLE:Right]I see...a Star Gift Badge.
+[Wait][NEXT]There is a child upstairs in the
+fortune-teller's house on
+Shooting Star Summit.
+[Wait][NEXT]Hey! I'm that fortune-teller!
+[Wait][NEXT]Anyway, the child is my brother,
+Merlow. He will trade Star Pieces
+for Badges.
+[Wait][NEXT]Head upstairs to see him![Wait][END]
+}
+
+#string:22:03A
+{
+[STYLE:Right]I see...a Head Start Badge.
+[Wait][NEXT]In the dark cave below Toad
+Town, there lies a massive 
+dungeon.
+[Wait][NEXT]After defeating 90 floors
+of enemies, you are rewarded
+with this Badge.[Wait][END]
+}
+
+#string:22:03B
+{
+[STYLE:Right]I see...a Haste Step Badge.
+[Wait][NEXT]In the dark cave below Toad
+Town, there lies a massive 
+dungeon.
+[Wait][NEXT]After defeating 30 floors
+of enemies, you are rewarded
+with this Badge.[Wait][END]
+}
+
+#string:22:04A
+{
+[STYLE:Right]I see...a Speedy Spin Badge.
+[Wait][NEXT]It is for sale at the open-air
+shop in the plaza outside the
+castle gate.[Wait][END]
+}
+
+#string:22:047
+{
+[STYLE:Right]I see...a Peekaboo Badge.
+[Wait][NEXT]In the dark cave below Toad
+Town, there lies a massive 
+dungeon.
+[Wait][NEXT]After defeating 10 floors
+of enemies, you are rewarded
+with this Badge.[Wait][END]
+}
+
+#string:22:04D
+{
+[STYLE:Right]I see...a Super Curse Badge.
+[Wait][NEXT]There is a child upstairs in the
+fortune-teller's house on
+Shooting Star Summit.
+[Wait][NEXT]Hey! I'm that fortune-teller!
+[Wait][NEXT]Anyway, the child is my brother,
+Merlow. He will trade Star Pieces
+for Badges.
+[Wait][NEXT]Head upstairs to see him![Wait][END]
+}

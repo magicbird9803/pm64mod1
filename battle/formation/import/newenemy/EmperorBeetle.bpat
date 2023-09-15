@@ -1,0 +1,1556 @@
+%lowish health, decent attack, massive defense
+%35 hp, 6 or 12 atk, 9 def (+ immunities)
+
+%Nerfed him to 32 because he has unpiercable defense
+
+#new:Actor $EmperorBeetle
+{
+% stats
+[Index]        F9b 
+[Level]        54`b 
+[MaxHP]         35`b 		%seems low but he is very tanky
+[Coins]         1`b 
+[Flags]       00000800 
+[StatusTable] $StatusTable_EmperorBeetle
+% ai
+[PartsCount]   1`s 
+[PartsTable] $PartsTable_EmperorBeetle
+[Script]      $Script_Init_EmperorBeetle
+% move effectiveness
+[Escape]        0`b 
+[Item]          0`b 
+[AirLift]       0`b %maybe
+[Hurricane]     0`b % Bow's "Spook" as well
+[UpAndAway]     0`b 
+[PowerBounce]   3`b 
+[SpinSmash]     4`b % weight (0-4)
+% ui positions
+[Size]         22`b  18`b % width height
+[HealthBar]     0`b   0`b % dx dy
+[StatusTurn]   -8`b  16`b % dx dy
+[StatusIcon]    8`b  13`b % dx dy
+}
+
+#new:Function $Function_802181A0_EmperorBeetle
+{
+    0:  ADDIU		SP, SP, FFD8
+    4:  SW			S1, 14 (SP)
+    8:  COPY		S1, A0
+    C:  SW			RA, 20 (SP)
+   10:  SW			S3, 1C (SP)
+   14:  SW			S2, 18 (SP)
+   18:  SW			S0, 10 (SP)
+   1C:  LW			S0, C (S1)
+   20:  LW			A1, 0 (S0)
+   24:  JAL			~Func:get_variable
+   28:  ADDIU		S0, S0, 4
+   2C:  LW			A1, 0 (S0)
+   30:  ADDIU		S0, S0, 4
+   34:  COPY		A0, S1
+   38:  JAL			~Func:get_variable
+   3C:  COPY		S3, V0
+   40:  LW			A1, 0 (S0)
+   44:  ADDIU		S0, S0, 4
+   48:  COPY		A0, S1
+   4C:  JAL			~Func:get_variable
+   50:  COPY		S2, V0
+   54:  COPY		A0, S1
+   58:  LW			A1, 0 (S0)
+   5C:  JAL			~Func:get_variable
+   60:  COPY		S0, V0
+   64:  LW			A0, 148 (S1)
+   68:  JAL			~Func:get_actor
+   6C:  COPY		S1, V0
+   70:  COPY		V1, V0
+   74:  LW			V0, 8 (V1)
+   78:  LBU			V0, 24 (V0)
+   7C:  LW			A0, 8 (V1)
+   80:  SUBU		S3, S3, V0
+   84:  SB			S3, 194 (V1)
+   88:  LBU			V0, 25 (A0)
+   8C:  SUBU		S2, S2, V0
+   90:  SB			S2, 195 (V1)
+   94:  LBU			V0, 26 (A0)
+   98:  SUBU		S0, S0, V0
+   9C:  SB			S0, 196 (V1)
+   A0:  LBU			A0, 27 (A0)
+   A4:  SUBU		S1, S1, A0
+   A8:  SB			S1, 197 (V1)
+   AC:  LW			RA, 20 (SP)
+   B0:  LW			S3, 1C (SP)
+   B4:  LW			S2, 18 (SP)
+   B8:  LW			S1, 14 (SP)
+   BC:  LW			S0, 10 (SP)
+   C0:  ADDIU		V0, R0, 2
+   C4:  JR			RA
+   C8:  ADDIU		SP, SP, 28
+}
+
+#new:Function $Function_80218200_A {
+    0:  ADDIU     SP, SP, FFA0
+    4:  SW        S1, 24 (SP)
+    8:  COPY      S1, A0
+    C:  SW        RA, 28 (SP)
+   10:  SW        S0, 20 (SP)
+   14:  SDC1      F30, 58 (SP)
+   18:  SDC1      F28, 50 (SP)
+   1C:  SDC1      F26, 48 (SP)
+   20:  SDC1      F24, 40 (SP)
+   24:  SDC1      F22, 38 (SP)
+   28:  SDC1      F20, 30 (SP)
+   2C:  LW        S0, C (S1)
+   30:  LW        A1, 0 (S0)
+   34:  JAL       ~Func:get_float_variable
+   38:  ADDIU     S0, S0, 4
+   3C:  LW        A1, 0 (S0)
+   40:  ADDIU     S0, S0, 4
+   44:  COPY      A0, S1
+   48:  JAL       ~Func:get_float_variable
+   4C:  MOV.S     F30, F0
+   50:  LW        A1, 0 (S0)
+   54:  ADDIU     S0, S0, 4
+   58:  COPY      A0, S1
+   5C:  JAL       ~Func:get_float_variable
+   60:  MOV.S     F20, F0
+   64:  LW        A1, 0 (S0)
+   68:  ADDIU     S0, S0, 4
+   6C:  COPY      A0, S1
+   70:  JAL       ~Func:get_float_variable
+   74:  MOV.S     F28, F0
+   78:  LW        A1, 0 (S0)
+   7C:  ADDIU     S0, S0, 4
+   80:  COPY      A0, S1
+   84:  JAL       ~Func:get_float_variable
+   88:  MOV.S     F26, F0
+   8C:  LW        A1, 0 (S0)
+   90:  ADDIU     S0, S0, 4
+   94:  COPY      A0, S1
+   98:  JAL       ~Func:get_float_variable
+   9C:  MOV.S     F24, F0
+   A0:  COPY      A0, S1
+   A4:  LW        A1, 0 (S0)
+   A8:  JAL       ~Func:get_variable
+   AC:  MOV.S     F22, F0
+   B0:  LW        A0, 148 (S1)
+   B4:  JAL       ~Func:get_actor
+   B8:  COPY      S0, V0
+   BC:  CVT.D.S   F20, F20
+   C0:  MFC1      A1, F30
+   C4:  LIF       F1, 2.3125
+   CC:  MTC1      R0, F0
+   D0:  MFC1      A3, F28
+   D4:  ADD.D     F20, F20, F0
+   D8:  CLEAR     A0
+		LI		  A0, 10
+   DC:  SW        S0, 1C (SP)
+   E0:  CVT.S.D   F20, F20
+   E4:  MFC1      A2, F20
+   E8:  COPY      S0, V0
+   EC:  SWC1      F26, 10 (SP)
+   F0:  SWC1      F24, 14 (SP)
+   F4:  JAL       8006FF50
+   F8:  SWC1      F22, 18 (SP)
+   FC:  COPY      A0, V0
+  100:  LB        V1, 210 (S0)
+  104:  LI        V0, A
+  108:  BNE       V1, V0, .o128
+  10C:  NOP
+  110:  LW        V0, C (A0)
+  114:  LIF       F0, 0.39804688
+  120:  NOP
+  124:  SWC1      F0, 28 (V0)
+        .o128
+  128:  LW        RA, 28 (SP)
+  12C:  LW        S1, 24 (SP)
+  130:  LW        S0, 20 (SP)
+  134:  LDC1      F30, 58 (SP)
+  138:  LDC1      F28, 50 (SP)
+  13C:  LDC1      F26, 48 (SP)
+  140:  LDC1      F24, 40 (SP)
+  144:  LDC1      F22, 38 (SP)
+  148:  LDC1      F20, 30 (SP)
+  14C:  LI        V0, 2
+  150:  JR        RA
+  154:  ADDIU     SP, SP, 60
+}
+
+#new:Function $Function_80218200_B {
+    0:  ADDIU     SP, SP, FFA0
+    4:  SW        S1, 24 (SP)
+    8:  COPY      S1, A0
+    C:  SW        RA, 28 (SP)
+   10:  SW        S0, 20 (SP)
+   14:  SDC1      F30, 58 (SP)
+   18:  SDC1      F28, 50 (SP)
+   1C:  SDC1      F26, 48 (SP)
+   20:  SDC1      F24, 40 (SP)
+   24:  SDC1      F22, 38 (SP)
+   28:  SDC1      F20, 30 (SP)
+   2C:  LW        S0, C (S1)
+   30:  LW        A1, 0 (S0)
+   34:  JAL       ~Func:get_float_variable
+   38:  ADDIU     S0, S0, 4
+   3C:  LW        A1, 0 (S0)
+   40:  ADDIU     S0, S0, 4
+   44:  COPY      A0, S1
+   48:  JAL       ~Func:get_float_variable
+   4C:  MOV.S     F30, F0
+   50:  LW        A1, 0 (S0)
+   54:  ADDIU     S0, S0, 4
+   58:  COPY      A0, S1
+   5C:  JAL       ~Func:get_float_variable
+   60:  MOV.S     F20, F0
+   64:  LW        A1, 0 (S0)
+   68:  ADDIU     S0, S0, 4
+   6C:  COPY      A0, S1
+   70:  JAL       ~Func:get_float_variable
+   74:  MOV.S     F28, F0
+   78:  LW        A1, 0 (S0)
+   7C:  ADDIU     S0, S0, 4
+   80:  COPY      A0, S1
+   84:  JAL       ~Func:get_float_variable
+   88:  MOV.S     F26, F0
+   8C:  LW        A1, 0 (S0)
+   90:  ADDIU     S0, S0, 4
+   94:  COPY      A0, S1
+   98:  JAL       ~Func:get_float_variable
+   9C:  MOV.S     F24, F0
+   A0:  COPY      A0, S1
+   A4:  LW        A1, 0 (S0)
+   A8:  JAL       ~Func:get_variable
+   AC:  MOV.S     F22, F0
+   B0:  LW        A0, 148 (S1)
+   B4:  JAL       ~Func:get_actor
+   B8:  COPY      S0, V0
+   BC:  CVT.D.S   F20, F20
+   C0:  MFC1      A1, F30
+   C4:  LIF       F1, 2.3125
+   CC:  MTC1      R0, F0
+   D0:  MFC1      A3, F28
+   D4:  ADD.D     F20, F20, F0
+   D8:  CLEAR     A0
+		LI		  A0, 20
+   DC:  SW        S0, 1C (SP)
+   E0:  CVT.S.D   F20, F20
+   E4:  MFC1      A2, F20
+   E8:  COPY      S0, V0
+   EC:  SWC1      F26, 10 (SP)
+   F0:  SWC1      F24, 14 (SP)
+   F4:  JAL       8006FF50
+   F8:  SWC1      F22, 18 (SP)
+   FC:  COPY      A0, V0
+  100:  LB        V1, 210 (S0)
+  104:  LI        V0, A
+  108:  BNE       V1, V0, .o128
+  10C:  NOP
+  110:  LW        V0, C (A0)
+  114:  LIF       F0, 0.39804688
+  120:  NOP
+  124:  SWC1      F0, 28 (V0)
+        .o128
+  128:  LW        RA, 28 (SP)
+  12C:  LW        S1, 24 (SP)
+  130:  LW        S0, 20 (SP)
+  134:  LDC1      F30, 58 (SP)
+  138:  LDC1      F28, 50 (SP)
+  13C:  LDC1      F26, 48 (SP)
+  140:  LDC1      F24, 40 (SP)
+  144:  LDC1      F22, 38 (SP)
+  148:  LDC1      F20, 30 (SP)
+  14C:  LI        V0, 2
+  150:  JR        RA
+  154:  ADDIU     SP, SP, 60
+}
+
+#new:Function $Function_80218200_C {
+    0:  ADDIU     SP, SP, FFA0
+    4:  SW        S1, 24 (SP)
+    8:  COPY      S1, A0
+    C:  SW        RA, 28 (SP)
+   10:  SW        S0, 20 (SP)
+   14:  SDC1      F30, 58 (SP)
+   18:  SDC1      F28, 50 (SP)
+   1C:  SDC1      F26, 48 (SP)
+   20:  SDC1      F24, 40 (SP)
+   24:  SDC1      F22, 38 (SP)
+   28:  SDC1      F20, 30 (SP)
+   2C:  LW        S0, C (S1)
+   30:  LW        A1, 0 (S0)
+   34:  JAL       ~Func:get_float_variable
+   38:  ADDIU     S0, S0, 4
+   3C:  LW        A1, 0 (S0)
+   40:  ADDIU     S0, S0, 4
+   44:  COPY      A0, S1
+   48:  JAL       ~Func:get_float_variable
+   4C:  MOV.S     F30, F0
+   50:  LW        A1, 0 (S0)
+   54:  ADDIU     S0, S0, 4
+   58:  COPY      A0, S1
+   5C:  JAL       ~Func:get_float_variable
+   60:  MOV.S     F20, F0
+   64:  LW        A1, 0 (S0)
+   68:  ADDIU     S0, S0, 4
+   6C:  COPY      A0, S1
+   70:  JAL       ~Func:get_float_variable
+   74:  MOV.S     F28, F0
+   78:  LW        A1, 0 (S0)
+   7C:  ADDIU     S0, S0, 4
+   80:  COPY      A0, S1
+   84:  JAL       ~Func:get_float_variable
+   88:  MOV.S     F26, F0
+   8C:  LW        A1, 0 (S0)
+   90:  ADDIU     S0, S0, 4
+   94:  COPY      A0, S1
+   98:  JAL       ~Func:get_float_variable
+   9C:  MOV.S     F24, F0
+   A0:  COPY      A0, S1
+   A4:  LW        A1, 0 (S0)
+   A8:  JAL       ~Func:get_variable
+   AC:  MOV.S     F22, F0
+   B0:  LW        A0, 148 (S1)
+   B4:  JAL       ~Func:get_actor
+   B8:  COPY      S0, V0
+   BC:  CVT.D.S   F20, F20
+   C0:  MFC1      A1, F30
+   C4:  LIF       F1, 2.3125
+   CC:  MTC1      R0, F0
+   D0:  MFC1      A3, F28
+   D4:  ADD.D     F20, F20, F0
+   D8:  CLEAR     A0
+		LI		  A0, 40
+   DC:  SW        S0, 1C (SP)
+   E0:  CVT.S.D   F20, F20
+   E4:  MFC1      A2, F20
+   E8:  COPY      S0, V0
+   EC:  SWC1      F26, 10 (SP)
+   F0:  SWC1      F24, 14 (SP)
+   F4:  JAL       8006FF50
+   F8:  SWC1      F22, 18 (SP)
+   FC:  COPY      A0, V0
+  100:  LB        V1, 210 (S0)
+  104:  LI        V0, A
+  108:  BNE       V1, V0, .o128
+  10C:  NOP
+  110:  LW        V0, C (A0)
+  114:  LIF       F0, 0.39804688
+  120:  NOP
+  124:  SWC1      F0, 28 (V0)
+        .o128
+  128:  LW        RA, 28 (SP)
+  12C:  LW        S1, 24 (SP)
+  130:  LW        S0, 20 (SP)
+  134:  LDC1      F30, 58 (SP)
+  138:  LDC1      F28, 50 (SP)
+  13C:  LDC1      F26, 48 (SP)
+  140:  LDC1      F24, 40 (SP)
+  144:  LDC1      F22, 38 (SP)
+  148:  LDC1      F20, 30 (SP)
+  14C:  LI        V0, 2
+  150:  JR        RA
+  154:  ADDIU     SP, SP, 60
+}
+
+#new:Function $Function_80218200_D {
+    0:  ADDIU     SP, SP, FFA0
+    4:  SW        S1, 24 (SP)
+    8:  COPY      S1, A0
+    C:  SW        RA, 28 (SP)
+   10:  SW        S0, 20 (SP)
+   14:  SDC1      F30, 58 (SP)
+   18:  SDC1      F28, 50 (SP)
+   1C:  SDC1      F26, 48 (SP)
+   20:  SDC1      F24, 40 (SP)
+   24:  SDC1      F22, 38 (SP)
+   28:  SDC1      F20, 30 (SP)
+   2C:  LW        S0, C (S1)
+   30:  LW        A1, 0 (S0)
+   34:  JAL       ~Func:get_float_variable
+   38:  ADDIU     S0, S0, 4
+   3C:  LW        A1, 0 (S0)
+   40:  ADDIU     S0, S0, 4
+   44:  COPY      A0, S1
+   48:  JAL       ~Func:get_float_variable
+   4C:  MOV.S     F30, F0
+   50:  LW        A1, 0 (S0)
+   54:  ADDIU     S0, S0, 4
+   58:  COPY      A0, S1
+   5C:  JAL       ~Func:get_float_variable
+   60:  MOV.S     F20, F0
+   64:  LW        A1, 0 (S0)
+   68:  ADDIU     S0, S0, 4
+   6C:  COPY      A0, S1
+   70:  JAL       ~Func:get_float_variable
+   74:  MOV.S     F28, F0
+   78:  LW        A1, 0 (S0)
+   7C:  ADDIU     S0, S0, 4
+   80:  COPY      A0, S1
+   84:  JAL       ~Func:get_float_variable
+   88:  MOV.S     F26, F0
+   8C:  LW        A1, 0 (S0)
+   90:  ADDIU     S0, S0, 4
+   94:  COPY      A0, S1
+   98:  JAL       ~Func:get_float_variable
+   9C:  MOV.S     F24, F0
+   A0:  COPY      A0, S1
+   A4:  LW        A1, 0 (S0)
+   A8:  JAL       ~Func:get_variable
+   AC:  MOV.S     F22, F0
+   B0:  LW        A0, 148 (S1)
+   B4:  JAL       ~Func:get_actor
+   B8:  COPY      S0, V0
+   BC:  CVT.D.S   F20, F20
+   C0:  MFC1      A1, F30
+   C4:  LIF       F1, 2.3125
+   CC:  MTC1      R0, F0
+   D0:  MFC1      A3, F28
+   D4:  ADD.D     F20, F20, F0
+   D8:  CLEAR     A0
+		LI		  A0, 30
+   DC:  SW        S0, 1C (SP)
+   E0:  CVT.S.D   F20, F20
+   E4:  MFC1      A2, F20
+   E8:  COPY      S0, V0
+   EC:  SWC1      F26, 10 (SP)
+   F0:  SWC1      F24, 14 (SP)
+   F4:  JAL       8006FF50
+   F8:  SWC1      F22, 18 (SP)
+   FC:  COPY      A0, V0
+  100:  LB        V1, 210 (S0)
+  104:  LI        V0, A
+  108:  BNE       V1, V0, .o128
+  10C:  NOP
+  110:  LW        V0, C (A0)
+  114:  LIF       F0, 0.39804688
+  120:  NOP
+  124:  SWC1      F0, 28 (V0)
+        .o128
+  128:  LW        RA, 28 (SP)
+  12C:  LW        S1, 24 (SP)
+  130:  LW        S0, 20 (SP)
+  134:  LDC1      F30, 58 (SP)
+  138:  LDC1      F28, 50 (SP)
+  13C:  LDC1      F26, 48 (SP)
+  140:  LDC1      F24, 40 (SP)
+  144:  LDC1      F22, 38 (SP)
+  148:  LDC1      F20, 30 (SP)
+  14C:  LI        V0, 2
+  150:  JR        RA
+  154:  ADDIU     SP, SP, 60
+}
+
+#new:Function $Function_SetGatherMagicColors_Red
+{
+    0:  ADDIU        SP, SP, FFE8
+    4:  SW            RA, 10 (SP)
+    8:  LW            V0, C (A0)
+    C:  JAL            ~Func:get_variable
+   10:  LW            A1, 0 (V0)
+   14:  LW            V1, C (V0)
+   18:  ADDIU        A0, R0, FF                %R
+   1C:  SW            A0, 30 (V1)
+   20:  LW            V1, C (V0)
+        ADDIU        A0, R0, 00                %G
+   24:  SW            A0, 34 (V1)
+   28:  LW            V1, C (V0)
+   2C:  ADDIU        A1, R0, 00                %B
+   30:  SW            A1, 38 (V1)
+   34:  LW            A0, C (V0)
+   38:  ADDIU        V1, R0, FF               %R 2
+   3C:  SW            V1, 3C (A0)
+   40:  LW            A0, C (V0)
+   44:  ADDIU        V1, R0, FF                %G 2
+   48:  SW            V1, 40 (A0)
+   4C:  LW            V1, C (V0)
+        ADDIU        A1, R0, FF                %B 2
+   50:  SW            A1, 44 (V1)
+   54:  LW            RA, 10 (SP)
+   58:  ADDIU        V0, R0, 2
+   5C:  JR            RA
+   60:  ADDIU        SP, SP, 18
+}
+
+#new:Function $Function_SetGatherMagicColors_Blue
+{
+    0:  ADDIU        SP, SP, FFE8
+    4:  SW            RA, 10 (SP)
+    8:  LW            V0, C (A0)
+    C:  JAL            ~Func:get_variable
+   10:  LW            A1, 0 (V0)
+   14:  LW            V1, C (V0)
+   18:  ADDIU        A0, R0, 00                %R
+   1C:  SW            A0, 30 (V1)
+   20:  LW            V1, C (V0)
+        ADDIU        A0, R0, FF                %G
+   24:  SW            A0, 34 (V1)
+   28:  LW            V1, C (V0)
+   2C:  ADDIU        A1, R0, FF                %B
+   30:  SW            A1, 38 (V1)
+   34:  LW            A0, C (V0)
+   38:  ADDIU        V1, R0, FF               %R 2
+   3C:  SW            V1, 3C (A0)
+   40:  LW            A0, C (V0)
+   44:  ADDIU        V1, R0, FF                %G 2
+   48:  SW            V1, 40 (A0)
+   4C:  LW            V1, C (V0)
+        ADDIU        A1, R0, FF                %B 2
+   50:  SW            A1, 44 (V1)
+   54:  LW            RA, 10 (SP)
+   58:  ADDIU        V0, R0, 2
+   5C:  JR            RA
+   60:  ADDIU        SP, SP, 18
+}
+
+#new:Function $Function_SetGatherMagicColors_White
+{
+    0:  ADDIU        SP, SP, FFE8
+    4:  SW            RA, 10 (SP)
+    8:  LW            V0, C (A0)
+    C:  JAL            ~Func:get_variable
+   10:  LW            A1, 0 (V0)
+   14:  LW            V1, C (V0)
+   18:  ADDIU        A0, R0, C0                %R
+   1C:  SW            A0, 30 (V1)
+   20:  LW            V1, C (V0)
+        ADDIU        A0, R0, C0                %G
+   24:  SW            A0, 34 (V1)
+   28:  LW            V1, C (V0)
+   2C:  ADDIU        A1, R0, FF                %B
+   30:  SW            A1, 38 (V1)
+   34:  LW            A0, C (V0)
+   38:  ADDIU        V1, R0, FF               %R 2
+   3C:  SW            V1, 3C (A0)
+   40:  LW            A0, C (V0)
+   44:  ADDIU        V1, R0, FF                %G 2
+   48:  SW            V1, 40 (A0)
+   4C:  LW            V1, C (V0)
+        ADDIU        A1, R0, FF                %B 2
+   50:  SW            A1, 44 (V1)
+   54:  LW            RA, 10 (SP)
+   58:  ADDIU        V0, R0, 2
+   5C:  JR            RA
+   60:  ADDIU        SP, SP, 18
+}
+
+#new:Function $Function_SetGatherMagicColors_Purple
+{
+    0:  ADDIU        SP, SP, FFE8
+    4:  SW            RA, 10 (SP)
+    8:  LW            V0, C (A0)
+    C:  JAL            ~Func:get_variable
+   10:  LW            A1, 0 (V0)
+   14:  LW            V1, C (V0)
+   18:  ADDIU        A0, R0, 50                %R
+   1C:  SW            A0, 30 (V1)
+   20:  LW            V1, C (V0)
+        ADDIU        A0, R0, 00                %G
+   24:  SW            A0, 34 (V1)
+   28:  LW            V1, C (V0)
+   2C:  ADDIU        A1, R0, FF                %B
+   30:  SW            A1, 38 (V1)
+   34:  LW            A0, C (V0)
+   38:  ADDIU        V1, R0, FF               %R 2
+   3C:  SW            V1, 3C (A0)
+   40:  LW            A0, C (V0)
+   44:  ADDIU        V1, R0, FF                %G 2
+   48:  SW            V1, 40 (A0)
+   4C:  LW            V1, C (V0)
+        ADDIU        A1, R0, FF                %B 2
+   50:  SW            A1, 44 (V1)
+   54:  LW            RA, 10 (SP)
+   58:  ADDIU        V0, R0, 2
+   5C:  JR            RA
+   60:  ADDIU        SP, SP, 18
+}
+
+#new:Function $Function_SetGatherMagicColors_Yellow
+{
+    0:  ADDIU        SP, SP, FFE8
+    4:  SW            RA, 10 (SP)
+    8:  LW            V0, C (A0)
+    C:  JAL            ~Func:get_variable
+   10:  LW            A1, 0 (V0)
+   14:  LW            V1, C (V0)
+   18:  ADDIU        A0, R0, FF                %R
+   1C:  SW            A0, 30 (V1)
+   20:  LW            V1, C (V0)
+        ADDIU        A0, R0, FF                %G
+   24:  SW            A0, 34 (V1)
+   28:  LW            V1, C (V0)
+   2C:  ADDIU        A1, R0, 00                %B
+   30:  SW            A1, 38 (V1)
+   34:  LW            A0, C (V0)
+   38:  ADDIU        V1, R0, FF               %R 2
+   3C:  SW            V1, 3C (A0)
+   40:  LW            A0, C (V0)
+   44:  ADDIU        V1, R0, FF                %G 2
+   48:  SW            V1, 40 (A0)
+   4C:  LW            V1, C (V0)
+        ADDIU        A1, R0, FF                %B 2
+   50:  SW            A1, 44 (V1)
+   54:  LW            RA, 10 (SP)
+   58:  ADDIU        V0, R0, 2
+   5C:  JR            RA
+   60:  ADDIU        SP, SP, 18
+}
+
+
+
+%He has unpiercable defense, so good luck fighting him
+#new:DefenseTable $DefenseTable_EmperorBeetle_Normal %immune to basically everything elemental
+{
+.Element:Normal 00000009 %insane defense
+.Element:Fire   00000063
+.Element:Blast  00000063
+.Element:Water  00000063
+.Element:Ice    00000063
+.Element:Shock  00000005 
+.Element:Cosmic 00000063 
+.Element:Quake  00000009 %Make them very hard to flip even with quakes
+.Element:End
+}
+
+#new:DefenseTable $DefenseTable_EmperorBeetle_Flipped
+{
+.Element:Normal 00000004 %less insane defense
+.Element:Fire   00000063
+.Element:Blast  00000063
+.Element:Water  00000063
+.Element:Ice    00000063
+.Element:Shock  00000003
+.Element:Cosmic 00000063 
+.Element:Quake  00000000 %No more quake resistance
+.Element:End
+}
+
+#new:StatusTable $StatusTable_EmperorBeetle %only stop works (but it costs resources to use stop)
+{
+.Status:Normal      0`
+.Status:Default    0`
+.Status:Sleep      0`%no sleep
+.Status:Poison      0`
+.Status:Frozen      0`
+.Status:Dizzy       0`
+.Status:Fear    0`
+.Status:Static      0`
+.Status:Paralyze    0`
+.Status:Shrink      0`
+.Status:Stop       60`
+.Status:DefaultTurnMod   0`
+.Status:SleepTurnMod     -1`
+.Status:PoisonTurnMod     0`
+.Status:FrozenTurnMod     0`
+.Status:DizzyTurnMod     -1`
+.Status:FearTurnMod   0`
+.Status:StaticTurnMod     0`
+.Status:ParalyzeTurnMod  -2`
+.Status:ShrinkTurnMod     0`
+.Status:StopTurnMod      -2`
+.Status:End
+}
+
+#new:PartsTable $PartsTable_EmperorBeetle
+{
+00800000 01000000 001000FF $IdleAnimations_EmperorBeetle $DefenseTable_EmperorBeetle_Normal 00041000 00000000 01070000 00000000 
+}
+
+#new:IdleAnimations $IdleAnimations_EmperorBeetle %floor
+{
+.Status:Normal    00F60001
+.Status:Stone     00F60000
+.Status:Sleep     00F60009
+.Status:Poison    00F60001
+.Status:Stop      00F60000
+.Status:Static    00F60001
+.Status:Paralyze  00F60000
+.Status:Dizzy     00F6000A
+.Status:Fear      00F6000A
+.Status:End
+}
+
+#new:IdleAnimations $IdleAnimations_EmperorBeetle_Flipped %flipped
+{
+.Status:Normal    00F60002
+.Status:Stone     00F6000F
+.Status:Sleep     00F60010
+.Status:Poison    00F60002
+.Status:Stop      00F6000F
+.Status:Static    00F60002
+.Status:Dizzy     00F60011
+.Status:Fear      00F60011
+.Status:End
+}
+
+#new:Script $Script_Init_EmperorBeetle {
+    0:  Call  BindIdle      ( .Actor:Self $Script_Idle_EmperorBeetle )
+   BC:  Call  SetActorVar       ( .Actor:Self 00000008 00000001 )
+   D4:  Call  SetTargetOffset   ( .Actor:Self 00000001 00000000 00000010 )
+   F0:  Call  8027D4C8  ( FFFFFF81 00000001 FFFFFFFF FFFFFFF7 )
+  10C:  Call  BindTakeTurn      ( .Actor:Self $Script_TakeTurn_EmperorBeetle )
+  120:  Call  BindHandleEvent   ( .Actor:Self $Script_HandleEvent_EmperorBeetle_B )
+  134:  Call  SetIdleAnimations ( .Actor:Self 00000001 $IdleAnimations_EmperorBeetle )
+  14C:  Call  SetActorFlagBits  ( .Actor:Self 00000800 .False )
+  164:  Call  SetPartEventBits  ( .Actor:Self 00000001 00001000 .True )
+  188:  Call  HPBarToHome       ( .Actor:Self )
+  198:  Call  EnableIdleScript  ( .Actor:Self 00000001 )
+  1AC:  Call  UseIdleAnimation  ( .Actor:Self .True )
+		Call  SetActorVar   ( .Actor:Self 00000000 00000006 ) %shape spell weight
+		Call  SetActorVar	( .Actor:Self 00000001 00000001 ) %self buff limiter
+		Call  SetActorVar 	( .Actor:Self 00000008 00000000 )
+		Call  SetActorVar 	( .Actor:Self 00000009 00000000 )
+  1C0:  Return
+  1C8:  End
+}
+
+#new:Script $Script_Idle_EmperorBeetle {
+    0:  Return
+    8:  End
+}
+
+#new:Script $Script_8021AA1C_03 {
+    0:  Call  GetActorVar   ( .Actor:Self 00000008 *Var3 )
+   18:  If  *Var3  ==  00000002 
+   28:  	Set   *Var1  *Var2 
+   38:  EndIf
+   40:  Return
+   48:  End
+}
+
+#new:IntTable $IntTable_8021AA6C_03 {
+00000007 0000000D 00000011 00000015 00000017 00000018 00000017 00000015 
+00000011 0000000D 00000007 00000000 00000004 00000007 00000006 00000004 
+00000000 00000002 00000000 
+}
+
+#new:Script $Script_HandleEvent_EmperorBeetle_B {
+    0:  Call  UseIdleAnimation  ( .Actor:Self .False )
+   14:  Call  EnableIdleScript  ( .Actor:Self 00000000 )
+   28:  Call  GetLastEvent      ( .Actor:Self *Var0 )
+   3C:  Switch  *Var0 
+   48:  	CaseOR  ==  .Event:HitCombo % 9
+   54:  	CaseOR  ==  .Event:Hit % A
+   60:  		SetConst  *Var0  00000001 
+   70:  		SetConst  *Var1  00F60006 
+   80:  		SetConst  *Var2  00F60007 
+   90:  		ExecWait  $Script_8021AA1C_03 
+   9C:  		ExecWait  DoNormalHit 
+   A8:  	EndCaseGroup
+   B0:  	Case  ==  .Event:BurnHit % E
+   BC:  		Call  GetActorVar   ( .Actor:Self 00000008 *Var0 )
+   D4:  		If  *Var0  !=  00000002 
+   E4:  			SetConst  *Var0  00000001 
+   F4:  			SetConst  *Var1  00F60006 
+  104:  			SetConst  *Var2  00F60006 
+  114:  			ExecWait  DoBurnHit 
+  120:  		Else
+  128:  			SetConst  *Var0  00000001 
+  138:  			SetConst  *Var1  00F60014 
+  148:  			SetConst  *Var2  00F60015 
+  158:  			ExecWait  DoBurnHit 
+  164:  		EndIf
+  16C:  	Case  ==  .Event:BurnDeath % 24
+  178:  		Call  GetActorVar   ( .Actor:Self 00000008 *Var0 )
+  190:  		If  *Var0  !=  00000002 
+  1A0:  			SetConst  *Var0  00000001 
+  1B0:  			SetConst  *Var1  00F60006 
+  1C0:  			SetConst  *Var2  00F60006 
+  1D0:  			ExecWait  DoBurnHit 
+  1DC:  			SetConst  *Var0  00000001 
+  1EC:  			SetConst  *Var1  00F60006 
+  1FC:  			ExecWait  DoDeath 
+  208:  		Else
+  210:  			SetConst  *Var0  00000001 
+  220:  			SetConst  *Var1  00F60014 
+  230:  			SetConst  *Var2  00F60015 
+  240:  			ExecWait  DoBurnHit 
+  24C:  			SetConst  *Var0  00000001 
+  25C:  			SetConst  *Var1  00F60015 
+  26C:  			ExecWait  DoDeath 
+  278:  		EndIf
+  280:  		Return
+  288:  	Case  ==  .Event:SpinSmashHit % B
+  294:  		SetConst  *Var0  00000001 
+  2A4:  		SetConst  *Var1  00F60006 
+  2B4:  		SetConst  *Var2  00F60007 
+  2C4:  		ExecWait  $Script_8021AA1C_03 
+  2D0:  		ExecWait  DoSpinSmashHit 
+  2DC:  	Case  ==  .Event:FlipTrigger % D
+    			%check if did damage
+				Call	 GetLastDamage ( .Actor:Self *Var[0] )
+				If ( *Var[0] <= 0 )
+					SetConst  *Var[0]  00000001 
+					SetConst  *Var[1]  00F6000C 
+					ExecWait DoImmune 
+					Call     SetAnimation 	( .Actor:Self 00000001 00F6000D )
+					Wait     00000008 
+					Return
+				EndIf  
+  2E8:  		Call  SetActorVar       ( .Actor:Self 00000008 00000002 )
+  300:  		Call  SetTargetOffset   ( .Actor:Self 00000001 00000000 00000010 )
+  31C:  		Call  8027D4C8  ( FFFFFF81 00000001 FFFFFFFF FFFFFFF7 )
+  338:  		Call  SetActorVar       ( .Actor:Self 00000009 00000001 )
+  350:  		Call  SetDefenseTable   ( .Actor:Self 00000001 $DefenseTable_EmperorBeetle_Flipped )
+  368:  		Call  SetIdleAnimations ( .Actor:Self 00000001 $IdleAnimations_EmperorBeetle_Flipped )
+  380:  		Call  SetActorFlagBits  ( .Actor:Self 00000400 .True )
+  398:  		Call  SetAnimation      ( .Actor:Self 00000001 00F60006 )
+  3B0:  		Call  SetActorRotationOffset    ( .Actor:Self 00000000 0000000C 00000000 )
+  3CC:  		Thread
+  3D4:  			Wait  1`
+  3E0:  			Call  SetActorRotation  ( .Actor:Self 00000000 00000000 00000000 )
+  3FC:  			Wait  1`
+  408:  			Call  SetActorRotation  ( .Actor:Self 00000000 00000000 FFFFFFD3 )
+  424:  			Wait  1`
+  430:  			Call  SetActorRotation  ( .Actor:Self 00000000 00000000 FFFFFFA6 )
+  44C:  			Wait  1`
+  458:  			Call  SetActorRotation  ( .Actor:Self 00000000 00000000 FFFFFF79 )
+  474:  			Wait  1`
+  480:  			Call  SetActorRotation  ( .Actor:Self 00000000 00000000 FFFFFF4C )
+  49C:  			Wait  1`
+  4A8:  		EndThread
+  4B0:  		UseIntBuffer  $IntTable_8021AA6C_03 
+  4BC:  		Loop  00000013 
+  4C8:  			Get1Int  *Var0 
+  4D4:  			Call  SetActorDispOffset    ( .Actor:Self 00000000 *Var0 00000000 )
+  4F0:  			Wait  1`
+  4FC:  		EndLoop
+  504:  		Call  SetActorDispOffset    ( .Actor:Self 00000000 00000000 00000000 )
+  520:  		Call  SetActorRotationOffset    ( .Actor:Self 00000000 00000000 00000000 )
+  53C:  		Call  SetActorRotation      ( .Actor:Self 00000000 00000000 00000000 )
+  558:  		Call  SetAnimation  ( .Actor:Self 00000001 00F60007 )
+  570:  	Case  ==  .Event:ShockHit % 2F
+  57C:  		SetConst  *Var0  00000001 
+  58C:  		SetConst  *Var1  00F60006 
+  59C:  		ExecWait  DoShockHit 
+  5A8:  		SetConst  *Var0  00000001 
+  5B8:  		SetConst  *Var1  00F60006 
+  5C8:  		ExecWait  DoJumpBack 
+  5D4:  		SetConst  *Var0  00000001 
+  5E4:  		SetConst  *Var1  00F60004 
+  5F4:  		ExecWait  DoReturnHome 
+  600:  	Case  ==  .Event:ShockDeath % 26
+  60C:  		SetConst  *Var0  00000001 
+  61C:  		SetConst  *Var1  00F60006 
+  62C:  		ExecWait  DoShockHit 
+  638:  		SetConst  *Var0  00000001 
+  648:  		SetConst  *Var1  00F60006 
+  658:  		ExecWait  DoDeath 
+  664:  		Return
+  66C:  	Case  ==  00000017 % 17
+  678:  		Call  GetActorVar   ( .Actor:Self 00000008 *Var0 )
+  690:  		If  *Var0  ==  00000001 
+  6A0:  			SetConst  *Var0  00000001 
+  6B0:  			SetConst  *Var1  00F6000C 
+  6C0:  			ExecWait  DoImmune 
+  6CC:  			Call  SetAnimation  ( .Actor:Self 00000001 00F6000D )
+  6E4:  			Wait  8`
+  6F0:  		Else
+  6F8:  			SetConst  *Var0  00000001 
+  708:  			SetConst  *Var1  00F60002 
+  718:  			ExecWait  DoImmune 
+  724:  		EndIf
+  72C:  	Case  ==  .Event:Immune % 19
+  738:  		Call  GetActorVar   ( .Actor:Self 00000008 *Var0 )
+  750:  		If  *Var0  ==  00000001 
+  760:  			SetConst  *Var0  00000001 
+  770:  			SetConst  *Var1  00F6000C 
+  780:  			ExecWait  DoImmune 
+  78C:  			Call  SetAnimation  ( .Actor:Self 00000001 00F6000D )
+  7A4:  			Wait  8`
+  7B0:  		Else
+  7B8:  			SetConst  *Var0  00000001 
+  7C8:  			SetConst  *Var1  00F60002 
+  7D8:  			ExecWait  DoImmune 
+  7E4:  		EndIf
+  7EC:  	Case  ==  .Event:SpikeTaunt % 1B
+  7F8:  		Wait  10`
+  804:  		Call  GetActorPos       ( .Actor:Self *Var0 *Var1 *Var2 )
+  820:  		Call  GetStatusFlags    ( .Actor:Self *Var3 )
+  834:  		If  *Var3  &  ~Flags:StatusFlags:Shrink % 80000
+  844:  			Add   *Var1  00000009 
+  854:  		Else
+  85C:  			Add   *Var1  00000018 
+  86C:  		EndIf
+  874:  		Call  PlayEffect    ( ~FX:LensFlare:Rotating *Var0 *Var1 *Var2 00000014 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+  8B8:  		Wait  20`
+  8C4:  	Case  ==  .Event:Death % 20
+  8D0:  		SetConst  *Var0  00000001 
+  8E0:  		SetConst  *Var1  00F60006 
+  8F0:  		SetConst  *Var2  00F60007 
+  900:  		ExecWait  $Script_8021AA1C_03 
+  90C:  		ExecWait  DoNormalHit 
+  918:  		Wait  10`
+  924:  		SetConst  *Var0  00000001 
+  934:  		SetConst  *Var1  00F60006 
+  944:  		SetConst  *Var2  00F60007 
+  954:  		ExecWait  $Script_8021AA1C_03 
+  960:  		ExecWait  DoDeath 
+  96C:  		Return
+  974:  	Case  ==  .Event:SpinSmashDeath % 21
+  980:  		SetConst  *Var0  00000001 
+  990:  		SetConst  *Var1  00F60006 
+  9A0:  		SetConst  *Var2  00F60007 
+  9B0:  		ExecWait  $Script_8021AA1C_03 
+  9BC:  		ExecWait  DoSpinSmashHit 
+  9C8:  		SetConst  *Var0  00000001 
+  9D8:  		SetConst  *Var1  00F60006 
+  9E8:  		SetConst  *Var2  00F60007 
+  9F8:  		ExecWait  $Script_8021AA1C_03 
+  A04:  		ExecWait  DoDeath 
+  A10:  		Return
+  A18:  	Case  ==  .Event:RecoverStatus % 31
+  A24:  		Call  GetActorVar   ( .Actor:Self 00000008 *Var0 )
+  A3C:  		If  *Var0  ==  00000001 
+  A4C:  			SetConst  *Var0  00000001 
+  A5C:  			SetConst  *Var1  00F60001 
+  A6C:  			ExecWait  DoRecover 
+  A78:  		EndIf
+  A80:  	Case  ==  .Event:ScareAway % 39
+  A8C:  		Call  GetActorVar   ( .Actor:Self 00000008 *Var0 )
+  AA4:  		If  *Var0  ==  00000001 
+  AB4:  			SetConst  *Var0  00000001 
+  AC4:  			SetConst  *Var1  00F60004 
+  AD4:  			SetConst  *Var2  00F60006 
+  AE4:  			ExecWait  DoScareAway 
+  AF0:  			Return
+  AF8:  		Else
+  B00:  			SetConst  *Var0  00000001 
+  B10:  			SetConst  *Var1  00F60002 
+  B20:  			ExecWait  DoImmune 
+  B2C:  		EndIf
+  B34:  	Case  ==  .Event:BeginAirLift % 3A
+  B40:  		Call  GetActorVar   ( .Actor:Self 00000008 *Var0 )
+  B58:  		If  *Var0  ==  00000001 
+  B68:  			SetConst  *Var0  00000001 
+  B78:  			SetConst  *Var1  00F60004 
+  B88:  		Else
+  B90:  			SetConst  *Var0  00000001 
+  BA0:  			SetConst  *Var1  00F60002 
+  BB0:  		EndIf
+  BB8:  		ExecWait  DoAirLift 
+  BC4:  	Case  ==  .Event:BlowAway % 16
+  BD0:  		Call  GetActorVar   ( .Actor:Self 00000008 *Var0 )
+  BE8:  		If  *Var0  ==  00000001 
+  BF8:  			SetConst  *Var0  00000001 
+  C08:  			SetConst  *Var1  00F60006 
+  C18:  		Else
+  C20:  			SetConst  *Var0  00000001 
+  C30:  			SetConst  *Var1  00F60007 
+  C40:  		EndIf
+  C48:  		ExecWait  DoBlowAway 
+  C54:  		Return
+  C5C:  	Case  ==  .Event:AirLiftFailed % 1F
+  C68:  		Call  GetActorVar   ( .Actor:Self 00000008 *Var0 )
+  C80:  		If  *Var0  ==  00000001 
+  C90:  			SetConst  *Var0  00000001 
+  CA0:  			SetConst  *Var1  00F6000C 
+  CB0:  			ExecWait  DoImmune 
+  CBC:  			Call  SetAnimation  ( .Actor:Self 00000001 00F6000D )
+  CD4:  			Wait  8`
+  CE0:  		Else
+  CE8:  			SetConst  *Var0  00000001 
+  CF8:  			SetConst  *Var1  00F60002 
+  D08:  			ExecWait  DoImmune 
+  D14:  		EndIf
+  D1C:  	Default
+  D24:  EndSwitch
+  D2C:  Call  EnableIdleScript  ( .Actor:Self 00000001 )
+  D40:  Call  UseIdleAnimation  ( .Actor:Self .True )
+  D54:  Return
+  D5C:  End
+}
+
+%all spells start with 6 weight, except self buff gets only 2
+#new:Script $Script_TakeTurn_EmperorBeetle 
+{
+	Call  UseIdleAnimation  ( .Actor:Self .False )
+	Call  EnableIdleScript  ( .Actor:Self 00000000 )
+	ExecWait $Script_TryUnflip
+	Call	 GetActorHP ( .Actor:Self *Var[E] )
+	Call	 GetEnemyMaxHP ( .Actor:Self *Var[D] )
+	Mul *VarE 35`
+	Div *VarE *VarD		%35 * hp propotion (so this is just hp but it undoes the curses)
+	If *VarE <= 10`
+		Call     GetActorVar 	( .Actor:Self 00000001 *VarC )
+		If *VarC > 00000000
+			ExecWait $Script_SelfBuffSpell_EmperorBeetle
+			Call  EnableIdleScript  ( .Actor:Self 00000001 )
+			Call  UseIdleAnimation  ( .Actor:Self .True )
+			Return
+		EndIf
+	EndIf
+	%Calculate this deterministically
+	Set *Var7 *GlobalTurnCount
+	Mod *Var7 4
+	Switch *Var7
+		Case == 0
+			ExecWait $Script_ShapeSpell_EmperorBeetle
+			Call  EnableIdleScript  ( .Actor:Self 00000001 )
+			Call  UseIdleAnimation  ( .Actor:Self .True )
+			Return
+		Case == 1
+			ExecWait $Script_AtkDownSpell_EmperorBeetle
+			Call  EnableIdleScript  ( .Actor:Self 00000001 )
+			Call  UseIdleAnimation  ( .Actor:Self .True )
+			Return
+		Case == 2
+			ExecWait $Script_DefDownSpell_EmperorBeetle
+			Call  EnableIdleScript  ( .Actor:Self 00000001 )
+			Call  UseIdleAnimation  ( .Actor:Self .True )
+			Return
+		Case == 3
+			ExecWait $Script_StunSpell_EmperorBeetle
+			Call  EnableIdleScript  ( .Actor:Self 00000001 )
+			Call  UseIdleAnimation  ( .Actor:Self .True )
+			Return
+	EndSwitch
+	ExecWait $Script_ShapeSpell_EmperorBeetle
+	Call  EnableIdleScript  ( .Actor:Self 00000001 )
+	Call  UseIdleAnimation  ( .Actor:Self .True )
+	Return
+	End
+}
+
+#new:Script $Script_TryUnflip
+{
+   28:  Call  GetActorVar       ( .Actor:Self 00000008 *Var0 )
+   40:  If  *Var0  ==  00000002 
+   50:  	Call  GetActorVar   ( .Actor:Self 00000009 *Var0 )
+   68:  	Set   *Var0  00000000 
+			Call  SetActorVar 	( .Actor:Self 00000009 00000000 )
+   F8:  	Call  AddActorDecoration    ( .Actor:Self 00000001 00000000 .Decoration:Sweat )
+  114:  	Wait  20`
+  120:  	Call  RemoveActorDecoration ( .Actor:Self 00000001 00000000 )
+  138:  	SetConst  *Var0  00000001 
+  148:  	SetConst  *Var1  00F60002 
+  158:  	SetConst  *Var2  00F60001 
+  168:  	ExecWait  8029BBB4 
+  174:  	Call  SetActorYaw       ( .Actor:Self 00000000 )
+  188:  	Call  SetActorVar       ( .Actor:Self 00000008 00000001 )
+  1A0:  	Call  SetTargetOffset   ( .Actor:Self 00000001 00000000 00000010 )
+  1BC:  	Call  8027D4C8  ( FFFFFF81 00000001 FFFFFFFF FFFFFFF7 )
+  1D8:  	Call  SetDefenseTable   ( .Actor:Self 00000001 $DefenseTable_EmperorBeetle_Normal )
+  1F0:  	Call  SetIdleAnimations ( .Actor:Self 00000001 $IdleAnimations_EmperorBeetle )
+  208:  	Call  BindIdle  ( .Actor:Self $Script_Idle_EmperorBeetle )
+  21C:  	Call  SetActorFlagBits  ( .Actor:Self 00000400 .False )
+  264:  	Return
+  26C:  EndIf
+  Return
+  End
+}
+
+#new:Script $Script_ShellToss_EmperorBeetle
+{
+  274:  Call  SetTargetActor    ( .Actor:Self .Actor:Player )
+  288:  Call  UseBattleCamPreset    ( 0000003F )
+  298:  Call  BattleCamTargetActor  ( .Actor:Self )
+  2A8:  Call  8024ECF8  ( FFFFFFFF 00000001 00000000 )
+  2C0:  Call  SetAnimation      ( .Actor:Self 00000001 00F6000C )
+  2D8:  Wait  10`
+  2E4:  Call  SetAnimation      ( .Actor:Self 00000001 00F60009 )
+  2FC:  Thread
+  304:  	Call  GetActorPos   ( .Actor:Self *Var0 *Var1 *Var2 )
+  320:  	Call  PlayEffect    ( ~FX:SmokeImpact:Small *Var0 *Var1 *Var2 00000020 00000004 00000000 0000000A 00000000 00000000 00000000 00000000 00000000 )
+  364:  	Wait  10`
+  370:  	Call  PlayEffect    ( ~FX:SmokeImpact:Small *Var0 *Var1 *Var2 00000020 00000004 00000000 0000000A 00000000 00000000 00000000 00000000 00000000 )
+  3B4:  	Wait  5`
+  3C0:  	Call  PlayEffect    ( ~FX:SmokeImpact:Small *Var0 *Var1 *Var2 00000020 00000004 00000000 0000000A 00000000 00000000 00000000 00000000 00000000 )
+  404:  EndThread
+  40C:  Call  PlaySoundAtActor  ( .Actor:Self 00002021 )
+  420:  Call  SetAnimation      ( .Actor:Self 00000001 00F60005 )
+  438:  Wait  20`
+  444:  Call  SetActorSounds    ( .Actor:Self .ActorSound:Walk 00000000 00000000 )
+  460:  Call  PlaySoundAtActor  ( .Actor:Self 000020D3 )
+  474:  Call  EnemyTestTarget   ( .Actor:Self *Var0 ~Flags:DamageType:0 00000000 00000002 00000010 )
+  498:  Switch  *Var0 
+  4A4:  	CaseOR  ==  .HitResult:Miss % 6
+  4B0:  	CaseOR  ==  .HitResult:Lucky % 5
+  4BC:  		Set   *VarA  *Var0 
+  4CC:  		Thread
+  4D4:  			Loop
+  4E0:  				Call  GetActorPos   ( .Actor:Player *Var0 *Var1 *Var2 )
+  4FC:  				Add   *Var0  0000001E 
+  50C:  				Call  GetActorPos   ( .Actor:Self *Var3 *Var4 *Var5 )
+  528:  				If  *Var0  >  *Var3 
+  538:  					BreakLoop
+  540:  				EndIf
+  548:  				Wait  1`
+  554:  			EndLoop
+  55C:  			Call  UseBattleCamPreset    ( 00000001 )
+  56C:  			If  *VarA  ==  .HitResult:Lucky % 5
+  57C:  				Call  EnemyTestTarget   ( .Actor:Self *Var0 ~Flags:DamageType:TriggerLucky 00000000 00000000 00000000 )
+  5A0:  			EndIf
+  5A8:  			Wait  15`
+  5B4:  			Call  UseBattleCamPreset    ( 00000002 )
+  5C4:  		EndThread
+  5CC:  		Call  SetGoalToTarget       ( .Actor:Self )
+  5DC:  		Call  AddGoalPos    ( .Actor:Self FFFFFF6A 00000000 00000000 )
+  5F8:  		Call  SetActorSpeed ( .Actor:Self *Fixed[14.0] )
+  60C:  		Call  RunToGoal     ( .Actor:Self 00000000 .False )
+  624:  		Wait  15`
+  630:  		Call  YieldTurn ( )
+  63C:  		Call  ResetAllActorSounds   ( .Actor:Self )
+  64C:  		Call  AddActorDecoration    ( .Actor:Self 00000001 00000000 .Decoration:Sweat )
+  668:  		Call  SetGoalToHome ( .Actor:Self )
+  678:  		Call  GetGoalPos    ( .Actor:Self *Var0 *Var1 *Var2 )
+  694:  		Add   *Var0  000000C8 
+  6A4:  		Call  SetActorPos   ( .Actor:Self *Var0 *Var1 *Var2 )
+  6C0:  		Call  SetActorSpeed ( .Actor:Self *Fixed[10.0] )
+  6D4:  		Call  RunToGoal     ( .Actor:Self 00000000 .False )
+  6EC:  		Wait  10`
+  6F8:  		Call  SetAnimation  ( .Actor:Self 00000001 00F6000D )
+  710:  		Wait  10`
+  71C:  		Call  RemoveActorDecoration ( .Actor:Self 00000001 00000000 )
+  734:  		Call  EnableIdleScript      ( .Actor:Self 00000001 )
+  748:  		Call  UseIdleAnimation      ( .Actor:Self .True )
+  75C:  		Return
+  764:  	EndCaseGroup
+  76C:  EndSwitch
+  774:  Call  SetGoalToTarget   ( .Actor:Self )
+  784:  Call  SetActorSpeed     ( .Actor:Self *Fixed[48.0] )
+  798:  Call  RunToGoal ( .Actor:Self 00000000 .False )
+  7B0:  Wait  2`
+  7BC:  Call  EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:0 0000FFFF 00000000 00000005 00000020 )
+  7E4:  Switch  *Var0 
+  7F0:  	CaseOR  ==  .HitResult:Hit % 0
+  7FC:  	CaseOR  ==  00000002 % 2
+  808:  		Call  UseBattleCamPreset    ( 00000002 )
+  818:  		Call  GetGoalPos    ( .Actor:Self *Var0 *Var1 *Var2 )
+  834:  		Add   *Var0  00000028 
+  844:  		Set   *Var1  00000000 
+  854:  		Call  SetActorJumpGravity   ( .Actor:Self *Fixed[1.8] )
+  868:  		Call  SetGoalPos    ( .Actor:Self *Var0 *Var1 *Var2 )
+  884:  		Call  JumpToGoal    ( .Actor:Self 0000000A .False .True .False )
+  8A4:  		Add   *Var0  0000001E 
+  8B4:  		Call  SetGoalPos    ( .Actor:Self *Var0 *Var1 *Var2 )
+  8D0:  		Call  JumpToGoal    ( .Actor:Self 00000008 .False .True .False )
+  8F0:  		Add   *Var0  00000014 
+  900:  		Call  SetGoalPos    ( .Actor:Self *Var0 *Var1 *Var2 )
+  91C:  		Call  JumpToGoal    ( .Actor:Self 00000006 .False .True .False )
+  93C:  		Call  SetAnimation  ( .Actor:Self 00000001 00F60001 )
+  954:  		Wait  8`
+  960:  		Call  YieldTurn ( )
+  96C:  		Call  ResetAllActorSounds   ( .Actor:Self )
+  97C:  		SetConst  *Var0  00000001 
+  98C:  		SetConst  *Var1  00F60004 
+  99C:  		ExecWait  DoReturnHome 
+  9A8:  		Call  SetAnimation  ( .Actor:Self 00000001 00F60001 )
+  9C0:  	EndCaseGroup
+  9C8:  EndSwitch
+  9F8:  Return
+  A00:  End
+}
+
+#new:Script $Script_ShapeSpell_EmperorBeetle
+{
+  10C:  Call  SetTargetActor    ( .Actor:Self .Actor:Player )
+  120:  Call  GetBattlePhase    ( *Var0 )
+  130:  If  *Var0  ==  00000001 
+  140:  	Call  UseBattleCamPreset    ( 00000002 )
+  150:  	Call  MoveBattleCamOver     ( 00000001 )
+  160:  Else
+  168:  	Call  UseBattleCamPreset    ( 00000002 )
+  178:  	Call  MoveBattleCamOver     ( 0000000A )
+  188:  EndIf
+  190:  Call  PlaySoundAtActor  ( .Actor:Self .Sound:SpellCast1 )
+  264: 	Call  SetAnimation      ( .Actor:Self 00000001 00F60516 )
+  27C: 	Call  GetActorPos       ( .Actor:Self *Var0 *Var1 *Var2 )
+  298: 	Call  GetStatusFlags    ( .Actor:Self *Var3 )
+  2AC: 	If  *Var3  &  ~Flags:StatusFlags:Shrink % 80000
+  2BC: 		Sub   *Var0  00000006 
+  2CC: 		Add   *Var1  0000000D 
+  2DC:  Else
+  2E4:  	Sub   *Var0  00000011 
+  2F4:  	Add   *Var1  00000021 
+  304:  EndIf
+  30C:  Call  PlayEffect    ( ~FX:GatherMagic:Pink *Var0 *Var1 *Var2 *Fixed[0.5] 0000001E 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+		Call  $Function_SetGatherMagicColors_White ( *VarF )
+  4FC:  Wait  30`
+  508:  Call  EnemyTestTarget   ( .Actor:Self *Var9 ~Flags:DamageType:0 00000000 00000001 00000010 )
+  52C:  Switch  *Var9 
+  538:  	CaseOR  ==  .HitResult:Miss % 6
+  544:  	CaseOR  ==  .HitResult:Lucky % 5
+  57C:  		Call  PlaySoundAtActor  ( .Actor:Self .Sound:SpellCast2 )
+  5D0:  		Call  SetAnimation  ( .Actor:Self 00000001 00F60517 )
+  640:  		Wait  5`
+  64C:  		Call  SetGoalToTarget   ( .Actor:Self )
+  65C:  		Call  GetGoalPos        ( .Actor:Self *Var4 *Var5 *Var6 )
+  678:  		Sub   *Var4  00000032 
+  688:  		Set   *Var5  00000000 
+  724:  		Call  GetActorPos       ( .Actor:Self *Var0 *Var1 *Var2 )
+  740:  		Call  GetStatusFlags    ( .Actor:Self *Var3 )
+  754:  		If  *Var3  &  ~Flags:StatusFlags:Shrink % 80000
+  764:  			Sub   *Var0  00000008 
+  774:  			Add   *Var1  00000008 
+  784:  		Else
+  78C:  			Sub   *Var0  00000014 
+  79C:  			Add   *Var1  00000014 
+  7AC:  		EndIf
+				Call  SetAnimation  ( .Actor:Self 00000001 00F60001 )
+  7B4:  		Call  $Function_80218200_A ( *Var0 *Var1 *Var6 *Var4 *Var5 *Var6 0000001E )
+  920:  		Wait  50`
+  92C:  		If  *Var9  ==  .HitResult:Lucky % 5
+  93C:  			Call  EnemyTestTarget   ( .Actor:Self *Var0 ~Flags:DamageType:TriggerLucky 00000000 00000000 00000000 )
+  960:  		EndIf
+  968:  		Wait  15`
+  974:  		Call  YieldTurn ( )
+  980:  		Call  UseIdleAnimation  ( .Actor:Self .True )
+  9C0:  		Return
+  9C8:  	EndCaseGroup
+  9D0:  EndSwitch
+  A04:  Call  PlaySoundAtActor  ( .Actor:Self .Sound:SpellCast2 )
+  A58:  Call  SetAnimation  ( .Actor:Self 00000001 00F60517 )
+  AC8:  Wait  5`
+  AD4:  Call  SetGoalToTarget   ( .Actor:Self )
+  AE4:  Call  GetGoalPos        ( .Actor:Self *Var4 *Var5 *Var6 )
+  B8C:  Call  GetActorPos       ( .Actor:Self *Var0 *Var1 *Var2 )
+  BA8:  Call  GetStatusFlags    ( .Actor:Self *Var3 )
+  BBC:  If  *Var3  &  ~Flags:StatusFlags:Shrink % 80000
+  BCC:  	Sub   *Var0  00000008 
+  BDC:  	Add   *Var1  00000008 
+  BEC:  Else
+  BF4:  	Sub   *Var0  00000014 
+  C04:  	Add   *Var1  00000014 
+  C14: 	EndIf
+		Call  SetAnimation  ( .Actor:Self 00000001 00F60001 )
+  C1C: 	Call  $Function_80218200_A ( *Var0 *Var1 *Var6 *Var4 *Var5 *Var6 00000014 )
+  D88:  Wait  18`
+  DE0:  Wait  2`
+  DEC:  Call  EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:NoContact|Magic 00000000 00000000 0000000C 00000020 )
+  E1C:  Switch  *Var0 
+  E28:  	CaseOR  ==  .HitResult:Hit % 0
+  E34:  	CaseOR  ==  00000002 % 2
+  E40:  		Wait  20`
+  E4C:  		Call  YieldTurn ( )
+  E58:  	EndCaseGroup
+  E60:  EndSwitch
+  EA8:  Return
+  EB0:  End
+}
+
+#new:Script $Script_AtkDownSpell_EmperorBeetle
+{
+  10C:  Call  SetTargetActor    ( .Actor:Self .Actor:Player )
+  120:  Call  GetBattlePhase    ( *Var0 )
+  130:  If  *Var0  ==  00000001 
+  140:  	Call  UseBattleCamPreset    ( 00000002 )
+  150:  	Call  MoveBattleCamOver     ( 00000001 )
+  160:  Else
+  168:  	Call  UseBattleCamPreset    ( 00000002 )
+  178:  	Call  MoveBattleCamOver     ( 0000000A )
+  188:  EndIf
+  190:  Call  PlaySoundAtActor  ( .Actor:Self .Sound:SpellCast1 )
+  264: 	Call  SetAnimation      ( .Actor:Self 00000001 00F60616 )
+  27C: 	Call  GetActorPos       ( .Actor:Self *Var0 *Var1 *Var2 )
+  298: 	Call  GetStatusFlags    ( .Actor:Self *Var3 )
+  2AC: 	If  *Var3  &  ~Flags:StatusFlags:Shrink % 80000
+  2BC: 		Sub   *Var0  00000006 
+  2CC: 		Add   *Var1  0000000D 
+  2DC:  Else
+  2E4:  	Sub   *Var0  00000011 
+  2F4:  	Add   *Var1  00000021 
+  304:  EndIf
+  30C:  Call  PlayEffect    ( ~FX:GatherMagic:Pink *Var0 *Var1 *Var2 *Fixed[0.5] 0000001E 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+		Call  $Function_SetGatherMagicColors_Red ( *VarF )
+  4FC:  Wait  30`
+  508:  Call  EnemyTestTarget   ( .Actor:Self *Var9 ~Flags:DamageType:0 00000000 00000001 00000010 )
+  52C:  Switch  *Var9 
+  538:  	CaseOR  ==  .HitResult:Miss % 6
+  544:  	CaseOR  ==  .HitResult:Lucky % 5
+  57C:  		Call  PlaySoundAtActor  ( .Actor:Self .Sound:SpellCast2 )
+  5D0:  		Call  SetAnimation  ( .Actor:Self 00000001 00F60617 )
+  640:  		Wait  5`
+  64C:  		Call  SetGoalToTarget   ( .Actor:Self )
+  65C:  		Call  GetGoalPos        ( .Actor:Self *Var4 *Var5 *Var6 )
+  678:  		Sub   *Var4  00000032 
+  688:  		Set   *Var5  00000000 
+  724:  		Call  GetActorPos       ( .Actor:Self *Var0 *Var1 *Var2 )
+  740:  		Call  GetStatusFlags    ( .Actor:Self *Var3 )
+  754:  		If  *Var3  &  ~Flags:StatusFlags:Shrink % 80000
+  764:  			Sub   *Var0  00000008 
+  774:  			Add   *Var1  00000008 
+  784:  		Else
+  78C:  			Sub   *Var0  00000014 
+  79C:  			Add   *Var1  00000014 
+  7AC:  		EndIf
+				Call  SetAnimation  ( .Actor:Self 00000001 00F60001 )
+  7B4:  		Call  $Function_80218200_B ( *Var0 *Var1 *Var6 *Var4 *Var5 *Var6 0000001E )
+  920:  		Wait  50`
+  92C:  		If  *Var9  ==  .HitResult:Lucky % 5
+  93C:  			Call  EnemyTestTarget   ( .Actor:Self *Var0 ~Flags:DamageType:TriggerLucky 00000000 00000000 00000000 )
+  960:  		EndIf
+  968:  		Wait  15`
+  974:  		Call  YieldTurn ( )
+  980:  		Call  UseIdleAnimation  ( .Actor:Self .True )
+  9C0:  		Return
+  9C8:  	EndCaseGroup
+  9D0:  EndSwitch
+  A04:  Call  PlaySoundAtActor  ( .Actor:Self .Sound:SpellCast2 )
+  A58:  Call  SetAnimation  ( .Actor:Self 00000001 00F60617 )
+  AC8:  Wait  5`
+  AD4:  Call  SetGoalToTarget   ( .Actor:Self )
+  AE4:  Call  GetGoalPos        ( .Actor:Self *Var4 *Var5 *Var6 )
+  B8C:  Call  GetActorPos       ( .Actor:Self *Var0 *Var1 *Var2 )
+  BA8:  Call  GetStatusFlags    ( .Actor:Self *Var3 )
+  BBC:  If  *Var3  &  ~Flags:StatusFlags:Shrink % 80000
+  BCC:  	Sub   *Var0  00000008 
+  BDC:  	Add   *Var1  00000008 
+  BEC:  Else
+  BF4:  	Sub   *Var0  00000014 
+  C04:  	Add   *Var1  00000014 
+  C14: 	EndIf
+		Call  SetAnimation  ( .Actor:Self 00000001 00F60001 )
+  C1C: 	Call  $Function_80218200_B ( *Var0 *Var1 *Var6 *Var4 *Var5 *Var6 25` )
+  D88:  Wait  25`
+  DEC:  Call  EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:NoContact|Magic 00000000 00000000 00000006 00000020 )
+		Thread %hope this will make it not break everything
+			Call	8026BF48	( 00000001 )
+			Call	BoostAttack	( .Actor:Player FFFFFFFE )
+			Call	8026BF48	( 00000000 )
+		EndThread		
+  E1C:  Switch  *Var0 
+  E28:  	CaseOR  ==  .HitResult:Hit % 0
+  E34:  	CaseOR  ==  00000002 % 2
+  E40:  		Wait  20`
+  E4C:  		Call  YieldTurn ( )
+  E58:  	EndCaseGroup
+  E60:  EndSwitch
+  EA8:  Return
+  EB0:  End
+}
+
+#new:Script $Script_DefDownSpell_EmperorBeetle
+{
+  10C:  Call  SetTargetActor    ( .Actor:Self .Actor:Player )
+  120:  Call  GetBattlePhase    ( *Var0 )
+  130:  If  *Var0  ==  00000001 
+  140:  	Call  UseBattleCamPreset    ( 00000002 )
+  150:  	Call  MoveBattleCamOver     ( 00000001 )
+  160:  Else
+  168:  	Call  UseBattleCamPreset    ( 00000002 )
+  178:  	Call  MoveBattleCamOver     ( 0000000A )
+  188:  EndIf
+  190:  Call  PlaySoundAtActor  ( .Actor:Self .Sound:SpellCast1 )
+  264: 	Call  SetAnimation      ( .Actor:Self 00000001 00F60716 )
+  27C: 	Call  GetActorPos       ( .Actor:Self *Var0 *Var1 *Var2 )
+  298: 	Call  GetStatusFlags    ( .Actor:Self *Var3 )
+  2AC: 	If  *Var3  &  ~Flags:StatusFlags:Shrink % 80000
+  2BC: 		Sub   *Var0  00000006 
+  2CC: 		Add   *Var1  0000000D 
+  2DC:  Else
+  2E4:  	Sub   *Var0  00000011 
+  2F4:  	Add   *Var1  00000021 
+  304:  EndIf
+  30C:  Call  PlayEffect    ( ~FX:GatherMagic:Pink *Var0 *Var1 *Var2 *Fixed[0.5] 0000001E 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+		Call  $Function_SetGatherMagicColors_Blue ( *VarF )
+  4FC:  Wait  30`
+  508:  Call  EnemyTestTarget   ( .Actor:Self *Var9 ~Flags:DamageType:0 00000000 00000001 00000010 )
+  52C:  Switch  *Var9 
+  538:  	CaseOR  ==  .HitResult:Miss % 6
+  544:  	CaseOR  ==  .HitResult:Lucky % 5
+  57C:  		Call  PlaySoundAtActor  ( .Actor:Self .Sound:SpellCast2 )
+  5D0:  		Call  SetAnimation  ( .Actor:Self 00000001 00F60717 )
+  640:  		Wait  5`
+  64C:  		Call  SetGoalToTarget   ( .Actor:Self )
+  65C:  		Call  GetGoalPos        ( .Actor:Self *Var4 *Var5 *Var6 )
+  678:  		Sub   *Var4  00000032 
+  688:  		Set   *Var5  00000000 
+  724:  		Call  GetActorPos       ( .Actor:Self *Var0 *Var1 *Var2 )
+  740:  		Call  GetStatusFlags    ( .Actor:Self *Var3 )
+  754:  		If  *Var3  &  ~Flags:StatusFlags:Shrink % 80000
+  764:  			Sub   *Var0  00000008 
+  774:  			Add   *Var1  00000008 
+  784:  		Else
+  78C:  			Sub   *Var0  00000014 
+  79C:  			Add   *Var1  00000014 
+  7AC:  		EndIf
+				Call  SetAnimation  ( .Actor:Self 00000001 00F60001 )
+  7B4:  		Call  $Function_80218200_C ( *Var0 *Var1 *Var6 *Var4 *Var5 *Var6 0000001E )
+  920:  		Wait  50`
+  92C:  		If  *Var9  ==  .HitResult:Lucky % 5
+  93C:  			Call  EnemyTestTarget   ( .Actor:Self *Var0 ~Flags:DamageType:TriggerLucky 00000000 00000000 00000000 )
+  960:  		EndIf
+  968:  		Wait  15`
+  974:  		Call  YieldTurn ( )
+  980:  		Call  UseIdleAnimation  ( .Actor:Self .True )
+  9C0:  		Return
+  9C8:  	EndCaseGroup
+  9D0:  EndSwitch
+  A04:  Call  PlaySoundAtActor  ( .Actor:Self .Sound:SpellCast2 )
+  A58:  Call  SetAnimation  ( .Actor:Self 00000001 00F60717 )
+  AC8:  Wait  5`
+  AD4:  Call  SetGoalToTarget   ( .Actor:Self )
+  AE4:  Call  GetGoalPos        ( .Actor:Self *Var4 *Var5 *Var6 )
+  B8C:  Call  GetActorPos       ( .Actor:Self *Var0 *Var1 *Var2 )
+  BA8:  Call  GetStatusFlags    ( .Actor:Self *Var3 )
+  BBC:  If  *Var3  &  ~Flags:StatusFlags:Shrink % 80000
+  BCC:  	Sub   *Var0  00000008 
+  BDC:  	Add   *Var1  00000008 
+  BEC:  Else
+  BF4:  	Sub   *Var0  00000014 
+  C04:  	Add   *Var1  00000014 
+  C14: 	EndIf
+		Call  SetAnimation  ( .Actor:Self 00000001 00F60001 )
+  C1C: 	Call  $Function_80218200_C ( *Var0 *Var1 *Var6 *Var4 *Var5 *Var6 15` )
+  D88:  Wait  15`
+  DEC:  Call  EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:NoContact|Magic 00000000 00000000 00000006 00000020 )
+		Thread %hope this will make it not break everything
+			Call	8026BF48	( 00000001 )
+			Call	BoostDefense	( .Actor:Player FFFFFFFE )
+			Call	8026BF48	( 00000000 )
+		EndThread		
+  E1C:  Switch  *Var0 
+  E28:  	CaseOR  ==  .HitResult:Hit % 0
+  E34:  	CaseOR  ==  00000002 % 2
+  E40:  		Wait  20`
+  E4C:  		Call  YieldTurn ( )
+  E58:  	EndCaseGroup
+  E60:  EndSwitch
+  EA8:  Return
+  EB0:  End
+}
+
+#new:Script $Script_StunSpell_EmperorBeetle
+{
+  10C:  Call  SetTargetActor    ( .Actor:Self .Actor:Player )
+  120:  Call  GetBattlePhase    ( *Var0 )
+  130:  If  *Var0  ==  00000001 
+  140:  	Call  UseBattleCamPreset    ( 00000002 )
+  150:  	Call  MoveBattleCamOver     ( 00000001 )
+  160:  Else
+  168:  	Call  UseBattleCamPreset    ( 00000002 )
+  178:  	Call  MoveBattleCamOver     ( 0000000A )
+  188:  EndIf
+  190:  Call  PlaySoundAtActor  ( .Actor:Self .Sound:SpellCast1 )
+  264: 	Call  SetAnimation      ( .Actor:Self 00000001 00F60816 )
+  27C: 	Call  GetActorPos       ( .Actor:Self *Var0 *Var1 *Var2 )
+  298: 	Call  GetStatusFlags    ( .Actor:Self *Var3 )
+  2AC: 	If  *Var3  &  ~Flags:StatusFlags:Shrink % 80000
+  2BC: 		Sub   *Var0  00000006 
+  2CC: 		Add   *Var1  0000000D 
+  2DC:  Else
+  2E4:  	Sub   *Var0  00000011 
+  2F4:  	Add   *Var1  00000021 
+  304:  EndIf
+  30C:  Call  PlayEffect    ( ~FX:GatherMagic:Pink *Var0 *Var1 *Var2 *Fixed[0.5] 0000001E 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+		Call  $Function_SetGatherMagicColors_Purple ( *VarF )
+  4FC:  Wait  30`
+  508:  Call  EnemyTestTarget   ( .Actor:Self *Var9 ~Flags:DamageType:0 00000000 00000001 00000010 )
+  52C:  Switch  *Var9 
+  538:  	CaseOR  ==  .HitResult:Miss % 6
+  544:  	CaseOR  ==  .HitResult:Lucky % 5
+  57C:  		Call  PlaySoundAtActor  ( .Actor:Self .Sound:SpellCast2 )
+  5D0:  		Call  SetAnimation  ( .Actor:Self 00000001 00F60817 )
+  640:  		Wait  5`
+  64C:  		Call  SetGoalToTarget   ( .Actor:Self )
+  65C:  		Call  GetGoalPos        ( .Actor:Self *Var4 *Var5 *Var6 )
+  678:  		Sub   *Var4  00000032 
+  688:  		Set   *Var5  00000000 
+  724:  		Call  GetActorPos       ( .Actor:Self *Var0 *Var1 *Var2 )
+  740:  		Call  GetStatusFlags    ( .Actor:Self *Var3 )
+  754:  		If  *Var3  &  ~Flags:StatusFlags:Shrink % 80000
+  764:  			Sub   *Var0  00000008 
+  774:  			Add   *Var1  00000008 
+  784:  		Else
+  78C:  			Sub   *Var0  00000014 
+  79C:  			Add   *Var1  00000014 
+  7AC:  		EndIf
+				Call  SetAnimation  ( .Actor:Self 00000001 00F60001 )
+  7B4:  		Call  $Function_80218200_D ( *Var0 *Var1 *Var6 *Var4 *Var5 *Var6 00000008 )
+  920:  		Wait  50`
+  92C:  		If  *Var9  ==  .HitResult:Lucky % 5
+  93C:  			Call  EnemyTestTarget   ( .Actor:Self *Var0 ~Flags:DamageType:TriggerLucky 00000000 00000000 00000000 )
+  960:  		EndIf
+  968:  		Wait  15`
+  974:  		Call  YieldTurn ( )
+  980:  		Call  UseIdleAnimation  ( .Actor:Self .True )
+  9C0:  		Return
+  9C8:  	EndCaseGroup
+  9D0:  EndSwitch
+  A04:  Call  PlaySoundAtActor  ( .Actor:Self .Sound:SpellCast2 )
+  A58:  Call  SetAnimation  ( .Actor:Self 00000001 00F60817 )
+  AC8:  Wait  5`
+  AD4:  Call  SetGoalToTarget   ( .Actor:Self )
+  AE4:  Call  GetGoalPos        ( .Actor:Self *Var4 *Var5 *Var6 )
+  B8C:  Call  GetActorPos       ( .Actor:Self *Var0 *Var1 *Var2 )
+  BA8:  Call  GetStatusFlags    ( .Actor:Self *Var3 )
+  BBC:  If  *Var3  &  ~Flags:StatusFlags:Shrink % 80000
+  BCC:  	Sub   *Var0  00000008 
+  BDC:  	Add   *Var1  00000008 
+  BEC:  Else
+  BF4:  	Sub   *Var0  00000014 
+  C04:  	Add   *Var1  00000014 
+  C14: 	EndIf
+		Call  SetAnimation  ( .Actor:Self 00000001 00F60001 )
+  C1C: 	Call  $Function_80218200_D ( *Var0 *Var1 *Var6 *Var4 *Var5 *Var6 8` )
+  D88:  Wait  8`
+  DEC:  Call  EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:NoContact|Magic 00000000 80200264 00000008 00000020 )
+  E1C:  Switch  *Var0 
+  E28:  	CaseOR  ==  .HitResult:Hit % 0
+  E34:  	CaseOR  ==  00000002 % 2
+  E40:  		Wait  20`
+  E4C:  		Call  YieldTurn ( )
+  E58:  	EndCaseGroup
+  E60:  EndSwitch
+  EA8:  Return
+  EB0:  End
+}
+
+#new:Script $Script_SelfBuffSpell_EmperorBeetle
+{
+		Call     GetActorVar 	( .Actor:Self 00000001 *Var1 )
+		Sub *Var1 1
+		If *Var1 < 0
+			Set *Var1 0
+		EndIf
+		Call	 SetActorVar 	( .Actor:Self 00000001 *Var1 )
+  10C:  Call  SetTargetActor    ( .Actor:Self .Actor:Player )
+  120:  Call  GetBattlePhase    ( *Var0 )
+  130:  If  *Var0  ==  00000001 
+  140:  	Call  UseBattleCamPreset    ( 00000002 )
+  150:  	Call  MoveBattleCamOver     ( 00000001 )
+  160:  Else
+  168:  	Call  UseBattleCamPreset    ( 00000002 )
+  178:  	Call  MoveBattleCamOver     ( 0000000A )
+  188:  EndIf
+  190:  Call  PlaySoundAtActor  ( .Actor:Self .Sound:SpellCast1 )
+  264: 	Call  SetAnimation      ( .Actor:Self 00000001 00F60916 )
+  27C: 	Call  GetActorPos       ( .Actor:Self *Var0 *Var1 *Var2 )
+  298: 	Call  GetStatusFlags    ( .Actor:Self *Var3 )
+  2AC: 	If  *Var3  &  ~Flags:StatusFlags:Shrink % 80000
+  2BC: 		Sub   *Var0  00000006 
+  2CC: 		Add   *Var1  0000000D 
+  2DC:  Else
+  2E4:  	Sub   *Var0  00000011 
+  2F4:  	Add   *Var1  00000021 
+  304:  EndIf
+  30C:  Call  PlayEffect    ( ~FX:GatherMagic:Pink *Var0 *Var1 *Var2 *Fixed[0.5] 0000001E 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+  		Call  $Function_SetGatherMagicColors_Yellow ( *VarF )
+  4FC:  Wait  30`
+  A04:  Call  PlaySoundAtActor  ( .Actor:Self .Sound:SpellCast2 )
+  A58:  Call  SetAnimation  ( .Actor:Self 00000001 00F60917 )
+  AC8:  Wait  5`
+  AD4:  Call  SetGoalToTarget   ( .Actor:Self )
+  AE4:  Call  GetGoalPos        ( .Actor:Self *Var4 *Var5 *Var6 )
+  B8C:  Call  GetActorPos       ( .Actor:Self *Var0 *Var1 *Var2 )
+  BA8:  Call  GetStatusFlags    ( .Actor:Self *Var3 )
+  BBC:  If  *Var3  &  ~Flags:StatusFlags:Shrink % 80000
+  BCC:  	Sub   *Var0  00000008 
+  BDC:  	Add   *Var1  00000008 
+  BEC:  Else
+  BF4:  	Sub   *Var0  00000014 
+  C04:  	Add   *Var1  00000014 
+  C14: 	EndIf
+		Call  SetAnimation  ( .Actor:Self 00000001 00F60001 )
+		Thread
+			Call	8026BF48	( 00000001 )
+			Call     GetEnemyMaxHP 	( .Actor:Self *Var[1] )
+			If *Var[1] > 99`
+				Set *Var[1] 99`
+			EndIf
+			Call	HealActor	( .Actor:Self *Var[1] 00000001 ) %full heal
+			Call	BoostAttack	( .Actor:Self 00000002 )
+			Call	BoostDefense ( .Actor:Self 00000002 )
+			Call	8026BF48	( 00000000 )
+		EndThread
+  EA8:  Return
+  EB0:  End
+}

@@ -1,0 +1,29 @@
+%Buff all goomba health
+%grounded goombas get 3 hp now, flying ones get 2 hp
+
+@ $Goomba
+{
+[MaxHP]		3`b
+}
+
+@ $SpikedGoomba
+{
+[MaxHP]		3`b
+}
+
+@ $Script_TakeTurn_8021BDDC %spiked goomba damage is now 3
+{
+[9AC]  Call     EnemyDamageTarget 	( .Actor:Self *Var[0] 00000000 00000000 00000000 00000003 00000020 )
+}
+
+@ $Paragoomba
+{
+[MaxHP]		2`b
+}
+
+@ $DefenseTable_8021CB0C
+{
+.Element:Normal 00000000
+.Element:Throw	FFFFFFFF
+.Element:End
+}

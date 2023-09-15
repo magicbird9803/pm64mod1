@@ -1,0 +1,305 @@
+%This was originally planned to contain a triple koopatrol fight
+%but I moved it to battle section 25 :P
+
+/%
+#import newenemy/Enemy/22_Koopatrol.bpat
+#import newenemy/GoldKoopatrol.bpat
+#import newenemy/DarkKoopatrol.bpat
+%/
+
+#import newenemy/Bobuke.bpat
+#import newenemy/DarkBoo.bpat
+#import newenemy/SteelCleft.bpat
+#import newenemy/SteelBristle.bpat
+#import newenemy/LilSparky.bpat
+
+#new:StageTable $StageTable
+{
+"cav_02" $Stage_Cave1
+%"cav_01" $Stage_Cave2
+"cav_03" $Stage_Cave3
+"cav_04" $Stage_Cave4
+"cav_05" $Stage_Cave6
+"pit_09" $Stage_Pit1
+00000000 00000000 
+}
+
+#new:Stage $Stage_Pit1
+{
+"kpa_tex"
+"pit_b01_shape"
+"pit_b01_hit"
+$Script_BeforeBattle_Pit
+$Script_AfterBattle_Pit
+00000000 
+00000000 
+00000000 
+00000000 
+00000000 
+}
+
+%pit does not remove SE because that would make it worse
+#new:Script $Script_BeforeBattle_Pit
+{
+	Return
+	End
+}
+
+#new:Script $Script_AfterBattle_Pit
+{
+	Return
+	End
+}
+
+#new:Script $Script_BeforeBattle_NormalCave
+{
+	Set *EnviroEffectsAux 3
+	Return
+	End
+}
+
+#new:Script $Script_AfterBattle_NormalCave
+{
+	Set *EnviroEffectsAux 0
+	Return
+	End
+}
+	
+#new:Script $Script_BeforeBattle_DarkCave %This one activates the "dark battle" stuff, so watt is required
+{
+	Call 80253734 ( 00000001 ) %?
+	Set *EnviroEffectsAux 3
+	Return
+	End
+}
+
+#new:Script $Script_AfterBattle_DarkCave
+{
+	Set *EnviroEffectsAux 0
+	Return
+	End
+}
+
+#new:Stage $Stage_Cave1
+{
+"kpa_tex"
+"cav_b01_shape"
+"cav_b01_hit"
+$Script_BeforeBattle_NormalCave
+$Script_AfterBattle_NormalCave
+00000000 
+00000000 
+00000000 
+00000000 
+00000000 
+}
+
+/%
+%this one has a ceiling, use it for cave maps with a low ceiling
+#new:Stage $Stage_Cave2
+"kpa_tex"
+"cav_b02_shape"
+"cav_b02_hit"
+$Script_BeforeBattle_NormalCave
+$Script_AfterBattle_NormalCave
+00000000 
+00000000 
+00000000 
+00000000 
+00000000 
+%/
+
+%this one is darker than the first one, use it for later maps
+#new:Stage $Stage_Cave3
+{
+"kpa_tex"
+"cav_b03_shape"
+"cav_b03_hit"
+$Script_BeforeBattle_NormalCave
+$Script_AfterBattle_NormalCave
+00000000 
+00000000 
+00000000 
+00000000 
+00000000 
+}
+
+%even darker
+#new:Stage $Stage_Cave4
+{
+"kpa_tex"
+"cav_b04_shape"
+"cav_b04_hit"
+$Script_BeforeBattle_DarkCave
+$Script_AfterBattle_DarkCave
+00000000 
+00000000 
+00000000 
+00000000 
+00000000 
+}
+
+/%
+%stage next to river
+#new:Stage $Stage_Cave5
+"kpa_tex"
+"cav_b05_shape"
+"cav_b05_hit"
+$Script_BeforeBattle_NormalCave
+$Script_AfterBattle_NormalCave
+00000000 
+00000000 
+00000000 
+00000000 
+00000000 
+%/
+
+%stage next to a precipice
+#new:Stage $Stage_Cave6
+{
+"kpa_tex"
+"cav_b06_shape"
+"cav_b06_hit"
+$Script_BeforeBattle_NormalCave
+$Script_AfterBattle_NormalCave
+00000000 
+00000000 
+00000000 
+00000000 
+00000000 
+}
+
+/%
+%stage in front of the dark temple
+#new:Stage $Stage_Cave7
+"kpa_tex"
+"cav_b07_shape"
+"cav_b07_hit"
+$Script_BeforeBattle_NormalCave
+$Script_AfterBattle_NormalCave
+00000000 
+00000000 
+00000000 
+00000000 
+00000000 
+
+%stage in the ruined city
+%/
+
+#new:Formation $Formation_00
+{
+$Bobuke 00000001 0000000A 00000000 00000000 00000000 00000000
+$Bobuke 00000002 00000009 00000000 00000000 00000000 00000000
+$Bobuke 00000003 00000008 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_01
+{
+$Bobuke 00000000 0000000A 00000000 00000000 00000000 00000000
+$Bobuke 00000001 00000009 00000000 00000000 00000000 00000000
+$SteelCleft 00000002 00000008 00000000 00000000 00000000 00000000
+$SteelCleft 00000003 00000007 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_02
+{
+$Bobuke 00000001 0000000A 00000000 00000000 00000000 00000000
+$SteelCleft 00000002 00000009 00000000 00000000 00000000 00000000
+$Bobuke 00000003 00000008 00000000 00000000 00000000 00000000
+$LilSparky 00000007 00000007 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_03
+{
+$Bobuke 00000001 0000000A 00000000 00000000 00000000 00000000
+$SteelCleft 00000002 00000009 00000000 00000000 00000000 00000000
+$SteelCleft 00000003 00000008 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_04
+{
+$Bobuke 00000000 0000000A 00000000 00000000 00000000 00000000
+$Bobuke 00000001 00000009 00000000 00000000 00000000 00000000
+$LilSparky 00000006 00000008 00000000 00000000 00000000 00000000
+}
+
+
+
+#new:Formation $Formation_07
+{
+$Bobuke 00000000 0000000A 00000000 00000000 00000000 00000000
+$Bobuke 00000001 00000009 00000000 00000000 00000000 00000000
+$SteelCleft 00000002 00000008 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_08
+{
+$Bobuke 00000000 0000000A 00000000 00000000 00000000 00000000
+$SteelCleft 00000001 00000009 00000000 00000000 00000000 00000000
+$SteelCleft 00000002 00000008 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_09
+{
+$Bobuke 00000000 0000000A 00000000 00000000 00000000 00000000
+$SteelBristle 00000001 00000009 00000000 00000000 00000000 00000000
+$SteelBristle 00000002 00000008 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_0A
+{
+$SteelCleft 00000001 0000000A 00000000 00000000 00000000 00000000
+$SteelCleft 00000002 00000009 00000000 00000000 00000000 00000000
+$SteelCleft 00000003 00000008 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_0B
+{
+$SteelCleft 00000001 0000000A 00000000 00000000 00000000 00000000
+$SteelBristle 00000002 00000009 00000000 00000000 00000000 00000000
+$SteelBristle 00000003 00000008 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_0C
+{
+$SteelCleft 00000000 0000000A 00000000 00000000 00000000 00000000
+$SteelCleft 00000001 00000009 00000000 00000000 00000000 00000000
+$SteelBristle 00000002 00000008 00000000 00000000 00000000 00000000
+$SteelBristle 00000003 00000007 00000000 00000000 00000000 00000000
+}
+
+
+
+
+#new:FormationTable $FormationTable
+{
+00000000 00000003 $Formation_00 $Stage_Cave1 00000000
+00000000 00000004 $Formation_01 $Stage_Cave1 00000000
+00000000 00000004 $Formation_02 $Stage_Cave1 00000000
+00000000 00000003 $Formation_03 $Stage_Cave1 00000000
+00000000 00000003 $Formation_04 $Stage_Cave1 00000000
+00000000 00000003 $Formation_05 $Stage_Pit1 00000000	%floor 86
+00000000 00000004 $Formation_06 $Stage_Pit1 00000000	%floor 88
+00000000 00000003 $Formation_07 $Stage_Cave4 00000000
+00000000 00000003 $Formation_08 $Stage_Cave4 00000000
+00000000 00000003 $Formation_09 $Stage_Cave4 00000000
+00000000 00000003 $Formation_0A $Stage_Cave4 00000000
+00000000 00000003 $Formation_0B $Stage_Cave4 00000000
+00000000 00000004 $Formation_0C $Stage_Cave4 00000000
+00000000 00000000 00000000 00000000 00000000 % unused
+}
+
+#new:Formation $Formation_05
+{
+$Bobuke 00000001 0000000A 00000000 00000000 00000000 00000000
+$SteelBristle 00000002 00000009 00000000 00000000 00000000 00000000
+$SteelCleft 00000003 00000008 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_06
+{
+$LilSparky 00000004 0000000A 00000000 00000000 00000000 00000000
+$LilSparky 00000005 00000009 00000000 00000000 00000000 00000000
+$SteelCleft 00000002 00000008 00000000 00000000 00000000 00000000
+$LilSparky 00000006 00000007 00000000 00000000 00000000 00000000
+}

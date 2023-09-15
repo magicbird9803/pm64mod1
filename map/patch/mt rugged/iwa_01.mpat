@@ -1,0 +1,64 @@
+@ $AISettings_80244BC0
+{
+    1.0 % move speed
+    30` % move time
+    30` % Wait time
+  120.0 % alert radius
+    0.0
+    3`
+    9.0 % chase speed %7 -> 9
+    60`
+    5`
+  100.0 % chase radius
+   60.0
+    1`
+}
+
+@ $NpcGroupList_80245DB0
+{
+	00000002 $NpcGroup_80244C40 09060002
+	00000002 $NpcGroup_80245020 09070002
+	00000002 $NpcGroup_80245400 09060002
+	00000002 $NpcGroup_802457E0 09070002
+	00000001 $NpcGroup_80245BC0 09040002
+	00000001 $NpcGroup_Paragoomba1 09080002 
+	00000001 $NpcGroup_Paragoomba2 090A0002 
+	00000000 00000000 00000000
+}
+
+#import NPC_Paragoomba.mpat
+
+#new:NpcGroup $NpcGroup_Paragoomba1
+{
+	00000009 $NpcSettings_Paragoomba ~Vec3f:NPC_Paragoomba1
+	00000400 00000000 00000000 00000000 0000010E
+	~İtems:5:DriedFruit:A ~HP:Standard:2 ~FP:Standard:2 ~CoinBonus:0:2
+	~Movement:NPC_Paragoomba1
+	00280101 00280103 00280104 00280104 00280101 00280101 00280106 00280106
+	00280104 00280104 00280104 00280104 00280104 00280104 00280104 00280104
+	00000001 00000000 00000000 00000000 % no tattle string
+}
+
+#new:NpcGroup $NpcGroup_Paragoomba2
+{
+	0000000A $NpcSettings_Paragoomba ~Vec3f:NPC_Paragoomba2
+	00000400 00000000 00000000 00000000 0000010E
+	~İtems:5:DriedFruit:A ~HP:Standard:2 ~FP:Standard:2 ~CoinBonus:0:2
+	~Movement:NPC_Paragoomba2
+	00280101 00280103 00280104 00280104 00280101 00280101 00280106 00280106
+	00280104 00280104 00280104 00280104 00280104 00280104 00280104 00280104
+	00000001 00000000 00000000 00000000 % no tattle string
+}
+
+
+%make them a little more aggressive
+@ $Script_NpcAI_Paragoomba
+{
+    0:  Call  SetSelfVar    ( 00000000 00000001 )	%???
+   14:  Call  SetSelfVar    ( 00000005 FFFFFCAE )	%amplitude (how far down the paragoomba goes) (*Not 1:1 correspondent with map units)
+   28:  Call  SetSelfVar    ( 00000006 0000003C )	%amplitude variable 2 (*high values result in lower amplitude?)
+   3C:  Call  SetSelfVar    ( 00000001 000002BC )	%???
+   50:  Call  $Function_8024130C_Paragoomba    ( $AISettings_Paragoomba )
+   60:  Return
+   68:  End
+}

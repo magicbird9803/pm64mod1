@@ -1,0 +1,563 @@
+%lantern ghost and peach Choices
+
+@ $FormationTable
+{
+$SJIS_8022EE60 00000001 $Formation_00 $Stage_8021B4A0 00000000 
+$SJIS_8022EE48 00000001 $Formation_01 $Stage_8021B62C 00000000 
+$SJIS_8022EE2C 00000002 $Formation_02 $Stage_8021B62C 00000000 % unused
+$SJIS_8022EE10 00000002 $Formation_03 $Stage_8021B62C 00000000 
+$SJIS_8022EDF4 00000002 $Formation_04 $Stage_8021B62C 00000000 % unused
+$SJIS_8022EDD8 00000004 $Formation_05 $Stage_8021B62C 00000000 
+$SJIS_8022EDB8 00000002 $Formation_06 $Stage_8021B62C 00000000 % unused
+$SJIS_8022ED98 00000001 $Formation_07 $Stage_8021B62C 00000000 
+$SJIS_8022ED80 00000002 $Formation_08 $Stage_8021B62C 00000000 
+$SJIS_8022ED64 00000001 $Formation_09 $Stage_8021B62C 00000000 
+$SJIS_8022ED58 00000001 $Formation_0A $Stage_8021B398 00000000 %to be removed, this is a singular shy guy 
+00000000 00000001 $Formation_0B $Stage_8021B62C 00000000 %shroom!
+00000000 00000000 00000000 00000000 00000000 % unused
+}
+
+%delete unused stuff
+
+%goomba replaced with dark goomba, so delete all the old goomba stuff
+#delete $DefenseTable_8021D150
+#delete $StatusTable_8021D15C
+#delete $PartsTable_8021D208
+#delete $Goomba
+#delete $IdleAnimations_8021D254
+#delete $IdleAnimations_8021D2A0
+#delete $Script_Init_8021D2EC
+#delete $Script_Idle_8021D338
+#delete $Script_HandleEvent_8021D614
+#delete $FloatTable_8021DCD4
+#delete $Script_TakeTurn_8021DE40
+
+%red clubba is different from regular clubba, so delete this stuff
+#delete $Clubba
+#delete $PartsTable_8021EC14 
+#delete $Script_Init_8021EC60
+#delete $Script_Idle_8021ECAC
+#delete $StatusTable_8021EB68 
+#delete $Script_HandleEvent_8021ECBC
+#delete $Script_TakeTurn_8021F1CC
+
+%remove shy guy
+%but not until i get the formations working
+/%
+#delete $DefenseTable_8022CCF0
+#delete $StatusTable_8022CD04
+#delete $PartsTable_8022CDB0
+#delete $ShyGuy
+#delete $IdleAnimations_8022CDFC
+#delete $Script_Init_8022CE48
+#delete $Script_Idle_8022CE94
+#delete $Script_8022CFA4
+#delete $Script_HandleEvent_8022D008
+#delete $Script_8022D4E4
+#delete $Script_8022DC0C
+#delete $Script_TakeTurn_8022E794
+%/
+
+%red fuzzy is not regular fuzzy, so delete this stuff
+#delete $DefenseTable_8021F720
+#delete $StatusTable_8021F72C
+#delete $PartsTable_8021F7D8
+#delete $Fuzzy
+#delete $IdleAnimations_8021F824
+#delete $Script_Init_8021F870
+#delete $Script_Idle_8021F8BC
+#delete $Script_HandleEvent_8021F8CC
+#delete $Script_TakeTurn_8021FF30
+
+%frost pokey is different from regular pokey
+%#delete 
+
+%gold koopatrol is different from regular koopatrol
+#delete $IdleAnimations_802280F0
+#delete $IdleAnimations_8022813C
+#delete $IdleAnimations_80228188
+#delete $IdleAnimations_802281D4
+#delete $DefenseTable_80228220
+#delete $DefenseTable_80228234
+#delete $DefenseTable_80228240
+#delete $StatusTable_80228254
+#delete $StatusTable_80228300
+#delete $PartsTable_8022839C
+#delete $Koopatrol
+#delete $Script_Init_802283E8
+#delete $Script_NextTurn_80228538
+#delete $Script_802285A4
+#delete $Script_Idle_8022875C
+#delete $IntTable_80228BEC
+#delete $Script_HandleEvent_80228C44
+#delete $Script_80229E34
+#delete $Script_8022AB88
+#delete $Script_8022B8AC
+#delete $Vector3D_8022BBBC
+#delete $SpecialFormation_8022BBC8
+#delete $Script_8022BBE4
+#delete $Script_8022C204
+#delete $Script_TakeTurn_8022C454
+
+#import newenemy/EvilShroom.bpat
+#import newenemy/DarkGoomba.bpat
+#import newenemy/RedClubba.bpat
+
+%#import newenemy/ShyGuy.bpat
+
+#new:Formation $Formation_0B
+{
+$EvilShroom 00000001 0000000A 00000000 00000000 00000000 00000000 
+}
+
+@ $Formation_01
+{
+$DarkGoomba 00000001 0000000A 00000000 00000000 00000000 00000000 
+}
+
+@ $Formation_02
+{
+$DarkGoomba 00000001 0000000A 00000000 00000000 00000000 00000000 
+$DarkGoomba 00000002 00000009 00000000 00000000 00000000 00000000 
+}
+
+@ $Formation_03
+{
+$RedClubba 00000001 0000000A 00000000 00000000 00000000 00000000 
+$RedClubba 00000002 00000009 00000000 00000000 00000000 00000000
+}
+
+%@ $Formation_0A
+%$ShyGuy 00000001 0000000A 00000000 00000000 00000000 00000000 %the old shy guy has the same name as the new shy guy, hope it doesn't break stuff
+
+#import newenemy/RedFuzzy.bpat
+%Might nerf sp gain from these guys later
+%The clone fuzzies give you 0 sp as expected, so no sp farming
+
+@ $Formation_04
+{
+$RedFuzzy 00000001 0000000A 00000000 00000000 00000000 00000000 
+$RedFuzzy 00000002 00000009 00000000 00000000 00000000 00000000 
+}
+
+@ $Formation_05 %star storm + power shell can kill them in one turn, but good luck if you don't come here with full star energy
+{
+$RedFuzzy 00000000 0000000A 00000000 00000000 00000000 00000000 
+$RedFuzzy 00000001 00000009 00000000 00000000 00000000 00000000 
+$RedFuzzy 00000002 00000008 00000000 00000000 00000000 00000000 
+$RedFuzzy 00000003 00000007 00000000 00000000 00000000 00000000 
+}
+
+#import newenemy/GoldKoopatrol.bpat
+#import newenemy/FrostPokey.bpat
+
+@ $GoldKoopatrol
+{
+[AirLift] 0`b %no cheating
+[Hurricane] 0`b
+}
+
+@ $Formation_09 %2 gold koopatrols would be way too hard
+{
+$GoldKoopatrol 00000001 0000000A 00000000 00000000 00000000 00000000 
+}
+
+@ $Formation_08
+{
+$FrostPokey 00000001 0000000A 00000000 00000001 00000000 00000000 
+$FrostPokey 00000002 00000009 00000000 00000001 00000000 00000000 
+}
+
+@ $StatusTable_80221034
+{
+.Status:Normal      0`
+.Status:Default     0`
+.Status:Sleep      40`
+.Status:Poison      0`
+.Status:Frozen      0`
+.Status:Dizzy      40`
+.Status:Fear        0`
+.Status:Static     75`
+.Status:Paralyze   75` %their armor isn't that good at stopping electricity
+.Status:Shrink     20`
+.Status:Stop       80`
+.Status:DefaultTurnMod    0`
+.Status:SleepTurnMod     -1`
+.Status:PoisonTurnMod     0`
+.Status:FrozenTurnMod     0`
+.Status:DizzyTurnMod     -1`
+.Status:FearTurnMod       0`
+.Status:StaticTurnMod     0`
+.Status:ParalyzeTurnMod   0`
+.Status:ShrinkTurnMod     1`
+.Status:StopTurnMod      -2`
+.Status:End
+}
+
+%buff hammer bro
+@ $HammerBros
+{
+[MaxHP]        13`b %beefy bros
+[Escape]       30`b 
+[AirLift]      55`b %pretty lightweight though 
+[Hurricane]    40`b % Bow's "Spook" as well
+[UpAndAway]    80`b 
+}
+
+@ $Script_Init_802211E0
+{
+    0:  Call  BindTakeTurn  ( .Actor:Self $Script_TakeTurn_80222DCC )
+   14:  Call  BindIdle      ( .Actor:Self $Script_Idle_80221244 )
+   28:  Call  BindHandleEvent   ( .Actor:Self $Script_HandleEvent_802213A0 )
+   28:  Call  BindNextTurn   ( .Actor:Self $Script_NextTurn_HammerBros )   
+   3C:  Call  SetActorVar   ( .Actor:Self 00000008 00000000 )
+   54:  Return
+   5C:  End
+}
+
+@ $Script_TakeTurn_80222DCC
+{
+    0:  Call  GetActorHP    ( .Actor:Self *Var0 )
+   14:  Call  GetEnemyMaxHP ( .Actor:Self *Var1 )
+   28:  Mul   *Var0  100`
+   38:  Div   *Var0  *Var1
+   48:  If  *Var0  >  50`	%34% -> 50%
+   58:  	ExecWait  $Script_802218B4
+   64:  Else
+   6C:  	ExecWait  $Script_80222570
+   78:  EndIf
+   80:  Return
+   88:  End
+}
+
+#new:Script $Script_NextTurn_HammerBros
+{
+	Call	GetBattlePhase ( *Var[0] )
+	If  *Var[0] ==  .Phase:EnemyEnd
+		Call	PlaySoundAtActor	( .Actor:Self 000002D8 )
+		%Thread
+		Call	 8026BF48	( 00000001 )
+		Call	 BoostAttack 	( .Actor:Self 00000001 )
+		Call 	 8026BF48 ( 00000000 )
+		%EndThread
+	EndIf
+	Return
+	End
+}
+
+@ $Script_802218B4 %single hammer
+{
+[6D8]  Call     EnemyDamageTarget 	( .Actor:Self *Var[0] 10000000 00000000 80080332 0000000A 00000020 ) %good luck if you chose hammer bro (but the fuzzy encounter is even worse!)
+}
+
+/%
+@ $Script_80222570 %Multi-attack
+{
+[698]  Call     EnemyDamageTarget 	( .Actor:Self *Var[0] 10000000 00000000 00000000 00000001 00000010 )
+[6D8]  Call     EnemyDamageTarget 	( .Actor:Self *Var[0] 10000000 00000000 00000000 00000002 00000040 )
+[718]  Call     EnemyDamageTarget 	( .Actor:Self *Var[0] 10000000 00000000 00000000 00000003 00000040 )
+[770]  Call     EnemyDamageTarget 	( .Actor:Self *Var[0] 10000000 00000000 00000000 00000004 00000040 )
+[7B0]  Call     EnemyDamageTarget 	( .Actor:Self *Var[0] 10000000 00000000 00000000 00000005 00000020 ) %hope you're wearing defensive badges or you'll take a full 15 damage
+}
+%/
+%Hammer guard timings make more sense
+@ $Script_80222570
+{
+    0:  Call  UseIdleAnimation  ( .Actor:Self .False )
+   14:  Call  EnableIdleScript  ( .Actor:Self 00000000 )
+   28:  Call  SetTargetActor    ( .Actor:Self .Actor:Player )
+   3C:  Thread
+   44:  	Set   *Var0  00000000
+   54:  	Loop  00000064
+   60:  		Add   *Var0  00000014
+   70:  		Mod   *Var0  00000168
+   80:  		Call  SetPartRotation   ( .Actor:Self 00000002 00000000 00000000 *Var0 )
+   A0:  		Call  SetPartRotation   ( .Actor:Self 00000003 00000000 00000000 *Var0 )
+   C0:  		Call  SetPartRotation   ( .Actor:Self 00000004 00000000 00000000 *Var0 )
+   E0:  		Call  SetPartRotation   ( .Actor:Self 00000005 00000000 00000000 *Var0 )
+  100:  		Call  SetPartRotation   ( .Actor:Self 00000006 00000000 00000000 *Var0 )
+  120:  		Wait  1`
+  12C:  	EndLoop
+  134:  EndThread
+  13C:  Call  GetActorPos   ( .Actor:Self *Var0 *Var1 *Var2 )
+  158:  Sub   *Var0  00000017
+  168:  Add   *Var1  00000017
+  178:  Sub   *Var2  00000002
+  188:  Call  SetPartPos    ( .Actor:Self 00000002 *Var0 *Var1 *Var2 )
+  1A8:  Call  SetPartPos    ( .Actor:Self 00000003 *Var0 *Var1 *Var2 )
+  1C8:  Call  SetPartPos    ( .Actor:Self 00000004 *Var0 *Var1 *Var2 )
+  1E8:  Call  SetPartPos    ( .Actor:Self 00000005 *Var0 *Var1 *Var2 )
+  208:  Call  SetPartPos    ( .Actor:Self 00000006 *Var0 *Var1 *Var2 )
+  228:  Call  GetStatusFlags    ( .Actor:Self *Var0 )
+  23C:  If  *Var0  &  ~Flags:StatusFlags:Shrink % 80000
+  24C:  	Call  SetPartScale  ( .Actor:Self 00000002 *Fixed[0.4] *Fixed[0.4] *Fixed[0.4] )
+  26C:  	Call  SetPartScale  ( .Actor:Self 00000003 *Fixed[0.4] *Fixed[0.4] *Fixed[0.4] )
+  28C:  	Call  SetPartScale  ( .Actor:Self 00000004 *Fixed[0.4] *Fixed[0.4] *Fixed[0.4] )
+  2AC:  	Call  SetPartScale  ( .Actor:Self 00000005 *Fixed[0.4] *Fixed[0.4] *Fixed[0.4] )
+  2CC:  	Call  SetPartScale  ( .Actor:Self 00000006 *Fixed[0.4] *Fixed[0.4] *Fixed[0.4] )
+  2EC:  Else
+  2F4:  	Call  SetPartScale  ( .Actor:Self 00000002 *Fixed[1.0] *Fixed[1.0] *Fixed[1.0] )
+  314:  	Call  SetPartScale  ( .Actor:Self 00000003 *Fixed[1.0] *Fixed[1.0] *Fixed[1.0] )
+  334:  	Call  SetPartScale  ( .Actor:Self 00000004 *Fixed[1.0] *Fixed[1.0] *Fixed[1.0] )
+  354:  	Call  SetPartScale  ( .Actor:Self 00000005 *Fixed[1.0] *Fixed[1.0] *Fixed[1.0] )
+  374:  	Call  SetPartScale  ( .Actor:Self 00000006 *Fixed[1.0] *Fixed[1.0] *Fixed[1.0] )
+  394:  EndIf
+  39C:  Call  EnemyTestTarget   ( .Actor:Self *Var0 ~Flags:DamageType:0 00000000 00000001 00000010 )
+  3C0:  Switch  *Var0
+  3CC:  	CaseOR  ==  .HitResult:Miss % 6
+  3D8:  	CaseOR  ==  .HitResult:Lucky % 5
+  3E4:  		Set   *VarA  *Var0
+  3F4:  		Set   *Var0  00000002
+  404:  		Exec  $Script_8022212C
+  410:  		Wait  5`
+  41C:  		Set   *Var0  00000003
+  42C:  		Exec  $Script_8022212C
+  438:  		Wait  5`
+  444:  		Set   *Var0  00000004
+  454:  		Exec  $Script_8022212C
+  460:  		Wait  5`
+  46C:  		Set   *Var0  00000005
+  47C:  		Exec  $Script_8022212C
+  488:  		Wait  5`
+  494:  		Set   *Var0  00000006
+  4A4:  		Exec  $Script_8022212C
+  4B0:  		Wait  5`
+  4BC:  		Wait  20`
+  4C8:  		Call  SetAnimation  ( .Actor:Self 00000001 005A0002 )
+  4E0:  		If  *VarA  ==  00000005
+  4F0:  			Call  EnemyTestTarget   ( .Actor:Self *Var0 ~Flags:DamageType:TriggerLucky 00000000 00000000 00000000 )
+  514:  		EndIf
+  51C:  		Wait  15`
+  528:  		Call  YieldTurn ( )
+  534:  		Call  AddActorDecoration    ( .Actor:Self 00000001 00000000 .Decoration:Sweat )
+  550:  		Wait  20`
+  55C:  		Call  RemoveActorDecoration ( .Actor:Self 00000001 00000000 )
+  574:  		Call  EnableIdleScript      ( .Actor:Self 00000001 )
+  588:  		Call  UseIdleAnimation      ( .Actor:Self .True )
+  59C:  		Return
+  5A4:  	EndCaseGroup
+  5AC:  EndSwitch
+  5B4:  Thread
+  5BC:  	Set   *Var0  00000002
+  5CC:  	Exec  $Script_80222378
+  5D8:  	Wait  7`
+  5E4:  	Set   *Var0  00000003
+  5F4:  	Exec  $Script_80222378
+  600:  	Wait  7`
+  60C:  	Set   *Var0  00000004
+  61C:  	Exec  $Script_80222378
+  628:  	Wait  7`
+  634:  	Set   *Var0  00000005
+  644:  	Exec  $Script_80222378
+  650:  	Wait  7`
+  65C:  	Set   *Var0  00000006
+  66C:  	Exec  $Script_80222378
+  678:  EndThread
+  680:  Wait  21`
+  68C:  Wait  2`
+  698:  Call  EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:NoContact 00000000 00000000 00000001 00000010 )
+  6C0:  Wait  5`
+  6CC:  Wait  2`
+  6D8:  Call  EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:NoContact 00000000 00000000 00000002 00000040 )
+  700:  Wait  5`
+  70C:  Wait  2`
+  718:  Call  EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:NoContact 00000000 00000000 00000003 00000040 )
+  740:  Wait  5`
+  74C:  Call  SetAnimation      ( .Actor:Self 00000001 005A0002 )
+  764:  Wait  2`
+  770:  Call  EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:NoContact 00000000 00000000 00000004 00000040 )
+  798:  Wait  5`
+  7A4:  Wait  2`
+  7B0:  Call  EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:NoContact 00000000 00000000 00000005 00000020 )
+  7D8:  Switch  *Var0
+  7E4:  	CaseOR  ==  .HitResult:Hit % 0
+  7F0:  	CaseOR  ==  00000002 % 2
+  7FC:  		Wait  20`
+  808:  		Call  YieldTurn ( )
+  814:  	EndCaseGroup
+  81C:  EndSwitch
+  824:  Call  EnableIdleScript  ( .Actor:Self 00000001 )
+  838:  Call  UseIdleAnimation  ( .Actor:Self .True )
+  84C:  Return
+  854:  End
+}
+
+
+
+%lantern ghost
+%can attack twice below 20 hp
+@ $BigLanternGhost
+{
+[PowerBounce]  3`b 
+}
+
+@ $StatusTable_80218DC8 %harder to use statuses on
+{
+.Status:Normal      0`
+.Status:Default     0`
+.Status:Sleep      20`
+.Status:Poison      0`
+.Status:Frozen      0`
+.Status:Dizzy      20`
+.Status:Fear        0`
+.Status:Static      0`
+.Status:Paralyze   30`
+.Status:Shrink      0`
+.Status:Stop       60`
+.Status:DefaultTurnMod    0`
+.Status:SleepTurnMod     -1`
+.Status:PoisonTurnMod     0`
+.Status:FrozenTurnMod     0`
+.Status:DizzyTurnMod     -1`
+.Status:FearTurnMod       0`
+.Status:StaticTurnMod     0`
+.Status:ParalyzeTurnMod  -1`
+.Status:ShrinkTurnMod     0`
+.Status:StopTurnMod      -2`
+.Status:End
+}
+
+/%
+@ $Script_8021A3E4
+{
+[518] Call EnemyDamageTarget ( FFFFFF81 *Var[E] 20000000 0000FFFF 80010364 00000002 00000020 ) %wee hee hee
+%though partner damage is unchanged 
+}
+%/
+
+%Make this not as unfair
+%The attacks won't stun you if you are stunned already
+@ $Script_8021A3E4
+{
+    0:  Call  SetActorVar       ( .Actor:Self 0000000B 00000000 )
+   18:  Call  SetActorVar       ( .Actor:Self 0000000C 00000003 )
+   30:  Call  UseIdleAnimation  ( .Actor:Self .False )
+   44:  Call  EnableIdleScript  ( .Actor:Self 00000000 )
+   58:  Call  SetTargetActor    ( .Actor:Self .Actor:Player )
+   6C:  Call  UseBattleCamPreset    ( 0000000D )
+   7C:  Call  SetBattleCamZoom  ( 000000F0 )
+   8C:  Call  BattleCamTargetActor  ( .Actor:Self )
+   9C:  Call  MoveBattleCamOver ( 00000014 )
+   AC:  Call  8024ECF8  ( FFFFFFFF 00000001 00000000 )
+   C4:  Call  SetGoalToTarget   ( .Actor:Self )
+   D4:  Call  GetGoalPos        ( .Actor:Self *Var0 *Var1 *Var2 )
+   F0:  Add   *Var0  00000050
+  100:  Set   *Var1  00000000
+  110:  Call  SetActorSpeed     ( .Actor:Self *Fixed[3.0] )
+  124:  Call  SetAnimation      ( .Actor:Self 00000001 006D0006 )
+  13C:  Call  SetGoalPos        ( .Actor:Self *Var0 *Var1 *Var2 )
+  158:  Call  RunToGoal ( .Actor:Self 00000000 .False )
+  170:  Call  SetAnimation      ( .Actor:Self 00000001 006D0001 )
+  188:  Wait  20`
+  194:  Call  UseBattleCamPreset    ( 00000005 )
+  1A4:  Call  SetBattleCamZoom  ( 0000015E )
+  1B4:  Call  SetBattleCamOffsetZ   ( 00000023 )
+  1C4:  Call  BattleCamTargetActor  ( .Actor:Self )
+  1D4:  Call  MoveBattleCamOver ( 00000008 )
+  1E4:  Call  PlaySoundAtActor  ( .Actor:Self 000002EB )
+  1F8:  Call  SetAnimation      ( .Actor:Self 00000001 006D000F )
+  210:  Call  GetActorVar       ( .Actor:Self 00000000 *Var5 )
+  228:  Call  SetActorVar       ( .Actor:Self 00000000 0000000B )
+  240:  Call  GetActorVar       ( .Actor:Self 00000002 *Var0 )
+  258:  Call  GetActorVar       ( .Actor:Self 00000003 *Var1 )
+  270:  Call  GetActorVar       ( .Actor:Self 00000004 *Var2 )
+  288:  Add   *Var1  0000000A
+  298:  Add   *Var2  00000002
+  2A8:  Thread
+  2B0:  	Wait  1`
+  2BC:  	Call  PlayEffect    ( ~FX:LightRays:SharpA *Var0 *Var1 *Var2 *Fixed[1.0] *VarB 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+  300:  	Wait  30`
+  30C:  	Call  RemoveEffect  ( *VarB )
+  31C:  EndThread
+  324:  Thread
+  32C:  	Wait  1`
+  338:  	Call  PlayEffect    ( 0000004F 00000001 *Var0 *Var1 *Var2 *Fixed[1.5] 0000001E 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+  37C:  EndThread
+  384:  Wait  5`
+  390:  Call  EnemyTestTarget   ( .Actor:Self *VarA ~Flags:DamageType:0 00000000 00000001 00000010 )
+  3B4:  Switch  *VarA
+  3C0:  	CaseOR  ==  .HitResult:Miss % 6
+  3CC:  	CaseOR  ==  .HitResult:Lucky % 5
+  3D8:  		If  *VarA  ==  .HitResult:Lucky % 5
+  3E8:  			Call  EnemyTestTarget   ( .Actor:Self *Var0 ~Flags:DamageType:TriggerLucky 00000000 00000000 00000000 )
+  40C:  		EndIf
+  414:  		Call  SetTargetActor    ( .Actor:Self .Actor:Partner )
+  428:  		Call  EnemyTestTarget   ( .Actor:Self *VarA ~Flags:DamageType:0 00000000 00000001 00000010 )
+  44C:  		Switch  *VarA
+  458:  			Case  ==  .HitResult:Miss % 6
+					Case  ==  .HitResult:Lucky
+  464:  			Default
+  46C:  				Call  ActorExists   ( .Actor:Partner *Var0 )
+  480:  				If  *Var0  ==  .True
+  490:  					Call  SetTargetActor    ( .Actor:Self .Actor:Partner )
+  4A4:  					Call  SetGoalToTarget   ( .Actor:Self )
+  4B4:  					Call  EnemyDamageTarget ( .Actor:Self *VarD ~Flags:DamageType:0 0000FFFF 00000000 00000002 00000020 )
+  4DC:  				EndIf
+  4E4:  		EndSwitch
+  4EC:  	EndCaseGroup
+  4F4:  	Default
+  4FC:  		Wait  2`
+  508:  		Call  SetGoalToTarget   ( .Actor:Self )
+				Call     GetStatusFlags ( .Actor:Player *Var[0] )
+				If  *Var[0]  &  0035D000   
+  518:  			Call  EnemyDamageTarget ( .Actor:Self *VarE 00000000 0000FFFF 00000000 00000002 00000020 )
+				Else
+  518:  			Call  EnemyDamageTarget ( .Actor:Self *VarE 00000000 0000FFFF 80010264 00000002 00000020 )
+				EndIf
+  540:  		Wait  2`
+  54C:  		Call  ActorExists       ( .Actor:Partner *Var0 )
+  560:  		If  *Var0  ==  .True
+  570:  			Call  SetTargetActor    ( .Actor:Self .Actor:Partner )
+  584:  			Call  SetGoalToTarget   ( .Actor:Self )
+					Call     GetStatusFlags ( .Actor:Partner *Var[0] )
+					If  *Var[0]  !&  01000000   
+  594:  				Call  EnemyDamageTarget ( .Actor:Self *VarD 00000000 0000FFFF 00000000 00000002 00000020 )
+					EndIf
+  5BC:  		EndIf
+  5C4:  EndSwitch
+  5CC:  Wait  40`
+  5D8:  Call  SetActorVar   ( .Actor:Self 00000000 *Var5 )
+  5F0:  Thread
+  5F8:  	Call  GetActorVar   ( .Actor:Self 0000000D *Var0 )
+  610:  	Wait  10`
+  61C:  	Switch  *Var0
+  628:  		Case  ==  00000000
+  634:  			Call  PlaySoundAtActor  ( .Actor:Self 000003AA )
+  648:  		Case  ==  00000001
+  654:  			Call  PlaySoundAtActor  ( .Actor:Self 000003A9 )
+  668:  		Case  ==  00000002
+  674:  			Call  PlaySoundAtActor  ( .Actor:Self 000003A8 )
+  688:  		Case  ==  00000003
+  694:  			Call  PlaySoundAtActor  ( .Actor:Self 000003A7 )
+  6A8:  	EndSwitch
+  6B0:  EndThread
+  6B8:  Call  SetAnimation      ( .Actor:Self 00000001 006D0014 )
+  6D0:  Wait  60`
+  6DC:  Call  UseBattleCamPreset    ( 00000002 )
+  6EC:  ExecWait  $Script_8021B0F8
+  6F8:  Call  EnableIdleScript  ( .Actor:Self 00000001 )
+  70C:  Call  UseIdleAnimation  ( .Actor:Self .True )
+  720:  Return
+  728:  End
+}
+
+@ $Script_8021B0F8 %more attacks
+{
+    0:  SetConst  *Var[0]  00000001 
+   10:  SetConst  *Var[1]  006D0007 
+   20:  ExecWait DoReturnHome 
+   2C:  Call     SetAnimation 	( .Actor:Self 00000001 006D0001 )
+		Call	 GetEnemyMaxHP ( .Actor:Self *Var[C] )
+		Div *Var[C] 2
+		Call     GetActorHP  	( .Actor:Self *Var[0] )
+  		If  *Var[0]  <  *Var[C]
+			If *Var[8] == 00000000
+				Set *Var[8] 00000001
+				ExecWait $Script_8021A3E4
+			Else
+				Set *Var[8] 00000000
+			EndIf
+		EndIf
+   44:  Return
+   4C:  End
+}

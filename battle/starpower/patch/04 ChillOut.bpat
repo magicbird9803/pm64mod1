@@ -1,0 +1,302 @@
+%Reduce duration to 3 turns
+%Attack power unchanged
+
+@ $Function_802A16F4
+{
+[94] ADDIU V0, R0, 3 % decrease duration (4 -> 3 turns)
+}
+
+#new:Function $Function_BoostedChillOut
+{
+    0:  ADDIU     SP, SP, FFE0
+    4:  SW        RA, 1C (SP)
+    8:  SW        S0, 18 (SP)
+    C:  JAL       ~Func:get_actor
+   10:  LW        A0, 148 (A0)
+   14:  COPY      S0, V0
+   18:  JAL       ~Func:get_actor
+   1C:  LH        A0, 428 (S0)
+   20:  LB        A1, 426 (S0)
+   24:  COPY      S0, V0
+   28:  JAL       ~Func:get_actor_part
+   2C:  COPY      A0, S0
+   30:  LW        V1, 0 (S0)
+   34:  COPY      A0, V0
+   38:  ANDI      V0, V1, 4000
+   3C:  BNE       V0, R0, .o1E4
+   40:  LI        V0, 2
+   44:  LUI       V0, 40
+   48:  AND       V0, V1, V0
+   4C:  BEQ       V0, R0, .o5C
+   50:  ANDI      V0, V1, 2000
+   54:  BEQ       R0, R0, .o1E4
+   58:  LI        V0, 2
+        .o5C
+   5C:  BNE       V0, R0, .o1E4
+   60:  LI        V0, 2
+   64:  LW        V1, 7C (A0)
+   68:  LUI       V0, 4
+   6C:  AND       V0, V1, V0
+   70:  BNE       V0, R0, .o1E4
+   74:  LI        V0, 2
+   78:  LUI       V0, 8
+   7C:  AND       V0, V1, V0
+   80:  BNE       V0, R0, .o1E4
+   84:  LI        V0, 2
+   88:  COPY      A0, S0
+   8C:  CLEAR     A1
+   90:  LI        A2, A
+   94:  LI        V0, 6										%6 turns!
+   98:  SB        V0, 224 (S0)
+   9C:  LI        V0, 3										%chill out
+   A0:  JAL       ~Func:dispatch_damage_event_actor_0
+   A4:  SB        V0, 223 (S0)
+   A8:  LH        V0, 150 (S0)
+   AC:  LWC1      F0, 144 (S0)
+   B0:  LW        V1, 0 (S0)
+   B4:  MTC1      V0, F2
+   B8:  NOP
+   BC:  CVT.S.W   F2, F2
+   C0:  LBU       V0, 190 (S0)
+   C4:  ADD.S     F0, F0, F2
+   C8:  SRL       V0, V0, 1
+   CC:  MTC1      V0, F2
+   D0:  NOP
+   D4:  CVT.S.W   F2, F2
+   D8:  ANDI      V0, V1, 800
+   DC:  BEQ       V0, R0, .o114
+   E0:  ADD.S     F4, F0, F2
+   E4:  LH        V0, 152 (S0)
+   E8:  LWC1      F0, 148 (S0)
+   EC:  MTC1      V0, F2
+   F0:  NOP
+   F4:  CVT.S.W   F2, F2
+   F8:  LBU       V0, 191 (S0)
+   FC:  ADD.S     F0, F0, F2
+  100:  MTC1      V0, F2
+  104:  NOP
+  108:  CVT.S.W   F2, F2
+  10C:  BEQ       R0, R0, .o180
+  110:  SUB.S     F0, F0, F2
+        .o114
+  114:  ANDI      V0, V1, 8000
+  118:  BNE       V0, R0, .o150
+  11C:  NOP
+  120:  LH        V0, 152 (S0)
+  124:  LWC1      F0, 148 (S0)
+  128:  MTC1      V0, F2
+  12C:  NOP
+  130:  CVT.S.W   F2, F2
+  134:  LBU       V0, 191 (S0)
+  138:  ADD.S     F0, F0, F2
+  13C:  MTC1      V0, F2
+  140:  NOP
+  144:  CVT.S.W   F2, F2
+  148:  BEQ       R0, R0, .o180
+  14C:  ADD.S     F0, F2, F0
+        .o150
+  150:  LH        V0, 152 (S0)
+  154:  LWC1      F2, 148 (S0)
+  158:  MTC1      V0, F0
+  15C:  NOP
+  160:  CVT.S.W   F0, F0
+  164:  LBU       V0, 191 (S0)
+  168:  ADD.S     F2, F2, F0
+  16C:  SLL       V0, V0, 1
+  170:  MTC1      V0, F0
+  174:  NOP
+  178:  CVT.S.W   F0, F0
+  17C:  ADD.S     F0, F2, F0
+        .o180
+  180:  LH        V0, 154 (S0)
+  184:  MFC1      A2, F0
+  188:  LWC1      F0, 14C (S0)
+  18C:  MTC1      V0, F2
+  190:  NOP
+  194:  CVT.S.W   F2, F2
+  198:  ADD.S     F0, F0, F2
+  19C:  LIF       F2, 5.0
+  1A4:  LI        A0, 5
+  1A8:  ADD.S     F0, F0, F2
+  1AC:  MFC1      A1, F4
+  1B0:  LIF       F4, 1.0
+  1B8:  MFC1      A3, F0
+  1BC:  LI        V0, 3C
+  1C0:  SW        V0, 14 (SP)
+  1C4:  JAL       ~Func:playFX_56
+  1C8:  SWC1      F4, 10 (SP)
+  1CC:  JAL       ~Func:sfx_play_sound
+  1D0:  LI        A0, 2106
+  1D4:  LI        V0, 2
+  1D8:  LI        V1, 1
+  1DC:  SAW       V1, $End[0]
+        .o1E4
+  1E4:  LW        RA, 1C (SP)
+  1E8:  LW        S0, 18 (SP)
+  1EC:  JR        RA
+  1F0:  ADDIU     SP, SP, 20
+}
+
+@ $Script_UsePower
+{
+    0:  Call     $Function_802A1518 ( )
+    C:  ExecWait $Script_802A18F0 
+		If *GameByte[00A] == 5
+			Call $ShowCustomMessage	( 002F002A 0000005A )
+			Call     UseBattleCamPreset 	( 00000002 )
+			ExecWait $Script_802A267C  
+			Call $Function_802A1528 ( ) %not having this might break stuff
+			Return
+		EndIf
+		Call	$Function_CheckStellarNova ( *VarE )		
+   18:  SetConst  *Var[0]  001C0001 
+   28:  ExecWait $Script_802A2020 
+   34:  Call     SetNpcAnimation 	( 00000064 001C0002 )
+   48:  Wait     00000010 
+   54:  Call     UseBattleCamPreset 	( 00000003 )
+   64:  Call     PlaySound   	( 00000244 )
+   74:  Call     InitTargetIterator 	( )
+   80:  Label    0000000A 
+   8C:  Call     ItemCheckHit 	( *Var[0] 00000000 00000000 00000000 00000000 )
+   AC:  If  *Var[0]  ==  00000006 
+   BC:  	Goto     0000000B 
+   C8:  EndIf
+   D0:  Call     $Function_802A163C ( )
+   DC:  If  *Var[0]  ==  00000001 
+   EC:  	Call     GetOwnerTarget ( *Var[A] *Var[B] )
+  100:  	Thread
+  108:  		Loop     00000005 
+  114:  			Call     8026C9C4 ( *Var[A] *Fixed[1.0] *Fixed[1.0] *Fixed[1.0] )
+  130:  			Wait     00000001 
+  13C:  			Call     8026C9C4 ( *Var[A] *Fixed[1.1005859] *Fixed[1.0] *Fixed[1.0] )
+  158:  			Wait     00000001 
+  164:  			Call     8026C9C4 ( *Var[A] *Fixed[1.2001953] *Fixed[0.9501953] *Fixed[1.0] )
+  180:  			Wait     00000001 
+  18C:  			Call     8026C9C4 ( *Var[A] *Fixed[1.3007812] *Fixed[0.9003906] *Fixed[1.0] )
+  1A8:  			Wait     00000001 
+  1B4:  			Call     8026C9C4 ( *Var[A] *Fixed[1.3505859] *Fixed[0.85058594] *Fixed[1.0] )
+  1D0:  			Wait     00000001 
+  1DC:  			Call     8026C9C4 ( *Var[A] *Fixed[1.3808594] *Fixed[0.80078125] *Fixed[1.0] )
+  1F8:  			Wait     00000001 
+  204:  			Call     8026C9C4 ( *Var[A] *Fixed[1.4003906] *Fixed[0.80078125] *Fixed[1.0] )
+  220:  			Wait     00000001 
+  22C:  			Call     8026C9C4 ( *Var[A] *Fixed[1.3007812] *Fixed[0.85058594] *Fixed[1.0] )
+  248:  			Wait     00000001 
+  254:  			Call     8026C9C4 ( *Var[A] *Fixed[1.2001953] *Fixed[0.9003906] *Fixed[1.0] )
+  270:  			Wait     00000001 
+  27C:  			Call     8026C9C4 ( *Var[A] *Fixed[1.1005859] *Fixed[0.9501953] *Fixed[1.0] )
+  298:  			Wait     00000001 
+  2A4:  		EndLoop
+  2AC:  		Call     8026C9C4 ( *Var[A] *Fixed[1.0] *Fixed[1.0] *Fixed[1.0] )
+  2C8:  	EndThread
+  2D0:  EndIf
+  2D8:  Label    0000000B 
+  2E4:  Call     ChooseNextTarget 	( .Iter:Next *Var[0] )
+  2F8:  If  *Var[0]  !=  FFFFFFFF 
+  308:  	Goto     0000000A 
+  314:  EndIf
+  31C:  Loop     0000001E 
+  328:  	Call     $Function_802A153C ( )
+  334:  	Wait     00000002 
+  340:  EndLoop
+  348:  Call     ChooseNextTarget 	( .Iter:First 00000000 )
+  35C:  Label    00000000 
+  368:  Call     SetGoalToTarget 	( .Actor:Self )
+  378:  Call     ItemCheckHit 	( *Var[0] 00000000 00000000 00000000 00000000 )
+  398:  If  *Var[0]  ==  00000006 
+  3A8:  	Goto     00000001 
+  3B4:  EndIf
+  3BC:  Call     $Function_802A163C ( )
+  3C8:  If  *Var[0]  ==  00000001 
+			%add cool effects because I can
+			Call	 GetGoalPos ( .Actor:Self *Var5 *Var6 *Var7 )
+			Call	 $Function_DebuffEffectCyan ( )
+			If *VarE > 0`
+  3D8:  		Call     $Function_BoostedChillOut ( )
+			Else
+  3D8:  		Call     $Function_802A16F4 ( )
+			EndIf
+  3E4:  Else
+  3EC:  	Call     PlayerDamageEnemy 	( *Var[0] 00000000 0000FFFF 00000000 00000000 00000820 )
+  410:  EndIf
+  418:  Label    00000001 
+  424:  Wait     00000005 
+  430:  Call     ChooseNextTarget 	( .Iter:Next *Var[0] )
+  444:  If  *Var[0]  !=  FFFFFFFF 
+  454:  	Goto     00000000 
+  460:  EndIf
+  468:  Wait     00000005 
+  474:  Call     $Function_802A1528 ( )
+  480:  If  *Var[0]  ==  00000001 
+  490:  	Call     ShowMessageBox ( 0000002C 0000003C )
+  4A4:  EndIf
+  4AC:  Call     80276EFC ( )
+  4B8:  ExecWait $Script_802A222C 
+  4C4:  ExecWait $Script_802A267C 
+  4D0:  Call     $Function_802A1528 ( )
+  4DC:  If  *Var[0]  ==  00000001 
+  4EC:  	Call     802513CC ( )
+  4F8:  EndIf
+  500:  Return
+  508:  End
+}
+
+#new:Function $Function_CheckStellarNova
+{
+PUSH	S1, A1, A2, T0, RA
+COPY	S1, A0
+%get
+LAB		A0, $StellarNovaBoolean
+%reset
+SAB		R0, $StellarNovaBoolean
+COPY	A2, A0
+COPY	A0, S1
+JAL		~Func:set_variable
+LW		A1, 0 (S0) %get argument
+NOP
+POP		S1, A1, A2, T0, RA
+JR		RA
+ADDIU	V0, R0, 2 	
+}
+
+%set var5, var6, var7 to correct position
+%03, FF, FF
+#new:Function $Function_DebuffEffectCyan
+{
+    0:  ADDIU     SP, SP, FFE8
+    4:  COPY      V0, A0
+    8:  SW        RA, 10 (SP)
+    C:  LWC1      F0, 98 (V0)				%84 (var0) -> 98 (var5)
+   10:  CVT.S.W   F0, F0
+   14:  MFC1      A1, F0
+   18:  LWC1      F0, 9C (V0)
+   1C:  CVT.S.W   F0, F0
+   20:  MFC1      A2, F0
+   24:  LWC1      F0, A0 (V0)
+   28:  CVT.S.W   F0, F0
+   2C:  MFC1      A3, F0
+   30:  JAL       80070AF0
+   34:  ADDIU     A0, R0, 2   
+   38:  LW        A0, C (V0)
+		ADDIU     V1, R0, 03 
+   40:  SB        V1, 38 (A0)						%color byte 1?
+   44:  LW        A0, C (V0)
+		ADDIU     V1, R0, FF
+   4C:  SB        V1, 39 (A0)						%color byte 2?
+   50:  LW        V1, C (V0)
+		ADDIU     A0, R0, FF
+   54:  SB        A0, 3A (V1)						%color byte 3?
+   58:  LW        A0, C (V0)
+		ADDIU     V1, R0, 70
+   60:  SB        V1, 3B (A0)						%color byte 4? (unused?)
+   64:  LW        A0, C (V0)
+		ADDIU     V1, R0, FF 
+   6C:  SB        V1, 3C (A0)						%color byte 5?
+   70:  LW        V1, C (V0)
+		ADDIU     V0, R0, FF 
+   74:  SB        V0, 3D (V1)						%color byte 6?
+   78:  LW        RA, 10 (SP)
+   7C:  ADDIU     V0, R0, 2   						%return 2
+   80:  JR        RA
+   84:  ADDIU     SP, SP, 18
+}

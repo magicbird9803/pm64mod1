@@ -1,0 +1,929 @@
+#message:22:006
+{
+	[STYLE:Right]
+	I see...a Dizzy Stomp Badge.[BR]
+	[Wait][NEXT]
+	You go near the waterfall in[BR]
+	Flower Fields and find a tree.[BR]
+	[Wait][NEXT]
+	You hit the tree and the badge[BR]
+	drops from above.[Wait][END]
+}
+
+#message:22:015
+{
+	[STYLE:Right]
+	I see...a Group Focus Badge.[BR]
+	[Wait][NEXT]
+	At the bottom of the path[BR]
+	between Gusty Gulch and[BR]
+	Dry Dry Desert, you find[BR]
+	a red ? block.[Wait][END]
+}
+
+#message:22:01D
+{
+	[STYLE:Right]
+	I see...an FP Plus Badge.[BR]
+	[Wait][NEXT]
+	It's inside a hidden room on the[BR]
+	second floor of Tubba Blubba's[BR]
+	Castle.[BR]
+	[Wait][NEXT]
+	You push aside a large clock and[BR]
+	go in the hole. Inside, you pull[BR]
+	out a drawer on the right[BR]
+	dresser.[BR]
+	[Wait][NEXT]
+	You climb up and a Paratroopa[BR]
+	carries you to the bed. You then[BR]
+	climb up to the top shelf.[BR]
+	[Wait][NEXT]
+	From there you find your way [BR]
+	into the hidden room.[Wait][END]
+}
+
+#message:22:025
+{
+	[STYLE:Right]
+	I see...a Flower Saver Badge.[BR]
+	[Wait][NEXT]
+	You move along the path between[BR]
+	Gusty Gulch and Dry Dry Desert.[BR]
+	[Wait][NEXT]
+	You use a high jump in order to[BR]
+	hit the block the badge is in.[Wait][END]
+}
+
+#message:22:02A
+{
+	[STYLE:Right]
+	I see...a Power Plus Badge.[BR]
+	[Wait][NEXT]
+	You are asked to deliver letters[BR]
+	by many people and you receive[BR]
+	the Badge when you complete[BR]
+	your last delivery.[Wait][END]
+}
+
+#message:22:030
+{
+	[STYLE:Right]
+	I see...a Mega Rush Badge.[BR]
+	[WAiT][NEXT]
+	Deep within Forever Forest, you[BR]
+	take the path in front of a[BR]
+	laughing rock.[BR]
+	[WAiT][NEXT]
+	A red ? Block is waiting in the[BR]
+	forest clearing.[BR]
+	[WAiT][NEXT]
+	After defeating an old enemy,[BR]
+	you use a high jump to obtain[BR]
+	the badge.[WAiT][END]
+}
+
+#message:22:037
+{
+	[STYLE:Right]
+	I see...a Feeling Fine Badge.[BR]
+	[Wait][NEXT]Below Toad Town, there is a[BR]
+	dark cave, and in that cave[BR]
+	there is a large dungeon.[BR]
+	[Wait][NEXT]After defeating 70 floors[BR]
+	of enemies, you are rewarded[BR]
+	with this Badge.[Wait][END]
+}
+
+#message:22:03A
+{
+	[STYLE:Right]
+	I see...a Head Start Badge.[BR]
+	[Wait][NEXT]Below Toad Town, there is a[BR]
+	dark cave, and in that cave[BR]
+	there is a large dungeon.[BR]
+	[Wait][NEXT]After defeating 90 floors[BR]
+	of enemies, you are rewarded[BR]
+	with this Badge.[Wait][END]
+}
+
+#message:22:03B
+{
+	[STYLE:Right]
+	I see...a Haste Step Badge.[BR]
+	[Wait][NEXT]Below Toad Town, there is a[BR]
+	dark cave, and in that cave[BR]
+	there is a large dungeon.[BR]
+	[Wait][NEXT]After defeating 20 floors[BR]
+	of enemies, you are rewarded[BR]
+	with this Badge.[Wait][END]
+}
+
+#message:22:042
+{
+	[STYLE:Right]
+	I see...an Auto Dodge Badge.[BR]
+	[Wait][NEXT]
+	This badge is held by the[BR]
+	Dojo Master in Toad Town.[BR]
+	[Wait][NEXT]
+	If you manage to defeat him[BR]
+	at his most powerful, he will[BR]
+	relinquish the badge.[BR]
+	[Wait][END]
+}
+
+#message:22:043
+{
+	[STYLE:Right]
+	I see...a Flower Power Badge.[BR]
+	[Wait][NEXT]
+	You throw a blue-colored berry[BR]
+	into the deserted well in Flower[BR]
+	Fields, [Pause 10]and something throws the[BR]
+	Badge to you.[Wait][END]
+}
+
+#message:22:046
+{
+	[STYLE:Right]
+	I see...a Money Money Badge.[BR]
+	[Wait][NEXT]
+	I can see a shady man living in[BR]
+	the tunnels under Toad Town. [BR]
+	[Wait][NEXT]
+	He sells many things, but you[BR]
+	don't know what you will get until[BR]
+	you give him the money.[BR]
+	[Wait][NEXT]
+	The price is always the same,[BR]
+	whatever you buy.[BR]
+	Sooner or later, he sells you [BR]
+	the Badge you seek. [Wait][END]
+}
+
+#message:22:047
+{
+	[STYLE:Right]
+	I see...a Peekaboo Badge.[BR]
+	[Wait][NEXT]Below Toad Town, there is a[BR]
+	dark cave, and in that cave[BR]
+	there is a large dungeon.[BR]
+	[Wait][NEXT]After defeating 10 floors[BR]
+	of enemies, you are rewarded[BR]
+	with this Badge.[Wait][END]
+}
+
+#message:22:049
+{
+	[STYLE:Right]
+	I see...a Flower Health Badge.[BR]
+	[Wait][NEXT]
+	There is a child upstairs in the[BR]
+	fortune-teller's house on[BR]
+	Shooting Star Summit.[BR]
+	[Wait][NEXT]
+	Hey! I'm that fortune-teller![BR]
+	[Wait][NEXT]
+	Anyway, the child is my brother,[BR]
+	Merlow. He will trade Star Pieces[BR]
+	for Badges.[BR]
+	[Wait][NEXT]
+	Head upstairs to see him![Wait][END]
+}
+
+%no clue why you would buy a badge fortune this early in the game but it works
+#message:22:04A
+{
+	[STYLE:Right]
+	I see...a Speedy Spin Badge.[BR]
+	[Wait][NEXT]
+	Hmm... It seems like someone is[BR]
+	already delivering this badge[BR]
+	to you.[Wait][END]
+}
+
+#message:22:04C
+{
+	[STYLE:Right]
+	I see...a Perfect Saver Badge.[BR]
+	[Wait][NEXT]Below Toad Town, there is a[BR]
+	dark cave, and in that cave[BR]
+	there is a large dungeon.[BR]
+	[Wait][NEXT]After defeating 30 floors[BR]
+	of enemies, you are rewarded[BR]
+	with this Badge.[Wait][END]
+}
+
+#message:22:04D
+{
+	[STYLE:Right]
+	I see...an Ultra Curse Badge.[BR]
+	[Wait][NEXT]There is a child upstairs in the[BR]
+	fortune-teller's house on[BR]
+	Shooting Star Summit.[BR]
+	[Wait][NEXT]Hey! I'm that fortune-teller![BR]
+	[Wait][NEXT]Anyway, the child is my brother,[BR]
+	Merlow. He will trade Star Pieces[BR]
+	for Badges.[BR]
+	[Wait][NEXT]Head upstairs to see him![Wait][END]
+}
+
+
+
+%totally new badges (i.e. not ones with an existing treasure fortune)
+
+#message:2F:100
+{
+[STYLE:Right]I see...a Berserker Badge.[BR]
+[Wait][NEXT]There is a child upstairs in the[BR]
+fortune-teller's house on[BR]
+Shooting Star Summit.[BR]
+[Wait][NEXT]Hey! I'm that fortune-teller![BR]
+[Wait][NEXT]Anyway, the child is my brother,[BR]
+Merlow. He will trade Star Pieces[BR]
+for Badges.[BR]
+[Wait][NEXT]Head upstairs to see him![Wait][END]
+}
+
+#message:2F:101
+{
+[STYLE:Right]I see...a Crazy Heart Badge.[BR]
+[Wait][NEXT]There is a child upstairs in the[BR]
+fortune-teller's house on[BR]
+Shooting Star Summit.[BR]
+[Wait][NEXT]Hey! I'm that fortune-teller![BR]
+[Wait][NEXT]Anyway, the child is my brother,[BR]
+Merlow. He will trade Star Pieces[BR]
+for Badges.[BR]
+[Wait][NEXT]Head upstairs to see him![Wait][END]
+}
+
+#message:2F:102
+{
+[STYLE:Right]I see...a Mega HP Drain Badge.[BR]
+[Wait][NEXT]There is a child upstairs in the[BR]
+fortune-teller's house on[BR]
+Shooting Star Summit.[BR]
+[Wait][NEXT]Hey! I'm that fortune-teller![BR]
+[Wait][NEXT]Anyway, the child is my brother,[BR]
+Merlow. He will trade Star Pieces[BR]
+for Badges.[BR]
+[Wait][NEXT]Head upstairs to see him![Wait][END]
+}
+
+#message:2F:103
+{
+[STYLE:Right]I see...a Flower Fanatic Badge.[BR]
+[Wait][NEXT]There is a child upstairs in the[BR]
+fortune-teller's house on[BR]
+Shooting Star Summit.[BR]
+[Wait][NEXT]Hey! I'm that fortune-teller![BR]
+[Wait][NEXT]Anyway, the child is my brother,[BR]
+Merlow. He will trade Star Pieces[BR]
+for Badges.[BR]
+[Wait][NEXT]Head upstairs to see him![Wait][END]
+}
+
+#message:2F:103
+{
+[STYLE:Right]I see...a Flower Fanatic Badge.[BR]
+[Wait][NEXT]There is a child upstairs in the[BR]
+fortune-teller's house on[BR]
+Shooting Star Summit.[BR]
+[Wait][NEXT]Hey! I'm that fortune-teller![BR]
+[Wait][NEXT]Anyway, the child is my brother,[BR]
+Merlow. He will trade Star Pieces[BR]
+for Badges.[BR]
+[Wait][NEXT]Head upstairs to see him![Wait][END]
+}
+
+#message:2F:104
+{
+[STYLE:Right]I see...a Super Curse Badge.[BR]
+[Wait][NEXT]There is a child upstairs in the[BR]
+fortune-teller's house on[BR]
+Shooting Star Summit.[BR]
+[Wait][NEXT]Hey! I'm that fortune-teller![BR]
+[Wait][NEXT]Anyway, the child is my brother,[BR]
+Merlow. He will trade Star Pieces[BR]
+for Badges.[BR]
+[Wait][NEXT]Head upstairs to see him![Wait][END]
+}
+
+
+#message:2F:105
+{
+[STYLE:Right]I see...a Frigid Stomp Badge.[BR]
+[Wait][NEXT]It is for sale at the open-air[BR]
+shop in the plaza outside the[BR]
+castle gate.[Wait][END]
+}
+
+#message:2F:106
+{
+[STYLE:Right]I see...a Flame Smash Badge.[BR]
+[Wait][NEXT]It is for sale at the open-air[BR]
+shop in the plaza outside the[BR]
+castle gate.[Wait][END]
+}
+
+#message:2F:107
+{
+[STYLE:Right]I see...a Dual Smash Badge.[BR]
+[Wait][NEXT]It is for sale at the open-air[BR]
+shop in the plaza outside the[BR]
+castle gate.[Wait][END]
+}
+
+#message:2F:108
+{
+[STYLE:Right]I see...an U. Smash Charge Badge.[BR]
+[Wait][NEXT]It is for sale at the open-air[BR]
+shop in the plaza outside the[BR]
+castle gate.[Wait][END]
+}
+
+#message:2F:109
+{
+[STYLE:Right]I see...an U. Jump Charge Badge.[BR]
+[Wait][NEXT]It is for sale at the open-air[BR]
+shop in the plaza outside the[BR]
+castle gate.[Wait][END]
+}
+
+#message:2F:10A
+{
+[STYLE:Right]I see...a Mega Bounce Badge.[BR]
+[Wait][NEXT]It is for sale at the open-air[BR]
+shop in the plaza outside the[BR]
+castle gate.[Wait][END]
+}
+
+
+
+#message:2F:10B
+{
+[STYLE:Right]I see...a Thunder Throw Badge.[BR]
+[Wait][NEXT]Below Toad Town, there is a[BR]
+dark cave, and in that cave[BR]
+there is a large dungeon.[BR]
+[Wait][NEXT]After defeating 40 floors[BR]
+of enemies, you are rewarded[BR]
+with this Badge.[Wait][END]
+}
+
+#message:2F:10C
+{
+[STYLE:Right]I see...a Mystery Stomp Badge.[BR]
+[Wait][NEXT]Below Toad Town, there is a[BR]
+dark cave, and in that cave[BR]
+there is a large dungeon.[BR]
+[Wait][NEXT]After defeating 50 floors[BR]
+of enemies, you are rewarded[BR]
+with this Badge.[Wait][END]
+}
+
+#message:2F:10D
+{
+[STYLE:Right]I see...a Perfect Rush Badge.[BR]
+[Wait][NEXT]Below Toad Town, there is a[BR]
+dark cave, and in that cave[BR]
+there is a large dungeon.[BR]
+[Wait][NEXT]After defeating 60 floors[BR]
+of enemies, you are rewarded[BR]
+with this Badge.[Wait][END]
+}
+
+#message:2F:10E
+{
+[STYLE:Right]I see...a Perfect Stand Badge.[BR]
+[Wait][NEXT]Below Toad Town, there is a[BR]
+dark cave, and in that cave[BR]
+there is a large dungeon.[BR]
+[Wait][NEXT]After defeating 80 floors[BR]
+of enemies, you are rewarded[BR]
+with this Badge.[Wait][END]
+}
+
+#message:2F:10F
+{
+[STYLE:Right]I see...a Flower Shield Badge.[BR]
+[Wait][NEXT]In Flower Fields, you will find[BR]
+this badge stuck in a sparkling[BR]
+tree.[BR]
+[Wait][NEXT]
+After hitting this tree quite[BR]
+a few times, this badge falls[BR]
+from above.[BR]
+[Wait][END]
+}
+
+#message:2F:110
+{
+[STYLE:Right]I see...a Flower Burst Badge.[BR]
+[Wait][NEXT]In Flower Fields, you will find[BR]
+this badge in the possession[BR]
+of a red flower.[BR]
+[Wait][NEXT]
+You give her a rare mushroom[BR]
+that only grows in the dark[BR]
+cave below Toad Town, and she[BR]
+will give you the badge.[BR]
+[Wait][END]
+}
+
+#message:2F:111
+{
+[STYLE:Right]I see...a Defend Plus Badge.[BR]
+[Wait][NEXT]In the dark cave below Toad[BR]
+Town, there lies a ruined [BR]
+city.[BR]
+[Wait][NEXT]Hidden on the top layer,[BR]
+there is a chest containing[BR]
+the badge.[Wait][END]
+}
+
+
+#message:2F:112
+{
+[STYLE:Right]I see...a Recoil Throw Badge.[BR]
+[Wait][NEXT]In the dark cave below Toad Town,[BR]
+you find a red ? block in[BR]
+the center of an island.[BR]
+[Wait][NEXT]With the help of a fishy friend,[BR]
+you swim through an underwater[BR]
+hole in the island in order[BR]
+to reach the block.[Wait][END]
+}
+
+#message:2F:113
+{
+[STYLE:Right]I see...a Quake Jump Badge.[BR]
+[Wait][NEXT]In the Temple of Darkness,[BR]
+it is protected by five[BR]
+extremely powerful enemies.[BR]
+[Wait][NEXT]Hmm... Maybe you should skip[BR]
+over this one...[Wait][END]
+}
+
+
+%stellar / dark badges
+#message:2F:114
+{
+[STYLE:Right]I see...a Stellar Flowers Badge.[BR]
+[Wait][NEXT]There is a child upstairs in the[BR]
+fortune-teller's house on[BR]
+Shooting Star Summit.[BR]
+[Wait][NEXT]Hey! I'm that fortune-teller![BR]
+[Wait][NEXT]Anyway, the child is my brother,[BR]
+Merlow. He will trade Star Pieces[BR]
+for Badges.[BR]
+[Wait][NEXT]Head upstairs to see him![Wait][END]
+}
+
+#message:2F:115
+{
+[STYLE:Right]I see...a Stellar Shield Badge.[BR]
+[Wait][NEXT]There is a child upstairs in the[BR]
+fortune-teller's house on[BR]
+Shooting Star Summit.[BR]
+[Wait][NEXT]Hey! I'm that fortune-teller![BR]
+[Wait][NEXT]Anyway, the child is my brother,[BR]
+Merlow. He will trade Star Pieces[BR]
+for Badges.[BR]
+[Wait][NEXT]Head upstairs to see him![Wait][END]
+}
+
+#message:2F:116
+{
+[STYLE:Right]I see...a Stellar Burst Badge.[BR]
+[Wait][NEXT]In a house in Star Haven,[BR]
+you find this badge on a chair.[Wait][END]
+}
+
+#message:2F:117
+{
+[STYLE:Right]I see...a Stellar Power Badge.[BR]
+[Wait][NEXT]It is next to a waterfall[BR]
+near the base of the[BR]
+Star Temple.[Wait][END]
+}
+
+#message:2F:118
+{
+[STYLE:Right]I see...a Dark Power Badge.[BR]
+[Wait][NEXT]In the cave below Toad Town,[BR]
+you find a ruined city.[BR]
+[Wait][NEXT]A hidden red ? block is[BR]
+inside the ruins of the right[BR]
+building.[Wait][END]
+}
+
+#message:2F:119
+{
+[STYLE:Right]I see...a Dark Saver Badge.[BR]
+[Wait][NEXT]In the cave below Toad Town,[BR]
+you find several light and[BR]
+dark platforms.[BR]
+[Wait][NEXT]
+By carefully moving across them,[BR]
+you get to a high platform with[BR]
+this badge.[Wait][END]
+}
+
+#message:2F:11A
+{
+[STYLE:Right]I see...a Dark Shield Badge.[BR]
+[Wait][NEXT]By fighting a series of dark[BR]
+bosses in the Star Temple,[BR]
+you are rewarded with this[BR]
+Badge.[Wait][END]
+}
+
+#message:2F:11B
+{
+[STYLE:Right]I see...a Last Chance Badge.[BR]
+[Wait][NEXT]By fighting someone you have[BR]
+fought many times before,[BR]
+you are rewarded with this[BR]
+badge.[Wait][END]
+}
+
+#message:2F:11C
+{
+[STYLE:Right]I see...a Mega Saver Badge.[BR]
+[Wait][NEXT]On the bridge to the[BR]
+Temple of Darkness, you find[BR]
+a red ? block with this badge.[Wait][END]
+}
+
+#message:2F:11D
+{
+[STYLE:Right]I see...an HP Plus Badge.[BR]
+[Wait][NEXT]It is for sale at the open-air[BR]
+shop in the plaza outside the[BR]
+castle gate.[Wait][END]
+}
+
+#message:2F:11E
+{
+[STYLE:Right]I see...an FP Plus Badge.[BR]
+[Wait][NEXT]It is for sale at the open-air[BR]
+shop in the plaza outside the[BR]
+castle gate.[Wait][END]
+}
+
+#message:2F:11F
+{
+[STYLE:Right]I see...a Mega Curse Badge.[BR]
+[Wait][NEXT]There is a child upstairs in the[BR]
+fortune-teller's house on[BR]
+Shooting Star Summit.[BR]
+[Wait][NEXT]Hey! I'm that fortune-teller![BR]
+[Wait][NEXT]Anyway, the child is my brother,[BR]
+Merlow. He will trade Star Pieces[BR]
+for Badges.[BR]
+[Wait][NEXT]Head upstairs to see him![Wait][END]
+}
+
+#message:2F:120
+{
+[STYLE:Right]I see...a Def Spotter Badge.[BR]
+[Wait][NEXT]It is for sale at the open-air[BR]
+shop in the plaza outside the[BR]
+castle gate.[Wait][END]
+}
+
+#message:2F:121
+{
+[STYLE:Right]I see...a Health Focus Badge.[BR]
+[Wait][NEXT]It is in a Red ? Block[BR]
+near Blue Station in Shy Guy's[BR]
+Toybox.[Wait][END]
+}
+
+#message:2F:122
+{
+[STYLE:Right]I see...a Flower Focus Badge.[BR]
+[Wait][NEXT]It is in a Red ? Block to[BR]
+the far west of Pink Station[BR]
+in Shy Guy's Toybox.[Wait][END]
+}
+
+#message:2F:123
+{
+[STYLE:Right]I see...a Power Focus Badge.[BR]
+[Wait][NEXT]It is in a Red ? Block inside[BR]
+a cave on a path to Shiver[BR]
+Mountain.[Wait][END]
+}
+
+#message:2F:124
+{
+[STYLE:Right]I see...a Defense Focus Badge.[BR]
+[Wait][NEXT]It is in a hidden Red ? Block[BR]
+inside a cave on a path to[BR]
+Shiver Mountain.[Wait][END]
+}
+
+#message:2F:125
+{
+[STYLE:Right]I see...a Right On Badge.[BR]
+[Wait][NEXT]In the Temple of Darkness,[BR]
+it is protected by five[BR]
+extremely powerful enemies.[BR]
+[Wait][NEXT]Hmm... Maybe you should skip[BR]
+over this one...[Wait][END]
+}
+
+#message:2F:126
+{
+[STYLE:Right]I see...a Pity Flower Badge.[BR]
+[Wait][NEXT]It is for sale at the open-air[BR]
+shop in the plaza outside the[BR]
+castle gate.[Wait][END]
+}
+
+#message:2F:127
+{
+[STYLE:Right]I see...an Item Saver Badge.[BR]
+[Wait][NEXT]You can get it from Tayce T.[BR]
+after cooking all recipes.[Wait][END]
+}
+
+#message:2F:128
+{
+[STYLE:Right]I see...a Static Stomp Badge.[BR]
+[Wait][NEXT]It is for sale at the open-air[BR]
+shop in the plaza outside the[BR]
+castle gate.[Wait][END]
+}
+
+#message:2F:129
+{
+[STYLE:Right]I see...a Stop Smash Badge.[BR]
+[Wait][NEXT]It is for sale at the open-air[BR]
+shop in the plaza outside the[BR]
+castle gate.[Wait][END]
+}
+
+#message:2F:12A
+{
+[STYLE:Right]I see...a Truth Stomp Badge.[BR]
+[Wait][NEXT]It is for sale at the open-air[BR]
+shop in the plaza outside the[BR]
+castle gate.[Wait][END]
+}
+
+#message:2F:12B
+{
+[STYLE:Right]I see...a Dark Smash Badge.[BR]
+[Wait][NEXT]It is for sale at the open-air[BR]
+shop in the plaza outside the[BR]
+castle gate.[Wait][END]
+}
+
+#message:2F:12C
+{
+[STYLE:Right]I see...a Weather Shield Badge.[BR]
+[Wait][NEXT]It is in the open on a[BR]
+platform on a path to Shiver[BR]
+Mountain.[BR]
+[Wait][END]
+}
+
+#message:2F:12D
+{
+[STYLE:Right]I see...a Stellar Nova Badge.[BR]
+[Wait][NEXT]There is a child upstairs in the[BR]
+fortune-teller's house on[BR]
+Shooting Star Summit.[BR]
+[Wait][NEXT]Hey! I'm that fortune-teller![BR]
+[Wait][NEXT]Anyway, the child is my brother,[BR]
+Merlow. He will trade Star Pieces[BR]
+for Badges.[BR]
+[Wait][NEXT]Oh... It looks like he won't[BR]
+give away this badge that easily.[BR]
+You'll probably have to get all[BR]
+his other badges first.[Wait][END]
+}
+
+#message:2F:12E
+{
+	[Style Right]
+	I see...a Flower Coins Badge.[BR]
+	[Wait][Next]
+	I see you buying all the badges[BR]
+	from the open-air shop in the[BR]
+	plaza outside the castle gate.[BR]
+	[Wait][Next]
+	He will then give you the Badge.[Wait][End]
+}
+
+#message:2F:12F
+{
+[STYLE:Right]I see...an SP Plus Badge.[BR]
+[Wait][NEXT]In the cave below Toad Town,[BR]
+you find a ruined palace.[BR]
+[Wait][NEXT]
+In one of the side rooms,[BR]
+you defeat a sealed enemy and[BR]
+get the Badge.[Wait][END]
+}
+
+
+#message:22:140
+{
+	[STYLE:Right]
+	I see...a Super Block.[BR]
+	[Wait][NEXT]
+	Deep within Bowser's Castle[BR]
+	there is a locked prison cell.[BR]
+	[Wait][NEXT]
+	The block lies within that cell.[Wait][END]
+}
+
+#message:22:141
+{
+	[STYLE:Right]
+	I see...a Super Block.[BR]
+	[Wait][NEXT]
+	In the dark cave below Toad Town,[BR]
+	you find the block on an island.[BR]
+	[Wait][NEXT]
+	With the help of a fishy friend,[BR]
+	you swim through an underwater[BR]
+	hole in the island in order[BR]
+	to reach the block.[Wait][END]
+}
+
+
+
+#message:2F:180
+{
+	[STYLE:Right]
+	I see...a Star Piece.[BR]
+	[Wait][NEXT]
+	You find a rock on the path[BR]
+	to Shooting Star Summit.[BR]
+	[Wait][NEXT]
+	You destroy the rock with an[BR]
+	explosion.[BR]
+	[Pause 5]The piece hides below.[Wait][END]
+}
+
+#message:2F:181
+{
+	[STYLE:Right]
+	I see...a Star Piece.[BR]
+	[Wait][NEXT]
+	You smash a tree in front of the[BR]
+	Star Temple.[BR]
+	[Wait][NEXT]
+	The piece tumbles down to you.[Wait][END]
+}
+
+#message:2F:182
+{
+	[STYLE:Right]
+	I see...a Star Piece.[BR]
+	[Wait][NEXT]
+	You turn left when you cross[BR]
+	the bridge to the Star Temple.[BR]
+	[Wait][NEXT]
+	You Spin Jump in the grass to[BR]
+	make a hidden panel appear.  [BR]
+	[Pause 5]The piece hides below.[Wait][END]
+}
+
+#message:2F:183
+{
+	[STYLE:Right]
+	I see...a Star Piece.[BR]
+	[Wait][NEXT]
+	In the Star Temple, you can[BR]
+	refight the Goomba King and[BR]
+	his men.[BR]
+	[Wait][NEXT]
+	You are rewarded with two Star[BR]
+	Pieces when you win.[Wait][END]
+}
+
+#message:2F:184
+{
+	[STYLE:Right]
+	I see...a Star Piece.[BR]
+	[Wait][NEXT]
+	In the Star Temple, you can[BR]
+	refight the four Koopa Bros.[BR]
+	[Wait][NEXT]
+	You are rewarded with two Star[BR]
+	Pieces when you win.[Wait][END]
+}
+
+#message:2F:185
+{
+	[STYLE:Right]
+	I see...a Star Piece.[BR]
+	[Wait][NEXT]
+	In the Star Temple, you can[BR]
+	refight Tutankoopa.[BR]
+	[Wait][NEXT]
+	You are rewarded with two Star[BR]
+	Pieces when you win.[Wait][END]
+}
+
+#message:2F:186
+{
+	[STYLE:Right]
+	I see...a Star Piece.[BR]
+	[Wait][NEXT]
+	In the Star Temple, you can[BR]
+	refight Tubba Blubba.[BR]
+	[Wait][NEXT]
+	You are rewarded with two Star[BR]
+	Pieces when you win.[Wait][END]
+}
+
+#message:2F:187
+{
+	[STYLE:Right]
+	I see...a Star Piece.[BR]
+	[Wait][NEXT]
+	In the Star Temple, you can[BR]
+	refight General Guy and[BR]
+	his men.[BR]
+	[Wait][NEXT]
+	You are rewarded with two Star[BR]
+	Pieces when you win.[Wait][END]
+}
+
+#message:2F:188
+{
+	[STYLE:Right]
+	I see...a Star Piece.[BR]
+	[Wait][NEXT]
+	In the Star Temple, you can[BR]
+	refight the Lava Piranha.[BR]
+	[Wait][NEXT]
+	You are rewarded with two Star[BR]
+	Pieces when you win.[Wait][END]
+}
+
+#message:2F:189
+{
+	[STYLE:Right]
+	I see...a Star Piece.[BR]
+	[Wait][NEXT]
+	In the Star Temple, you can[BR]
+	refight Huff N Puff.[BR]
+	[Wait][NEXT]
+	You are rewarded with two Star[BR]
+	Pieces when you win.[Wait][END]
+}
+
+#message:2F:18A
+{
+	[STYLE:Right]
+	I see...a Star Piece.[BR]
+	[Wait][NEXT]
+	In the Star Temple, you can[BR]
+	refight the Crystal King.[BR]
+	[Wait][NEXT]
+	You are rewarded with two Star[BR]
+	Pieces when you win.[Wait][END]
+}
+
+#message:2F:18B
+{
+	[STYLE:Right]
+	I see...a Star Piece.[BR]
+	[Wait][NEXT]
+	In a town located deep within[BR]
+	a cave, you find this Star Piece[BR]
+	in a fenced-off area.[Wait][END]
+}
+
+#message:2F:18C
+{
+	[STYLE:Right]
+	I see...a Star Piece.[BR]
+	[Wait][NEXT]
+	In between Dry Dry Desert[BR]
+	and Gusty Gulch, there is[BR]
+	a barren platetau.[BR]
+	[Wait][NEXT]
+	You Spin Jump on this plateau,[BR]
+	causing a hidden panel[BR]
+	to shudder.[Wait][END]
+}
+
+#message:2F:18D
+{
+	[STYLE:Right]
+	I see...a Star Piece.[BR]
+	[Wait][NEXT]
+	It is located to the east[BR]
+	of the Star Temple.[Wait][END]
+}

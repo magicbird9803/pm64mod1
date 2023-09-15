@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Prefab author="shadeblade" textures="nok_tex">
+	<ModelTree>
+		<Node name="Root" id="4">
+			<Node name="waku1" id="0"/>
+			<Node name="yuka" id="1"/>
+			<Node name="waku2" id="2"/>
+			<Node name="waku" id="3"/>
+		</Node>
+	</ModelTree>
+	<LightSets>
+		<LightSet name="Lights_None" a="0" b="0">
+		</LightSet>
+	</LightSets>
+	<Models>
+		<Model ver="2" type="ROOT" lightset="0">
+			<MapObject ver="1" name="Root" id="4"/>
+			<BoundingBox empty="true" min="0,0,0" max="0,0,0"/>
+			<PropertyList>
+			</PropertyList>
+		</Model>
+		<Model ver="2" type="MODEL" lightset="0">
+			<MapObject ver="1" name="waku" id="3"/>
+			<ShapeMesh ver="3" texture="nok_frametif">
+				<DisplayList>
+					<F3DEX2 cmd="E7000000,0"/>
+					<F3DEX2 cmd="D9FDFFFF,0"/>
+					<F3DEX2 cmd="D9FFFFFF,200400"/>
+					<TriangleBatch ver="0">
+						<VertexTable>
+							<Vertex xyz="-163,0,-71" uv="5325,2048" rgba="176,176,176,255"/>
+							<Vertex xyz="-153,5,-151" uv="5325,2867" rgba="176,176,176,255"/>
+							<Vertex xyz="-153,150,-151" uv="0,2867" rgba="176,176,176,255"/>
+							<Vertex xyz="-163,0,-71" uv="5325,2048" rgba="176,176,176,255"/>
+							<Vertex xyz="-153,150,-151" uv="0,2867" rgba="176,176,176,255"/>
+							<Vertex xyz="-163,150,-71" uv="0,2048" rgba="176,176,176,255"/>
+							<Vertex xyz="162,150,-71" uv="2048,2048" rgba="176,176,176,255"/>
+							<Vertex xyz="152,150,-151" uv="2048,3072" rgba="176,176,176,255"/>
+							<Vertex xyz="152,5,-151" uv="-4608,3072" rgba="176,176,176,255"/>
+							<Vertex xyz="162,150,-71" uv="2048,2048" rgba="176,176,176,255"/>
+							<Vertex xyz="152,5,-151" uv="-4608,3072" rgba="176,176,176,255"/>
+							<Vertex xyz="162,0,-71" uv="-4608,2048" rgba="176,176,176,255"/>
+						</VertexTable>
+						<TriangleList>
+							<Triangle ijk="0,1,2"/>
+							<Triangle ijk="3,4,5"/>
+							<Triangle ijk="6,7,8"/>
+							<Triangle ijk="9,10,11"/>
+						</TriangleList>
+					</TriangleBatch>
+				</DisplayList>
+			</ShapeMesh>
+			<PropertyList>
+				<Property v="5C,0,4"/>
+				<Property v="5F,0,0"/>
+			</PropertyList>
+		</Model>
+		<Model ver="2" type="MODEL" lightset="0">
+			<MapObject ver="1" name="waku2" id="2"/>
+			<ShapeMesh ver="3" texture="nok_miki4tif">
+				<DisplayList>
+					<F3DEX2 cmd="E7000000,0"/>
+					<F3DEX2 cmd="D9FDFFFF,0"/>
+					<F3DEX2 cmd="D9FFFFFF,200400"/>
+					<TriangleBatch ver="0">
+						<VertexTable>
+							<Vertex xyz="-163,0,-71" uv="512,0"/>
+							<Vertex xyz="-163,150,-71" uv="512,1536"/>
+							<Vertex xyz="-188,150,-71" uv="256,1536"/>
+							<Vertex xyz="-163,0,-71" uv="512,0"/>
+							<Vertex xyz="-188,150,-71" uv="256,1536"/>
+							<Vertex xyz="-188,0,-71" uv="256,0"/>
+							<Vertex xyz="-188,150,-71" uv="-256,0"/>
+							<Vertex xyz="187,150,-71" uv="3584,0"/>
+							<Vertex xyz="187,175,-71" uv="3584,256"/>
+							<Vertex xyz="-188,150,-71" uv="-256,0"/>
+							<Vertex xyz="187,175,-71" uv="3584,256"/>
+							<Vertex xyz="-188,175,-71" uv="-256,256"/>
+							<Vertex xyz="162,150,-71" uv="0,1280"/>
+							<Vertex xyz="162,0,-71"/>
+							<Vertex xyz="187,0,-71" uv="213,0"/>
+							<Vertex xyz="162,150,-71" uv="0,1280"/>
+							<Vertex xyz="187,0,-71" uv="213,0"/>
+							<Vertex xyz="187,150,-71" uv="213,1280"/>
+						</VertexTable>
+						<TriangleList>
+							<Triangle ijk="0,1,2"/>
+							<Triangle ijk="3,4,5"/>
+							<Triangle ijk="6,7,8"/>
+							<Triangle ijk="9,10,11"/>
+							<Triangle ijk="12,13,14"/>
+							<Triangle ijk="15,16,17"/>
+						</TriangleList>
+					</TriangleBatch>
+				</DisplayList>
+			</ShapeMesh>
+			<PropertyList>
+				<Property v="5C,0,10"/>
+				<Property v="5F,0,0"/>
+			</PropertyList>
+		</Model>
+		<Model ver="2" type="MODEL" lightset="0">
+			<MapObject ver="1" name="yuka" id="1"/>
+			<ShapeMesh ver="3" texture="nok_green_etif">
+				<DisplayList>
+					<F3DEX2 cmd="E7000000,0"/>
+					<F3DEX2 cmd="D9FDFFFF,0"/>
+					<F3DEX2 cmd="D9FFFFFF,200400"/>
+					<TriangleBatch ver="0">
+						<VertexTable>
+							<Vertex xyz="63,0,71" uv="-1267,-17"/>
+							<Vertex xyz="187,0,71" uv="0,-17"/>
+							<Vertex xyz="187,0,-71" uv="0,1434"/>
+							<Vertex xyz="63,0,71" uv="-1267,-17"/>
+							<Vertex xyz="187,0,-71" uv="0,1434"/>
+							<Vertex xyz="63,0,-71" uv="-1267,1434"/>
+							<Vertex xyz="-57,0,71" uv="-2502,-17"/>
+							<Vertex xyz="63,0,71" uv="-1267,-17"/>
+							<Vertex xyz="63,0,-71" uv="-1267,1434"/>
+							<Vertex xyz="-57,0,71" uv="-2502,-17"/>
+							<Vertex xyz="63,0,-71" uv="-1267,1434"/>
+							<Vertex xyz="-57,0,-71" uv="-2502,1434"/>
+							<Vertex xyz="-188,0,-71" uv="-3840,1434"/>
+							<Vertex xyz="-188,0,71" uv="-3840,-17"/>
+							<Vertex xyz="-57,0,71" uv="-2502,-17"/>
+							<Vertex xyz="-188,0,-71" uv="-3840,1434"/>
+							<Vertex xyz="-57,0,71" uv="-2502,-17"/>
+							<Vertex xyz="-57,0,-71" uv="-2502,1434"/>
+						</VertexTable>
+						<TriangleList>
+							<Triangle ijk="0,1,2"/>
+							<Triangle ijk="3,4,5"/>
+							<Triangle ijk="6,7,8"/>
+							<Triangle ijk="9,10,11"/>
+							<Triangle ijk="12,13,14"/>
+							<Triangle ijk="15,16,17"/>
+						</TriangleList>
+					</TriangleBatch>
+				</DisplayList>
+			</ShapeMesh>
+			<PropertyList>
+				<Property v="5C,0,1"/>
+				<Property v="5F,0,0"/>
+			</PropertyList>
+		</Model>
+		<Model ver="2" type="MODEL" lightset="0">
+			<MapObject ver="1" name="waku1" id="0"/>
+			<ShapeMesh ver="3" texture="nok_frametif">
+				<DisplayList>
+					<F3DEX2 cmd="E7000000,0"/>
+					<F3DEX2 cmd="D9FDFFFF,0"/>
+					<F3DEX2 cmd="D9FFFFFF,200400"/>
+					<TriangleBatch ver="0">
+						<VertexTable>
+							<Vertex xyz="-188,0,-71" uv="-8293,2048"/>
+							<Vertex xyz="-206,-40,-78" uv="-8293,0"/>
+							<Vertex xyz="-206,-40,88" uv="-8293,0"/>
+							<Vertex xyz="-188,0,-71" uv="-8293,2048"/>
+							<Vertex xyz="-206,-40,88" uv="-8293,0"/>
+							<Vertex xyz="-188,0,71" uv="-8293,2048"/>
+							<Vertex xyz="-188,0,71" uv="-8293,2048"/>
+							<Vertex xyz="-206,-40,88" uv="-8293,0"/>
+							<Vertex xyz="205,-40,88" uv="10240,0"/>
+							<Vertex xyz="-188,0,71" uv="-8293,2048"/>
+							<Vertex xyz="205,-40,88" uv="10240,0"/>
+							<Vertex xyz="187,0,71" uv="10240,2048"/>
+							<Vertex xyz="187,0,71" uv="10240,2048"/>
+							<Vertex xyz="205,-40,88" uv="10240,0"/>
+							<Vertex xyz="205,-40,-78" uv="10240,0"/>
+							<Vertex xyz="187,0,71" uv="10240,2048"/>
+							<Vertex xyz="205,-40,-78" uv="10240,0"/>
+							<Vertex xyz="187,0,-71" uv="10240,2048"/>
+						</VertexTable>
+						<TriangleList>
+							<Triangle ijk="0,1,2"/>
+							<Triangle ijk="3,4,5"/>
+							<Triangle ijk="6,7,8"/>
+							<Triangle ijk="9,10,11"/>
+							<Triangle ijk="12,13,14"/>
+							<Triangle ijk="15,16,17"/>
+						</TriangleList>
+					</TriangleBatch>
+				</DisplayList>
+			</ShapeMesh>
+			<PropertyList>
+				<Property v="5C,0,1"/>
+				<Property v="5F,0,0"/>
+			</PropertyList>
+		</Model>
+	</Models>
+</Prefab>

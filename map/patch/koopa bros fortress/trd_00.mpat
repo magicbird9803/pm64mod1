@@ -1,0 +1,108 @@
+@ $Header
+{
+	[MainScript]  $Script_Main
+	[EntryList]   $EntryList
+	[EntryCount]  00000007
+	[Background]  80200000
+	[MapTattle]   0019004E
+}
+
+@ $EntryList
+{
+	~Vec4f:Entry0 % -973.0    0.0  204.0   90.0
+	~Vec4f:Entry1 % -525.0    0.0  130.0  240.0
+	~Vec4f:Entry2 %  400.0    0.0  185.0  180.0
+	~Vec4f:Entry3 %  587.0    0.0    6.0   90.0
+	~Vec4f:Entry4 % -955.0  200.0 -101.0   90.0
+	~Vec4f:Entry5 % -518.0    0.0  212.0  240.0
+	~Vec4f:Entry6
+}
+
+@ $Script_MakeEntities %$Script_80241524
+{
+	0:  Call     MakeEntity  	( .Entity:Chest ~Vec4d:Entity80241524 00000000 80000000 )
+   28:  Call     AssignFlag  	( *Flag_TRD_03 )
+   38:  Call     AssignScript 	( $Script_8024148C )
+   48:  Call     MakeEntity  	( .Entity:Chest ~Vec4d:Entity8024156C 00000000 80000000 )
+   70:  Call     AssignFlag  	( *Flag_TRD_04 )
+   80:  Call     AssignScript 	( $Script_802414D8 )
+   90:  Call     MakeEntity  	( .Entity:SavePoint ~Vec4d:Entity802415B4 80000000 )
+   B4:  Call     MakeEntity  	( .Entity:SavePoint ~Vec4d:Entity802415D8 80000000 )
+		Call     MakeEntity  	( .Entity:HiddenYellowBlock ~Vec4d:EntityHiddenBlock .Item:SuperShroom 80000000 ) %add a free super shroom to fix the room's asymmetry
+		Call     AssignBlockFlag 	( *GF_TRD00_HiddenBlock1 )
+		Call     MakeEntity  	( .Entity:HiddenYellowBlock ~Vec4d:EntityHiddenBlock2 .Item:UltraShroom 80000000 ) %life shroom at center island
+		Call     AssignBlockFlag 	( *GF_TRD00_HiddenBlock2 )
+   D8:  Return
+   E0:  End
+}
+
+@ $Script_EnterWalk_80240D8C
+{
+    0:  SetGroup  00000000
+    C:  SuspendAll  00000001
+   18:  Call  GetLoadType   ( *Var1 )
+   28:  If  *Var1  ==  00000001
+   38:  	Exec  EnterSavePoint
+   44:  	Exec  $Script_80240A98
+   50:  	Return
+   58:  EndIf
+   60:  Call  GetEntryID    ( *Var0 )
+   70:  Switch  *Var0
+   7C:  	Case  ==  ~Entry:Entry0
+   88:  		If  *GB_StoryProgress  <  .Story:Ch1_ArrivedAtKoopaFortress % FFFFFFA6
+   98:  			Set   *GB_StoryProgress  .Story:Ch1_ArrivedAtKoopaFortress
+   A8:  			ExecWait  $Script_80240B34
+   B4:  			Exec  $Script_80240A98
+   C0:  		Else
+   C8:  			Set   *Var0  $Script_80240A98
+   D8:  			Exec  EnterWalk
+   E4:  		EndIf
+   EC:  	Case  ==  ~Entry:Entry1
+   F8:  		Set   *Var2  ~Model:o62
+  108:  		Set   *Var3  ~Model:doa
+  118:  		ExecWait  EnterDoubleDoor
+  124:  		Exec  $Script_80240A98
+  130:  	Case  ==  ~Entry:Entry2
+  13C:  		Set   *Var2  ~Model:o70
+  14C:  		Set   *Var3  ~Model:o69
+  15C:  		ExecWait  EnterDoubleDoor
+  168:  		Exec  $Script_80240A98
+  174:  	Case  ==  ~Entry:Entry3
+  180:  		Set   *Var0  $Script_80240A98
+  190:  		Exec  EnterWalk
+  19C:  	Case  ==  ~Entry:Entry4
+  1A8:  		Set   *Var0  $Script_80240A98
+  1B8:  		Exec  EnterWalk
+  1C4:  	Case  ==  ~Entry:Entry5
+  1D0:  		Exec  $Script_80240A98
+  174:  	Case  ==  ~Entry:Entry6
+				Set   *Var0  $Script_80240A98 %$Script_Entry6
+				Exec  EnterWalk
+  1DC:  EndSwitch
+  1E4:  ResumeAll  00000001
+  1F0:  Return
+  1F8:  End
+}
+
+@ $Script_80240A98
+{
+    0:  Bind  $Script_ExitWalk_8024083C .Trigger:FloorAbove ~Collider:deiliw 00000001 00000000
+   1C:  Bind  $Script_ExitDoubleDoor_80240898 .Trigger:WallPressA ~Collider:tt2 00000001 00000000
+   38:  Bind  $Script_ExitDoubleDoor_8024093C .Trigger:WallPressA ~Collider:tt3 00000001 00000000
+   54:  Bind  $Script_ExitWalk_802409E0 .Trigger:FloorAbove ~Collider:deili5 00000001 00000000
+   70:  Bind  $Script_ExitWalk_80240A3C .Trigger:FloorAbove ~Collider:deilit 00000001 00000000
+		Bind  $Script_ExitWalk_Entry6 .Trigger:FloorAbove ~Collider:northlz 00000001 00000000
+   8C:  Return
+   94:  End
+}
+
+#new:Script $Script_ExitWalk_Entry6
+{
+    0:  SetGroup  0000001B
+    C:  Call  UseExitHeading    ( 0000003C ~Entry:Entry6 )
+   20:  Exec  ExitWalk
+   2C:  Call  GotoMap   ( "nok_16" 00000000 ) % trd_05
+   40:  Wait  100`
+   4C:  Return
+   54:  End
+}

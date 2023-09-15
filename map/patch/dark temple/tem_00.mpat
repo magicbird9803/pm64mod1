@@ -1,0 +1,605 @@
+%this room forces you to fight the 5 guys!
+
+#new:Header $Header
+{
+[MainScript] $Script_Main
+[EntryList] $EntryList
+[EntryCount] 00000003
+[Background] 80200000
+[MapTattle]   $Function_GetTattle
+}
+
+%there is no cav_tex so replace with kpa_tex
+#new:Function_Init $Function_Init
+{
+    PUSH      RA
+    LIA       A0, 800B0CF0
+    LIA       A1, "kpa_tex"
+    JAL       ~Func:sprintf
+    RESERVED
+	%set fog
+	JAL		~Func:enable_world_fog
+	NOP
+	LI		A0, 03B6 
+	LI	    A1, 0400
+	JAL		~Func:set_world_fog_dist
+	NOP	
+	LI		A0, 0
+	LI	    A1, 0
+	LI		A2, 0
+	JAL		~Func:set_world_fog_color
+	NOP		
+	%
+    DADDU     V0, R0, R0
+    JPOP      RA
+}
+
+
+#new:Function $Function_GetTattle
+{
+	ADDIU     SP, SP, FFE8
+	LIO       V0, $MapTattle
+	JR        RA
+	ADDIU     SP, SP, 18
+}
+
+#string $MapTattle
+{
+[Style Tattle][EnableCDownNext]This is the entrance to[BR]
+the Temple of Darkness.[BR]
+[Wait][NEXT]
+I'm getting a bad feeling from[BR]
+this place. Maybe we should come[BR]
+back with more items.[BR]
+[Wait][END]
+}
+
+#new:EntryList $EntryList
+{
+~Vec4f:Entry0
+~Vec4f:Entry1
+~Vec4f:Entry2
+}
+
+#new:Script $Script_SetMusic
+{
+Call     SetMusicTrack 	( 00000000 .Song:CaveTheme 00000000 00000008 ) %New music maybe
+Return
+End
+}
+
+
+#import EnterViaPipe.mpat
+
+#new:Script_Main $Script_Main
+{
+Set  *GB_WorldLocation .Location:ToadTownTunnels%2D %hope this doesn't crash the game when trying to display world map
+Call	SetSpriteShading 	( FFFFFFFF )
+Call	SetCamPerspective	( .Cam:Default  3  25` 16` 4096` )	% default type, half vertical FOV, near clip, and far clip
+Call	SetCamBGColor   	( .Cam:Default  0  0  0 ) 			% color values are RGB bytes; (0,0,0) is black, (255`,255`,255`) is white, etc.
+Call	SetCamEnabled 	 	( .Cam:Default  .True )				% enabled?
+Call	SetCamLeadPlayer 	( .Cam:Default  .False )			% lead player motion?
+Exec    $Script_SetMusic
+If 		*GF_TEM00_AntiFiveFight == .False
+	Call     MakeNpcs           ( 00000001 $NpcGroupList_AntiGuys )
+Else
+	Call     ModifyColliderFlags 	( 00000000 ~Collider:BlockingWall 7FFFFE00 ) 
+EndIf
+ExecWait $Script_MakeEntities
+Set 	 *MapFlag[2]	.False
+%entry 0 = back loading zone
+%entry 1 = temple loading zone
+%entry 2 = pipe
+Call     GetEntryID  	( *Var[0] )
+Switch *Var0
+	Case == 00000000
+		Set		*Var[0] $Script_MakeExits 
+		Exec EnterWalk
+	Case == 00000001
+		Set		*Var[0] $Script_MakeExits 
+		Exec EnterWalk
+	Case == 00000002
+		Set *Var[A] $Script_MakeExits
+		Exec $Script_EnterVerticalPipe
+EndSwitch
+Return
+End
+}
+
+#define .PipeRaiseSound 0000208E
+
+#new:Script $Script_RaisePipe
+{
+	Wait     0000000A 
+	Call     PlaySound  ( .PipeRaiseSound )
+	Set      *AreaFlag[009] 	00000001
+	Unbind
+	Return
+	End
+}
+
+#new:Script $Script_MakeEntities
+{
+	If *GF_TEM00_AntiFiveFight == .True
+		Call	MakeItemEntity	( .Item:EarthquakeJump ~Vec3d:QuakeJump 00000011 *GF_TEM00_QuakeJump )
+		Call	MakeItemEntity	( .Item:RightOn ~Vec3d:RightOn 00000011 *GF_TEM00_RightOn )
+	EndIf
+	Call 	 MakeEntity ( .Entity:BlueWarpPipe ~Vec4d:pipe 2 $Script_UseBluePipe 0000063D 80000000 )	%*GF_TEM00_AntiFiveFight
+	/%
+	If       *GF_TEM00_AntiFiveFight ==  00000000 
+		Bind     $Script_RaisePipe .Trigger:AreaFlagSet *AreaFlag[009] 00000001 00000000 
+	EndIf
+	%/
+	Return
+	End
+}
+
+#new:Script $Script_UseBluePipe
+{
+	Call     GotoMap	( "cav_00" 3 )
+	Wait     00000064 
+	Return
+	End
+}
+
+
+#new:Script $Script_MakeExits
+{
+	Bind     $Script_Entry0 .Trigger:FloorAbove ~Collider:bridgeLZ 00000001 00000000
+	If *GF_TEM00_AntiFiveFight == .True
+		Bind     $Script_Entry1 .Trigger:FloorAbove ~Collider:templeLZ 00000001 00000000
+	EndIf
+	Return
+    End
+}
+
+#new:Script $Script_Entry0 
+{
+	0:  SetGroup 0000001B 
+    C:  Call     UseExitHeading ( 0000003C 00000000 )
+   20:  Exec     ExitWalk 
+   2C:  Call     GotoMap     	( "cav_07" 00000001 )
+   40:  Wait     00000064 
+   4C:  Return
+   54:  End
+}
+   
+#new:Script $Script_Entry1
+{
+		%Call  ShowMessageAtScreenPos    ( $EndOfVer08 000000A0 00000028 ) % It's locked! You can't open it.
+	0:  SetGroup 0000001B 
+    C:  Call     UseExitHeading ( 0000003C 00000001 )
+   20:  Exec     ExitWalk 
+   2C:  Call     GotoMap     	( "tem_01" 00000000 )
+   40:  Wait     00000064 
+   4C:  Return
+   54:  End
+}
+
+
+
+
+
+%You get five chances to say no
+%Might be excessive but who cares
+
+%really similar to the power plus text but idc
+#new:String $AntiWarning
+{
+	[Style Right]
+	[Wave]Hm? What do you want?[BR]
+	[Wait][Next]
+	Get out of our temple, pal![BR]
+	[/fx][Wait][Yield][Next]
+	It's ours, see?[BR]
+	[Pause 10]Don't mess with us![HEART][BR]
+	[Yield][End]
+}
+
+#new:String $PhalanxWarning
+{
+	[Style Right]
+	[NEXT]
+	What? You think you can win?[BR]
+	You may have beat us alone,[BR]
+	but together, we can never[BR]
+	lose![BR]
+	[Yield][End]
+}
+
+#new:String $CovertWarning
+{
+	[Style Right]
+	[NEXT]
+	Huh? You really want to fight?[BR]
+	Did you forget how strong we[BR]
+	all are?[BR]
+	[Yield][End]
+}
+
+#new:String $PermafrostWarning
+{
+	[Style Right]
+	[NEXT]
+	Perhaps you believe the[BR]
+	Star Spirits will save you when[BR]
+	you inevitably fail?[BR]
+	[Wait][NEXT]
+	Unfortunately, that will not[BR]
+	happen here. This temple is[BR]
+	one of the few places where[BR]
+	[COLOR:20]they have no power[COLOR:0A].[BR]
+	[Yield][End]
+}
+
+#new:String $NuclearWarning
+{
+	[NEXT]
+	[STYLE:Right][Wave]Gra ha ha ha ha![/fx][BR]
+	[NEXT]
+	You guys are so weak![BR]
+	I bet you won't last a[BR]
+	single turn against us![BR]
+	[Wait][NEXT]
+	Why don't you just run home[BR]
+	like the weaklings you are?[BR]
+	[Yield][End]
+}
+
+#new:String $AntiReject
+{
+	[Next]
+	[Wave]Good. You're a smart boy![HEART][Wait][End]
+}
+
+#new:String $PhalanxReject
+{
+	[Next]
+	Yeah, that's what I thought![Wait][End]
+}
+
+#new:String $CovertReject
+{
+	[Next]
+	Heh heh.[BR]
+	Looks like you remember us.[Wait][End]
+}
+
+#new:String $PermafrostReject
+{
+	[Next]
+	Wise decision.[Wait][END]
+}
+
+#new:String $NuclearReject
+{
+	[Next]
+	I knew you didn't have the[BR]
+	guts![Wait][END]
+}
+
+#new:String $NuclearFight
+{
+	[Next]
+	[Wave]Gra ha ha ha ha![/fx][BR]
+	This will be easy![BR]
+	[Wait][END]
+}
+
+%tattles
+%guess I'll just remind you of some of their mechanics and some other stuff
+
+#new:String $AntiTattle
+{
+[STYLE:TATTLE]That's Anti Guy.[BR]
+Fighting him on his own wouldn't[BR]
+be that bad, but now we have[BR]
+to fight all his friends too.[BR]
+[Wait][NEXT]
+It's going to take a lot of[BR]
+planning to beat these guys.[BR]
+[Wait][END]
+}
+
+#new:String $PhalanxTattle
+{
+[STYLE:TATTLE]That's Phalanx Guy.[BR]
+He fights with a big spear,[BR]
+but his base attack power[BR]
+is actually the weakest.[BR]
+[Wait][NEXT]
+His charge attack will still[BR]
+hurt a lot though.[BR]
+[Wait][END]
+}
+
+#new:String $CovertTattle
+{
+[STYLE:TATTLE]That's Covert Guy.[BR]
+He's wearing camo armor, but[BR]
+he stands out here.[BR]
+[Wait][NEXT]
+Since he goes invisible every[BR]
+time he gets hit, he'll probably[BR]
+be the hardest to deal with.[BR]
+[Wait][END]
+}
+
+#new:String $PermafrostTattle
+{
+[STYLE:TATTLE]That's Permafrost Guy.[BR]
+He's covered in a thick shell[BR]
+of ice, which give him the[BR]
+highest defense of all of them.[BR]
+[Wait][NEXT]
+It's not as cold down here,[BR]
+so he won't be able to freeze[BR]
+us permanently.[BR]
+[Wait][NEXT]
+However, we still have to defeat[BR]
+him along with the others to get[BR]
+through here.[Wait][END]
+}
+
+#new:String $NuclearTattle
+{
+[STYLE:TATTLE]That's Nuclear Guy.[BR]
+I'm not sure how he's covered[BR]
+in green fire, but it gives him[BR]
+the highest damage attacks.[BR]
+[Wait][NEXT]
+He's also the only one of them[BR]
+that can still hurt you when[BR]
+you're invisible.[Wait][END]
+}
+
+
+#new:NpcSettings $NpcSettings_Guy
+{
+	00000000 00170016 00000000 00000000 00000000 80077F70 00000000 8007809C
+	00000000 00000000 000E0001
+}
+
+#new:Script $Script_Idle_Anti
+{
+	Loop	
+		Wait 1`
+		If *MapFlag[2] == .True
+			BreakLoop
+		EndIf
+	EndLoop
+	Call     DisablePlayerInput 	( .False )
+	Call	StartBossBattle		( .Song:SMRPGBossTheme )
+	Return
+	End
+}
+
+#new:Script $Script_Init_Anti
+{
+	Call     BindNpcInteract	( .Npc:Self $Script_AllDialogueA )
+	Call     BindNpcIdle		( .Npc:Self $Script_Idle_Anti )
+	Call	 BindNpcDefeat		( .Npc:Self $Script_Defeat )
+	Return
+	End
+}
+
+#new:Script $Script_Init_Phalanx
+{
+	Call     BindNpcInteract	( .Npc:Self $Script_AllDialogueB )
+	Return
+	End
+}
+
+#new:Script $Script_Init_Covert
+{
+	Call     BindNpcInteract	( .Npc:Self $Script_AllDialogueB )
+	Return
+	End
+}
+
+#new:Script $Script_Init_Permafrost
+{
+	Call     BindNpcInteract	( .Npc:Self $Script_AllDialogueB )
+	Return
+	End
+}
+
+#new:Script $Script_Init_Nuclear
+{
+	Call     BindNpcInteract	( .Npc:Self $Script_AllDialogueB )
+	Return
+	End
+}
+
+#new:Script $Script_Defeat
+{
+    0:  Call  GetBattleOutcome  ( *Var0 )
+   10:  Switch  *Var0
+   1C:  	Case  ==  .Outcome:PlayerWon % 0
+   28:  		Set   *GF_TEM00_AntiFiveFight  .True
+				Call	MakeItemEntity	( .Item:EarthquakeJump ~Vec3d:QuakeJump 00000011 *GF_TEM00_QuakeJump )
+				Call	MakeItemEntity	( .Item:RightOn ~Vec3d:RightOn 00000011 *GF_TEM00_RightOn )
+   38:  		Call  	ModifyColliderFlags   ( 00000000 ~Collider:BlockingWall 7FFFFE00 )
+				Bind    $Script_Entry1 .Trigger:FloorAbove ~Collider:templeLZ 00000001 00000000				%the loading zone doesn't even exist until you kill them to prevent you from clipping through somehow
+				If *MapFlag[3] == .True
+					%Call	 DisablePlayerInput ( .False )
+				EndIf
+   50:  		Call    DoNpcDefeat ( )
+   5C:  	Case  ==  .Outcome:PlayerLost % 1
+   7C:  	Case  ==  .Outcome:PlayerFled % 2
+   9C:  EndSwitch
+   A4:  Return
+   AC:  End
+}
+
+#new:Script $Script_AllDialogueA	%They all give you a chance to say no
+{
+	Call	 DisablePlayerInput ( .True )
+	%Anti guy
+	Call  SpeakToPlayer ( 00000000 003B0511 003B0501 00000000 $AntiWarning ) % Grrrrr!!! You stingy, candy-hogging punk! Well, yo ...
+	Call  ShowChoice    ( 001E0044 ) % Don't fight Fight
+	If  *Var0  ==  00000000
+		Call  ContinueSpeech    ( 00000000 003B0511 003B0501 00000000 $AntiReject ) % Good. You're a smart boy!
+		Call	 DisablePlayerInput ( .False )
+		Return
+	EndIf	
+	%Phalanx guy
+	Call     ContinueSpeech  	( 00000001 00420110 00420103 00000000 $PhalanxWarning ) % time to fight
+	Call  ShowChoice    ( 001E0044 ) % Don't fight Fight
+	If  *Var0  ==  00000000
+		Call     ContinueSpeech  	( 00000001 00420110 00420103 00000000 $PhalanxReject ) % time to fight
+		Call	 DisablePlayerInput ( .False )
+		Return
+	EndIf	
+	%Covert guy
+	Call     ContinueSpeech  	( 00000002 003F0105 003F0102 00000000 $CovertWarning ) % time to fight
+	Call  ShowChoice    ( 001E0044 ) % Don't fight Fight
+	If  *Var0  ==  00000000
+		Call  ContinueSpeech    ( 00000002 003F0105 003F0102 00000000 $CovertReject ) % Good. You're a smart boy!
+		Call	 DisablePlayerInput ( .False )
+		Return
+	EndIf		
+	%Permafrost guy
+	Call     ContinueSpeech  	( 00000003 00ED0102 00ED0101 00000000 $PermafrostWarning ) % time to fight
+	Call  ShowChoice    ( 001E0044 ) % Don't fight Fight
+	If  *Var0  ==  00000000
+		Call     ContinueSpeech  	( 00000003 00ED0102 00ED0101 00000000 $PermafrostReject ) % time to fight
+		Call	 DisablePlayerInput ( .False )
+		Return
+	EndIf			
+	%Nuclear guy
+	Call     ContinueSpeech  	( 00000004 003E0202 003E0201 00000000 $NuclearWarning ) % time to fight
+	Call  ShowChoice    ( 001E0044 ) % Don't fight Fight
+	If  *Var0  ==  00000000
+		Call     ContinueSpeech  	( 00000004 003E0202 003E0201 00000000 $NuclearReject ) % time to fight
+		Call	 DisablePlayerInput ( .False )
+		Return
+	EndIf		
+	%Ok, you really want to fight, It's time
+	Call     ContinueSpeech  	( 00000004 003E0202 003E0201 00000000 $NuclearFight ) % time to fight
+	%Call	 DisablePlayerInput ( .False )
+	%good luck!
+	Set 	 *MapFlag[2]	.True
+	Set 	 *MapFlag[3]	.True
+	Return
+	End
+}
+
+#new:Script $Script_AllDialogueB	%They all give you a chance to say no
+{
+	Call	 DisablePlayerInput ( .True )
+	%Anti guy
+	Call  SpeakToPlayer ( 00000000 003B0511 003B0501 00000000 $AntiWarning ) % Grrrrr!!! You stingy, candy-hogging punk! Well, yo ...
+	Call  ShowChoice    ( 001E0044 ) % Don't fight Fight
+	If  *Var0  ==  00000000
+		Call  ContinueSpeech    ( 00000000 003B0511 003B0501 00000000 $AntiReject ) % Good. You're a smart boy!
+		Call	 DisablePlayerInput ( .False )
+		Return
+	EndIf	
+	%Phalanx guy
+	Call     ContinueSpeech  	( 00000001 00420110 00420103 00000000 $PhalanxWarning ) % time to fight
+	Call  ShowChoice    ( 001E0044 ) % Don't fight Fight
+	If  *Var0  ==  00000000
+		Call     ContinueSpeech  	( 00000001 00420110 00420103 00000000 $PhalanxReject ) % time to fight
+		Call	 DisablePlayerInput ( .False )
+		Return
+	EndIf	
+	%Covert guy
+	Call     ContinueSpeech  	( 00000002 003F0105 003F0102 00000000 $CovertWarning ) % time to fight
+	Call  ShowChoice    ( 001E0044 ) % Don't fight Fight
+	If  *Var0  ==  00000000
+		Call  ContinueSpeech    ( 00000002 003F0105 003F0102 00000000 $CovertReject ) % Good. You're a smart boy!
+		Call	 DisablePlayerInput ( .False )
+		Return
+	EndIf		
+	%Permafrost guy
+	Call     ContinueSpeech  	( 00000003 00ED0102 00ED0101 00000000 $PermafrostWarning ) % time to fight
+	Call  ShowChoice    ( 001E0044 ) % Don't fight Fight
+	If  *Var0  ==  00000000
+		Call     ContinueSpeech  	( 00000003 00ED0102 00ED0101 00000000 $PermafrostReject ) % time to fight
+		Call	 DisablePlayerInput ( .False )
+		Return
+	EndIf			
+	%Nuclear guy
+	Call     ContinueSpeech  	( 00000004 003E0202 003E0201 00000000 $NuclearWarning ) % time to fight
+	Call  ShowChoice    ( 001E0044 ) % Don't fight Fight
+	If  *Var0  ==  00000000
+		Call     ContinueSpeech  	( 00000004 003E0202 003E0201 00000000 $NuclearReject ) % time to fight
+		Call	 DisablePlayerInput ( .False )
+		Return
+	EndIf		
+	%Ok, you really want to fight, It's time
+	Call     ContinueSpeech  	( 00000004 003E0202 003E0201 00000000 $NuclearFight ) % time to fight
+	Call	 DisablePlayerInput ( .False )
+	%good luck!
+	Set 	 *MapFlag[2]	.True
+	Return
+	End
+}
+
+%they're all here
+%now you have to fight ALL OF THEM to access the temple!
+
+#new:NpcGroupList $NpcGroupList_AntiGuys
+{
+	00000005 $NpcGroup_AntiGuys 3B050002
+	00000000 00000000 00000000
+}
+
+#new:NpcGroup $NpcGroup_AntiGuys
+{
+00000000 $NpcSettings_Guy ~Vec3f:antiguy % -770 0 0
+00640D01 $Script_Init_Anti 00000000 00000000 0000010E 
+~İtems:0:DriedShroom:A
+~NoHP
+~NoFP
+~NoCoinBonus
+~Movement:antiguy
+003B0501 003B0502 003B0504 003B0504 003B0501 003B0501 003B050C 003B050C
+003B0515 003B0512 003B0511 003B0510 003B0505 003B0501 003B0501 003B0501 % .Sprite:ShyGuy
+00000001 00000000 00000000 $AntiTattle % no tattle string
+%
+00000001 $NpcSettings_Guy ~Vec3f:phalanxguy
+00640D01 $Script_Init_Phalanx 00000000 00000000 0000010E 
+~İtems:0:DriedShroom:A
+~NoHP
+~NoFP
+~NoCoinBonus
+~Movement:phalanxguy
+00420103 00420105 00420106 00420106 00420101 00420101 00420109 00420107
+00420103 00420103 00420103 00420103 00420103 00420103 00420103 00420103 % recolored spear guy
+00000000 00000000 00000000 $PhalanxTattle % no tattle string
+%
+00000002 $NpcSettings_Guy ~Vec3f:covertguy
+00640D01 $Script_Init_Covert 00000000 00000000 0000010E 
+~İtems:0:DriedShroom:A
+~NoHP
+~NoFP
+~NoCoinBonus
+~Movement:covertguy
+003F0102 003F0104 003F0105 003F0105 003F0102 003F0102 003F010B 003F010C
+003F0102 003F0102 003F0102 003F0102 003F0102 003F0102 003F0102 003F0102
+00000000 00000000 00000000 $CovertTattle % has a tattle
+%
+00000003 $NpcSettings_Guy ~Vec3f:permafrostguy
+00640D01 $Script_Init_Permafrost 00000000 00000000 0000010E 
+~İtems:0:DriedShroom:A
+~NoHP
+~NoFP
+~NoCoinBonus
+~Movement:covertguy
+00ED0101 00ED0105 00ED0106 00ED0106 00ED0101 00ED0101 00ED0109 00ED0107
+00ED0101 00ED0101 00ED0101 00ED0101 00ED0101 00ED0101 00ED0101 00ED0101 % recolored spear guy
+00000000 00000000 00000000 $PermafrostTattle % no tattle string
+%
+00000004 $NpcSettings_Guy ~Vec3f:nuclearguy
+00640D01 $Script_Init_Nuclear 00000000 00000000 0000010E 
+~İtems:0:DriedShroom:A
+~NoHP
+~NoFP
+~NoCoinBonus
+~Movement:nuclearguy
+003E0201 003E0202 003E0203 003E0204 003E0201 003E0201 003E0206 003E0208
+003E0201 003E0201 003E0201 003E0201 003E0201 003E0201 003E0201 003E0201 % recolored pyro guy
+00000000 00000000 00000000 $NuclearTattle % no tattle string
+}

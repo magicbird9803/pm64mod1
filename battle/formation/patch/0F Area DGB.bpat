@@ -1,0 +1,267 @@
+@ $Clubba
+{
+[MaxHP]         10`b 
+}
+
+@ $PartsTable_80218104
+{
+00800000 01000000 F42000FF $IdleAnimations_80218000 $DefenseTable_8021804C 00000010 00000000 08FD0000 00000000 %they're spiky now. deal with it.
+}
+
+@ $Script_HandleEvent_802181AC
+{
+    0:  Call     UseIdleAnimation 	( .Actor:Self .False )
+   14:  Call     EnableIdleScript 	( .Actor:Self 00000000 )
+   28:  Call     GetLastEvent 	( .Actor:Self *Var[0] )
+   3C:  Switch  *Var[0] 
+   48:  	CaseOR  ==  .Event:HitCombo
+   54:  	CaseOR  ==  .Event:Hit
+   60:  		SetConst  *Var[0]  00000001 
+   70:  		SetConst  *Var[1]  003A0004 
+   80:  		ExecWait DoNormalHit 
+   8C:  	EndCaseGroup
+   94:  	Case  ==  .Event:BurnHit
+   A0:  		SetConst  *Var[0]  00000001 
+   B0:  		SetConst  *Var[1]  003A0006 
+   C0:  		SetConst  *Var[2]  003A0007 
+   D0:  		ExecWait DoBurnHit 
+   DC:  	Case  ==  .Event:BurnDeath
+   E8:  		SetConst  *Var[0]  00000001 
+   F8:  		SetConst  *Var[1]  003A0006 
+  108:  		SetConst  *Var[2]  003A0007 
+  118:  		ExecWait DoBurnHit 
+  124:  		SetConst  *Var[0]  00000001 
+  134:  		SetConst  *Var[1]  003A0007 
+  144:  		ExecWait DoDeath 
+  150:  		Return
+  158:  	Case  ==  .Event:SpinSmashHit
+  164:  		SetConst  *Var[0]  00000001 
+  174:  		SetConst  *Var[1]  003A0004 
+  184:  		ExecWait 8029B998 
+  190:  	Case  ==  .Event:SpinSmashDeath
+  19C:  		SetConst  *Var[0]  00000001 
+  1AC:  		SetConst  *Var[1]  003A0004 
+  1BC:  		ExecWait 8029B998 
+  1C8:  		SetConst  *Var[0]  00000001 
+  1D8:  		SetConst  *Var[1]  003A0004 
+  1E8:  		ExecWait DoDeath 
+  1F4:  		Return
+  1FC:  	Case  ==  .Event:ShockHit
+  208:  		SetConst  *Var[0]  00000001 
+  218:  		SetConst  *Var[1]  003A0004 
+  228:  		ExecWait DoShockHit 
+  234:  		SetConst  *Var[0]  00000001 
+  244:  		SetConst  *Var[1]  003A0004 
+  254:  		ExecWait DoJumpBack 
+  260:  		SetConst  *Var[0]  00000001 
+  270:  		SetConst  *Var[1]  003A0002 
+  280:  		ExecWait DoReturnHome 
+  28C:  	Case  ==  .Event:ShockDeath
+  298:  		SetConst  *Var[0]  00000001 
+  2A8:  		SetConst  *Var[1]  003A0004 
+  2B8:  		ExecWait DoShockHit 
+  2C4:  		SetConst  *Var[0]  00000001 
+  2D4:  		SetConst  *Var[1]  003A0004 
+  2E4:  		ExecWait DoDeath 
+  2F0:  		Return
+  2F8:  	CaseOR  ==  00000017
+  304:  	CaseOR  ==  .Event:Immune
+  310:  	CaseOR  ==  .Event:AirLiftFailed
+  31C:  		SetConst  *Var[0]  00000001 
+  32C:  		SetConst  *Var[1]  003A0001 
+  33C:  		ExecWait DoImmune 
+  348:  	EndCaseGroup
+  350:  	Case  ==  .Event:Death
+  35C:  		SetConst  *Var[0]  00000001 
+  36C:  		SetConst  *Var[1]  003A0004 
+  37C:  		ExecWait DoNormalHit 
+  388:  		Wait     0000000A 
+  394:  		SetConst  *Var[0]  00000001 
+  3A4:  		SetConst  *Var[1]  003A0004 
+  3B4:  		ExecWait DoDeath 
+  3C0:  		Return
+  3C8:  	Case  ==  .Event:RecoverStatus
+  3D4:  		SetConst  *Var[0]  00000001 
+  3E4:  		SetConst  *Var[1]  003A0001 
+  3F4:  		ExecWait DoRecover 
+  400:  	Case  ==  .Event:ScareAway
+  40C:  		SetConst  *Var[0]  00000001 
+  41C:  		SetConst  *Var[1]  003A0002 
+  42C:  		SetConst  *Var[2]  003A0004 
+  43C:  		ExecWait DoScareAway 
+  448:  		Return
+  450:  	Case  ==  .Event:BeginAirLift
+  45C:  		SetConst  *Var[0]  00000001 
+  46C:  		SetConst  *Var[1]  003A0004 
+  47C:  		ExecWait DoAirLift 
+  488:  	Case  ==  .Event:BlowAway
+  494:  		SetConst  *Var[0]  00000001 
+  4A4:  		SetConst  *Var[1]  003A0004 
+  4B4:  		ExecWait DoBlowAway 
+  4C0:  		Return
+			Case  ==  .Event:SpikeTaunt
+				Call     GetStatusFlags ( .Actor:Self *Var[0] )
+				If  *Var[0]  !&  0035D000 
+					Call     SetAnimation 	( .Actor:Self 00000001 003A0008 ) %swing once
+				EndIf
+				Wait     0000000A 
+  4C8:  	Default
+  4D0:  EndSwitch
+  4D8:  Call     EnableIdleScript 	( .Actor:Self 00000001 )
+  4EC:  Call     UseIdleAnimation 	( .Actor:Self .True )
+  500:  Return
+  508:  End
+}
+
+@ $Script_TakeTurn_802186BC
+{
+[440] Call     EnemyDamageTarget 	( .Actor:Self *Var[0] 10000000 00000000 00000000 00000005 00000020 ) %3 -> 5
+}
+
+@ $TubbaBlubba 
+{
+[MaxHP]        1`b %lol
+[Escape]       1`b %no escape 
+}
+
+@ $Script_80219D88
+{
+[498]  Call     EnemyDamageTarget 	( .Actor:Self *Var[F] 10000000 00000000 00000000 00000008 00000020 ) %4 -> 8
+}
+
+@ $Script_8021A36C
+{
+[620]  Call     EnemyDamageTarget 	( .Actor:Self *Var[0] 10000000 00000000 00000000 0000000C 00000020 ) %6 -> 12
+}
+
+#import newenemy/RedClubba.bpat
+#import newenemy/PoisonFuzzy.bpat
+#import newenemy/Bristle.bpat
+
+%unused?
+@ $Formation_00
+{
+	$Clubba 00000001 0000000A 00000000 00000000 00000000 00000000
+	$Bristle 00000002 00000009 00000000 00000000 00000000 00000000
+}
+
+@ $Formation_01 %clubba to poison fuzzy, add a bristle too
+{
+$Clubba 00000001 0000000A 00000000 00000000 00000000 00000000 
+$PoisonFuzzy 00000002 00000009 00000000 00000000 00000000 00000000 
+$Bristle 00000003 00000008 00000000 00000000 00000000 00000000
+}
+
+%unused?
+@ $Formation_02
+{
+	$Clubba 00000000 0000000A 00000000 00000000 00000000 00000000
+	$Clubba 00000001 00000009 00000000 00000000 00000000 00000000
+	$Bristle 00000002 00000008 00000000 00000000 00000000 00000000
+	$Bristle 00000003 00000007 00000000 00000000 00000000 00000000
+}
+
+
+@ $Formation_03 %three clubbas -> 1 of each
+{
+$Clubba 00000000 0000000A 00000000 00000000 00000000 00000000 
+$RedClubba 00000001 00000009 00000000 00000000 00000000 00000000 
+$PoisonFuzzy 00000002 00000008 00000000 00000000 00000000 00000000 
+$Bristle 00000003 00000007 00000000 00000000 00000000 00000000
+}
+
+@ $Formation_05 %red clubba formation
+{
+$RedClubba 00000000 0000000A 00000000 00000000 00000000 00000000 
+$RedClubba 00000001 00000009 00000000 00000000 00000000 00000000 
+$PoisonFuzzy 00000002 00000008 00000000 00000000 00000000 00000000 
+$Bristle 00000003 00000007 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_06
+{
+$RedClubba 00000002 0000000A 00000000 00000000 00000000 00000000 
+}
+
+#new:Formation $Formation_07
+{
+$PoisonFuzzy 00000000 0000000A 00000000 00000000 00000000 00000000 
+$PoisonFuzzy 00000001 00000009 00000000 00000000 00000000 00000000 
+$PoisonFuzzy 00000002 00000008 00000000 00000000 00000000 00000000 
+}
+
+#new:Formation $Formation_08 %lol
+{
+$RedClubba 00000001 0000000A 00000000 00000000 00000000 00000000 
+$RedClubba 00000002 00000009 00000000 00000000 00000000 00000000 
+}
+
+#new:Formation $Formation_09
+{
+$Clubba 00000000 0000000A 00000000 00000000 00000000 00000000 
+$PoisonFuzzy 00000001 00000009 00000000 00000000 00000000 00000000 
+$PoisonFuzzy 00000002 00000008 00000000 00000000 00000000 00000000 
+$Bristle 00000003 00000007 00000000 00000000 00000000 00000000 
+}
+
+#new:Formation $Formation_0A
+{
+$RedClubba 00000000 0000000A 00000000 00000000 00000000 00000000 
+$Bristle 00000001 00000009 00000000 00000000 00000000 00000000 
+$Bristle 00000002 00000008 00000000 00000000 00000000 00000000 
+$Clubba 00000003 00000007 00000000 00000000 00000000 00000000 
+}
+
+@ $FormationTable
+{
+$SJIS_8021B574 00000002 $Formation_00 $Stage_8021B080 00000000 
+$SJIS_8021B564 00000003 $Formation_01 $Stage_8021B080 00000000 
+$SJIS_8021B554 00000004 $Formation_02 $Stage_8021B080 00000000 
+$SJIS_8021B544 00000004 $Formation_03 $Stage_8021B080 00000000 
+$SJIS_8021B534 00000001 $Formation_04 $Stage_8021B080 00000000 
+$SJIS_8021B518 00000001 $Formation_05 $Stage_8021B080 00000000 % unused
+00000000 00000001 $Formation_06 $Stage_8021B080 00000000
+00000000 00000003 $Formation_07 $Stage_8021B080 00000000
+00000000 00000002 $Formation_08 $Stage_8021B080 00000000
+00000000 00000004 $Formation_09 $Stage_Pit1 00000000 %floor 28
+00000000 00000004 $Formation_0A $Stage_Pit1 00000000 %floor 29
+00000000 00000000 00000000 00000000 00000000 % unused
+}
+
+@ $StageTable
+{
+$ASCII_8021B5A0 $Stage_8021B080 
+$ASCII_8021B598 $Stage_8021B0E0 
+$ASCII_8021B590 $Stage_8021B140 
+$ASCII_8021B588 $Stage_8021B1A8 
+$ASCII_8021B580 $Stage_8021B200 
+"pit_03" $Stage_Pit1
+00000000 00000000 
+}
+
+#new:Stage $Stage_Pit1
+{
+"kpa_tex"
+"pit_b01_shape"
+"pit_b01_hit"
+$Script_BeforeBattle_Pit
+$Script_AfterBattle_Pit
+00000000 
+00000000 
+00000000 
+00000000 
+00000000 
+}
+
+%to make things easier to add, I'm adding the pit scripts every time even when I don't need to
+#new:Script $Script_BeforeBattle_Pit
+{
+	Return
+	End
+}
+
+#new:Script $Script_AfterBattle_Pit
+{
+	Return
+	End
+}

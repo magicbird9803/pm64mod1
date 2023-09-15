@@ -1,0 +1,5 @@
+%Ok first I need to find where mario's hitbox size is again
+%Hm
+
+%8010F078	= height
+%8010F07A 	= width

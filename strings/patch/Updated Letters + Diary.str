@@ -1,0 +1,113 @@
+#string:20:051
+{
+[STYLE:INSPECT]Once again, my brother went on[BR]
+an exciting journey.[BR]
+[Wait][NEXT]Once again, he went alone.[BR]
+It's so unfair![BR]
+[Wait][NEXT]I remember the carefree days[BR]
+when we played Golf and [BR]
+Tennis and had Parties.[BR]
+[Wait][NEXT]I remodeled the house and[BR][BR]
+made a secret basement.[BR]
+My brother has no idea![BR]
+[Wait][NEXT]It's the perfect place to [BR]
+write in you, my secret diary.[BR]
+[Wait][NEXT]I think I'll do some reading[BR]
+while I have the extra time.[BR]
+[Wait][NEXT]Maybe I can learn some neat[BR]
+stuff to impress my brother[BR]
+when he gets back![BR]
+[Wait][END]
+}
+
+%technically makes sense whether or not you get the badge stone or not
+#string:20:052
+{
+[Style Inspect]
+Right before the party at Peach's[BR]
+castle, some weird guy handed[BR]
+me a green stone.[BR]
+[Wait][NEXT]
+I didn't think it was that[BR]
+important, so I gave it away.[BR]
+[Wait][NEXT]
+Now I'm wondering what it could[BR]
+have done...[BR]
+[Wait][End]
+}
+
+#string:20:053
+{
+[STYLE:INSPECT]I read in a book I borrowed[BR]
+from Russ T. that there's[BR]
+a massive cave below Toad Town.[BR]
+[Wait][NEXT]The book said that there was[BR]
+an empire down there, but[BR]
+it fell after a war with[BR]
+the Star Spirits.[BR]
+[Wait][NEXT]Legend has it, the treasures[BR]
+of the empire are still down[BR]
+there somewhere.[BR]
+[Wait][NEXT]That sounds nice, but to tell[BR]
+you the truth it sounds too[BR]
+scary for me![BR]
+[Wait][NEXT]Maybe when Mario gets back[BR]
+I'll see if he wants to check[BR]
+it out. Alone.[BR]
+[Wait][END]
+}
+
+#string:20:056
+{
+[STYLE:INSPECT]There was a weird page in[BR]
+that book about the underground[BR]
+empire.[BR]
+[Wait][NEXT]I couldn't read the language,[BR]
+but I could distinctly count[BR]
+100 rooms, one atop the other.[BR]
+[Wait][NEXT]There must be some amazing[BR]
+treasure in those rooms.[BR]
+Every 10th floor seemed to[BR]
+be especially important.[BR]
+[Wait][NEXT]Apparently, those rooms had[BR]
+extremely powerful monsters too,[BR]
+so I'm probably not going[BR]
+to check it out.[BR]
+[Wait][NEXT]Even just reading about that[BR]
+place gives me the creeps![BR]
+[Wait][END]
+}
+
+%Shameless advertising for my other mod
+#string:20:057
+{
+	[Style Inspect]
+	A weird package came in the mail[BR]
+	today. It looked like a game of[BR]
+	some kind.[BR]
+	[Wait][NEXT]
+	Something called "Error Blame:[BR]
+	Eternal Fruit"[BR]
+	[Wait][NEXT]
+	I don't really know what to[BR]
+	do with it. The package didn't[BR]
+	have a return address either.[BR]
+	[Wait][End]
+}
+
+#string:20:059
+{
+[STYLE:INSPECT]I remember reading a weird [BR]
+passage in that book I borrowed.[BR]
+[Wait][NEXT]It talked about a man who[BR]
+fought his enemies with an[BR]
+arsenal of pebbles.[BR]
+[Wait][NEXT]The next page was missing,[BR]
+but the page after that was[BR]
+after the man defeated [BR]
+everyone.[BR]
+[Wait][NEXT]I really want to see what's on[BR]
+that missing page, but I[BR]
+guess it's lost to history.[BR]
+[Wait][END]
+}

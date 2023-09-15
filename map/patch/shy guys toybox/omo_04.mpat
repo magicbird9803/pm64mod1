@@ -1,0 +1,232 @@
+@ $Script_Main_EnterWalk %add a shroom fight
+{
+	0:  Set  *GB_WorldLocation  .Location:ShyGuysToybox
+   10:  Call     SetSpriteShading 	( FFFFFFFF )
+   20:  Call     SetCamPerspective 	( .Cam:Default 00000003 00000019 00000010 00001000 )
+   40:  Call     SetCamBGColor 	( .Cam:Default 00000000 00000000 00000000 )
+   5C:  Call     SetCamEnabled 	( .Cam:Default .True )
+   70:  If  *GF_OMO04_SpawnedPeachChoice1  ==  .False
+   80:  	Call     MakeNpcs    	( 00000001 $NpcGroupList_80243E30 )
+   94:  Else
+   9C:  	If  *Flag_OMO_04  ==  00000000 
+   AC:  		Switch  *GB_OMO_PeachChoice1 
+   B8:  			Case  ==  00000000 
+   C4:  				Call     MakeNpcs    	( 00000001 $NpcGroupList_80243DAC )
+   D8:  			Case  ==  00000001 
+   E4:  				Call     MakeNpcs    	( 00000001 $NpcGroupList_80243DDC )
+   F8:  			Case  ==  00000002 
+  104:  				Call     MakeNpcs    	( 00000001 $NpcGroupList_Shroom ) %it's a shroom now
+  %118:  				Call     MakeItemEntity ( .Item:Mushroom ~Vec3d:Item80242180 00000011 *Flag_OMO_04 )
+  13C:  		EndSwitch
+  144:  	Else
+  14C:  		Call     MakeNpcs    	( 00000001 $NpcGroupList_80243E0C ) %the npcs after you beat whatever was chosen
+  160:  	EndIf
+  168:  EndIf
+  170:  ExecWait $Script_MakeEntities
+  17C:  ExecWait $Script_80242608 
+  188:  ExecWait $Script_80241F70 
+  194:  If  *Flag_OMO_14  ==  00000000 
+  1A4:  	Exec     $Script_80244288 
+  1B0:  Else
+  1B8:  	Set  *Var[0]  $Script_8024203C 
+  1C8:  	Exec     EnterWalk 
+  1D4:  	Wait     00000001 
+  1E0:  EndIf
+  1E8:  Return
+  1F0:  End
+}
+
+#import NPC_Puff.mpat
+
+#new:NpcGroup $NpcGroup_Puff1
+{
+00000009 $NpcSettings_Puff ~Vec3f:NPC_Puff1
+00000C00 00000000 00000000 00000000 0000005A 
+~İtems:5:SuperShroom:A
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:0:3
+~Movement:NPC_Puff1
+007D0000 007D0000 007D0005 007D0005 007D0000 007D0000 007D0006 007D0006
+007D0005 007D0001 007D0001 007D0001 007D0001 007D0001 007D0001 007D0001 
+00000003 00000000 00000000 00000000 % no tattle string
+}
+
+#new:NpcGroup $NpcGroup_Puff2
+{
+0000000A $NpcSettings_Puff ~Vec3f:NPC_Puff2
+00000C00 00000000 00000000 00000000 0000005A 
+~İtems:5:SuperShroom:A
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:0:3
+~Movement:NPC_Puff2
+007D0000 007D0000 007D0005 007D0005 007D0000 007D0000 007D0006 007D0006
+007D0005 007D0001 007D0001 007D0001 007D0001 007D0001 007D0001 007D0001 
+00000003 00000000 00000000 00000000 % no tattle string
+}
+
+@ $NpcGroupList_80243DAC
+{
+	00000001 $NpcGroup_802433E0 12010001
+	00000001 $NpcGroup_802437C0 10040001
+	00000001 $NpcGroup_802439B0 100F0001
+	00000001 $NpcGroup_Puff1    101E0001
+	00000001 $NpcGroup_Puff2    101F0001
+	00000000 00000000 00000000
+}
+
+@ $NpcGroupList_80243DDC
+{
+	00000001 $NpcGroup_802435D0 12030001
+	00000001 $NpcGroup_802437C0 10040001
+	00000001 $NpcGroup_802439B0 100F0001
+	00000001 $NpcGroup_Puff1    101E0001
+	00000001 $NpcGroup_Puff2    101F0001
+	00000000 00000000 00000000
+}
+
+@ $NpcGroupList_80243E0C
+{
+	00000001 $NpcGroup_802437C0 10040001
+	00000001 $NpcGroup_802439B0 100F0001
+	00000001 $NpcGroup_Puff1    101E0001
+	00000001 $NpcGroup_Puff2    101F0001
+	00000000 00000000 00000000
+}
+
+@ $NpcGroupList_80243E30
+{
+	00000001 $NpcGroup_80243BBC 00000000
+	00000001 $NpcGroup_802433E0 12010001
+	00000001 $NpcGroup_802435D0 12030001
+	%00000001 $NpcGroup_Shroom   120B0001	%This wasn't here in the past version, maybe I need this? (Probably not)
+	00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroupList_Shroom
+{
+00000001 $NpcGroup_Shroom   120B0001
+00000001 $NpcGroup_802437C0 10040001 
+00000001 $NpcGroup_802439B0 100F0001 
+00000000 00000000 00000000 
+}
+
+#new:NpcGroup $NpcGroup_Shroom
+{
+00000005 $NpcSettings_80243050 ~Vec3f:NPC_Shroom % 1100 0 0
+00440F00 $Script_Init_Shroom 00000000 00000000 0000010E 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus
+~Movement:NPC_Shroom
+00EE0000 00EE0000 00EE0000 00EE0000 00EE0000 00EE0000 00EE0001 00EE0001
+00EE0000 00EE0000 00EE0000 00EE0000 00EE0000 00EE0000 00EE0000 00EE0000 % evil shroom sprite
+00000000 00000000 00000000 00000000 % no tattle string
+}
+
+#new:Script $Script_Init_Shroom
+{
+	0:  If  *GB_OMO_PeachChoice1  ==  00000002 
+   10:  	Call     BindNpcIdle 	( .Npc:Self $Script_Idle_802430D4 )
+   24:  	Call     BindNpcDefeat 	( .Npc:Self $Script_Defeat_8024324C ) %generic defeat script
+   38:  Else
+   40:  	Call     SetNpcPos   	( .Npc:Self 00000000 FFFFFC18 00000000 )
+   5C:  EndIf
+   64:  Return
+   6C:  End
+}
+
+@ $Script_Idle_802430D4
+{
+	0:  Label    00000000 
+    C:  Call     GetPlayerPos 	( *Var[0] *Var[1] *Var[2] )
+   24:  If  *Var[0]  <  0000041A 
+   34:  	Wait     00000001 
+   40:  	Goto     00000000 
+   4C:  EndIf
+   54:  Call     DisablePlayerInput 	( .True )
+   64:  Call     $Function_80241E04 ( )
+   70:  Call     GetNpcPos   	( .Npc:Self *Var[0] *Var[1] *Var[2] )
+   8C:  Call     802CC3EC ( 00000000 *Fixed[5.0] *Var[0] *Var[1] *Var[2] 0000012C *Fixed[13.0] *Fixed[-9.5] )
+   B8:  Switch  (*GB_OMO_PeachChoice1) 
+			Case == 00000000
+   C8:  		Call     SpeakToPlayer 	( 00000000 0062020A 00620202 00000000 000F003A ) % Oh... Mario!? I have to fight Mario?! By myself? W ...
+			Case == 00000001
+   F0:  		Call     SpeakToPlayer 	( 00000001 00390205 00390202 00000000 000F003B ) % Oh, it's Mario!! See this fine club I have? I'm go ...
+			Case == 00000002
+				Wait 00000004
+				Call SetNpcJumpscale (.Actor:Self *Fixed[1.0])
+				Call GetPlayerPos (*Var[0] *Var[1] *Var[2])
+				Call NpcJump0 ( .Actor:Self *Var[0] *Var[1] *Var[2] 20`)
+  110:  EndSwitch
+  118:  Thread
+  120:  	Call     $Function_80241E20 ( )
+  12C:  	Call     ResetCam    	( .Cam:Default *Fixed[4.0] )
+  140:  EndThread
+  148:  Call     DisablePlayerInput 	( .False )
+  158:  Call     StartBossBattle 	( .Song:SpecialBattle )
+  168:  Return
+  170:  End
+}
+
+@ $Script_MakeEntities
+{
+	0:  Call     MakeEntity  	( .Entity:Chest ~Vec4d:Entity80242B1C 00000000 80000000 )
+   28:  Call     AssignFlag  	( *Flag_OMO_15 )
+   38:  Call     AssignScript 	( $Script_8024277C )
+   48:  Call     MakeEntity  	( .Entity:StarBoxLaucher ~Vec4d:Entity80242B64 80000000 )
+   6C:  Call     AssignScript 	( $Script_802429E8 )
+   7C:  Call     MakeEntity  	( .Entity:StarBoxLaucher ~Vec4d:Entity80242B98 80000000 )
+   A0:  Call     AssignScript 	( $Script_80242A14 )
+   B0:  Call     MakeEntity  	( .Entity:StarBoxLaucher ~Vec4d:Entity80242BCC 80000000 )
+   D4:  Call     AssignScript 	( $Script_80242A40 )
+   E4:  Call     MakeEntity  	( .Entity:StarBoxLaucher ~Vec4d:Entity80242C00 80000000 )
+  108:  Call     AssignScript 	( $Script_80242A6C )
+  118:  Call     MakeEntity  	( .Entity:StarBoxLaucher ~Vec4d:Entity80242C34 80000000 )
+  13C:  Call     AssignScript 	( $Script_80242A98 )
+  14C:  Call     MakeEntity  	( .Entity:StarBoxLaucher ~Vec4d:Entity80242C68 80000000 )
+  170:  Call     AssignScript 	( $Script_80242AC4 )
+  180:  Call     MakeEntity  	( .Entity:StarBoxLaucher ~Vec4d:Entity80242C9C 80000000 )
+  1A4:  Call     AssignScript 	( $Script_80242AF0 )
+  1B4:  Call     MakeEntity  	( .Entity:YellowBlock ~Vec4d:Entity80242CD0 .Item:VoltShroom 80000000 ) %if you don't have zaptap, volt shrooms will be really helpful
+  1DC:  Call     AssignBlockFlag 	( *Flag_OMO_16 )
+  1EC:  Call     MakeEntity  	( .Entity:YellowBlock ~Vec4d:Entity80242D08 .Item:Coin 80000000 )
+  214:  Call     AssignBlockFlag 	( *Flag_OMO_17 )
+  224:  Call     MakeEntity  	( .Entity:YellowBlock ~Vec4d:Entity80242D40 .Item:ShroomTrio 80000000 )
+  24C:  Call     AssignBlockFlag 	( *Flag_OMO_18 )
+  25C:  Call     MakeItemEntity ( .Item:Coin ~Vec3d:Item80242D78 00000011 *Flag_OMO_19 )
+  280:  Call     MakeItemEntity ( .Item:Coin ~Vec3d:Item80242D9C 00000011 *Flag_OMO_1A )
+  2A4:  Call     MakeItemEntity ( .Item:Coin ~Vec3d:Item80242DC0 00000011 *Flag_OMO_1B )
+  2C8:  Call     MakeItemEntity ( .Item:Coin ~Vec3d:Item80242DE4 00000011 *Flag_OMO_1C )
+  2EC:  Call     MakeItemEntity ( .Item:Coin ~Vec3d:Item80242E08 00000011 *Flag_OMO_1D )
+  310:  Call     MakeItemEntity ( .Item:Coin ~Vec3d:Item80242E2C 00000011 *Flag_OMO_1E )
+  334:  Call     MakeItemEntity ( .Item:Coin ~Vec3d:Item80242E50 00000011 *Flag_OMO_1F )
+  358:  Call     MakeItemEntity ( .Item:Coin ~Vec3d:Item80242E74 00000011 *Flag_OMO_20 )
+  37C:  Call     MakeItemEntity ( .Item:StarPiece ~Vec3d:Item80242E98 00000011 *Flag_OMO_22 )
+  3A0:  Call     MakeItemEntity ( .Item:StarPiece ~Vec3d:Item80242EBC 00000011 *Flag_OMO_23 )
+  224:  Call     MakeEntity  	( .Entity:RedBlock ~Vec4d:HiddenBlock .Item:HealthFocus 80000000 )
+  24C:  Call     AssignBlockFlag 	( *GF_OMO04_NewBlock )
+  3C4:  Return
+  3CC:  End
+}
+
+@ $NpcGroup_802433E0 %now a dark goomba
+{
+00000000 $NpcSettings_80243050 ~Vec3f:NPC_802433E0 % 1100 0 0
+00440F00 $Script_Init_802432C0 00000000 00000000 0000010E 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus
+~Movement:NPC_802433E0
+00620202 00620204 00620206 00620206 00620202 00620202 00620209 00620209
+00620206 00620206 00620206 00620206 00620206 00620206 00620206 00620206
+00000000 00000000 00000000 00000000 % no tattle string
+}
+
+@ $NpcGroup_802435D0 %red clubba
+{
+00000001 $NpcSettings_8024307C ~Vec3f:NPC_802435D0 % 1100 0 0
+00440F00 $Script_Init_80243334 00000000 00000000 0000010E 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus
+~Movement:NPC_802435D0
+00390202 00390203 00390204 00390204 00390202 00390202 0039020C 0039020C 
+00390211 00390212 00390207 00390208 00390202 00390202 00390202 00390202 % .Sprite:WorldClubba
+00000000 00000000 00000000 00000000 % no tattle string
+}

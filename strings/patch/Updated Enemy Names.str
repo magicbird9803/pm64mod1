@@ -1,0 +1,594 @@
+#string:29:044
+{
+	Fluff Puff[End]
+}
+
+#message:29:070
+{
+Tubba Blubba[END]
+}
+
+#message:29:083
+{
+Red Bob-omb[END]
+}
+
+#message:29:084
+{
+Bandito[END]
+}
+
+#message:29:085
+{
+Dull Bones[END]
+}
+
+#message:29:086
+{
+Layzee Dayzee[END]
+}
+
+#message:29:087
+{
+Poison Fuzzy[END]
+}
+
+#message:29:088
+{
+Red Clubba[END]
+}
+
+#message:29:089
+{
+Bob-uke[END]
+}
+
+#message:29:08A
+{
+Fire Piranha[END]
+}
+
+#message:29:08B
+{
+Boo[END]
+}
+
+#message:29:08C
+{
+Cryo Guy[END]
+}
+
+#message:29:08D
+{
+Mushroom?[END]
+}
+
+#message:29:08E
+{
+Dark Goomba[END]
+}
+
+#message:29:08F
+{
+Insanee Dayzee[END]
+}
+
+#message:29:090
+{
+Red Fuzzy[END]
+}
+
+#message:29:091
+{
+Gold Koopatrol[END]
+}
+
+#message:29:092
+{
+Dark Koopatrol[END]
+}
+
+#message:29:093
+{
+Frost Pokey[END]
+}
+
+#message:29:094
+{
+Frost Puff[END]
+}
+
+#message:29:095
+{
+Blue Spike Top[END]
+}
+
+#message:29:096
+{
+Bzzrk![END]
+}
+
+#message:29:097
+{
+Poison Puff[END]
+}
+
+#message:29:098
+{
+Dark Bubble[END]
+}
+
+#message:29:099
+{
+Dark Beetle[END]
+}
+
+#message:29:09A
+{
+Lil' Sparky[END]
+}
+
+#message:29:09B
+{
+Remedy Guy[END]
+}
+
+#message:29:09C
+{
+Practitioner Guy[END]
+}
+
+#message:29:09D
+{
+Robotoad[END]
+}
+
+#message:29:09E
+{
+The Master[END]
+}
+
+#message:29:09F
+{
+[Color:20]Whacka[END]
+}
+
+#message:29:0A0
+{
+Phalanx Guy[END]
+}
+
+#message:29:0A1
+{
+Covert Guy[END]
+}
+
+#message:29:0A2
+{
+Permafrost Guy[END]
+}
+
+#message:29:0A3
+{
+Nuclear Guy[END]
+}
+
+#message:29:0A4
+{
+Blue Ninjakoopa[END]
+}
+
+#message:29:0A5
+{
+Dark Bones[END]
+}
+
+#message:29:0A6
+{
+Atomic Boo[END]
+}
+
+#message:29:0A7
+{
+Sparkarine[END]
+}
+
+#message:29:0A8
+{
+Lava Cheep[END]
+}
+
+#message:29:0A9
+{
+Beedazzle[END]
+}
+
+#message:29:0AA
+{
+Doople[END]
+}
+
+#message:29:0AB
+{
+Magic Bro[END]
+}
+
+#message:29:0AC
+{
+Emperor Beetle[END]
+}
+
+#message:29:0AD
+{
+?????[END]
+}
+
+#message:29:025
+{
+Tubba Blubba[END]
+}
+
+#message:29:0AE
+{
+Elite Bandit[END]
+}
+
+#message:29:0AF
+{
+Steel Cleft[END]
+}
+
+#message:29:0B0
+{
+Dark Sentinel[END]
+}
+
+#message:29:0B1
+{
+Dark Boo[END]
+}
+
+#message:29:0B2
+{
+Ztar[END]
+}
+
+#message:29:0B3
+{
+Dark Clubba[END]
+}
+
+#message:29:0B4
+{
+Lakilulu[END]
+}
+
+#message:29:0B5
+{
+Toadinator[END]
+}
+
+#message:29:0B6
+{
+	Dark Goombario[END]
+}
+
+#message:29:0B7
+{
+	Dark Kooper[END]
+}
+
+#message:29:0B8
+{
+	Dark Bombette[END]
+}
+
+#message:29:0B9
+{
+	Dark Parakarry[END]
+}
+
+#message:29:0BA
+{
+	Dark Bow[END]
+}
+
+#message:29:0BB
+{
+	Dark Watt[END]
+}
+
+#message:29:0BC
+{
+	Dark Sushie[END]
+}
+
+#message:29:0BD
+{
+	Dark Lakilester[END]
+}
+
+#message:29:0BE
+{
+	Lickit[END]
+}
+
+#message:29:0BF
+{
+	Cheep Cheep[END]
+}
+
+#message:29:0C0
+{
+	Red Goomba[END]
+}
+
+#message:29:0C1
+{
+	Red Paragoomba[END]
+}
+
+#message:29:0C2
+{
+	Dry Bubble[END]
+}
+
+#message:29:0C3
+{
+	Bristle[END]
+}
+
+#message:29:0C4
+{
+	Dark Bristle[END]
+}
+
+#message:29:0C5
+{
+	Crystal Bristle[END]
+}
+
+#message:29:0C6
+{
+	Steel Bristle[END]
+}
+
+#message:29:0C7
+{
+	Ember Guy[END]
+}
+
+#message:29:0C8
+{
+	R Bush[END]
+}
+
+#message:29:0C9
+{
+	Crystal Chomp[END]
+}
+
+#message:29:0CA
+{
+	Bloody Beetle[END]
+}
+
+#message:29:0CB
+{
+	Red Bones[END]
+}
+
+#message:29:0CC
+{
+	Dark Puff[END]
+}
+
+#message:29:0CD
+{
+	Dark Magikoopa[END]
+}
+
+#message:29:0CE
+{
+Ultra Shroom?[END]
+}
+
+#message:29:0CF
+{
+Ultra Blooper?[END]
+}
+
+#message:29:0D0
+{
+Swoopix[END]
+}
+
+#message:29:0D1
+{
+Dark Traveller[END]
+}
+
+#message:29:0D2
+{
+Solid Void[END]
+}
+
+#message:29:0D3
+{
+Dark Shieldbearer[END]
+}
+
+#message:29:0D4
+{
+Dark Collective[END]
+}
+
+#message:29:0D5
+{
+Dark Fragment[END]
+}
+
+#message:29:0D6
+{
+Dark Aspirant[END]
+}
+
+#message:29:0D7
+{
+Dark Revenant[END]
+}
+
+#message:29:0D8
+{
+Dark Summoner[END]
+}
+
+#message:29:0D9
+{
+Perfect Bit[END]
+}
+
+#message:29:0DA
+{
+Shielded Bit[END]
+}
+
+#message:29:0DB
+{
+Viscous Bit[END]
+}
+
+#message:29:0DC
+{
+Sturdy Bit[END]
+}
+
+#message:29:0DD
+{
+Dark Replicator[END]
+}
+
+#message:29:0DE
+{
+Dark Replication[END]
+}
+
+#message:29:0DF
+{
+??????????[END]
+}
+
+#message:29:0E0
+{
+Buzzatrice[END]
+}
+
+#message:29:0E1
+{
+Buzzatrice???[END]
+}
+
+#message:29:0E2
+{
+Dark Buzzatrice[END]
+}
+
+#message:29:0E3
+{
+	Golden Chomp[END]
+}
+
+#message:29:0E4
+{
+	Light Goombario[END]
+}
+
+#message:29:0E5
+{
+	Light Kooper[END]
+}
+
+#message:29:0E6
+{
+	Light Bombette[END]
+}
+
+#message:29:0E7
+{
+	Light Parakarry[END]
+}
+
+#message:29:0E8
+{
+	Light Bow[END]
+}
+
+#message:29:0E9
+{
+	Light Watt[END]
+}
+
+#message:29:0EA
+{
+	Light Sushie[END]
+}
+
+#message:29:0EB
+{
+	Light Lakilester[END]
+}
+
+#message:29:0EC
+{
+	Light Goomba[END]
+}
+
+#message:29:0ED
+{
+	Light Chomp[END]
+}
+
+#message:29:0EE
+{
+	Light Bones[END]
+}
+
+#message:29:0EF
+{
+	Light Bubble[END]
+}
+
+#message:29:0F0
+{
+	Proto Bristle[END]
+}
+
+#message:29:0F1
+{
+	Breezee Dayzee[END]
+}
+
+#message:29:0F2
+{
+	Beestroyer[END]
+}
+
+#message:29:0F3
+{
+	Queen of Light[END]
+}
+
+#message:29:0F4
+{
+	Light Guardian[END]
+}
+
+#message:29:0F5
+{
+	Unstable Star[END]
+}
+
+#message:29:0F6
+{
+	Dark Bowser[END]
+}

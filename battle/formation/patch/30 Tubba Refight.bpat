@@ -1,0 +1,1900 @@
+%tubba refight 1
+%50 hp, same attacks
+%but when he gets to 0, he gets a full heal and doubled turns
+
+%tubba refight 2
+%80 hp, stronger attacks (2x first ex fight)
+%starts off immune to statuses
+%though the heals means he has effectively 240 hp
+
+%AI is different from the first fight
+%cycles through attacks
+%jump  	(jump + smash)	(jump + quake)
+%smash 	(quake) 		(quake + jump)
+%throw 	(smash + throw)	(smash + throw + jump)
+
+
+#new:StatusTable $StatusTable_TubbaRefight_Weak %vulnerable to shrink, before healing
+{
+.Status:Normal      0`
+.Status:Default     0`
+.Status:Sleep      20`
+.Status:Poison      0`
+.Status:Frozen      0`
+.Status:Dizzy      10`
+.Status:Fear        0`
+.Status:Static      0`
+.Status:Paralyze   10`
+.Status:Shrink    100`
+.Status:Stop       20`
+.Status:DefaultTurnMod    0`
+.Status:SleepTurnMod      -1`
+.Status:PoisonTurnMod     0`
+.Status:FrozenTurnMod     0`
+.Status:DizzyTurnMod      -2`
+.Status:FearTurnMod       0`
+.Status:StaticTurnMod     0`
+.Status:ParalyzeTurnMod   -1`
+.Status:ShrinkTurnMod     0`
+.Status:StopTurnMod       0`
+.Status:End
+}
+
+#new:StatusTable $StatusTable_TubbaRefight_Medium %less vulnerable to shrink, healed once
+{
+.Status:Normal      0`
+.Status:Default     0`
+.Status:Sleep      20`
+.Status:Poison      0`
+.Status:Frozen      0`
+.Status:Dizzy      10`
+.Status:Fear        0`
+.Status:Static      0`
+.Status:Paralyze   10`
+.Status:Shrink     50`
+.Status:Stop       20`
+.Status:DefaultTurnMod    0`
+.Status:SleepTurnMod      -2`
+.Status:PoisonTurnMod     0`
+.Status:FrozenTurnMod     0`
+.Status:DizzyTurnMod      -2`
+.Status:FearTurnMod       0`
+.Status:StaticTurnMod     0`
+.Status:ParalyzeTurnMod   -2`
+.Status:ShrinkTurnMod     -1`
+.Status:StopTurnMod       0`
+.Status:End
+}
+
+#new:StatusTable $StatusTable_TubbaRefight_Strong %no statusing at all
+{
+.Status:Normal      0`
+.Status:Default     0`
+.Status:Sleep       0`
+.Status:Poison      0`
+.Status:Frozen      0`
+.Status:Dizzy       0`
+.Status:Fear        0`
+.Status:Static      0`
+.Status:Paralyze    0`
+.Status:Shrink      0`
+.Status:Stop        0`
+.Status:DefaultTurnMod    0`
+.Status:SleepTurnMod      -2`
+.Status:PoisonTurnMod     0`
+.Status:FrozenTurnMod     0`
+.Status:DizzyTurnMod      -2`
+.Status:FearTurnMod       0`
+.Status:StaticTurnMod     0`
+.Status:ParalyzeTurnMod   -2`
+.Status:ShrinkTurnMod     -2`
+.Status:StopTurnMod       0`
+.Status:End
+}
+
+#new:PartsTable $PartsTable_TubbaRefight
+{
+00800000 01000000 F14B00FF $IdleAnimations_TubbaRefight $DefenseTable_TubbaRefight 00000000 00000000 00F60000 00000000 %he is immune to star beam
+}
+
+#new:IdleAnimations $IdleAnimations_TubbaRefight
+{
+.Status:Normal    006B0001
+.Status:Stone     006B0000
+.Status:Sleep     006B0018
+.Status:Poison    006B0001
+.Status:Stop      006B0000
+.Status:Static    006B0000
+.Status:Paralyze  006B0000
+.Status:Paralyze  006B0000
+.Status:Dizzy     006B0018
+.Status:Fear      006B0000
+.Status:End
+}
+
+#new:PartsTable $PartsTable_TubbaRefight2
+{
+00800000 01000000 F14B00FF $IdleAnimations_TubbaRefight2 $DefenseTable_TubbaRefight 00080000 00000000 00F60000 00000000 %he is immune to star beam
+}
+
+#new:IdleAnimations $IdleAnimations_TubbaRefight2
+{
+.Status:Normal    006B0801
+.Status:Stone     006B0800
+.Status:Sleep     006B0818
+.Status:Poison    006B0801
+.Status:Stop      006B0800
+.Status:Static    006B0800
+.Status:Paralyze  006B0800
+.Status:Paralyze  006B0800
+.Status:Dizzy     006B0818
+.Status:Fear      006B0800
+.Status:End
+}
+
+%switching out the encounter for the different curse animations is possible but I am lazy and also don't want to overcomplicate the rematch map
+
+#new:IdleAnimations $IdleAnimations_TubbaRefight3
+{
+.Status:Normal    006B0A01
+.Status:Stone     006B0A00
+.Status:Sleep     006B0A18
+.Status:Poison    006B0A01
+.Status:Stop      006B0A00
+.Status:Static    006B0A00
+.Status:Paralyze  006B0A00
+.Status:Paralyze  006B0A00
+.Status:Dizzy     006B0A18
+.Status:Fear      006B0A00
+.Status:End
+}
+
+#new:IdleAnimations $IdleAnimations_TubbaRefight4
+{
+.Status:Normal    006B0B01
+.Status:Stone     006B0B00
+.Status:Sleep     006B0B18
+.Status:Poison    006B0B01
+.Status:Stop      006B0B00
+.Status:Static    006B0B00
+.Status:Paralyze  006B0B00
+.Status:Paralyze  006B0B00
+.Status:Dizzy     006B0B18
+.Status:Fear      006B0B00
+.Status:End
+}
+
+%wow look nothing
+#new:DefenseTable $DefenseTable_TubbaRefight
+{
+.Element:Normal 00000000
+.Element:End
+}			 
+
+#new:Actor $TubbaBlubba
+{
+% stats
+[Index]        51b 
+[Level]        85`b 
+[MaxHP]        50`b 
+[Coins]         0`b 
+[Flags]       00000000 
+[StatusTable] $StatusTable_TubbaRefight_Weak
+% ai
+[PartsCount]   1`s 
+[PartsTable] $PartsTable_TubbaRefight 
+[Script]      $Script_Init_TubbaRefight
+% move effectiveness
+[Escape]        0`b 
+[Item]          0`b 
+[AirLift]       0`b 
+[Hurricane]     0`b % Bow's "Spook" as well
+[UpAndAway]     0`b 
+[PowerBounce]   3`b 
+[SpinSmash]     4`b % weight (0-4)
+% ui positions
+[Size]        110`b 100`b % width height
+[HealthBar]     0`b   0`b % dx dy
+[StatusTurn]  -33`b  78`b % dx dy
+[StatusIcon]   10`b  75`b % dx dy
+}
+
+#new:Actor $TubbaBlubba2
+{
+% stats
+[Index]        51b 
+[Level]       100`b 
+[MaxHP]        80`b 
+[Coins]         0`b 
+[Flags]       00000000 
+[StatusTable] $StatusTable_TubbaRefight_Strong
+% ai
+[PartsCount]   1`s 
+[PartsTable] $PartsTable_TubbaRefight2
+[Script]      $Script_Init_TubbaRefight2
+% move effectiveness
+[Escape]        0`b 
+[Item]          0`b 
+[AirLift]       0`b 
+[Hurricane]     0`b % Bow's "Spook" as well
+[UpAndAway]     0`b 
+[PowerBounce]   3`b 
+[SpinSmash]     4`b % weight (0-4)
+% ui positions
+[Size]        110`b 100`b % width height
+[HealthBar]     0`b   0`b % dx dy
+[StatusTurn]  -33`b  78`b % dx dy
+[StatusIcon]   10`b  75`b % dx dy
+}
+
+#new:Script $Script_Idle_TubbaRefight
+{
+	Return
+	End
+}
+  
+#new:Script $Script_Init_TubbaRefight
+{
+    0:  Call     BindTakeTurn 	( .Actor:Self $Script_TakeTurn_TubbaRefight )
+		Call     BindNextTurn 	( .Actor:Self $Script_NextTurn )
+   14:  Call     BindIdle    	( .Actor:Self $Script_Idle_TubbaRefight )
+   28:  Call     BindHandleEvent 	( .Actor:Self $Script_HandleEvent_TubbaRefight )
+   3C:  Call     SetActorVar 	( .Actor:Self 00000008 00000000 )
+		Call     SetActorVar 	( .Actor:Self 00000009 00000000 )
+		Call     SetActorVar 	( .Actor:Self 0000000A 00000064 ) %size
+		Call     SetActorVar 	( .Actor:Self 0000000B 00000000 ) %heal counter
+		Call     SetActorVar 	( .Actor:Self 0000000C 00000000 ) %used for determining what attacks to do
+		Call     SetActorVar 	( .Actor:Self 0000000D 00000000 ) %used for handling zap tap
+		Call     SetActorVar 	( .Actor:Self 0000000E 00000000 ) %0 if first time, 1 if EX fight
+		Call     SetActorVar 	( .Actor:Self 0000000F 00000000 )
+   54:  Exec     $Script_80225E08_Tubba
+   60:  Return
+   68:  End
+}
+
+#new:Script $Script_Init_TubbaRefight2
+{
+		If	*Flag_Rematch3  ==  .True
+			Call	$Function_SetLevel	( $TubbaBlubba2 0` )
+		EndIf
+		Call	$Function_SetTattle_B ( 001C0109 )
+    0:  Call     BindTakeTurn 	( .Actor:Self $Script_TakeTurn_TubbaRefight )
+		Call     BindNextTurn 	( .Actor:Self $Script_NextTurn )
+   14:  Call     BindIdle    	( .Actor:Self $Script_Idle_TubbaRefight )
+   28:  Call     BindHandleEvent 	( .Actor:Self $Script_HandleEvent_TubbaRefight )
+   3C:  Call     SetActorVar 	( .Actor:Self 00000008 00000000 )
+		Call     SetActorVar 	( .Actor:Self 00000009 00000000 )
+		Call     SetActorVar 	( .Actor:Self 0000000A 00000064 ) %size
+		Call     SetActorVar 	( .Actor:Self 0000000B 00000000 ) %heal counter
+		Call     SetActorVar 	( .Actor:Self 0000000C 00000000 ) %used for determining what attacks to do
+		Call     SetActorVar 	( .Actor:Self 0000000D 00000000 ) %used for handling zap tap
+		%palette stuff
+		Call	 $Function_GetCurseState ( *VarB )
+		Call     SetActorVar 	( .Actor:Self 0000000F *VarB )
+		Switch *VarB			
+			Case == 1`
+				%Set to dark palette
+				Call     SetActorVar 	( .Actor:Self 0000000F 00000001 ) %makes it slightly simpler to change anims
+				Call     SetActorVar 	( .Actor:Self 0000000E 00000004 ) %0 for first time, nonzero for ex fight
+				Call	 SetIdleAnimations ( .Actor:Self 00000001 $IdleAnimations_TubbaRefight4 )
+			CaseOR == 2`
+			CaseOR == 3`
+				%Set to golden palette
+				Call     SetActorVar 	( .Actor:Self 0000000F 00000002 )
+				Call     SetActorVar 	( .Actor:Self 0000000E 00000003 ) %0 for first time, nonzero for ex fight
+				Call	 SetIdleAnimations ( .Actor:Self 00000001 $IdleAnimations_TubbaRefight3 )
+			EndCaseGroup
+			Default
+				%Set to default palette
+				Call     SetActorVar 	( .Actor:Self 0000000F 00000000 )
+				Call     SetActorVar 	( .Actor:Self 0000000E 00000001 ) %0 for first time, nonzero for ex fight
+				Call	 SetIdleAnimations ( .Actor:Self 00000001 $IdleAnimations_TubbaRefight2 )
+		EndSwitch
+   54:  Exec     $Script_80225E08_Tubba
+   60:  Return
+   68:  End
+}
+
+#new:Script $Script_80225E08_Tubba
+{
+    0:  Label    00000000 
+    C:  Wait     00000001 
+   18:  Call     ActorExists 	( .Actor:Self *Var[0] )
+   2C:  If  *Var[0]  ==  00000000 
+   3C:  	Return
+   44:  EndIf
+   4C:  Call     GetStatusFlags ( .Actor:Self *Var[0] )
+   60:  If  *Var[0]  &  00080000 
+   70:  	Goto     00000000 
+   7C:  EndIf
+   84:  Call     GetAnimation 	( .Actor:Self 00000001 *Var[0] )
+   9C:  If  *Var[0]  ==  006B0006 
+   AC:  	Goto     00000001 
+   B8:  EndIf
+   C0:  If  *Var[0]  ==  006B0007 
+   D0:  	Goto     00000001 
+   DC:  EndIf
+   E4:  Goto     00000000 
+   F0:  Label    00000001 
+   FC:  Call     80254218 ( 00000001 )
+  10C:  Call     ShakeCam    	( 00000001 00000000 00000002 *Fixed[0.5] )
+  128:  Wait     00000001 
+  134:  Goto     00000000 
+  140:  Return
+  148:  End
+}
+
+%anti-spook measures
+%idk why you would try spooking a lategame boss, but here you go
+#new:Script $SpookCheck1 %spliced from jr troopas code
+{
+	Call     GetStatusFlags ( .Actor:Self *Var[2] )
+	If  *Var[2]  &  0035D000 %if he can't move, don't detect spooking
+		Return
+	EndIf
+	Call     GetActorVar 	( .Actor:Self 00000009 *Var[0] ) %equal to 1 if you used spook
+	If  *Var[0] == 00000001 %if flag set to 1, don't set it again
+		Call	SetActorVar ( .Actor:Self 00000009 00000002 )
+		Return
+	EndIf	
+	Call     GetBattleFlags ( *Var[2] )
+	If  *Var[2]  &  00080000 
+		Call     GetMenuSelection 	( *Var[0] *Var[1] *Var[2] )
+		If  *Var[2]  ==  000000B7 %apparently this is spook
+			Call	SetActorVar ( .Actor:Self 00000009 00000001 )
+		EndIf
+	EndIf
+	Return
+	End
+}
+
+#new:Script $SpookCheck2
+{
+Call     GetStatusFlags ( .Actor:Self *Var[0] )
+If  *Var[0]  !&  0035D000 
+	Call     GetActorVar 	( .Actor:Self 00000009 *Var[0] ) %equal to 1 if you used spook
+	If  *Var[0]  ==  00000001 %you did, time to die
+		Call     GetActorVar 	( .Actor:Self 0000000E *Var[0] ) %check EX fight
+		Switch *Var0
+			Case == 0
+				Call     ActorSpeak  	( $DontSpookMe .Actor:Self 00000001 006B0009 006B0002 )
+			Case == 1
+				Call     ActorSpeak  	( $DontSpookMe .Actor:Self 00000001 006B0809 006B0802 )
+			Case == 3
+				Call     ActorSpeak  	( $DontSpookMe .Actor:Self 00000001 006B0A09 006B0A02 )
+			Case == 4
+				Call     ActorSpeak  	( $DontSpookMe .Actor:Self 00000001 006B0B09 006B0B02 )			
+		EndSwitch
+		%can't do the instant regret script yet?
+		% ExecWait	$InstantRegret
+	EndIf
+EndIf
+Return
+End
+}
+
+#string $DontSpookMe
+{
+[STYLE:Right]What? I'll never be s-scared[BR]
+of a puny attack like that![BR]
+[Wait][NEXT]I'll show YOU![BR]
+[Wait][END]
+}
+
+#new:Script $Script_NextTurn
+{
+Call	GetBattlePhase ( *Var[0] )
+If *Var[0] == .Phase:EnemyEnd
+	Call     GetActorVar 	( .Actor:Self 00000009 *Var[0] ) %equal to 1 if you used spook, greater if you used spook then attacked
+	If  *Var[0]  >  00000000 %you did, time to die
+		ExecWait $InstantRegret
+	EndIf
+EndIf
+Return
+End
+}
+
+#new:Script $InstantRegret %oof
+{
+Call	$Function_SetLevel( $TubbaBlubba 180` ) %a whole bunch of star points if you beat him in this state
+Call	$Function_SetLevel( $TubbaBlubba2 180` ) %a whole bunch of star points if you beat him in this state
+Thread %stuff spliced from mq tubba refight
+	Wait     00000005 
+	Call     PlaySoundAtActor    ( *Var[0] 0000206D )
+	Call     PlaySoundAtActor    ( *Var[0] 00000214 )
+	Wait     30` 
+	Call     PlaySoundAtActor    ( *Var[0] 0000025C )
+EndThread
+Call	8026BF48	( 00000001 )
+Call     GetEnemyMaxHP 	( .Actor:Self *Var[1] )
+If *Var[1] > 99`
+	Set *Var[1] 99`
+EndIf
+Call	HealActor	( .Actor:Self *Var[1] 00000001 ) %full heal
+Call	8026BF48	( 00000000 )
+Wait 	00000014
+Call	GetActorAttackBoost ( .Actor:Self *Var[0] )
+Set *Var[F] 1
+If  *Var[0]  <  14 %at this point tubba becomes big enough to go offscreen
+	Call	PlaySoundAtActor	( .Actor:Self 000002D8 )
+	Set *Var[F] 0
+	Thread
+		Call	8026BF48	( 00000001 )
+		Call	BoostAttack	( .Actor:Self 0000000A )
+		Call	8026BF48	( 00000000 )
+		Set *Var[F] 1
+	EndThread
+EndIf
+Call	 SetActorVar 	( .Actor:Self 0000000B 00000000 ) %put him back at phase 1 :)
+%more spliced stuff, make tubba bigger
+Label 0
+Call	 GetActorVar ( .Actor:Self 0000000A *Var[5] )
+Call     GetActorAttackBoost ( .Actor:Self *Var[6] )
+Mul	*Var[6] 10`
+Add *Var[6] 100`
+If (*Var[5] >= *Var[6]) %we're at the right size, so end script
+	If *Var[F] == 00000000 %hold up, the attack boost hasn't updated yet
+		Wait 00000001
+		Goto 0
+	EndIf
+	Return 
+EndIf
+Call     MakeLerp	( *Var[5] *Var[6] 30` 00000000 )
+Label    1 
+	Call	UpdateLerp  	( )
+	DivF	*Var[0]  100`
+	Call	SetActorScale	( .Actor:Self *Var[0] *Var[0] *Var[0] )
+	Wait     1 
+If  *Var[1]  ==  .True 
+	Goto     1
+EndIf
+Set  *Var[5]  *Var[6]
+Call SetActorVar	(.Actor:Self 0000000A *Var[5])
+Call SetActorVar	(.Actor:Self 00000009 00000000)
+Goto     0 
+Return
+End
+}
+
+#new:Script $Script_HandleDeath %$Script_80227878
+{
+		Call     EnableIdleScript 	( .Actor:Self 00000000 )
+		Call 	 UseIdleAnimation ( .Actor:Self .False )
+		Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+		Switch *Var7
+			Case == 0
+				Call     SetAnimation 	( .Actor:Self 00000001 006B0014 )
+			Case == 1
+				Call     SetAnimation 	( .Actor:Self 00000001 006B0814 )
+			Case == 3
+				Call     SetAnimation 	( .Actor:Self 00000001 006B0A14 )
+			Case == 4
+				Call     SetAnimation 	( .Actor:Self 00000001 006B0B14 )
+		EndSwitch
+		Call	 GetActorVar 	( .Actor:Self 0000000B *Var[0] )
+		Add *Var[0] 1
+		Call	 SetActorVar 	( .Actor:Self 0000000B *Var[0] )
+		If *Var[0] < 3
+			Call	UseIdleAnimation ( .Actor:Self .True )
+			Call     GetEnemyMaxHP 	( .Actor:Self *Var[1] )
+			If *Var[1] > 99`
+				Set *Var[1] 99`
+			EndIf
+			Thread
+				Call	8026BF48	( 00000001 )
+				Call	HealActor	( .Actor:Self *Var[1] 00000001 ) %full heal
+				Call	8026BF48	( 00000000 )
+			EndThread
+			Call	 GetActorVar 	( .Actor:Self 0000000E *Var[1] )
+			If *Var[1] > 0
+				Call	GetActorAttackBoost ( .Actor:Self *Var[0] )
+				Set *Var[F] 1
+				If  *Var[0]  <  14 %at this point tubba becomes big enough to go offscreen
+					Call	PlaySoundAtActor	( .Actor:Self 000002D8 )
+					Set *Var[F] 0
+					Thread
+						Call	8026BF48	( 00000001 )
+						Call	BoostAttack	( .Actor:Self 00000002 ) %+2 attack
+						Call	8026BF48	( 00000000 )
+						Set *Var[F] 1
+					EndThread
+				EndIf
+				%removed the size increasing code
+				Call     SetStatusTable ( .Actor:Self $StatusTable_TubbaRefight_Strong )
+			Else
+				Switch *Var[0]
+					Case == 00000001
+						Call     SetStatusTable ( .Actor:Self $StatusTable_TubbaRefight_Medium )
+					Case == 00000002
+						Call     SetStatusTable ( .Actor:Self $StatusTable_TubbaRefight_Strong )
+				EndSwitch
+			EndIf
+			Call     EnableIdleScript 	( .Actor:Self 00000001 )
+			Call 	 UseIdleAnimation ( .Actor:Self .True )
+			Return
+		EndIf
+		Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+		Switch *Var7
+			Case == 0
+				Call     ActorSpeak  	( 000E00C9 .Actor:Self 00000001 006B0014 006B0014 ) % Eeeeoooow!!
+			Case == 1
+				Call     ActorSpeak  	( 000E00C9 .Actor:Self 00000001 006B0814 006B0814 ) % Eeeeoooow!!
+			Case == 3
+				Call     ActorSpeak  	( 000E00C9 .Actor:Self 00000001 006B0A14 006B0A14 ) % Eeeeoooow!!
+			Case == 4
+				Call     ActorSpeak  	( 000E00C9 .Actor:Self 00000001 006B0B14 006B0B14 ) % Eeeeoooow!!
+		EndSwitch
+   38:  Set  *Var[0]  00000001 
+   48:  Set  *Var[1]  006B0014 
+		Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+		Switch *Var7
+			Case == 0
+				Add *Var[1] 000
+			Case == 1
+				Add *Var[1] 800
+			Case == 3
+				Add *Var[1] A00
+			Case == 4
+				Add *Var[1] B00
+		EndSwitch
+   58:  ExecWait DoDeath 
+   64:  Return
+   6C:  End
+}
+
+#new:Script $Script_HandleEvent_TubbaRefight
+{
+    0:  Call     UseIdleAnimation 	( .Actor:Self .False )
+   14:  Call     EnableIdleScript 	( .Actor:Self 00000000 )
+   28:  Call     GetLastEvent 	( .Actor:Self *Var[A] )
+   3C:  Switch  *Var[A] 
+   48:  	CaseOR  ==  .Event:HitCombo
+   54:  	CaseOR  ==  .Event:Hit
+   60:  		SetConst  *Var[0]  00000001 
+   70:  		SetConst  *Var[1]  006B0014 
+				Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+				Switch *Var7
+					Case == 0
+						Add *Var[1] 000
+					Case == 1
+						Add *Var[1] 800
+					Case == 3
+						Add *Var[1] A00
+					Case == 4
+						Add *Var[1] B00
+				EndSwitch
+   80:  		ExecWait DoNormalHit 
+				ExecWait $SpookCheck1
+				ExecWait $SpookCheck2
+   8C:  	EndCaseGroup
+   94:  	Case  ==  .Event:BurnHit
+   A0:  		SetConst  *Var[0]  00000001 
+   B0:  		SetConst  *Var[1]  006B0014 
+				Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+				Switch *Var7
+					Case == 0
+						Add *Var[1] 000
+					Case == 1
+						Add *Var[1] 800
+					Case == 3
+						Add *Var[1] A00
+					Case == 4
+						Add *Var[1] B00
+				EndSwitch
+   C0:  		SetConst  *Var[2]  FFFFFFFF 
+   D0:  		ExecWait DoBurnHit 
+   DC:  	Case  ==  .Event:BurnDeath
+   E8:  		SetConst  *Var[0]  00000001 
+   F8:  		SetConst  *Var[1]  006B0014 
+				Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+				Switch *Var7
+					Case == 0
+						Add *Var[1] 000
+					Case == 1
+						Add *Var[1] 800
+					Case == 3
+						Add *Var[1] A00
+					Case == 4
+						Add *Var[1] B00
+				EndSwitch
+  108:  		SetConst  *Var[2]  FFFFFFFF 
+  118:  		ExecWait DoBurnHit 
+  124:  		ExecWait $Script_HandleDeath 
+  130:  		Return
+  138:  	Case  ==  .Event:SpinSmashHit
+  144:  		SetConst  *Var[0]  00000001 
+  154:  		SetConst  *Var[1]  006B0014 
+				Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+				Switch *Var7
+					Case == 0
+						Add *Var[1] 000
+					Case == 1
+						Add *Var[1] 800
+					Case == 3
+						Add *Var[1] A00
+					Case == 4
+						Add *Var[1] B00
+				EndSwitch
+  164:  		ExecWait 8029B998 
+  170:  	Case  ==  .Event:ShockHit
+  17C:  		Call     UseBattleCamPreset 	( 00000002 )
+  18C:  		Call     MoveBattleCamOver 	( 00000014 )
+  19C:  		SetConst  *Var[0]  00000001 
+  1AC:  		SetConst  *Var[1]  006B0014 
+				Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+				Switch *Var7
+					Case == 0
+						Add *Var[1] 000
+					Case == 1
+						Add *Var[1] 800
+					Case == 3
+						Add *Var[1] A00
+					Case == 4
+						Add *Var[1] B00
+				EndSwitch
+  1BC:  		ExecWait DoShockHit 
+  1C8:  		SetConst  *Var[0]  00000001 
+  1D8:  		SetConst  *Var[1]  006B0014 
+				Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+				Switch *Var7
+					Case == 0
+						Add *Var[1] 000
+					Case == 1
+						Add *Var[1] 800
+					Case == 3
+						Add *Var[1] A00
+					Case == 4
+						Add *Var[1] B00
+				EndSwitch
+  1E8:  		ExecWait DoJumpBack 
+  1F4:  		ExecWait $Script_80225FD4_Tubba 
+				ExecWait $HandleAntiZapTap %so you can't stop his combos with one badge
+  200:  	CaseOR  ==  00000017
+  20C:  	CaseOR  ==  .Event:Immune
+  218:  	CaseOR  ==  .Event:AirLiftFailed
+  224:  		SetConst  *Var[0]  00000001 
+  234:  		SetConst  *Var[1]  006B0001 
+				Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+				Switch *Var7
+					Case == 0
+						Add *Var[1] 000
+					Case == 1
+						Add *Var[1] 800
+					Case == 3
+						Add *Var[1] A00
+					Case == 4
+						Add *Var[1] B00
+				EndSwitch
+  244:  		ExecWait DoImmune 
+				ExecWait $SpookCheck1
+				ExecWait $SpookCheck2
+  250:  	EndCaseGroup
+			Case  ==  0000001D 										  %event for if star beam didn't work?
+				Wait    12`
+				ExecWait $Script_FixAttackBoost
+  258:  	Case  ==  .Event:ShockDeath
+  264:  		Call     UseBattleCamPreset 	( 00000002 )
+  274:  		Call     MoveBattleCamOver 	( 00000014 )
+  284:  		SetConst  *Var[0]  00000001 
+  294:  		SetConst  *Var[1]  006B0014 
+				Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+				Switch *Var7
+					Case == 0
+						Add *Var[1] 000
+					Case == 1
+						Add *Var[1] 800
+					Case == 3
+						Add *Var[1] A00
+					Case == 4
+						Add *Var[1] B00
+				EndSwitch
+  2A4:  		ExecWait DoShockHit 
+  2B0:  		ExecWait $Script_HandleDeath 
+  2BC:  		Return
+  2C4:  	Case  ==  .Event:Death
+  2D0:  		SetConst  *Var[0]  00000001 
+  2E0:  		SetConst  *Var[1]  006B0014 
+				Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+				Switch *Var7
+					Case == 0
+						Add *Var[1] 000
+					Case == 1
+						Add *Var[1] 800
+					Case == 3
+						Add *Var[1] A00
+					Case == 4
+						Add *Var[1] B00
+				EndSwitch
+  2F0:  		ExecWait DoNormalHit 
+  2FC:  		ExecWait $Script_HandleDeath 
+  308:  		Return
+  310:  	Case  ==  .Event:SpinSmashDeath
+  31C:  		SetConst  *Var[0]  00000001 
+  32C:  		SetConst  *Var[1]  006B0014 
+				Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+				Switch *Var7
+					Case == 0
+						Add *Var[1] 000
+					Case == 1
+						Add *Var[1] 800
+					Case == 3
+						Add *Var[1] A00
+					Case == 4
+						Add *Var[1] B00
+				EndSwitch
+  33C:  		ExecWait 8029B998 
+  348:  		ExecWait $Script_HandleDeath 
+  354:  		Return
+  35C:  	Case  ==  .Event:RecoverStatus
+  368:  		SetConst  *Var[0]  00000001 
+  378:  		SetConst  *Var[1]  006B0001 
+				Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+				Switch *Var7
+					Case == 0
+						Add *Var[1] 000
+					Case == 1
+						Add *Var[1] 800
+					Case == 3
+						Add *Var[1] A00
+					Case == 4
+						Add *Var[1] B00
+				EndSwitch
+  388:  		ExecWait DoRecover 
+  394:  	Default
+  39C:  EndSwitch
+  3A4:  Call     EnableIdleScript 	( .Actor:Self 00000001 )
+  3B8:  Call     UseIdleAnimation 	( .Actor:Self .True )
+  3CC:  Return
+  3D4:  End
+}
+
+#new:Script $Script_80225FD4_Tubba
+{
+    0:  Set  *Var[1]  006B0001 
+		Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+		Switch *Var7
+			Case == 0
+				Add *Var[1] 000
+			Case == 1
+				Add *Var[1] 800
+			Case == 3
+				Add *Var[1] A00
+			Case == 4
+				Add *Var[1] B00
+		EndSwitch
+   %10:  ExecWait $Script_80225F8C <-- was a useless script that didn't really do anything noticable
+   1C:  Call     SetAnimation 	( .Actor:Self 00000001 *Var[1] )
+   34:  Call     SetGoalToHome 	( .Actor:Self )
+   44:  Call     SetActorSpeed 	( .Actor:Self *Fixed[6.0] )
+   58:  Set  *Var[1]  006B0006 
+		Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+		Switch *Var7
+			Case == 0
+				Add *Var[1] 000
+			Case == 1
+				Add *Var[1] 800
+			Case == 3
+				Add *Var[1] A00
+			Case == 4
+				Add *Var[1] B00
+		EndSwitch
+   %68:  ExecWait $Script_80225F8C 
+   74:  Call     SetAnimation 	( .Actor:Self 00000001 *Var[1] )
+   8C:  Call     RunToGoal   	( .Actor:Self 00000000 .False )
+   A4:  Set  *Var[1]  006B0001 
+		Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+		Switch *Var7
+			Case == 0
+				Add *Var[1] 000
+			Case == 1
+				Add *Var[1] 800
+			Case == 3
+				Add *Var[1] A00
+			Case == 4
+				Add *Var[1] B00
+		EndSwitch
+   %B4:  ExecWait $Script_80225F8C 
+   C0:  Call     SetAnimation 	( .Actor:Self 00000001 *Var[1] )
+   D8:  Call     SetActorYaw 	( .Actor:Self 00000000 )
+   EC:  Return
+   F4:  End
+}
+
+%AI is different from the first fight
+%cycles through attacks
+%jump (jump + smash) (jump + quake)
+%smash (quake) (quake + jump)
+%throw (smash + throw) (smash + throw + jump)
+
+#new:Script $Script_FixAttackBoost %fix attack boost if you use star beam
+{
+	Call	 GetActorVar ( .Actor:Self 0000000A *Var[5] ) 
+	Sub *Var[5] 100`
+	Div *Var[5] 10`
+	If *Var[5] > 0
+		Call	8026BF48	( 00000001 )
+		Call	BoostAttack	( .Actor:Self *Var[5] )
+		Call	8026BF48	( 00000000 )
+	EndIf
+	Return
+	End
+}
+
+#new:Script $Script_TakeTurn_TubbaRefight 
+{
+		ExecWait $Script_FixAttackBoost
+    0:  Call     UseIdleAnimation 	( .Actor:Self .False )
+   14:  Call     EnableIdleScript 	( .Actor:Self 00000000 )
+		Call	 GetActorVar 		( .Actor:Self 0000000C *Var[C] )
+		Add *Var[C] 1
+		Mod *Var[C] 3
+		Call	 SetActorVar		( .Actor:Self 0000000C *Var[C] )
+		Switch *Var[C]
+			Case == 00000000
+				Call	GetActorVar ( .Actor:Self 0000000B *Var[B] )
+				Switch *Var[B]
+					Case == 00000000
+						ExecWait $Script_JumpAttack
+					Case == 00000001
+						Call	SetActorVar	( .Actor:Self 0000000D 00000001 )
+						ExecWait $Script_JumpAttack
+						Call	SetActorVar	( .Actor:Self 0000000D 00000000 )
+						ExecWait $Script_SmashAttack 
+					Case == 00000002
+						Call	SetActorVar	( .Actor:Self 0000000D 00000001 )
+						ExecWait $Script_JumpAttack
+						Call	SetActorVar	( .Actor:Self 0000000D 00000000 )
+						ExecWait $Script_QuakeAttack
+				EndSwitch
+			Case == 00000001
+				Call	GetActorVar ( .Actor:Self 0000000B *Var[B] )
+				Switch *Var[B]
+					Case == 00000000
+						ExecWait $Script_SmashAttack 
+					Case == 00000001
+						ExecWait $Script_QuakeAttack
+					Case == 00000002
+						ExecWait $Script_QuakeAttack
+						ExecWait $Script_SmashAttack
+				EndSwitch
+			Case == 00000002
+				Call	GetActorVar ( .Actor:Self 0000000B *Var[B] )
+				Switch *Var[B]
+					Case == 00000000
+						ExecWait $Script_ThrowAttack
+					Case == 00000001
+						Call	SetActorVar	( .Actor:Self 0000000D 00000001 )
+						ExecWait $Script_SmashAttack 
+						Call	SetActorVar	( .Actor:Self 0000000D 00000000 )
+						ExecWait $Script_ThrowAttack
+					Case == 00000002
+						Call	SetActorVar	( .Actor:Self 0000000D 00000001 )
+						ExecWait $Script_SmashAttack
+						ExecWait $Script_ThrowAttack
+						Call	SetActorVar	( .Actor:Self 0000000D 00000000 )
+						ExecWait $Script_JumpAttack
+				EndSwitch
+			Default
+				Call	 SetActorVar		( .Actor:Self 0000000C 00000000 )	
+		EndSwitch
+   74:  Call     EnableIdleScript 	( .Actor:Self 00000001 )
+   88:  Call     UseIdleAnimation 	( .Actor:Self .True )
+   9C:  Return
+   A4:  End 
+}
+   
+#new:Script $HandleAntiZapTap %if his moves get interrupted, keep going anyway
+{
+	Call     UseIdleAnimation 	( .Actor:Self .False )
+	Call     EnableIdleScript 	( .Actor:Self 00000000 )
+	Call	 GetActorVar ( .Actor:Self 0000000B *Var[B] )		 %how many heals did he do? (he gets more attacks as time goes on)
+	Call	 GetActorVar 		( .Actor:Self 0000000C *Var[C] ) %where are we in the cycle?
+	Call	 GetActorVar 		( .Actor:Self 0000000D *Var[D] ) %how many attacks do we have left?
+	If *Var[D] == 00000000 %no more attacks, end turn
+		Return
+	EndIf
+	Switch *Var[C]
+		Case == 00000000
+			Switch *Var[B]
+				Case == 00000001
+					Call	SetActorVar	( .Actor:Self 0000000D 00000000 )
+					ExecWait $Script_SmashAttack %if jump is interrupted, do smash attack
+				Case == 00000002
+					Call	SetActorVar	( .Actor:Self 0000000D 00000000 )
+					ExecWait $Script_QuakeAttack
+			EndSwitch
+		Case == 00000001
+			Return %no way to interrupt these combos
+		Case == 00000002
+			Switch *Var[B]
+				Case == 00000001
+					Call	SetActorVar	( .Actor:Self 0000000D 00000000 )
+					ExecWait $Script_ThrowAttack
+				Case == 00000002
+					%throw can't be interrupted, so we can just do this normally
+					Call	SetActorVar	( .Actor:Self 0000000D 00000000 )
+					ExecWait $Script_ThrowAttack
+					ExecWait $Script_JumpAttack
+			EndSwitch
+	EndSwitch
+	Call     EnableIdleScript 	( .Actor:Self 00000001 )
+	Call     UseIdleAnimation 	( .Actor:Self .True 
+	Return
+	End
+}
+   
+#new:Script $Script_JumpAttack
+{
+    0:  Call     SetTargetActor ( .Actor:Self .Actor:Player )
+   14:  Call     UseBattleCamPreset 	( 0000003F )
+   24:  Call     SetBattleCamZoom  	( 00000096 )
+   34:  Call     BattleCamTargetActor ( .Actor:Self )
+   44:  Call     8024ECF8 ( FFFFFFFF 00000001 00000000 )
+   5C:  Set  *Var[1]  006B0006 
+   %6C:  ExecWait $Script_80225F8C 
+		Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+		Switch *Var7
+			Case == 0
+				Add *Var[1] 000
+			Case == 1
+				Add *Var[1] 800
+			Case == 3
+				Add *Var[1] A00
+			Case == 4
+				Add *Var[1] B00
+		EndSwitch
+   78:  Call     SetAnimation 	( .Actor:Self 00000001 *Var[1] )
+   90:  Call     SetGoalToTarget 	( .Actor:Self )
+   A0:  Call     AddGoalPos 	( .Actor:Self 00000046 00000000 00000000 )
+   BC:  Call     SetActorSpeed 	( .Actor:Self *Fixed[4.0] )
+   D0:  Call     RunToGoal   	( .Actor:Self 00000000 .False )
+		Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+		Switch *Var7
+			Case == 0
+				Call     SetAnimation 	( .Actor:Self 00000001 006B000A )
+			Case == 1
+				Call     SetAnimation 	( .Actor:Self 00000001 006B080A )
+			Case == 3
+				Call     SetAnimation 	( .Actor:Self 00000001 006B0A0A )
+			Case == 4
+				Call     SetAnimation 	( .Actor:Self 00000001 006B0B0A )
+		EndSwitch
+  100:  Wait     00000008 
+		Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+		Switch *Var7
+			Case == 0
+				Call     SetAnimation 	( .Actor:Self 00000001 006B000B )
+			Case == 1
+				Call     SetAnimation 	( .Actor:Self 00000001 006B080B )
+			Case == 3
+				Call     SetAnimation 	( .Actor:Self 00000001 006B0A0B )
+			Case == 4
+				Call     SetAnimation 	( .Actor:Self 00000001 006B0B0B )
+		EndSwitch
+  124:  Call     SetActorSounds ( FFFFFF81 00000002 000003E7 00000000 )
+  140:  Call     EnemyTestTarget ( .Actor:Self *Var[0] 00000000 00000000 00000001 00000010 )
+  164:  Switch  *Var[0] 
+  170:  	CaseOR  ==  .HitResult:Miss % 6
+  17C:  	CaseOR  ==  .HitResult:Lucky % 5
+  188:  		Set  *Var[A]  *Var[0] 
+  198:  		Thread
+  1A0:  			Wait     0000000C 
+					Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+					Switch *Var7
+						Case == 0
+							Call     SetAnimation 	( .Actor:Self 00000001 006B000C )
+						Case == 1
+							Call     SetAnimation 	( .Actor:Self 00000001 006B080C )
+						Case == 3
+							Call     SetAnimation 	( .Actor:Self 00000001 006B0A0C )
+						Case == 4
+							Call     SetAnimation 	( .Actor:Self 00000001 006B0B0C )
+					EndSwitch
+  1C4:  		EndThread
+  1CC:  		Call     SetGoalToTarget 	( .Actor:Self )
+  1DC:  		Call     GetGoalPos  	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+  1F8:  		Sub  *Var[0]  0000000F 
+  208:  		Set  *Var[1]  00000000 
+  218:  		Add  *Var[2]  00000005 
+  228:  		Call     SetActorJumpGravity 	( .Actor:Self *Fixed[1.0] )
+  23C:  		Call     SetGoalPos 	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+  258:  		Call     JumpToGoal  	( .Actor:Self 00000017 00000000 00000001 00000000 )
+  278:  		Call     PlaySoundAtActor 	( .Actor:Self 000020EA )
+  28C:  		Call     PlayEffect  	( ~FX:ShockWave:White *Var[0] 00000000 *Var[2] 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+				Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+				Switch *Var7
+					Case == 0
+						Call     SetAnimation 	( .Actor:Self 00000001 006B000D )
+					Case == 1
+						Call     SetAnimation 	( .Actor:Self 00000001 006B080D )
+					Case == 3
+						Call     SetAnimation 	( .Actor:Self 00000001 006B0A0D )
+					Case == 4
+						Call     SetAnimation 	( .Actor:Self 00000001 006B0B0D )
+				EndSwitch
+  2E8:  		Thread
+  2F0:  			Call     GetActorPos 	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+  30C:  			Call     PlayEffect  	( ~FX:SmokeImpact:Large *Var[0] *Var[1] *Var[2] 0000003C 00000008 0000000A 00000014 00000000 00000000 00000000 00000000 00000000 )
+  350:  		EndThread
+  358:  		Thread
+  360:  			Call     80254218 ( 00000001 )
+  370:  			Call     ShakeCam    	( 00000001 00000000 00000005 *Fixed[3.0] )
+  38C:  		EndThread
+  394:  		Call     8026F838 ( FFFFFF81 00000002 )
+  3A8:  		Call     GetGoalPos  	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+  3C4:  		Sub  *Var[0]  00000014 
+  3D4:  		Set  *Var[1]  00000000 
+  3E4:  		Add  *Var[2]  00000005 
+  3F4:  		Call     SetActorJumpGravity 	( .Actor:Self *Fixed[1.0] )
+  408:  		Call     SetGoalPos 	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+  424:  		Call     JumpToGoal  	( .Actor:Self 0000000A 00000000 00000001 00000000 )
+  444:  		Call     80254218 ( 00000001 )
+  454:  		Call     ShakeCam    	( 00000001 00000000 00000005 *Fixed[3.0] )
+  470:  		Call     GetActorPos 	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+  48C:  		Call     PlayEffect  	( ~FX:SmokeImpact:Large *Var[0] *Var[1] *Var[2] 0000003C 00000008 0000000A 00000014 00000000 00000000 00000000 00000000 00000000 )
+  4D0:  		If  *Var[A]  ==  00000005 
+  4E0:  			Call     EnemyTestTarget ( .Actor:Self *Var[0] 80000000 00000000 00000000 00000000 )
+  504:  		EndIf
+  50C:  		Call     UseBattleCamPreset 	( 00000002 )
+  51C:  		Call     MoveBattleCamOver 	( 00000014 )
+  52C:  		Wait     00000008 
+				Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+				Switch *Var7
+					Case == 0
+						Call     SetAnimation 	( .Actor:Self 00000001 006B000E )
+					Case == 1
+						Call     SetAnimation 	( .Actor:Self 00000001 006B080E )
+					Case == 3
+						Call     SetAnimation 	( .Actor:Self 00000001 006B0A0E )
+					Case == 4
+						Call     SetAnimation 	( .Actor:Self 00000001 006B0B0E )
+				EndSwitch
+  550:  		Wait     00000004 
+  55C:  		ExecWait $Script_80225FD4_Tubba 
+  568:  		Return
+  570:  	EndCaseGroup
+  578:  	Default
+  580:  		Thread
+  588:  			Wait     00000009 
+					Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+					Switch *Var7
+						Case == 0
+							Call     SetAnimation 	( .Actor:Self 00000001 006B000C )
+						Case == 1
+							Call     SetAnimation 	( .Actor:Self 00000001 006B080C )
+						Case == 3
+							Call     SetAnimation 	( .Actor:Self 00000001 006B0A0C )
+						Case == 4
+							Call     SetAnimation 	( .Actor:Self 00000001 006B0B0C )
+					EndSwitch
+  5AC:  		EndThread
+  5B4:  		Call     SetGoalToTarget 	( .Actor:Self )
+  5C4:  		Call     SetActorJumpGravity 	( .Actor:Self *Fixed[1.0] )
+  5D8:  		Call     JumpToGoal  	( .Actor:Self 00000010 00000000 00000001 00000000 )
+  5F8:  EndSwitch
+  600:  Wait     00000002 
+  60C:  Call     SetGoalToTarget 	( .Actor:Self )
+  61C:  Call     GetStatusFlags ( .Actor:Self *Var[5] )
+		Call	GetActorVar ( .Actor:Self 0000000E *Var[E] )
+  630:  If  *Var[5]  !&  00080000 
+			If *VarE == 0
+  640:  		Call     80269EAC ( 00000018 )							%flatten mario on hit
+			EndIf
+  650:  	Call     PlaySoundAtActor 	( .Actor:Self 000020EA )
+  664:  EndIf
+		Call	GetActorVar ( .Actor:Self 0000000E *Var[E] )
+		If *Var[E] > 0
+			Call     EnemyDamageTarget 	( .Actor:Self *Var[F] 00000000 00000000 80080332 00000006 00000020 ) %6 attack (but 2 hits)
+			Thread
+				Wait     00000009 
+				Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+				Switch *Var7
+					Case == 0
+						Call     SetAnimation 	( .Actor:Self 00000001 006B000C )
+					Case == 1
+						Call     SetAnimation 	( .Actor:Self 00000001 006B080C )
+					Case == 3
+						Call     SetAnimation 	( .Actor:Self 00000001 006B0A0C )
+					Case == 4
+						Call     SetAnimation 	( .Actor:Self 00000001 006B0B0C )
+				EndSwitch
+			EndThread
+			Call     SetGoalToTarget 	( .Actor:Self )
+			Call     SetActorJumpGravity 	( .Actor:Self *Fixed[1.0] )
+			Call     JumpToGoal  	( .Actor:Self 00000010 00000000 00000001 00000000 )
+			Wait     00000002 
+			Call     SetGoalToTarget 	( .Actor:Self )
+			Call     GetStatusFlags ( .Actor:Self *Var[5] )
+			If  *Var[5]  !&  00080000 
+				Call     80269EAC ( 00000018 )							%flatten mario on hit
+				Call     PlaySoundAtActor 	( .Actor:Self 000020EA )
+			EndIf
+  66C:  	Call     EnemyDamageTarget 	( .Actor:Self *Var[F] 00000000 00000000 80080332 00000006 00000020 )
+		Else
+			Call     EnemyDamageTarget 	( .Actor:Self *Var[F] 00000000 00000000 80080332 00000009 00000020 )
+		EndIf
+  694:  Call     UseBattleCamPreset 	( 0000003F )
+  6A4:  Call     SetBattleCamZoom  	( 000000C8 )
+  6B4:  Call     BattleCamTargetActor ( .Actor:Self )
+  6C4:  Call     8024ECF8 ( FFFFFFFF 00000001 00000000 )
+  6DC:  Call     MoveBattleCamOver 	( 0000001E )
+  6EC:  Switch  *Var[F] 
+  6F8:  	CaseOR  ==  00000000 
+  704:  	CaseOR  ==  00000002 
+  710:  		Call     GetStatusFlags ( .Actor:Self *Var[5] )
+  724:  		If  *Var[5]  &  00080000 
+  734:  			Goto     00000001 
+  740:  		EndIf
+  748:  		Call     GetBattleFlags ( *Var[0] )
+  758:  		If  *Var[0]  !&  80000000 
+  768:  			Call     GetStatusFlags ( .Actor:Player *Var[0] )
+  77C:  			If  *Var[0]  !&  00100000 
+  78C:  				Call     LandJump ( FFFFFF81 )
+  79C:  			Else
+  7A4:  				Goto     00000001 
+  7B0:  			EndIf
+  7B8:  		Else
+  7C0:  			Goto     00000001 
+  7CC:  		EndIf
+  7D4:  		Label    00000000 
+  7E0:  		Call     GetActorPos 	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+  7FC:  		Call     PlayEffect  	( ~FX:ShockWave:White *Var[0] 00000000 *Var[2] 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+				Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+				Switch *Var7
+					Case == 0
+						Call     SetAnimation 	( .Actor:Self 00000001 006B000D )
+					Case == 1
+						Call     SetAnimation 	( .Actor:Self 00000001 006B080D )
+					Case == 3
+						Call     SetAnimation 	( .Actor:Self 00000001 006B0A0D )
+					Case == 4
+						Call     SetAnimation 	( .Actor:Self 00000001 006B0B0D )
+				EndSwitch
+  858:  		Thread
+  860:  			Call     GetActorPos 	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+  87C:  			Call     PlayEffect  	( ~FX:SmokeImpact:Large *Var[0] *Var[1] *Var[2] 0000003C 00000008 0000000A 00000014 00000000 00000000 00000000 00000000 00000000 )
+  8C0:  		EndThread
+  8C8:  		Thread
+  8D0:  			Call     80254218 ( 00000001 )
+  8E0:  			Call     ShakeCam    	( 00000001 00000000 00000005 *Fixed[3.0] )
+  8FC:  		EndThread
+  904:  		Call     8026F838 ( FFFFFF81 00000002 )
+  918:  		Call     GetGoalPos  	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+  934:  		Sub  *Var[0]  00000014 
+  944:  		Set  *Var[1]  00000000 
+  954:  		Add  *Var[2]  00000005 
+  964:  		Call     SetActorJumpGravity 	( .Actor:Self *Fixed[1.0] )
+  978:  		Call     SetGoalPos 	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+  994:  		Call     JumpToGoal  	( .Actor:Self 0000000A 00000000 00000001 00000000 )
+  9B4:  		Call     80254218 ( 00000001 )
+  9C4:  		Call     ShakeCam    	( 00000001 00000000 00000005 *Fixed[3.0] )
+  9E0:  		Call     GetActorPos 	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+  9FC:  		Call     PlayEffect  	( ~FX:SmokeImpact:Large *Var[0] *Var[1] *Var[2] 0000003C 00000008 0000000A 00000014 00000000 00000000 00000000 00000000 00000000 )
+  A40:  		Goto     00000002 
+  A4C:  		Label    00000001 
+  A58:  		Call     GetStatusFlags ( .Actor:Self *Var[5] )
+  A6C:  		If  *Var[5]  !&  00080000 
+  A7C:  			Wait     00000003 
+  A88:  			Call     GetGoalPos  	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+  AA4:  			Call     PlayEffect  	( ~FX:ShockWave:LargeWhite *Var[0] 00000000 *Var[2] 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+  AE8:  			Call     80254218 ( 00000001 )
+  AF8:  			Call     ShakeCam    	( 00000001 00000000 00000005 *Fixed[3.0] )
+  B14:  		EndIf
+  B1C:  		Call     GetGoalPos  	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+  B38:  		Add  *Var[0]  00000028 
+  B48:  		Set  *Var[1]  00000000 
+  B58:  		Call     SetActorJumpGravity 	( .Actor:Self *Fixed[1.8007812] )
+  B6C:  		Thread
+  B74:  			Wait     00000008 
+				Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+				Switch *Var7
+					Case == 0
+						Call     SetAnimation 	( .Actor:Self 00000001 006B000E )
+					Case == 1
+						Call     SetAnimation 	( .Actor:Self 00000001 006B080E )
+					Case == 3
+						Call     SetAnimation 	( .Actor:Self 00000001 006B0A0E )
+					Case == 4
+						Call     SetAnimation 	( .Actor:Self 00000001 006B0B0E )
+				EndSwitch
+  B98:  		EndThread
+  BA0:  		Call     SetGoalPos 	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+  BBC:  		Call     JumpToGoal  	( .Actor:Self 0000000A 00000000 00000001 00000000 )
+  BDC:  		If  *Var[5]  !&  00080000 
+  BEC:  			Call     80254218 ( 00000001 )
+  BFC:  			Call     ShakeCam    	( 00000001 00000000 00000005 *Fixed[3.0] )
+  C18:  			Call     GetActorPos 	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+  C34:  			Call     PlayEffect  	( ~FX:SmokeImpact:Large *Var[0] *Var[1] *Var[2] 0000003C 00000008 0000000A 00000014 00000000 00000000 00000000 00000000 00000000 )
+  C78:  			Wait     00000008 
+  C84:  		EndIf
+  C8C:  		Label    00000002 
+  C98:  		Call     UseBattleCamPreset 	( 00000002 )
+  CA8:  		Call     MoveBattleCamOver 	( 00000014 )
+  CB8:  		Call     YieldTurn   	( )
+  CC4:  		ExecWait $Script_80225FD4_Tubba 
+  CD0:  	EndCaseGroup
+  CD8:  EndSwitch
+  CE0:  Return
+  CE8:  End
+}
+   
+#new:Script $Script_SmashAttack
+{
+    0:  Call     SetTargetActor ( .Actor:Self .Actor:Player )
+   14:  Call     UseBattleCamPreset 	( 0000003F )
+   24:  Call     SetBattleCamZoom  	( 00000096 )
+   34:  Call     BattleCamTargetActor ( .Actor:Self )
+   44:  Call     8024ECF8 ( FFFFFFFF 00000001 00000000 )
+   5C:  Set  *Var[1]  006B0006 
+   %6C:  ExecWait $Script_80225F8C 
+		Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+		Switch *Var7
+			Case == 0
+				Add *Var[1] 000
+			Case == 1
+				Add *Var[1] 800
+			Case == 3
+				Add *Var[1] A00
+			Case == 4
+				Add *Var[1] B00
+		EndSwitch
+   78:  Call     SetAnimation 	( .Actor:Self 00000001 *Var[1] )
+   90:  Call     SetGoalToTarget 	( .Actor:Self )
+   A0:  Call     GetStatusFlags ( .Actor:Self *Var[5] )
+   B4:  If  *Var[5]  !&  00080000 
+   C4:  	Call     AddGoalPos 	( .Actor:Self 00000032 00000000 00000000 )
+   E0:  Else
+   E8:  	Call     AddGoalPos 	( .Actor:Self 00000014 00000000 00000000 )
+  104:  EndIf
+  10C:  Call     SetActorSpeed 	( .Actor:Self *Fixed[4.0] )
+  120:  Call     RunToGoal   	( .Actor:Self 00000000 .False )
+		Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+		Switch *Var7
+			Case == 0
+				Call     SetAnimation 	( .Actor:Self 00000001 006B0015 )
+			Case == 1
+				Call     SetAnimation 	( .Actor:Self 00000001 006B0815 )
+			Case == 3
+				Call     SetAnimation 	( .Actor:Self 00000001 006B0A15 )
+			Case == 4
+				Call     SetAnimation 	( .Actor:Self 00000001 006B0B15 )
+		EndSwitch
+  150:  Wait     00000008 
+  15C:  Call     PlaySoundAtActor 	( .Actor:Self 0000035E )
+		Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+		Switch *Var7
+			Case == 0
+				Call     SetAnimation 	( .Actor:Self 00000001 006B0016 )
+  188: 		 	Wait     00000014 
+			Case == 1
+				Call     SetAnimation 	( .Actor:Self 00000001 006B0816 )
+  188: 		 	Wait     0000000C 
+			Case == 3
+				Call     SetAnimation 	( .Actor:Self 00000001 006B0A16 )
+  188: 		 	Wait     0000000C 
+			Case == 4
+				Call     SetAnimation 	( .Actor:Self 00000001 006B0B16 )
+  188: 		 	Wait     0000000C 
+		EndSwitch
+		Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+		Switch *Var7
+			Case == 0
+				Call     SetAnimation 	( .Actor:Self 00000001 006B0017 )
+			Case == 1
+				Call     SetAnimation 	( .Actor:Self 00000001 006B0817 )
+			Case == 3
+				Call     SetAnimation 	( .Actor:Self 00000001 006B0A17 )
+			Case == 4
+				Call     SetAnimation 	( .Actor:Self 00000001 006B0B17 )
+		EndSwitch
+  1AC:  Wait     00000003 
+  1B8:  Call     SetGoalToTarget 	( .Actor:Self )
+  1C8:  Call     GetStatusFlags ( .Actor:Self *Var[0] )
+  1DC:  If  *Var[0]  !&  00080000 
+  1EC:  	Call     GetGoalPos  	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+  208:  	Set  *Var[1]  00000000 
+  218:  	Call     PlayEffect  	( ~FX:Steam:LargeOutward *Var[0] *Var[1] *Var[2] 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+  25C:  	Thread
+  264:  		Call     80254218 ( 00000001 )
+  274:  		Call     ShakeCam    	( 00000001 00000000 00000005 *Fixed[15.0] )
+  290:  	EndThread
+  298:  	Call     PlaySoundAtActor 	( .Actor:Self 000020EA )
+  2AC:  EndIf
+  2B4:  Call     EnemyTestTarget ( .Actor:Self *Var[A] 00000000 00000000 00000001 00000010 )
+  2D8:  Switch  *Var[A] 
+  2E4:  	CaseOR  ==  .HitResult:Miss % 6
+  2F0:  	CaseOR  ==  .HitResult:Lucky % 5
+  2FC:  		Call     GetGoalPos  	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+  318:  		Call     PlayEffect  	( ~FX:ShockWave:White *Var[0] 00000000 *Var[2] 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+  35C:  		Wait     0000001E 
+  368:  		Set  *Var[1]  006B0001 
+  %378:  		ExecWait $Script_80225F8C 
+				Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+				Switch *Var7
+					Case == 0
+						Add *Var[1] 000
+					Case == 1
+						Add *Var[1] 800
+					Case == 3
+						Add *Var[1] A00
+					Case == 4
+						Add *Var[1] B00
+				EndSwitch
+  384:  		Call     SetAnimation 	( .Actor:Self 00000001 *Var[1] )
+  39C:  		Call     UseBattleCamPreset 	( 00000002 )
+  3AC:  		Call     MoveBattleCamOver 	( 00000014 )
+  3BC:  		If  *Var[A]  ==  00000005 
+  3CC:  			Call     EnemyTestTarget ( .Actor:Self *Var[0] 80000000 00000000 00000000 00000000 )
+  3F0:  		EndIf
+  3F8:  		ExecWait $Script_80225FD4_Tubba 
+  404:  		Return
+  40C:  	EndCaseGroup
+  414:  	Default
+  41C:  EndSwitch
+  424:  Call     GetStatusFlags ( .Actor:Self *Var[5] )
+  438:  If  *Var[5]  !&  00080000 
+  448:  	Call     GetGoalPos  	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+  464:  	Call     PlayEffect  	( ~FX:ShockWave:LargeWhite *Var[0] 00000000 *Var[2] 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+  4A8:  EndIf
+  4B0:  Wait     00000002 
+  4BC:  Call     SetGoalToTarget 	( .Actor:Self )
+  4CC:  If  *Var[5]  !&  00080000 
+  4DC:  	Call     80269EAC ( 00000017 )		%flatten mario on hit
+  4EC:  EndIf
+  		Call	GetActorVar ( .Actor:Self 0000000E *Var[E] )
+		If *Var[E] != 0
+			Call     EnemyDamageTarget 	( .Actor:Self *Var[F] 00000000 00000000 00000000 00000008 00000020 )	%8 damage
+		Else
+  4F4: 	 	Call     EnemyDamageTarget 	( .Actor:Self *Var[F] 00000000 00000000 00000000 00000006 00000020 )
+		EndIf
+  51C:  Call     UseBattleCamPreset 	( 0000003F )
+  52C:  Call     SetBattleCamZoom  	( 000000C8 )
+  53C:  Call     BattleCamTargetActor ( .Actor:Self )
+  54C:  Call     8024ECF8 ( FFFFFFFF 00000001 00000000 )
+  564:  Call     MoveBattleCamOver 	( 0000001E )
+  574:  Switch  *Var[F] 
+  580:  	CaseOR  ==  00000000 
+  58C:  	CaseOR  ==  00000002 
+  598:  		Wait     0000001E 
+  5A4:  		Set  *Var[1]  006B0001 
+  %5B4:  		ExecWait $Script_80225F8C 
+				Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+				Switch *Var7
+					Case == 0
+						Add *Var[1] 000
+					Case == 1
+						Add *Var[1] 800
+					Case == 3
+						Add *Var[1] A00
+					Case == 4
+						Add *Var[1] B00
+				EndSwitch
+  5C0:  		Call     SetAnimation 	( .Actor:Self 00000001 *Var[1] )
+  5D8:  		Call     UseBattleCamPreset 	( 00000002 )
+  5E8:  		Call     MoveBattleCamOver 	( 00000014 )
+  5F8:  		Call     YieldTurn   	( )
+  604:  		ExecWait $Script_80225FD4_Tubba 
+  610:  	EndCaseGroup
+  618:  EndSwitch
+  620:  Return
+  628:  End   
+}
+
+#new:Script $Script_ThrowAttack %this is basically just a heavily modified smash attack
+{
+    0:  Call     SetTargetActor ( .Actor:Self .Actor:Player )
+   14:  Call     UseBattleCamPreset 	( 0000003F )
+   24:  Call     SetBattleCamZoom  	( 00000096 )
+   34:  Call     BattleCamTargetActor ( .Actor:Self )
+   44:  Call     8024ECF8 ( FFFFFFFF 00000001 00000000 )
+   5C:  Set  *Var[1]  006B0006 
+		Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+		Switch *Var7
+			Case == 0
+				Add *Var[1] 000
+			Case == 1
+				Add *Var[1] 800
+			Case == 3
+				Add *Var[1] A00
+			Case == 4
+				Add *Var[1] B00
+		EndSwitch
+   78:  Call     SetAnimation 	( .Actor:Self 00000001 *Var[1] )
+   90:  Call     SetGoalToTarget 	( .Actor:Self )
+   A0:  Call     GetStatusFlags ( .Actor:Self *Var[5] )
+   B4:  If  *Var[5]  !&  00080000 
+			Call 	 GetActorVar ( .Actor:Self 0000000A *Var[5] )
+			Div		 *Var[5] 2
+			Call     AddGoalPos 	( .Actor:Self *Var[5] 00000000 00000000 )
+   E0:  Else
+   E8:  	Call     AddGoalPos 	( .Actor:Self 00000014 00000000 00000000 )
+  104:  EndIf
+  10C:  Call     SetActorSpeed 	( .Actor:Self *Fixed[4.0] )
+  120:  Call     RunToGoal   	( .Actor:Self 00000000 .False )
+		Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+		Switch *Var7
+			Case == 0
+				Call     SetAnimation 	( .Actor:Self 00000001 006B0015 )
+			Case == 1
+				Call     SetAnimation 	( .Actor:Self 00000001 006B0815 )
+			Case == 3
+				Call     SetAnimation 	( .Actor:Self 00000001 006B0A15 )
+			Case == 4
+				Call     SetAnimation 	( .Actor:Self 00000001 006B0B15 )
+		EndSwitch
+  150:  Wait     00000008 
+  15C:  Call     PlaySoundAtActor 	( .Actor:Self 0000035E )
+		Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+		Switch *Var7
+			Case == 0
+				Call     SetAnimation 	( .Actor:Self 00000001 006B0016 )
+			Case == 1
+				Call     SetAnimation 	( .Actor:Self 00000001 006B0816 )
+			Case == 3
+				Call     SetAnimation 	( .Actor:Self 00000001 006B0A16 )
+			Case == 4
+				Call     SetAnimation 	( .Actor:Self 00000001 006B0B16 )
+		EndSwitch
+  1B8:  Call     SetGoalToTarget 	( .Actor:Self )
+  2B4:  Call     EnemyTestTarget ( .Actor:Self *Var[A] 00000000 00000000 00000001 00000010 )
+  2D8:  Switch  *Var[A] 
+  2E4:  	CaseOR  ==  00000006 
+  2F0:  	CaseOR  ==  00000005 
+  2FC:  		Call     GetGoalPos  	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+  35C:  		Wait     0000001E 
+  368:  		Set  *Var[1]  006B0001 
+				Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+				Switch *Var7
+					Case == 0
+						Add *Var[1] 000
+					Case == 1
+						Add *Var[1] 800
+					Case == 3
+						Add *Var[1] A00
+					Case == 4
+						Add *Var[1] B00
+				EndSwitch
+  384:  		Call     SetAnimation 	( .Actor:Self 00000001 *Var[1] )
+  39C:  		Call     UseBattleCamPreset 	( 00000002 )
+  3AC:  		Call     MoveBattleCamOver 	( 00000014 )
+  3BC:  		If  *Var[A]  ==  00000005 
+  3CC:  			Call     EnemyTestTarget ( .Actor:Self *Var[0] 80000000 00000000 00000000 00000000 )
+  3F0:  		EndIf
+  3F8:  		ExecWait $Script_80225FD4_Tubba 
+  404:  		Return
+  40C:  	EndCaseGroup
+  414:  	Default
+  41C:  EndSwitch
+  424:  Call     GetStatusFlags ( .Actor:Self *Var[5] )
+  438:  If  *Var[5]  !&  00080000 
+  448:  	Call     GetGoalPos  	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+  4A8:  EndIf
+  4B0:  Wait     00000002 
+  4BC:  Call     SetGoalToTarget 	( .Actor:Self )
+  4CC:  If  *Var[5]  !&  00080000 
+  4DC:  	Call     80269EAC ( 00000017 )
+  4EC:  EndIf 
+		Call     UseBattleCamPreset 	( 0000003F ) %reset camera earlier to fix problems
+		Call     SetBattleCamZoom  	( 000000C8 )
+		%spliced from part of the master's script (make mario go flying)
+    	Call     EnablePlayerBlur 	( 00000001 )
+		Call	GetActorVar ( .Actor:Self 0000000E *Var[E] )
+    	If *Var[E] == 1
+			Call     SetActorJumpGravity 	( .Actor:Player *Fixed[0.5] )
+    	Else
+			Call     SetActorJumpGravity 	( .Actor:Player *Fixed[0.30078125] )
+		EndIf
+		Call     GetActorPos 	( .Actor:Player *Var[0] *Var[1] *Var[2] )
+    	Call     SetGoalPos 	( .Actor:Player *Var[0] *Var[1] *Var[2] )
+		If  *Var[5]  !&  00080000 %shrunken tubba can't launch you as high
+			Call 	 UseIdleAnimation ( .Actor:Player .False )
+			Call     SetJumpAnimations 	( .Actor:Player 00000000 0001001B 0001001B 0001001B) %?
+			Call     SetAnimation 	( .Actor:Player 00000000 0001001B )
+			Call     80273444 ( 00000048 00000000 00000000 ) %player jump?
+			Call 	 UseIdleAnimation ( .Actor:Player .True )
+    	Else
+			Call 	 UseIdleAnimation ( .Actor:Player .False )
+			Call     SetJumpAnimations 	( .Actor:Player 00000000 00010028 00010028 00010028 ) %?
+			Call     SetAnimation 	( .Actor:Player 00000000 00010028 )
+			Call     80273444 ( 00000036 00000000 00000000 ) %player jump?
+			Call 	 UseIdleAnimation ( .Actor:Player .True )
+		EndIf
+		Call     EnablePlayerBlur 	( 00000000 )  
+		If *Var[E] != 0
+			Call     EnemyDamageTarget 	( .Actor:Self *Var[F] 1A000000 00000000 00000000 0000000E 00000020 ) %14 unblockable damage
+		Else
+  4F4:  	Call     EnemyDamageTarget 	( .Actor:Self *Var[F] 1A000000 00000000 00000000 0000000A 00000020 ) %10 unblockable damage
+		EndIf
+  53C:  Call     BattleCamTargetActor ( .Actor:Self )
+  54C:  Call     8024ECF8 ( FFFFFFFF 00000001 00000000 ) 
+  564:  Call     MoveBattleCamOver 	( 0000001E )
+  574:  Switch  *Var[F] 
+  580:  	CaseOR  ==  00000000 
+  58C:  	CaseOR  ==  00000002 
+  598:  		Wait     0000001E 
+  5A4:  		Set  *Var[1]  006B0001 
+				Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+				Switch *Var7
+					Case == 0
+						Add *Var[1] 000
+					Case == 1
+						Add *Var[1] 800
+					Case == 3
+						Add *Var[1] A00
+					Case == 4
+						Add *Var[1] B00
+				EndSwitch
+  5C0:  		Call     SetAnimation 	( .Actor:Self 00000001 *Var[1] )
+  5D8:  		Call     UseBattleCamPreset 	( 00000002 )
+  5E8:  		Call     MoveBattleCamOver 	( 00000014 )
+  5F8:  		Call     YieldTurn   	( )
+  604:  		ExecWait $Script_80225FD4_Tubba 
+  610:  	EndCaseGroup
+  618:  EndSwitch
+  620:  Return
+  628:  End
+}
+
+#new:Script $Script_QuakeAttack %10 + 3
+{
+    0:  Call     SetTargetActor ( .Actor:Self .Actor:Player )
+   14:  Call     UseBattleCamPreset 	( 00000002 )
+   44:  Call     8024ECF8 ( FFFFFFFF 00000001 00000000 )
+   5C:  Set  *Var[1]  006B0006 
+		Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+		Switch *Var7
+			Case == 0
+				Add *Var1 0
+			Case == 1
+				Add *Var1 800
+			Case == 3
+				Add *Var1 A00
+			Case == 4
+				Add *Var1 B00
+		EndSwitch
+   78:  Call     SetAnimation 	( .Actor:Self 00000001 *Var[1] )
+		Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+		Switch *Var7
+			Case == 0
+				Call     SetAnimation 	( .Actor:Self 00000001 006B000A )
+			Case == 1
+				Call     SetAnimation 	( .Actor:Self 00000001 006B080A )
+			Case == 3
+				Call     SetAnimation 	( .Actor:Self 00000001 006B0A0A )
+			Case == 4
+				Call     SetAnimation 	( .Actor:Self 00000001 006B0B0A )
+		EndSwitch
+  100:  Wait     00000008 
+		Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+		Switch *Var7
+			Case == 0
+				Call     SetAnimation 	( .Actor:Self 00000001 006B000B )
+			Case == 1
+				Call     SetAnimation 	( .Actor:Self 00000001 006B080B )
+			Case == 3
+				Call     SetAnimation 	( .Actor:Self 00000001 006B0A0B )
+			Case == 4
+				Call     SetAnimation 	( .Actor:Self 00000001 006B0B0B )
+		EndSwitch
+  124:  Call     SetActorSounds ( FFFFFF81 00000002 000003E7 00000000 )
+  140:  Call     EnemyTestTarget ( .Actor:Self *Var[0] 10000000 00000000 00000001 00000010 )
+  164:  Switch  *Var[0] 
+  170:  	CaseOR  ==  .HitResult:Miss % 6
+  17C:  	CaseOR  ==  .HitResult:Lucky % 5
+  188:  		Set  *Var[A]  *Var[0] 
+  198:  		Thread
+  1A0:  			Wait     0000000C 
+					Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+					Switch *Var7
+						Case == 0
+							Call     SetAnimation 	( .Actor:Self 00000001 006B000C )
+						Case == 1
+							Call     SetAnimation 	( .Actor:Self 00000001 006B080C )
+						Case == 3
+							Call     SetAnimation 	( .Actor:Self 00000001 006B0A0C )
+						Case == 4
+							Call     SetAnimation 	( .Actor:Self 00000001 006B0B0C )
+					EndSwitch
+  1C4:  		EndThread
+  1CC:  		Call     SetGoalToTarget 	( .Actor:Self )
+				Call	 GetActorPos	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+  228:  		Call     SetActorJumpGravity 	( .Actor:Self *Fixed[1.5] )
+  23C:  		Call     SetGoalPos 	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+  258:  		Call     JumpToGoal  	( .Actor:Self 0000000F 00000000 00000001 00000000 )
+				Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+				Switch *Var7
+					Case == 0
+						Call     SetAnimation 	( .Actor:Self 00000001 006B000D )
+					Case == 1
+						Call     SetAnimation 	( .Actor:Self 00000001 006B080D )
+					Case == 3
+						Call     SetAnimation 	( .Actor:Self 00000001 006B0A0D )
+					Case == 4
+						Call     SetAnimation 	( .Actor:Self 00000001 006B0B0D )
+				EndSwitch
+  278:  		Call     PlaySoundAtActor 	( .Actor:Self 000020EA )
+  28C:  		Call     PlayEffect  	( ~FX:ShockWave:White *Var[0] 00000000 *Var[2] 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+				Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+				Switch *Var7
+					Case == 0
+						Call     SetAnimation 	( .Actor:Self 00000001 006B000D )
+					Case == 1
+						Call     SetAnimation 	( .Actor:Self 00000001 006B080D )
+					Case == 3
+						Call     SetAnimation 	( .Actor:Self 00000001 006B0A0D )
+					Case == 4
+						Call     SetAnimation 	( .Actor:Self 00000001 006B0B0D )
+				EndSwitch
+  2E8:  		Thread
+  2F0:  			Call     GetActorPos 	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+  30C:  			Call     PlayEffect  	( ~FX:SmokeImpact:Large *Var[0] *Var[1] *Var[2] 0000003C 00000008 0000000A 00000014 00000000 00000000 00000000 00000000 00000000 )
+  350:  		EndThread
+  358:  		Thread
+  360:  			Call     80254218 ( 00000001 )
+  370:  			Call     ShakeCam    	( 00000001 00000000 00000005 *Fixed[3.0] )
+  38C:  		EndThread
+  394:  		Call     8026F838 ( FFFFFF81 00000002 )
+  454:  		Call     ShakeCam    	( 00000001 00000000 00000005 *Fixed[3.0] )
+				Call     GetActorPos 	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+				Wait     0000000F 
+				Thread
+					%Call     80254218 ( 00000001 )		this is in the smash script (Flatten mario on hit)
+					Call     ShakeCam    	( 00000001 00000000 0000000A *Fixed[10.0] ) %big quake
+				EndThread
+				SetF  *Var[6]  *Fixed[0.0] 
+				Loop     0000000A 
+					Set  *Var[4]  *Var[3] 
+					Set  *Var[5]  *Var[2] 
+					AddF  *Var[6]  *Fixed[36.0] 
+					Call     AddVectorPolar ( *Var[4] *Var[5] *Fixed[300.0] *Var[6] )
+					Set  *Var[A]  *Var[F] 
+					Call     PlayEffect  	( ~FX:Lightning *Var[3] 00000001 *Var[2] *Var[4] 00000001 *Var[5] *Fixed[4.0] 0000001E 00000000 00000000 00000000 00000000 )
+					Set  *Var[F]  *Var[A] 
+				EndLoop
+				Wait     0000000A 
+  4D0:  		If  *Var[A]  ==  00000005 
+  4E0:  			Call     EnemyTestTarget ( .Actor:Self *Var[0] 80000000 00000000 00000000 00000000 )
+  504:  		EndIf
+  50C:  		Call     UseBattleCamPreset 	( 00000002 )
+  51C:  		Call     MoveBattleCamOver 	( 00000014 )
+  52C:  		Wait     00000008 
+				Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+				Switch *Var7
+					Case == 0
+						Call     SetAnimation 	( .Actor:Self 00000001 006B000E )
+					Case == 1
+						Call     SetAnimation 	( .Actor:Self 00000001 006B080E )
+					Case == 3
+						Call     SetAnimation 	( .Actor:Self 00000001 006B0A0E )
+					Case == 4
+						Call     SetAnimation 	( .Actor:Self 00000001 006B0B0E )
+				EndSwitch
+  550:  		Wait     00000004 
+  55C:  		ExecWait $Script_80225FD4_Tubba 
+  568:  		Return
+  570:  	EndCaseGroup
+  578:  	Default
+  580:  		Thread
+  588:  			Wait     00000009 
+					Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+					Switch *Var7
+						Case == 0
+							Call     SetAnimation 	( .Actor:Self 00000001 006B000C )
+						Case == 1
+							Call     SetAnimation 	( .Actor:Self 00000001 006B080C )
+						Case == 3
+							Call     SetAnimation 	( .Actor:Self 00000001 006B0A0C )
+						Case == 4
+							Call     SetAnimation 	( .Actor:Self 00000001 006B0B0C )
+					EndSwitch
+  5AC:  		EndThread
+				Call	 GetActorPos	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+				Call     SetGoalPos 	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+  5C4:  		Call     SetActorJumpGravity 	( .Actor:Self *Fixed[1.5] )
+  5D8:  		Call     JumpToGoal  	( .Actor:Self 0000000F 00000000 00000001 00000000 )
+				Call     GetActorVar 	( .Actor:Self 0000000E *Var[7] ) %check EX fight
+				Switch *Var7
+					Case == 0
+						Call     SetAnimation 	( .Actor:Self 00000001 006B000D )
+					Case == 1
+						Call     SetAnimation 	( .Actor:Self 00000001 006B080D )
+					Case == 3
+						Call     SetAnimation 	( .Actor:Self 00000001 006B0A0D )
+					Case == 4
+						Call     SetAnimation 	( .Actor:Self 00000001 006B0B0D )
+				EndSwitch
+  5F8:  EndSwitch
+  600:  Wait     00000002 
+  61C:  Call     GetStatusFlags ( .Actor:Self *Var[5] )
+  630:  If  *Var[5]  !&  00080000 
+  650:  	Call     PlaySoundAtActor 	( .Actor:Self 000020EA )
+  664:  EndIf
+		Call     GetActorPos 	( .Actor:Self *Var[0] *Var[1] *Var[2] )  	
+  		Call     PlayEffect  	( ~FX:ShockWave:White *Var[0] 00000000 *Var[2] 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+  		Wait     0000000F 
+		Thread
+			%Call     80254218 ( 00000001 )		this is in the smash script
+			Call     ShakeCam    	( 00000001 00000000 0000000A *Fixed[10.0] ) %big quake
+		EndThread
+		%Effects time
+		Thread
+			Wait  8`
+			Call  GetActorPos   ( .Actor:Self *Var0 *Var1 *Var2 )
+			Add   *Var0  -24`
+			Add   *Var1  -10`
+			Call  PlayEffect    ( ~FX:SmokeImpact:Small *Var0 *Var1 *Var2 0000003C 00000008 00000000 0000001E 00000000 00000000 00000000 00000000 00000000 )
+			Wait  2`
+			Call  PlayEffect    ( ~FX:SmokeImpact:Small *Var0 *Var1 *Var2 0000003C 00000008 00000021 0000001E 00000000 00000000 00000000 00000000 00000000 )
+			Wait  2`
+			Call  PlayEffect    ( ~FX:SmokeImpact:Small *Var0 *Var1 *Var2 0000003C 00000008 00000042 0000001E 00000000 00000000 00000000 00000000 00000000 )
+		EndThread
+		Call  StartRumble   ( 0000000B )
+		Thread
+			Call  ShakeCam  ( .Cam:Battle 00000000 00000002 *Fixed[0.3] )
+			Call  ShakeCam  ( .Cam:Battle 00000000 00000005 *Fixed[1.5] )
+			Call  ShakeCam  ( .Cam:Battle 00000000 0000000A *Fixed[3.0] )
+			Call  ShakeCam  ( .Cam:Battle 00000000 00000005 *Fixed[1.5] )
+			Call  ShakeCam  ( .Cam:Battle 00000000 00000003 *Fixed[1.05] )
+			Call  ShakeCam  ( .Cam:Battle 00000000 00000004 *Fixed[0.6] )
+			Call  ShakeCam  ( .Cam:Battle 00000000 00000006 *Fixed[0.15] )
+			Call  ShakeCam  ( .Cam:Battle 00000000 00000004 *Fixed[0.07519531] )
+		EndThread
+		Thread
+			Call  GetActorPos   ( .Actor:Self *Var0 *Var1 *Var2 )
+			Add   *Var0  00000018
+			Add   *Var1  0000000A
+			Call  PlayEffect    ( ~FX:SmokeImpact:Large *Var0 *Var1 *Var2 00000048 00000008 00000000 0000001E 00000000 00000000 00000000 00000000 00000000 )
+			Wait  5`
+			Call  PlayEffect    ( ~FX:SmokeImpact:Large *Var0 *Var1 *Var2 00000048 00000008 00000018 0000001E 00000000 00000000 00000000 00000000 00000000 )
+			Wait  5`
+			Call  PlayEffect    ( ~FX:SmokeImpact:Large *Var0 *Var1 *Var2 00000048 00000008 00000030 0000001E 00000000 00000000 00000000 00000000 00000000 )
+			Wait  5`
+			Call  PlayEffect    ( ~FX:SmokeImpact:Large *Var0 *Var1 *Var2 00000048 00000008 00000048 0000001E 00000000 00000000 00000000 00000000 00000000 )
+		EndThread
+		Thread
+			Wait  10`
+			Call  PlayEffect    ( ~FX:ShockWave:LargeWhite *Var0 *Var1 *Var2 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+		EndThread
+		Wait  15`
+		SetF  *Var6  *Fixed[0.0]
+		Loop  0000000A
+			Set   *Var4  *Var3
+			Set   *Var5  *Var2
+			AddF  *Var6  *Fixed[36.0]
+			Call  AddVectorPolar    ( *Var4 *Var5 *Fixed[300.0] *Var6 )
+			Set   *VarA  *VarF
+			Call  PlayEffect        ( ~FX:Lightning *Var3 00000001 *Var2 *Var4 00000001 *Var5 *Fixed[4.0] 0000001E 00000000 00000000 00000000 00000000 )
+			Set   *VarF  *VarA
+		EndLoop
+		Wait     0000000A 
+		Call	GetActorVar ( .Actor:Self 0000000E *Var[E] )
+		Call	 SetGoalToTarget ( .Actor:Self )
+		If *Var[E] == 1
+			Call     EnemyDamageTarget 	( .Actor:Self *Var[F] 10000000 00000000 00000000 0000000E 00000020 ) %14 damage
+		Else
+  66C: 	 	Call     EnemyDamageTarget 	( .Actor:Self *Var[F] 10000000 00000000 00000000 0000000A 00000020 )
+		EndIf
+		Wait 	 00000004
+		Call 	 SetTargetActor ( .Actor:Self .Actor:Partner )
+		Call	 SetGoalToTarget ( .Actor:Self )
+		Call	 GetActorFlags ( .Actor:Partner *Var[E] )
+		If *Var[E] & 00000200 %flying partners are immune
+			Goto 3
+		EndIf
+		If *Var[E] != 0
+			Call     EnemyDamageTarget 	( .Actor:Self *Var[F] 10000000 00000000 00000000 00000004 00000020 ) %gg
+		Else
+			Call     EnemyDamageTarget 	( .Actor:Self *Var[F] 10000000 00000000 00000000 00000003 00000020 )
+		EndIf
+		Label 3
+  6C4:  Call     8024ECF8 ( FFFFFFFF 00000001 00000000 )
+  6EC:  Switch  *Var[F] 
+  6F8:  	CaseOR  ==  00000000 
+  704:  	CaseOR  ==  00000002 
+				%tubba is already at home
+  C98:  		Call     UseBattleCamPreset 	( 00000002 )
+  CA8:  		Call     MoveBattleCamOver 	( 00000014 )
+  CB8:  		Call     YieldTurn   	( )
+  CC4:  		ExecWait $Script_80225FD4_Tubba 
+  CD0:  	EndCaseGroup
+  CD8:  EndSwitch
+  CE0:  Return
+  CE8:  End
+}
+
+#new:Function $Function_80218360
+{
+    0:  ADDIU		SP, SP, FFE8
+    4:  SW			RA, 10 (SP)
+    8:  JAL			8011BB50
+    C:  NOP
+   10:  ADDIU		A0, R0, 3B6
+   14:  JAL			8011BB74
+   18:  ADDIU		A1, R0, 3E8
+   1C:  ADDIU		A0, R0, 10
+   20:  COPY		A1, A0
+   24:  COPY		A2, A0
+   28:  JAL			~Func:set_world_fog_color
+   2C:  ADDIU		A3, R0, FF
+   30:  LIA			V0, 800B1D80
+   38:  ADDIU		V1, R0, 14
+   3C:  SH			V1, 584 (V0)
+   40:  SH			V1, 586 (V0)
+   44:  ADDIU		V1, R0, 1C
+   48:  SH			V1, 588 (V0)
+   4C:  LW			RA, 10 (SP)
+   50:  ADDIU		V0, R0, 2
+   54:  JR			RA
+   58:  ADDIU		SP, SP, 18  
+}
+
+#new:StageTable $StageTable
+{
+"mim_01" $Stage_Forest 
+00000000 00000000 
+}
+
+#new:Script $Script_BeforeBattle_Forest
+{
+    0:  Call     SetSpriteShading 	( FFFFFFFF )
+   10:  Call     $Function_80218360 ( )
+   1C:  Return
+   24:  End
+}
+
+#new:Script $Script_AfterBattle_Forest
+{
+    0:  Return
+    8:  End
+}
+
+#new:Stage $Stage_Forest
+{
+"mim_tex"  % mim_tex
+"mim_bt01_shape"  % mim_bt01_shape
+"mim_bt01_hit"  % mim_bt01_hit
+$Script_BeforeBattle_Forest 
+$Script_AfterBattle_Forest 
+00000000 
+00000000 
+00000000 
+00000000 
+00000000 
+}
+
+/%
+#new:ASCII $ASCII_8021EC00
+"mim_bt01_hit"
+
+#new:ASCII $ASCII_8021EC10
+"mim_bt01_shape"
+
+#new:ASCII $ASCII_8021EC20
+"mim_tex"
+
+#new:ASCII $ASCII_8021EE68
+"mim_01"
+%/
+
+
+#new:Vector3D $Vector3D_TubbaPos
+{
+75` 0` 10`
+}
+
+#new:Formation $Formation_00
+{
+$TubbaBlubba $Vector3D_TubbaPos 0000000A 00000000 00000000 00000000 00000000 
+}
+
+#new:Formation $Formation_01
+{
+$TubbaBlubba2 $Vector3D_TubbaPos 0000000A 00000000 00000000 00000000 00000000 
+}
+
+#new:FormationTable $FormationTable
+{
+00000000 00000001 $Formation_00 $Stage_Forest 00000000 
+00000000 00000001 $Formation_01 $Stage_Forest 00000000 
+00000000 00000000 00000000 00000000 00000000 % unused
+}

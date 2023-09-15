@@ -1,0 +1,7 @@
+@ $TreeDropList_Tree2
+{
+	00000001
+	.Item:HeartPiece ~Vec3d:Tree2_Drop1 .ItemSpawnMode:Fall_SpawnOnce *GF_KMR11_Tree2_Coin 00000000
+}
+
+%Add a blue coin for fun

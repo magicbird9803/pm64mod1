@@ -1,0 +1,466 @@
+%Pit of 100 trials
+%This map is used for the floors 91-99
+
+%#import EnterViaPipe.mpat
+#import Pit_AI.mpat
+#import NPC_Clubba.mpat
+#import NPC_Dayzee.mpat
+
+#new:Header $Header
+{
+[MainScript] $Script_Main
+[Background] 80200000
+[EntryList] $EntryList
+[EntryCount] 2
+[MapTattle] $Function_GetTattle
+}
+
+#new:Function $Function_GetTattle
+{
+	ADDIU     SP, SP, FFE8
+	LIO       V0, $MapTattle
+	JR        RA
+	ADDIU     SP, SP, 18
+}
+
+%no pit_tex function so I have to do this
+#new:Function_Init $Function_Init
+{
+    PUSH      RA
+    LIA       A0, 800B0CF0
+    LIA       A1, "kpa_tex"
+    JAL       ~Func:sprintf
+    RESERVED
+    DADDU     V0, R0, R0
+    JPOP      RA
+}
+
+#string $MapTattle
+{
+[Style Tattle][EnableCDownNext]It's been getting a lot darker[BR]
+here, and the enemies are super[BR]
+strong too.[BR]
+[Wait][NEXT]Maybe we should've gotten out of[BR]
+here on floor 90... [PAUSE:0A][BR]
+Oh well. There's no turning back now.[BR]
+[Wait][END]
+}
+
+
+#new:EntryList $EntryList
+{
+~Vec4f:Entry0	%top
+~Vec4f:Entry1	%bottom
+}
+
+#new:Script $Script_RaisePipe
+{
+	Wait     0000000A 
+	Call     PlaySound  ( .PipeRaiseSound )
+	Set      .PipeBool 	00000001
+	Unbind
+	Return
+	End
+}
+
+#new:Script $Script_UseBluePipe
+{
+	Call     GotoMap    ( "pit_10" 0 )
+	Call 	 $Reset_Enemy_Flag
+	Wait     00000064 
+	Return
+	End
+}
+	
+#new:Function $Reset_Enemy_Flag
+{
+	PUSH	RA
+	SAB 	R0, 800B1173
+	POP 	RA
+	JR 		RA
+	NOP
+}	
+
+#new:Script $Script_GetPipeWorking
+{
+	Bind     $Script_RaisePipe .Trigger:GameFlagSet .PipeBool 00000001 00000000
+	Call     MakeEntity  ( .Entity:BlueWarpPipe ~Vec4d:Entry1 00000001 $Script_UseBluePipe ~İndex:*GF_PitPipeFlag 80000000 )
+	Return
+	End
+}
+
+#define .PipeBool *GF_PitPipeFlag
+#define .PipeRaiseSound 0000208E
+
+#new:Script $Script_Outcome
+{
+Call     GetBattleOutcome 	( *Var[0] )
+Switch  *Var[0] 
+	Case  ==  00000000 
+			Set  .PipeBool  00000001 %pipe is up
+			ExecWait	 $Script_RaisePipe
+			Call     DoNpcDefeat 	( )
+EndSwitch
+Return
+End
+}
+   
+%GetBattleOutcome :   int args: *out (0 = player won, 1 = player lost, 2 = player ran, 3 = enemy ran)  
+
+#new:Script $Script_Init_Enemy
+{
+    Call     BindNpcDefeat 	( .Npc:Self $Script_Outcome )
+    Return
+    End
+}
+
+/%
+	goomba (*might need some changes for bigger hitbox?)
+	insanee dayzee (reuse crazee dayzee with faster speed)
+	clubba (*make him ultra speedy)
+	bubble
+%/
+
+@ $NpcSettings_Goomba
+{
+00000000 00180020 00000000 00000000 $Script_GoombaAI 80077F70 00000000 8007809C
+00000000 00000000 00060000 
+}
+
+@ $AISettings_Goomba
+{
+    1.6 % move speed
+    60` % move time
+    30` % Wait time
+   200.0 % alert radius
+    0.0
+    5`
+    4.6 % chase speed
+    60`
+    15`
+  400.0 % chase radius
+    0.0
+    1`		 
+}
+
+#new:NpcGroup $NpcGroup_DarkGoomba %normal goomba AI might cause problems with hitbox sizes though
+{
+00000000 $NpcSettings_Goomba ~Vec3f:ground_enemy
+00000400 $Script_Init_Enemy 00000000 00000000 0000005A 
+~İtems:10:DriedShroom:A %yay dried shrooms
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:2:6
+~Movement:ground_enemy
+00620206 00620204 00620205 00620204 00620206 00620200 00620209 00620209 % dark goomba
+00620203 00620203 00620203 00620203 00620202 00620204 00620200 00620202 
+00000000 00000000 00000000 00000000 % no tattle string	
+}
+	
+#new:NpcGroup $NpcGroup_InsaneeDayzee
+{
+00000001 $NpcSettings_Dayzee ~Vec3f:ground_enemy % -350 0 40
+00002D00 $Script_Init_Enemy 00000000 00000000 0000005A 
+~İtems:8:JamminJelly:6:HoneySyrup:C
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:4:40 ~FP:30:40:4:40 ~FP:50:40:4:40 ~FP:80:40:4:40 ~FP:100:30:4:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:0:3
+~Movement:ground_enemy
+00480201 00480202 00480203 00480203 00480201 00480201 00480208 00480208
+00480206 00480207 00480201 00480201 00480201 00480201 00480201 00480201 % .Sprite:Dayzee
+00000003 00000000 00000000 00000000 % no tattle string
+}
+
+	
+#new:NpcGroup $NpcGroup_DarkClubba
+{
+00000002 $NpcSettings_ClubbaA ~Vec3f:ground_enemy % -200 0 180
+00000C00 $Script_Init_Enemy 00000000 00000000 0000010E 
+~İtems:5:SuperShroom:A
+~HP:20:70:3:50 ~HP:30:60:3:50 ~HP:50:50:3:40 ~HP:80:40:3:40 ~HP:100:30:3:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:2:3
+~Movement:ground_enemy
+00390302 00390303 00390304 00390304 00390302 00390302 0039030C 0039030C
+00390311 00390312 00390307 00390308 00390301 00390302 00390302 00390302 % .Sprite:WorldClubba
+00000002 00000000 $ExtraAnimationList_ClubbaA 00000000 % no tattle string
+% 
+% $NpcGroup_80241E08[1F0]
+00000003 $NpcSettings_ClubbaB ~Vec3f:ground_enemy % 0 -1000 0
+00800D00 $Script_Init_Enemy 00000000 00000000 00000000 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus
+~Movement:ground_enemy
+00390302 00390303 00390304 00390304 00390302 00390302 0039030C 0039030C
+00390311 00390312 00390307 00390308 00390301 00390302 00390302 00390302  % .Sprite:WorldClubba
+00000000 00000000 $ExtraAnimationList_ClubbaB 00000000 % no tattle string
+}
+
+
+#new:NpcGroup $NpcGroup_DarkBubble
+{
+00000004 $NpcSettings_Bubble ~Vec3f:air_enemy
+00000D00 $Script_Init_Enemy 00000000 00000000 0000005A 
+~İtems:5:StoneCap:A
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:1:4
+~Movement:air_enemy
+00460301 00460302 00460303 00460303 00460301 00460301 00460307 00460307 
+00460304 00460301 00460301 00460301 00460301 00460301 00460301 00460301 
+00000002 00000000 00000000 00000000 % no tattle string
+}
+
+
+@ $AISettings_Clubba
+{
+    3.0 % move speed
+    120` % move time
+    30` % Wait time
+   85.0 % alert radius
+   65.0
+    5`
+    6.0 % chase speed
+    90`
+    12`
+  110.0 % chase radius
+   90.0
+    3`
+}
+
+%ok these parameters make them very hard to avoid
+%they can go from seeing you to hitting you in a blink of an eye
+@ $Script_NpcAI_ClubbaA %mess with parameters
+{
+	0:  Call     SetSelfVar 	( 00000000 00000000 )
+   14:  Call     SetSelfVar 	( 00000001 00000002 )
+   28:  Call     SetSelfVar 	( 00000002 00000006 )
+   3C:  Call     SetSelfVar 	( 00000003 00000004 )
+   50:  Call     $Function_8024061C_Clubba ( $AISettings_Clubba )
+   60:  Return
+   68:  End
+}
+
+@ $AISettings_Bubble
+{
+    1.8 % move speed
+    90` % move time
+    0` % Wait time
+   120.0 % alert radius
+    0.0
+    4`
+    4.3 % chase speed
+    10`
+    1`
+  450.0 % chase radius
+    0.0
+    1`
+}
+
+
+/%
+		91: 2 dark goombas										3A-00
+		92: 2 dark goombas + dark bubble						3A-01
+		93: 1 insanee dayzee + 2 dark goombas + dark bubble 	3A-02
+		94: 2 insanee dayzees + ztar + dark bubble				3A-03
+		95: 2 dark goombas + dark clubba + 1 ztar 				3B-00
+		96: 2 dark clubbas + 2 ztars							3B-01
+		97: 1 insanee dayzee + dark clubba + 1 dark sentinel 	3B-02
+		98: 1 dark goomba + 1 dark sentinel + dark clubba + ztar 3B-03
+		99: 1 dark sentinel + 1 ztar + 1 dark goomba + 1 insanee dayzee + dark clubba 3B-04
+			*(clubba is front)
+%/
+
+#new:NpcGroupList $NpcGroup_1
+{
+00000001 $NpcGroup_DarkGoomba 3A000000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_2
+{
+00000001 $NpcGroup_DarkGoomba 3A010000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_3
+{
+00000001 $NpcGroup_DarkBubble 3A020000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_4
+{
+00000001 $NpcGroup_InsaneeDayzee 3A030000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_5
+{
+00000001 $NpcGroup_DarkGoomba 3B000000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_6
+{
+00000002 $NpcGroup_DarkClubba 3B010000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_7
+{
+00000001 $NpcGroup_InsaneeDayzee 3B020000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_8
+{
+00000002 $NpcGroup_DarkClubba 3B030000
+00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroup_9
+{
+00000002 $NpcGroup_DarkClubba 3B040000
+00000000 00000000 00000000
+}
+
+
+
+#new:Script_Main $Script_Main
+{
+	Add		*PitFloor 00000001
+	Set 	.PipeBool 00000000
+	Switch 	*PitFloor
+		Case == 0000005B
+			Call     MakeNpcs           ( 00000001 $NpcGroup_1)
+		Case == 0000005C
+			Call     MakeNpcs           ( 00000001 $NpcGroup_2)
+		Case == 0000005D
+			Call     MakeNpcs           ( 00000001 $NpcGroup_3)
+		Case == 0000005E
+			Call     MakeNpcs           ( 00000001 $NpcGroup_4)
+		Case == 0000005F
+			Call     MakeNpcs           ( 00000001 $NpcGroup_5)
+		Case == 00000060
+			Call     MakeNpcs           ( 00000001 $NpcGroup_6)
+		Case == 00000061
+			Call     MakeNpcs           ( 00000001 $NpcGroup_7)
+		Case == 00000062
+			Call     MakeNpcs           ( 00000001 $NpcGroup_8)
+		Case == 00000063
+			Call     MakeNpcs           ( 00000001 $NpcGroup_9)
+		Case == 00000064
+			Call     GotoMap    ( "pit_12" 0 ) %floor 100 is a different map
+	EndSwitch
+	Call     MakeEntity  	( .Entity:Signpost ~Vec4d:sign 80000000 )
+	Call	 AssignScript ( $Script_SignPost )
+	Exec	 $Script_GetPipeWorking
+	Call     SetSpriteShading 	( 00080000 )
+	Call     SetCamPerspective 	( .Cam:Default 00000003 00000019 00000010 00001000 )
+	Call     SetCamBGColor 	( .Cam:Default 00000000 00000000 00000000 )
+	Call	 SetCamEnabled 	 	( .Cam:Default  .True )				% enabled?
+	Call	 SetCamLeadPlayer 	( .Cam:Default  .False )			% lead player motion?
+	Call     SetMusicTrack    	( 00000000 .Song:DryDryRuins 00000000 00000008 )
+	Return
+	End
+}
+
+#new:Script $Script_SignPost
+{
+	0:  Call     DisablePlayerInput 	( .True )
+		Switch *PitFloor
+			Case == 0000005B
+				Call     ShowMessageAtScreenPos 	( $Floor1 000000A0 00000028 )  
+			Case == 0000005C
+				Call     ShowMessageAtScreenPos 	( $Floor2 000000A0 00000028 )
+			Case == 0000005D
+				Call     ShowMessageAtScreenPos 	( $Floor3 000000A0 00000028 )
+			Case == 0000005E
+				Call     ShowMessageAtScreenPos 	( $Floor4 000000A0 00000028 )
+			Case == 0000005F
+				Call     ShowMessageAtScreenPos 	( $Floor5 000000A0 00000028 )
+			Case == 00000060
+				Call     ShowMessageAtScreenPos 	( $Floor6 000000A0 00000028 )
+			Case == 00000061
+				Call     ShowMessageAtScreenPos 	( $Floor7 000000A0 00000028 )
+			Case == 00000062
+				Call     ShowMessageAtScreenPos 	( $Floor8 000000A0 00000028 )
+			Case == 00000063
+				Call     ShowMessageAtScreenPos 	( $Floor9 000000A0 00000028 )
+			Default
+				Call     ShowMessageAtScreenPos 	( $Error 000000A0 00000028 )
+		EndSwitch
+   28:  Call     DisablePlayerInput 	( .False )
+   38:  Return
+   40: End
+}
+   
+#string $Floor1
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 91
+
+[DelayOn][Wait][END] 
+}
+
+#string $Floor2
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 92
+
+[DelayOn][Wait][END] 
+}
+
+#string $Floor3
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 93
+
+[DelayOn][Wait][END] 
+}
+
+#string $Floor4
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 94
+
+[DelayOn][Wait][END] 
+}
+
+#string $Floor5
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 95
+
+[DelayOn][Wait][END] 
+}
+
+#string $Floor6
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 96
+
+[DelayOn][Wait][END] 
+}
+
+#string $Floor7
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 97
+
+[DelayOn][Wait][END] 
+}
+
+#string $Floor8
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 98
+
+[DelayOn][Wait][END] 
+}
+
+#string $Floor9
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Floor 99
+
+[DelayOn][Wait][END] 
+}
+
+#string $Error
+{
+[DelayOff][Style Sign][CenterX 255][Down 15]Signpost error.[BR]
+(Floor no. not between 91-100)
+[DelayOn][Wait][END] 
+}

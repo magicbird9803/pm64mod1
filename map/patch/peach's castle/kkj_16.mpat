@@ -1,0 +1,103 @@
+%make the table koopatrol a really fast gold koopatrol
+%he's training to be ready for the dark koopatrol armor
+
+@ $NpcGroup_80241D28
+{
+	00000000 $NpcSettings_802413E0 ~Vec3f:NPC_80241D28 % 0 -500 0
+	00000F0D $Script_Init_80241B14 00000000 00000000 00000000
+	~NoDrops
+	~Movement:NPC_80241D28
+	~AnimationTable:NPC_80241D28 % .Sprite:HammerBros
+	00000000 00000000 $ExtraAnimationList_80241CEC 00000000 % no tattle string
+	%
+	% $NpcGroup_80241D28[1F0]
+	00000001 $NpcSettings_8024140C ~Vec3f:NPC_80241F18 % 0 -500 0
+	00000F0D $Script_Init_80241B88 00000000 00000000 00000000
+	~NoDrops
+	~Movement:NPC_80241F18
+	~AnimationTable:NPC_80241F18 % .Sprite:WorldKoopatrol
+	00000000 00000000 $ExtraAnimationList_80241D08 00000000 % no tattle string
+	%
+	% $NpcGroup_80241D28[3E0]
+	00000002 $NpcSettings_8024140C ~Vec3f:NPC_80242108 % 0 -500 0
+	00000F0D $Script_Init_80241BFC 00000000 00000000 00000000
+	~NoDrops
+	~Movement:NPC_80242108
+	~AnimationTable:NPC_80242108 % .Sprite:WorldKoopatrol
+	00000000 00000000 $ExtraAnimationList_80241D08 00000000 % no tattle string
+	%
+	% $NpcGroup_80241D28[5D0]
+	00000003 $NpcSettings_8024140C ~Vec3f:NPC_802422F8 % 0 -500 0
+	00000F0D $Script_Init_80241C3C 00000000 00000000 00000000
+	~NoDrops
+	~Movement:NPC_802422F8
+	00580101 00580104 00580106 00580106 00580101 00580101 00580110 00580110
+	0058010C 0058010B 0058010D 00580101 00580101 00580101 00580101 00580101
+	00000000 00000000 $ExtraAnimationList_GoldKoopatrol 00000000 % no tattle string
+	%
+	% $NpcGroup_80241D28[7C0]
+	00000004 $NpcSettings_8024140C ~Vec3f:NPC_802424E8 % 0 -500 0
+	00000F0D $Script_Init_80241CAC 00000000 00000000 00000000
+	~NoDrops
+	~Movement:NPC_802424E8
+	~AnimationTable:NPC_802424E8 % .Sprite:WorldKoopatrol
+	00000000 00000000 $ExtraAnimationList_80241D08 00000000 % no tattle string
+}
+
+#new:ExtraAnimationList $ExtraAnimationList_GoldKoopatrol
+{
+	00580100 00580101 00580104 00580106 00580108 00580112 00580114 FFFFFFFF
+}
+
+%$Function_80240060 = function used to check if peach should be caught or not
+%	Has 4 arguments (*Var0 / output, ???, ???, ???)
+
+#new:Script $Script_NpcAI_GoldKoopatrolDiscover
+{
+    0:  Call  DisablePlayerInput    ( .True )
+   10:  SetGroup  00000000
+   1C:  Call  SetTimeFreezeMode ( 00000001 )
+   2C:  Call  PlaySoundAtNpc    ( .Npc:Self 00000262 00000000 )
+   44:  Call  ShowEmote ( .Npc:Self .Emote:Exclamation 00000000 00000014 00000001 00000000 00000000 00000000 00000000 )
+   74:  Call  NpcFacePlayer     ( .Npc:Self 00000000 )
+   88:  Wait  20`
+   94:  Call  PlayerFaceNpc     ( .Npc:Self 00000000 )
+   A8:  Call  SetPlayerAnimation    ( 000C0005 )
+   B8:  Call  SetNpcAnimation   ( .Npc:Self 00580101 )
+   CC:  Call  SpeakToPlayer     ( .Npc:Self 00580108 00580101 00000000 00140174 ) % What?! Princess Peach!
+   EC:  Call  $Function_802406D8    ( FFFFFFFF *Var3 *Var0 *Var2 )	%find some position near peach?
+  108:  If  *Var3  !=  00000000
+  118:  	Call  SetNpcAnimation   ( .Npc:Self 00580106 )
+  12C:  	Call  SetNpcSpeed       ( .Npc:Self *Fixed[10.0] ) %s  p  e  e  d
+  140:  	Call  NpcMoveTo ( .Npc:Self *Var0 *Var2 00000000 )
+  15C:  	Call  SetNpcAnimation   ( .Npc:Self 00580101 )
+  170:  EndIf
+  178:  Call  SpeakToPlayer ( .Npc:Self 00580108 00580101 00000000 00140175 ) % You know you're not allowed to leave the room! I'm ...
+  198:  Call  SetPlayerAnimation    ( 000C0017 )
+  1A8:  Wait  20`
+  1B4:  Call  GotoMapSpecial        ( $ASCII_80244828 0000000B 0000000D ) % kkj_14
+  1CC:  Wait  100`
+  1D8:  Call  DisablePlayerInput    ( .False )
+  1E8:  Return
+  1F0:  End
+}
+
+@ $Script_Idle_802417CC
+{
+[0]   Call  SetNpcAnimation   ( .Npc:Self 00580104 )
+[54]  Call  BindNpcAI ( .Npc:Self $Script_NpcAI_GoldKoopatrolDiscover )
+[94]  Call  SetNpcSpeed   ( .Npc:Self *Fixed[6.0] )	%s p e e d
+}
+
+@ $Script_8024476C
+{
+    0:  Call  MakeItemEntity    ( .Item:MiracleJelly ~Vec3d:Item8024476C .ItemSpawnMode:Fixed_NeverVanish *GF_KKJ16_Item_LifeShroom )
+   24:  Call  MakeItemEntity    ( .Item:PowerRush ~Vec3d:Item80244790 .ItemSpawnMode:Fixed_NeverVanish *GF_KKJ16_Item_PowerRush )
+   48:  If  *GB_StoryProgress  <  .Story:Ch8_ReachedPeachsCastle % 5F
+   58:  	If  *GF_KKJ16_Item_PowerRush  ==  .False
+   68:  		Exec  $Script_80244700
+   74:  	EndIf
+   7C:  EndIf
+   84:  Return
+   8C:  End
+}

@@ -1,0 +1,26 @@
+@ $NpcGroup_80241AC4
+{
+	00000000 $NpcSettings_80241A98 ~Vec3f:NPC_80241AC4 % 100 0 83
+	00002C00 00000000 00000000 00000000 0000005A
+	~İtems:5:SuperShroom:A ~HP:Standard:4 ~FP:Standard:2 ~CoinBonus:0:4
+	~Movement:NPC_80241AC4
+	00550104 0055010C 0055010E 0055010E 00550104 00550104 00550118 00550118
+	00550110 00550116 00550112 00550104 00550104 00550104 00550104 00550104 % .Sprite:BonyBeetle
+	00000000 00000000 00000000 00000000 % no tattle string
+}
+
+@ $AISettings_80241880
+{
+    1.0 % move speed
+    20` % move time
+    5` % Wait time
+  120.0 % alert radius
+    0.0
+    3`
+   9.0 % chase speed			fast and aggressive
+    0`
+    0`
+  150.0 % chase radius
+    0.0
+    1`
+}

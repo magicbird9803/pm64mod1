@@ -1,0 +1,38 @@
+@ $Script_80243ED4
+{
+    0:  Thread
+    8:  	Call  AdjustCam ( .Cam:Default *Fixed[8.0] 00000000 *Fixed[300.0] *Fixed[17.5] *Fixed[-9.5] )
+   2C:  EndThread
+   34:  Call  SetPlayerAnimation    ( 0006000C )
+   44:  Call  GetPlayerPos      ( *Var5 *Var6 *Var7 )
+   5C:  Add   *Var6  00000028
+   6C:  Call  MakeItemEntity    ( .Item:Boots2Icon *Var5 *Var6 *Var7 .ItemSpawnMode:Decoration 00000000 )
+   90:  Set   *VarC  *Var0
+   A0:  Add   *Var6  00000010
+   B0:  Call  PlayEffect        ( ~FX:GotItemOutline *Var5 *Var6 *Var7 *Fixed[1.0] *Var8 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+   F4:  Call  PlayEffect        ( 00000033 00000009 *Var5 *Var6 *Var7 *Fixed[1.0] 00000064 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+  138:  Thread
+  140:  	Wait  4`
+  14C:  	Call  GetPlayerPos  ( *Var3 *Var4 *Var5 )
+  164:  	Add   *Var4  00000032
+  174:  	Add   *Var5  00000002
+  184:  	Add   *Var3  00000008
+  194:  	Call  PlayEffect    ( 00000011 00000003 *Var3 *Var4 *Var5 00000014 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+  1D8:  	Add   *Var3  FFFFFFF0
+  1E8:  	Call  PlayEffect    ( 00000011 00000003 *Var3 *Var4 *Var5 00000014 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+  22C:  EndThread
+  234:  Loop
+  240:  	Wait  1`
+  24C:  	If  *MapFlag[0A]  ==  .True
+  25C:  		BreakLoop
+  264:  	EndIf
+  26C:  EndLoop
+  274:  Call  802D7B44  ( *Var8 )
+  284:  Call  RemoveItemEntity      ( *VarC )
+  294:  Call  SetPlayerAnimation    ( 00010002 )
+  2A4:  Thread
+  2AC:  	Call  ResetCam  ( .Cam:Default 00000003 )
+  2C0:  EndThread
+  2C8:  Return
+  2D0:  End
+}

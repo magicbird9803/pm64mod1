@@ -1,0 +1,34 @@
+/%
+$ShopInventory_8024034C
+.ItemMystery         00000005 0024002B % Who knows what it does... Take a chance to find ou ...
+.ItemDizzyDial       00000019 00240029 % If it works, dazes and paralyzes all enemies brief ...
+.ItemPOWBlock        0000000F 00240027 % Flips shell enemies and inflicts 2 damage points o ...
+.ItemThunderRage     0000001E 00240002 % Lightning that strikes all enemies. Attack Power:  ...
+.ItemMapleSyrup      0000001E 00240017 % Delicious maple syrup. Restores 10 FP.
+.ItemSuperShroom     0000001E 0024000A % A truly super Mushroom. Restores 10 HP.
+00000000 00000000 00000000
+%/
+
+@ $ShopPriceList_802403A0
+{
+.Item:FrightJar      0000000F 00000000 
+.Item:EggMissile     0000001E 00000000 
+.Item:Pebble         00000001 00000000 
+.Item:Mistake        00000014 00000000 
+.Item:LifeShroom     00000019 00000000 
+.Item:ShootingStar   00000014 00000000 
+.Item:SuperSoda      0000000A 00000000 
+.Item:StopWatch      00000014 00000000 
+00000000 00000000 00000000
+}
+
+@ $ShopInventory_8024034C
+{
+.Item:HustleDrink     0000001E 002F0013 
+.Item:SuperTrio       0000001E 002F020B 
+.Item:Pebble 	      00000002 00240006 % pebble :)
+.Item:BombFruit        00000014 002F01D1 % Flips shell enemies and inflicts 2 damage points 
+.Item:UltraShroom     00000064 0024000B % If it works, dazes and paralyzes all enemies brief ...
+.Item:JamminJelly     00000064 00240018 % Flips shell enemies and inflicts 2 damage points o ...
+00000000 00000000 00000000
+}

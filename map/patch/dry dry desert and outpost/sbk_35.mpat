@@ -1,0 +1,240 @@
+%let's put way too many bandits here
+
+%leader bandit chances
+%starts at 25%
+%after entering ruins: 42%
+%after chapter 2: 67%
+%after chapter 3: 92%
+@ $Script_Main_EnterWalk %leader appears 25% of the time, but chances increase over time!
+{
+	0:  Set  *GB_WorldLocation  .Location:DryDryDesert
+   10:  Call     SetSpriteShading 	( FFFFFFFF )
+   20:  If  *GB_StoryProgress  ==  FFFFFFC1 
+   30:  	Call     DisablePulseStone 	( .False )
+   40:  EndIf
+   48:  Call     SetCamPerspective 	( .Cam:Default 00000003 00000019 00000010 00001000 )
+   68:  Call     SetCamBGColor 	( .Cam:Default 00000000 00000000 00000000 )
+   84:  Call     SetCamEnabled 	( .Cam:Default .True )
+   98:  Call     SetCamLeadPlayer 	( .Cam:Default .False )
+		Call	 RandInt ( 0000000B *Var[0] ) %0-11
+		If  *GB_StoryProgress  > FFFFFFC2 %enter ruins
+			Add *Var0 2
+		EndIf
+		If  *GB_StoryProgress  > FFFFFFC9 %finish chapter 2
+			Add *Var0 3
+		EndIf
+		If  *GB_StoryProgress  > FFFFFFF1 %finish chapter 3
+			Add *Var0 3
+		EndIf
+		If *Var[0] >= 9
+   AC: 	 	Call     MakeNpcs    	( 00000000 $NpcGroupList_80240C60 )
+		Else
+			Call     MakeNpcs    	( 00000000 $NpcGroupList_NoLeader )
+		EndIf
+   C0:  Call     $Function_80240000 ( )
+   CC:  Call     SetMusicTrack 	( 00000000 .Song:DryDryDesert 00000000 00000008 )
+   E8:  Set  *Var[0]  $Script_80240570 
+   F8:  Exec     EnterWalk 
+  104:  Exec     $Script_802416A0 
+  110:  Return
+  118:  End
+}
+
+/%
+#new:NpcSettings $NpcSettings_80240A44
+00000000 001A0018 00000000 00000000 $Script_NpcAI_802407D8 80077F70 00000000 $Script_802407F8 
+00000000 00000000 00090005 
+%/
+
+/%
+#new:NpcGroup $NpcGroup_80240A70
+00000000 $NpcSettings_80240A44 ~Vec3f:NPC_80240A70 % -40 0 155
+00002C00 00000000 00000000 00000000 0000010E 
+~İtems:5:HoneySyrup:A
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:1:3
+~Movement:NPC_80240A70
+{AnimationTable:NPC_80240A70 % .Sprite:Bandit
+00000001 00000000 00000000 00000000 % no tattle string
+%/
+
+#new:NpcGroup $NpcGroup_Bandito1
+{
+00000001 $NpcSettings_Bandito ~Vec3f:NPC_Bandito1 % -40 0 155
+00002C00 00000000 00000000 00000000 0000010E 
+~İtems:5:HoneySyrup:A
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:1:3
+~Movement:NPC_Bandito1
+00320601 00320605 00320607 00320607 00320601 00320601 00320609 00320609
+00320600 00320600 00320600 00320600 00320600 00320600 00320600 00320600 % .Sprite:Bandit
+00000001 00000000 00000000 00000000 % no tattle string
+}
+
+#new:NpcGroup $NpcGroup_Bandito2
+{
+00000002 $NpcSettings_Bandito ~Vec3f:NPC_Bandito2 % -40 0 155
+00002C00 00000000 00000000 00000000 0000010E 
+~İtems:5:HoneySyrup:A
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:1:3
+~Movement:NPC_Bandito2
+00320601 00320605 00320607 00320607 00320601 00320601 00320609 00320609
+00320600 00320600 00320600 00320600 00320600 00320600 00320600 00320600 % .Sprite:Bandit
+00000001 00000000 00000000 00000000 % no tattle string
+}
+
+#new:NpcGroup $NpcGroup_Bandito3
+{
+00000003 $NpcSettings_Bandito ~Vec3f:NPC_Bandito3 % -40 0 155
+00002C00 00000000 00000000 00000000 0000010E 
+~İtems:5:HoneySyrup:A
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:1:3
+~Movement:NPC_Bandito3
+00320601 00320605 00320607 00320607 00320601 00320601 00320609 00320609
+00320600 00320600 00320600 00320600 00320600 00320600 00320600 00320600 % .Sprite:Bandit
+00000001 00000000 00000000 00000000 % no tattle string
+}
+
+#new:NpcGroup $NpcGroup_Bandito4
+{
+00000004 $NpcSettings_Bandito ~Vec3f:NPC_Bandito4 % -40 0 155
+00002C00 00000000 00000000 00000000 0000010E 
+~İtems:5:HoneySyrup:A
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:1:3
+~Movement:NPC_Bandito4
+00320601 00320605 00320607 00320607 00320601 00320601 00320609 00320609
+00320600 00320600 00320600 00320600 00320600 00320600 00320600 00320600 % .Sprite:Bandit
+00000001 00000000 00000000 00000000 % no tattle string
+}
+
+#new:NpcGroup $NpcGroup_BanditLeader
+{
+00000005 $NpcSettings_BanditoElito ~Vec3f:NPC_BanditLeader % -40 0 155
+00002C00 00000000 00000000 00000000 0000010E 
+~İtems:64:MapleSyrup:A %free maple syrup
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:1:4
+~Movement:NPC_BanditLeader
+00320701 00320705 00320707 00320707 00320701 00320701 00320709 00320709
+00320700 00320700 00320700 00320700 00320700 00320700 00320700 00320700 % .Sprite:Bandit
+00000001 00000000 00000000 00000000 % no tattle string
+}
+
+#new:NpcGroup $NpcGroup_Bandit2
+{
+00000006 $NpcSettings_Bandito ~Vec3f:NPC_Bandit2 % -40 0 155
+00002C00 00000000 00000000 00000000 0000010E 
+~İtems:5:HoneySyrup:A
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:1:3
+~Movement:NPC_Bandit2
+00320001 00320005 00320007 00320007 00320001 00320001 00320009 00320009
+00320000 00320000 00320000 00320000 00320000 00320000 00320000 00320000 % .Sprite:Bandit
+00000001 00000000 00000000 00000000 % no tattle string
+}
+
+#new:NpcGroup $NpcGroup_Bandit3
+{
+00000007 $NpcSettings_Bandito ~Vec3f:NPC_Bandit3 % -40 0 155
+00002C00 00000000 00000000 00000000 0000010E 
+~İtems:5:HoneySyrup:A
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:1:3
+~Movement:NPC_Bandit3
+00320001 00320005 00320007 00320007 00320001 00320001 00320009 00320009
+00320000 00320000 00320000 00320000 00320000 00320000 00320000 00320000 % .Sprite:Bandit
+00000001 00000000 00000000 00000000 % no tattle string
+}
+
+#new:AISettings $AISettings_Bandito
+{
+    5.4 % move speed	2.7 -> 5.4
+    45` % move time
+    30` % Wait time
+  450.0 % alert radius
+    0.0
+    10`
+    14.3 % chase speed	8.3 -> 14.3
+    180`
+    100`
+  550.0 % chase radius
+  100.0
+    1`
+}
+
+#new:Script $Script_NpcAI_Bandito
+{
+	0:  Call     DoBasicAI   	( $AISettings_Bandito )
+   10:  Return
+   18:  End
+}
+
+#new:NpcSettings $NpcSettings_Bandito
+{
+00000000 001A0018 00000000 00000000 $Script_NpcAI_Bandito 80077F70 00000000 $Script_802407F8 
+00000000 00000000 00090005 
+}
+
+#new:AISettings $AISettings_BanditoElito
+{
+    2.7 % move speed
+    40` % move time		45 -> 40
+    15` % Wait time		30 -> 15
+  900.0 % alert radius	%550 -> 900
+    0.0
+    10`
+    12.3 % chase speed	8.3 -> 12.3
+    180`
+    100`
+ 1000.0 % chase radius %550 -> 1000
+  100.0
+    1`
+}
+
+#new:Script $Script_NpcAI_BanditoElito
+{
+	0:  Call     DoBasicAI   	( $AISettings_BanditoElito )
+   10:  Return
+   18:  End
+}
+
+#new:NpcSettings $NpcSettings_BanditoElito
+{
+00000000 001A0018 00000000 00000000 $Script_NpcAI_BanditoElito 80077F70 00000000 $Script_802407F8 
+00000000 00000000 00200005	%<-- Not sure what that second half does (its usually 0)
+}
+
+@ $NpcGroupList_80240C60
+{
+00000001 $NpcGroup_80240A70 0A0C0001 
+00000001 $NpcGroup_Bandito1 0A110001 
+00000001 $NpcGroup_Bandito2 0A120001 
+00000001 $NpcGroup_Bandito3 0A110001 
+00000001 $NpcGroup_Bandito4 0A130001 
+00000001 $NpcGroup_BanditLeader 0A140001
+00000001 $NpcGroup_Bandit2 0A0E0001 
+00000001 $NpcGroup_Bandit3 0A0A0001 
+00000000 00000000 00000000 
+}
+
+#new:NpcGroupList $NpcGroupList_NoLeader %also has 1 less bandito
+{
+00000001 $NpcGroup_80240A70 0A0C0001 
+00000001 $NpcGroup_Bandito1 0A110001 
+00000001 $NpcGroup_Bandito2 0A120001 
+00000001 $NpcGroup_Bandito4 0A130001 
+00000001 $NpcGroup_Bandit2 0A0E0001 
+00000001 $NpcGroup_Bandit3 0A0A0001 
+00000000 00000000 00000000 
+}

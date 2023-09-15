@@ -1,0 +1,18 @@
+%dark traveller causes a div by 0 crash somehow, somewhere
+
+%it can't draw the health bars somewhere?
+%or maybe it just can't handle all these healthbar-less entities floating around
+
+%16E880 --> 8023FFA0
+%   9C:  BREAK     1C00
+%   B4:  BREAK     1800
+
+@Function 16E91C
+{
+	NOP
+}
+
+@Function 16E934
+{
+	NOP
+}

@@ -1,0 +1,210 @@
+
+%mess with the letter text
+
+@ $Script_80243470
+{
+    0:  Call  DisablePlayerInput    ( .True )
+   10:  Call  UseSettingsFrom       ( .Cam:Default 00000000 00000000 00000000 )
+   2C:  Call  SetPanTarget  ( .Cam:Default 00000000 00000000 00000000 )
+   48:  Call  SetCamSpeed   ( .Cam:Default *Fixed[90.0] )
+   5C:  Call  SetCamDistance        ( .Cam:Default 00000307 )
+   70:  Call  SetCamPitch   ( .Cam:Default 00000014 FFFFFFED )
+   88:  Call  PanToTarget   ( .Cam:Default 00000000 00000001 )
+   A0:  Call  $Function_80240380    ( 00000002 00000000 00000003 )
+   B8:  Call  $Function_80240380    ( 00000001 FFFFFFFF 00000003 )
+   D0:  Call  $Function_80240678    ( 000000C8 000000C8 000000C8 00000028 00000028 00000028 )
+   F4:  Call  $Function_802406E0 ( )
+  100:  Wait  15`
+  10C:  Call  ShowMessageAtScreenPos    ( 00000022 000000A0 00000028 ) %
+  124:  Wait  12`
+		Switch *GB_FileCodeMode
+			Case == 6`
+				Call  ShowMessageAtScreenPos    ( $ShyLetter 000000A0 00000028 ) % I'm throwing a party at my castle today! Mario and ...
+			Case == 7`
+				Call  ShowMessageAtScreenPos    ( $ToadsLetter 000000A0 00000028 ) % I'm throwing a party at my castle today! Mario and ...
+			Case == 8`
+				Call  ShowMessageAtScreenPos    ( $ShyLetter 000000A0 00000028 ) % I'm throwing a party at my castle today! Mario and ...
+			Default
+  130:  		Call  ShowMessageAtScreenPos    ( 00000023 000000A0 00000028 ) % I'm throwing a party at my castle today! Mario and ...
+		EndSwitch
+  148:  Wait  3`
+  154:  Call  GotoMapSpecial        ( $ASCII_802437B0 00000001 00000007 ) % kmr_20
+  16C:  Wait  40`
+  178:  Return
+  180:  End
+}
+
+#new:String $ToadsLetter
+{
+	[Style Narrate]
+	[Pause 4][InputOn]I'm turning literally everyone[BR]
+	around the world into Toads![BR]
+	[Pause 10]By the time you read this,[BR]
+	it will be too late for you![BR]
+	[Wait][BR]
+	[Next]
+	[Down 5]Even if it doesn't work on you,[BR]
+	[Down 5]there will be no escape from them![BR]
+	[Wait][BR]
+	[Up 10][Next]
+	Not even Bowser will be spared[BR]
+	from the grasp of my new[BR]
+	Toad Empire![BR]
+	[Pause 15][Right 110]Sincerely, Peach[BR]
+	[Wait][Yield][End]
+}
+
+#new:String $ShyLetter
+{
+	[Style Narrate]
+	[Pause 4][InputOn]It's too late for you, Mario.[BR]
+	[Pause 10]We've already taken over the[BR]
+	world. Everyone will bow to us[BR]
+	in due time.[BR]
+	[Wait][BR]
+	[Next]The fact that we are sending[BR]
+	this letter in Peach's name[BR]
+	is proof of that.[BR]
+	[Wait][NEXT]
+	The entire population of the world[BR]
+	(except for you and Peach) will[BR]
+	be transformed into Shy Guys.[BR]
+	[Wait][BR]
+	[Next]
+	Nobody will help you. We've already[BR]
+	used mind control to convince[BR]
+	everyone that nothing's wrong.[BR]
+	[Pause 15][Right 110]- Permafrost Guy[BR]
+	[Wait][Yield][End]
+}
+
+
+
+
+%add yoshi if you took the greed stone
+%he says stuff
+
+@ $Script_Main
+{
+    0:  Set   *GB_WorldLocation  .Location:PeachCastleGrounds
+   10:  Call  SetSpriteShading  ( .Shading:None )
+   20:  Call  SetCamPerspective ( .Cam:Default 00000003 00000019 00000010 00001000 )
+   40:  Call  SetCamBGColor     ( .Cam:Default 00000000 00000000 00000000 )
+   5C:  Call  SetCamEnabled     ( .Cam:Default .True )
+   70:  Call  SetCamLeadPlayer  ( .Cam:Default .False )
+   84:  Switch  *GB_StoryProgress
+   90:  	Case  ==  .Story:Intro % FFFFFF80
+   9C:  		Call  $Function_8024030C ( )
+   A8:  		Call  MakeNpcs  ( .False $NpcGroupList_8024117C )
+   BC:  	Case  >=  .Story:Epilogue % 60
+   C8:  		Call  $Function_80240344 ( )
+  				Call	 $Function_HasGreedStone ( *Var[1] )
+				If ( *Var[1] == 0 )
+  160:  			Set  *Var[0]  $NpcGroupList_80243428
+				Else
+					Set  *Var[0]  $NpcGroupList_WithYoshi
+				EndIf
+   D4:  		Call  MakeNpcs  ( .False *Var0 )
+   E8:  EndSwitch
+   F0:  Call  GetEntryID    ( *Var0 )
+  100:  If  *Var0  !=  ~Entry:Entry3
+  110:  	Exec  $Script_80240820
+  11C:  EndIf
+  124:  Call  GetEntryID    ( *Var0 )
+  134:  If  *Var0  !=  ~Entry:Entry3
+  144:  	Exec  $Script_80240BA0
+  150:  	Call  PlaySoundAtF  ( 80000059 00000001 0000012C 00000000 00000190 )
+  170:  EndIf
+  178:  Exec  $Script_EnterWalk_80240AD4
+  184:  Wait  1`
+  190:  Return
+  198:  End
+}
+
+@ $NpcGroupList_80243428
+{
+	00000003 $NpcGroup_80241888 00000000
+	00000004 $NpcGroup_80241E88 00000000
+	00000002 $NpcGroup_80242668 00000000
+	00000002 $NpcGroup_80242A58 00000000
+	00000003 $NpcGroup_80242E58 00000000
+	00000000 00000000 00000000
+}
+
+#new:NpcGroupList $NpcGroupList_WithYoshi
+{
+	00000003 $NpcGroup_80241888 00000000
+	00000004 $NpcGroup_80241E88 00000000
+	00000002 $NpcGroup_80242668 00000000
+	00000002 $NpcGroup_80242A58 00000000
+	00000003 $NpcGroup_80242E58 00000000
+	00000001 $NpcGroup_Yoshi 00000000
+	00000000 00000000 00000000
+}
+
+
+#new:NpcGroup $NpcGroup_Yoshi
+{
+00000060 $YoshiSettings ~Vec3f:NPC_Yoshi %???
+00000D0D $Script_Init_Yoshi 00000000 00000000 00000080 %???
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus
+~Movement:NPC_Yoshi
+%~AnimationTable:NPC_GreedYoshi
+% 00C30101 00C30102 00C30103 00C30103 00C30101 00C30101 00C3010B 00C3010C %animation table
+% 00C30101 00C30101 00C30101 00C30101 00C30101 00C30101 00C30101 00C30101 
+%
+00EC0001 00EC0002 00EC0003 00EC0003 00EC0001 00EC0001 00EC000B 00EC000C %animation table
+00EC0001 00EC0001 00EC0001 00EC0001 00EC0001 00EC0001 00EC0001 00EC0001  %thanks star rod
+00000000 00000000 00000000 001A0122 % now has a tattle string
+}
+
+#new:NpcSettings $YoshiSettings
+{
+00000000 00300018 00000000 00000000 00000000 00000000 00000000 00000000 
+00000000 00000000 00630000 
+}
+
+#new:Script $Script_Init_Yoshi
+{
+	Call     BindNpcInteract	( .Npc:Self $Script_Interact )
+	Return
+	End
+}
+
+#new:Script $Script_IdleAI
+{
+	Return
+	End
+}
+
+#new:Script $Script_Interact
+{
+	%Call	 DisablePlayerInput ( .True )
+	Call     SpeakToPlayer 	( .Npc:Self 00EC0004 00EC0001 00000000 $GoodJob )
+	%Call	 DisablePlayerInput ( .False )
+	Return
+	End
+}
+
+#new:String $GoodJob
+{
+	[STYLE:Right]You know, I felt kinda[BR]
+	bad giving you that stone[BR]
+	at first, but it looks like[BR]
+	it didn't stop you at all![BR]
+	[Wait][NEXT]
+	You must have worked really[BR]
+	hard to get here.[BR]
+	[PAUSE:0A]...Or maybe you figured out[BR]
+	some cheese strategies.[BR]
+	[Wait][NEXT]
+	Either way, you might want to[BR]
+	try out "[COLOR:20]EasyMode[COLOR:0A]" if you[BR]
+	want to breeze through things[BR]
+	really easily.[BR]
+	[Wait][NEXT]
+	Looks like my old friends are[BR]
+	here. Maybe they'll finally[BR]
+	let me go home.[BR]
+	[Wait][END]
+}

@@ -1,0 +1,31 @@
+%TTYD reference
+#message:19:049
+{
+	[Style Tattle]
+	[EnableCDownNext]The house with the yellowish[BR]
+	roof is the home of the famous[BR]
+	archaeologist and explorer,[BR]
+	Kolorado.[BR]
+	[wait][Next]
+	Kolorado's always running from[BR]
+	one mysterious place to another[BR]
+	in order to do research.[BR]
+	[wait][Next]
+	His dad was a warrior, y'know[BR]
+	I think he went to fight a[BR]
+	dragon or something, I wonder[BR]
+	how he's doing.[wait][End]
+}
+
+#message:19:07C
+{
+[STYLE:TATTLE][EnableCDownNext]There are a ton of Bandits[BR]
+around here. We better be careful![BR]
+Apparently their leader is around[BR]
+here somewhere too.[BR]
+[wait][NEXT]
+That rock in the middle of the[BR]
+path looks weird. I don't think[BR]
+whoever made the path would[BR]
+just have it run into a rock...[wait][END]
+}

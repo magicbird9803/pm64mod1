@@ -1,0 +1,17 @@
+%remove slow go
+%it's now in the pit as a different, actually-useful badge
+
+@ $Script_80240A5C
+{
+	0:  Set  *Var[A]  .Item:LifeShroom %000000F7 
+   10:  Set  *Var[B]  00000002 
+   20:  Set  *Flag_ISK_1F  00000001 
+   30:  ExecWait $Script_8024075C 
+   3C:  Return
+   44:  End
+}
+
+@ $Script_MakeEntities
+{
+	[0]		Call  MakeEntity    ( .Entity:GiantChest ~Vec4d:Entity80240AC8 .Item:Hammer2Icon 80000000 )
+}

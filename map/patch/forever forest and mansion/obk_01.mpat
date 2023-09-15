@@ -1,0 +1,135 @@
+@ $NpcGroupList_80245804
+{
+00000001 $NpcGroup_80244E54 0D110000 %0D110000 
+00000001 $NpcGroup_80245044 00000000 
+00000001 $NpcGroup_80245234 00000000 
+00000002 $NpcGroup_80245424 00000000 
+00000000 00000000 00000000 
+}
+
+@ $Script_Interact_80244C28
+{
+  [120]  		Set   *Var0  .Item:KootOldPhotoB
+  [14C]  		Call  AddKeyItem    ( .Item:KootOldPhotoB )  
+}
+
+@ $NpcGroup_80244E54
+{
+00000000 $NpcSettings_8024407C ~Vec3f:NPC_80244E54 % 0 -1000 0
+00000A01 $Script_Init_DoorBoo 00000000 00000000 00000000 
+~İtems:0:DriedShroom:A ~NoHP ~NoFP ~NoCoinBonus
+~Movement:NPC_80244E54
+00950001 00950002 00950003 00950003 00950001 00950001 00950000 00950000
+00950003 00950003 00950003 00950003 00950003 00950003 00950003 00950003 % .Sprite:Boo
+00000000 00000000 00000000 00000000 % no tattle string
+}
+
+#new:Script $Script_Init_DoorBoo
+{
+If	*GB_StoryProgress > FFFFFFD2
+	Return %don't do any scripty stuff
+EndIf
+Call	BindNpcIdle ( 00000000 $Script_DoorBooAI )
+Call	BindNpcDefeat ( 00000000 $Script_EndBattle )
+Return
+End
+}
+
+#new:Script $Script_EndBattle
+{
+Call     802CFD30 ( 00000000 00000007 00000000 00000000 00000000 00000000 ) %i think this sets alpha to 0
+Call     DisablePlayerInput	( .False )
+Call     DoNpcDefeat 	( )
+Set  *MapFlag[0] .False 
+Return
+End
+}
+
+#new:Script $Script_DoorBooAI
+{
+Loop
+	If *MapFlag[0] == .True
+		Call     StartBossBattle 	( .Song:SpecialBattle ) %;)
+	EndIf
+	Wait	00000001
+EndLoop
+Return
+End
+}
+
+% #new:NpcSettings $NpcSettings_DoorBoo
+% 00000000 00180018 00000000 00000000 $Script_DoorBooAI 00000000 00000000 00000000 
+% 00000000 00000000 00630000 
+
+@ $Script_80243D70 %hmm... this mansion doesn't have any encounters. Let's change that!
+{
+	0:  Call     DisablePlayerInput 	( .True )
+   10:  Call     GetPlayerPos 	( *Var[3] *Var[4] *Var[5] )
+   28:  Add  *Var[4]  00000050 
+   38:  Call     SetNpcPos   	( 00000000 *Var[3] *Var[4] *Var[5] )
+   54:  Thread
+   5C:  	Wait     00000005 
+   68:  	Sub  *Var[3]  0000000A 
+   78:  	Call     PlayEffect  	( ~FX:RadialFlowOut:ThinLines *Var[3] *Var[4] *Var[5] *Fixed[2.8007812] 00000032 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+   BC:  EndThread
+   C4:  Call     PlaySoundAtNpc ( 00000000 00002094 00000000 )
+   DC:  Sub  *Var[4]  0000000C 
+   EC:  Call     MakeLerp    	( 0000000A 000001C2 00000008 00000001 )
+  108:  Loop     
+  114:  	Call     UpdateLerp  	( )
+  120:  	SetF  *Var[2]  *Var[0] 
+  130:  	DivF  *Var[2]  *Fixed[100.0] 
+  140:  	Call     SetNpcScale 	( 00000000 *Var[2] *Var[2] *Var[2] )
+  15C:  	MulF  *Var[2]  0000000C 
+  16C:  	SetF  *Var[6]  *Var[4] 
+  17C:  	SubF  *Var[6]  *Var[2] 
+  18C:  	Call     SetNpcPos   	( 00000000 *Var[3] *Var[6] *Var[5] )
+  1A8:  	Wait     00000001 
+  1B4:  	If  *Var[1]  ==  00000000 
+  1C4:  		BreakLoop
+  1CC:  	EndIf
+  1D4:  EndLoop
+  1DC:  Wait     0000000F 
+  1E8:  SetF  *Var[0]  *Fixed[240.0] 
+  %			this lowers the alpha i think, removing this to make the cutscene better
+  % 1F8:  Loop     00000014 
+  % 204:  	SubF  *Var[0]  *Fixed[12.0] 
+  % 214:  	Call     802CFD30 ( 00000000 00000007 *Var[0] 00000000 00000000 00000000 )
+  % 238:  	Wait     00000001 
+  % 244:  EndLoop
+  24C:  %Call     RemoveNpc   	( 00000000 )
+		Call     DisablePlayerInput 	( .False )
+		Set	 *MapFlag[0] .True
+  25C:  Set  *GB_StoryProgress  FFFFFFD3
+		%Call     StartBossBattle 	( .Song:SpecialBattle ) %;)
+  27C:  Return
+  284:  End
+}
+
+@ $Script_8024218C
+{
+	[6A0]  Call  FindKeyItem       ( .Item:BooWeightB *Var1 )
+}
+%  6A0:  Call  FindKeyItem       ( .Item:Weight *Var1 )
+
+@ $ItemList_80241C50
+{
+	.Item:BooWeightB
+	00000000
+}
+
+@ $Script_80242CE8
+{
+	[19C]  	Call  MakeItemEntity    ( .Item:BooWeightB ~Vec3d:Item80242E84 .ItemSpawnMode:Decoration 00000000 )
+}
+
+@ $Script_80243094
+{
+	[118]  				Call  MakeItemEntity    ( .Item:BooPortraitB *Var0 *Var1 *Var2 .ItemSpawnMode:Decoration 00000000 )
+}
+
+@ $ItemList_80243B00
+{
+	.Item:BooPortraitB
+	00000000
+}

@@ -1,0 +1,478 @@
+#string:1D:0E1
+{
+He'll master Megabonk to[BR]
+headbonk with high attack power.[END]
+}
+
+#string:1D:0E2
+{
+	He'll master Dizzy Shell[BR]
+	to dizzy enemies.[BR]
+	[End]
+}
+
+#string:1D:0EA
+{
+She'll master Turbo Charge to [BR]
+increase Mario's attack power.[END]
+}
+
+#string:1D:0EB
+{
+She'll master Mega Bolt to[BR]
+deal strong piercing damage.[END]
+}
+
+#string:1D:0EE
+{
+	He'll master Cloud Nine[BR]
+	to resist enemy attacks.[End]
+}
+
+#string:1D:0E5
+{
+She'll master Shrink Bomb[BR]
+to shrink all enemies.[END]
+}
+
+#string:1D:0E8
+{
+She'll master Curse to [BR]
+reduce the defense of enemies.[End]
+}
+
+#string:1D:0EF
+{
+He'll master Hurricane to deal[BR]
+piercing damage to all enemies.[END]
+}
+
+#string:28:003
+{
+	See enemy description and make[BR]
+	HP visible. (0 turns)[End]
+}
+
+#string:28:00A
+{
+	See enemies' descriptions and[BR]
+	see their HP during battle.[BR]
+	Does not consume turns.[End]
+}
+
+#string:28:011
+{
+	Daze all enemies on the ground.[End]
+}
+
+/%
+#string:28:014
+{
+	Throw a shell at an enemy.[End]
+}
+%/
+
+#string:28:015
+{
+	Throw a shell at an enemy.[BR]
+	Reduces defense by 1 for 1 turn.[End]
+}
+
+#string:28:016
+{
+	Throw a shell at an enemy.[BR]
+	Reduces defense by 1 for 1 turn.[End]
+}
+
+#string:28:018
+{
+	Daze all enemies on the ground.[End]
+}
+
+/%
+#string:28:021
+{
+	Body Slam an enemy.[End]
+}
+%/
+
+#string:28:022
+{
+	Body Slam an enemy.[BR]
+	This has Spin Smash properties.[End]
+}
+
+#string:28:023
+{
+	Body Slam an enemy.[BR]
+	This has Spin Smash properties.[End]
+}
+
+#string:28:037
+{
+	Make Mario transparent so he[BR]
+	can avoid enemy attacks.[End]
+}
+
+#string:28:03E
+{
+	Make Mario transparent so he[BR]
+	can avoid enemy attacks.[BR]
+	The move cost will increase[BR]
+	by 2 FP every time you use it.[End]
+}
+
+/%
+#string:28:02E
+{
+	Kick an enemy.[End]
+}
+%/
+
+#string:28:02F
+{
+	Kick an enemy.[BR]
+	Gain +1 FP per use.[End]
+}
+
+#string:28:030
+{
+	Kick an enemy.[BR]
+	Gain +1 FP per use.[End]
+}
+
+#string:28:02B
+{
+	If it works, will carry an enemy[BR]
+	away from the battle. (1/battle)[End]
+}
+
+#string:28:032
+{
+	Carry an enemy away from[BR]
+	the battle.[BR]
+	Enemies can become weaker at[BR]
+	low hp or when statused.[BR]
+	This can only be successfully[BR]
+	used once per battle.[END]
+}
+
+/%
+#string:28:055
+{
+	Flop on an enemy.[End]
+}
+%/
+
+#string:28:056
+{
+	Flop on an enemy.[BR]
+	Reduces attack by 1 for 1 turn.[End]
+}
+
+#string:28:057
+{
+	Flop on an enemy.[BR]
+	Reduces attack by 1 for 1 turn.[End]
+}
+
+
+
+%New moves
+#string:2B:012
+{
+	Curse[End]
+}
+
+#string:28:038
+{
+Reduce the defense of enemies[BR]
+for a short time.[End]
+}
+
+#string:28:03F
+{
+Reduce the defense of enemies[BR]
+for a short time.[BR]
+-2 defense for 3 turns, but[BR]
+defense cannot go below 0.[End]
+}
+
+
+
+#string:2B:017
+{
+	Mega Bolt[End]
+}
+
+#string:28:046
+{
+	Attack a single enemy with[BR]
+	a strong lightning bolt.[End]
+}
+
+#string:28:047
+{
+	The child of a Li'l Sparky, she[BR]
+	can produce ample electricity.[BR]
+	Press [C-DOWN] to illuminate areas[BR]
+	and see invisible blocks.[BR]
+	She's great at penetrating[BR]
+	defenses and paralyzing enemies.[End]
+}
+
+
+#string:28:04D
+{
+	Attack a single enemy with[BR]
+	a strong lightning bolt.[End]
+}
+
+
+%hurricane
+
+#string:28:060
+{
+Deal piercing damage to all[BR]
+enemies.[END]
+}
+
+#string:28:067
+{
+Deal piercing damage to all[BR]
+enemies.[END]
+}
+
+
+#string:28:004
+{
+Charge attack power. It goes up[BR]
+by 3 then returns to normal.[END]
+}
+
+#string:28:00B
+{
+	Charge to raise attack power[BR]
+	by 3.[BR]
+	You can charge up to +6 attack,[BR]
+	but power fades after attack.[BR]
+	[End]
+}
+
+#string:1D:07D
+{
+Goombario's attack power will[BR]
+increase by 3![END]
+}
+
+#string:1D:07E
+{
+Goombario's attack power will[BR]
+increase by 3 more![END]
+}
+
+#string:2B:003
+{
+Megabonk[END]
+}
+
+#string:28:005
+{
+Headbonk an enemy with a lot[BR]
+of attack power.[END]
+}
+
+#string:28:00C
+{
+Headbonk an enemy with a lot[BR]
+of attack power.[END]
+}
+
+#string:2B:00B
+{
+Shrink Bomb[END]
+}
+
+#string:28:01F
+{
+Explode and shrink all enemies.[END]
+}
+
+#string:28:026
+{
+Explode and shrink all enemies.[END]
+}
+
+#string:28:05F
+{
+Create a cloud to protect Mario[BR]
+for a short time.[END]
+}
+
+#string:28:062
+{
+Throw a spiny egg at an enemy.[BR]
+Stronger against aerial targets.[END]
+}
+
+#string:28:063
+{
+Throw a spiny egg at an enemy.[BR]
+Stronger against aerial targets.[END]
+}
+
+#string:28:064
+{
+Throw a spiny egg at an enemy.[BR]
+Stronger against aerial targets.[END]
+}
+
+#string:28:065
+{
+Throw spiny eggs at all enemies.[BR]
+Stronger against aerial targets.[END]
+}
+
+#string:28:066
+{
+Create a cloud to protect Mario[BR]
+for a short time.[BR]
+While in the cloud, incoming[BR]
+damage will be reduced by 1/3.[END]
+}
+
+#string:1D:09A
+{
+Incoming damage will be[BR]
+reduced.[END]
+}
+
+
+%new stuff
+#string:28:068
+{
+	Press [C-DOWN] to shoot a beam[BR]
+	that defeats weak enemies.[End]
+}
+
+#string:28:069
+{
+	She has magical attacks that are[BR]
+	stronger against certain enemies.[End]
+}
+
+#string:28:06A
+{
+	Blast an enemy with magic.[BR]
+	Stronger against low HP enemies.[End]
+}
+
+#string:28:06B
+{
+	Hit an enemy with a magic[BR]
+	beam. Can hit invisible enemies.[End]
+}
+
+#string:28:06C
+{
+	Heal Mario for up to 12 HP.[End]
+}
+
+#string:28:06D
+{
+	Give Mario an extra turn.[BR]
+	Inflicts recoil on failure.[End]
+}
+
+#string:28:06E
+{
+	Buzzatrice was the princess[BR]
+	of the empire below Toad Town.[BR]
+	Press [C-DOWN] to shoot a beam[BR]
+	that defeats weak enemies.[BR]
+	Her normal attack is stronger[BR]
+	against enemies at low HP.[BR]
+	Her beam attack is stronger[BR]
+	against enemies with buffs.[BR]
+	[End]
+}
+
+#string:28:06F
+{
+	Blast an enemy with magic.[BR]
+	Stronger against low HP enemies.[BR]
+	Damage goes up based on how low[BR]
+	an enemy's HP percentage is.[End]
+}
+
+#string:28:070
+{
+	Blast an enemy with magic.[BR]
+	Stronger against low HP enemies.[BR]
+	Damage goes up based on how low[BR]
+	an enemy's HP percentage is.[End]
+}
+
+#string:28:071
+{
+	Blast an enemy with magic.[BR]
+	Stronger against low HP enemies.[BR]
+	Damage goes up based on how low[BR]
+	an enemy's HP percentage is.[End]
+}
+
+#string:28:072
+{
+	Hit an enemy with a magic[BR]
+	beam.[BR]
+	Each level of boosted attack or[BR]
+	defense will increase power by 1.[BR]
+	Invisible enemies can be hit[BR]
+	by this move.[BR]
+	Damage is capped at 12.[End]
+}
+
+#string:28:073
+{
+	Heal Mario for up to 12 HP.[End]
+}
+
+#string:28:074
+{
+	Give Mario an additional turn[BR]
+	on his next turn.[BR]
+	Failing the action command will[BR]
+	cause Mario to take damage.[BR]
+	The action command becomes more[BR]
+	difficult when Mario's HP is low.[BR]
+	Repeated use increases difficulty[BR]
+	and backfire damage.[End]
+}
+
+#string:2B:020
+{
+	Shape Blast[End]
+}
+
+#string:2B:021
+{
+	Power Beam[End]
+}
+
+#string:2B:022
+{
+	Rejuvenate[End]
+}
+
+#string:2B:023
+{
+	Hustle Spell[End]
+}
+
+
+%fix vanilla problem
+#string:28:075
+{
+	His specialty is throwing spiny[BR]
+	eggs.[End]
+}

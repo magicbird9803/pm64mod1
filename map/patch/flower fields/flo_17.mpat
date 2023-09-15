@@ -1,0 +1,45 @@
+%add an R bush
+
+@ $NpcGroupList_80245228
+{
+	00000001 $NpcGroup_80244688 18090003
+	00000001 $NpcGroup_80244878 180A0003
+	00000001 $NpcGroup_80244A68 180C0003
+	00000001 $NpcGroup_80244C58 180C0003
+	00000001 $NpcGroup_80244E48 180C0003
+	00000001 $NpcGroup_80245038 180C0003
+	00000001 $NpcGroup_RBush 18010003
+	00000000 00000000 00000000
+}
+
+%Add R bushes
+#import Pit_AI.mpat
+
+@ $NpcSettings_Goomba
+{
+00000000 00200028 00000000 00000000 $Script_GoombaAI 80077F70 00000000 8007809C
+00000000 00000000 00060000 
+}
+
+#new:NpcGroup $NpcGroup_RBush
+{
+0000000C $NpcSettings_Goomba ~Vec3f:NPC_RBush
+00000400 00000000 00000000 00000000 0000005A 
+~İtems:8:Mushroom:A
+~HP:20:70:2:50 ~HP:30:60:2:50 ~HP:50:50:2:40 ~HP:80:40:2:40 ~HP:100:30:2:30 ~HP:None ~HP:None ~HP:None 
+~FP:20:50:2:40 ~FP:30:40:2:40 ~FP:50:40:2:40 ~FP:80:40:2:40 ~FP:100:30:2:40 ~FP:None ~FP:None ~FP:None 
+~CoinBonus:2:6
+~Movement:NPC_RBush
+00450102 00450104 00450105 00450105 00450101 00450101 00450107 00450107
+00450101 00450101 00450101 00450101 00450101 00450101 00450101 00450101
+00000000 00000000 00000000 00000000 % no tattle string	
+}
+
+@ $Script_MakeEntities
+{
+    0:  Call  MakeEntity        ( .Entity:HiddenYellowBlock ~Vec4d:Entity80245280 .Item:BombFruit 80000000 )
+   28:  Call  AssignBlockFlag   ( *GF_FLO17_HiddenItem_ThunderRage )
+   38:  Call  MakeItemEntity    ( .Item:Letter09 ~Vec3d:Item802452B8 .ItemSpawnMode:Fixed_NeverVanish *GF_FLO17_Item_Letter09 )
+   5C:  Return
+   64:  End
+}

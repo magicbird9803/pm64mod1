@@ -1,0 +1,300 @@
+%kooky cookie and strange cake share this script but their effects are different now
+%kooky cookie: heals HP equal to current FP and FP equal to current HP
+%strange cake: swap HP and FP
+
+
+#new:Function $Function_SwapStats %swapping the stats is simple enough, but we also need to ensure that hp and fp don't go above maximums, and you don't accidentally kill yourself by setting your hp to 0
+{
+PUSH RA, A0, A1, T0, T1
+LIO	A0, 8010F290
+LB	A1, 2 (A0) %get stats
+LB	T0, 5 (A0)
+SB	A1, 5 (A0) %swap stats
+SB	T0, 2 (A0)
+LB	T1, 3 (A0) %make sure hp <= maxhp
+BLT	T0, T1 .hpbelowmax
+NOP
+SB	T1, 2 (A0)
+BEQ	R0, R0, .hpgood %ofc if hp > maxhp then hp > 0 assuming you haven't set max hp to a negative number
+NOP
+.hpbelowmax
+BGT T0, R0, .hpgood %wait, we also need hp > 0
+NOP
+ORI T1, R0, 1
+SB	T1, 2 (A0)
+.hpgood
+LB	T1, 6 (A0) %make sure fp <= maxfp
+BLT	A1, T1 .fpgood
+NOP
+SB	T1, 5 (A0)
+.fpgood
+POP RA, A0, A1, T0, T1
+JR RA
+ORI V0, R0, 2 %return?
+}
+
+#new:Function $Function_EqualizeStats
+{
+PUSH RA, A0, A1, T0, T1
+LIO	A0, 8010F290
+LB	A1, 2 (A0) %get stats
+LB	T0, 5 (A0)
+ADD A1, A1, T0
+SRL A1, A1, 1		%Div by 2
+SB	A1, 5 (A0) %set stats
+SB	A1, 2 (A0)
+LB	T1, 3 (A0) %make sure hp <= maxhp
+BLT	T0, T1 .hpbelowmax
+NOP
+SB	T1, 2 (A0)
+BEQ	R0, R0, .hpgood %ofc if hp > maxhp then hp > 0 assuming you haven't set max hp to a negative number
+NOP
+.hpbelowmax
+BGT T0, R0, .hpgood %wait, we also need hp > 0
+NOP
+ORI T1, R0, 1
+SB	T1, 2 (A0)
+.hpgood
+LB	T1, 6 (A0) %make sure fp <= maxfp
+BLT	A1, T1 .fpgood
+NOP
+SB	A1, 5 (A0)
+.fpgood
+POP RA, A0, A1, T0, T1
+JR RA
+ORI V0, R0, 2 %return?
+}
+
+#new:Function $GetHP
+{
+PUSH	RA, A1, A2
+LIO		A1, 8010F290
+LB		A2, 2 (A1)
+JAL		~Func:set_variable
+LW		A1, 0 (S0) %get argument
+NOP
+POP		RA, A1, A2
+JR		RA
+ADDIU	V0, R0, 2
+}
+
+#new:Function $GetFP
+{
+PUSH	RA, A1, A2
+LIO		A1, 8010F290
+LB		A2, 5 (A1)
+JAL		~Func:set_variable
+LW		A1, 0 (S0) %get argument
+NOP
+POP		RA, A1, A2
+JR		RA
+ADDIU	V0, R0, 2
+}
+
+#new:Function $Function_802A1378
+{
+    0:  ADDIU		SP, SP, FFD0
+    4:  SW			S1, 1C (SP)
+    8:  COPY		S1, A0
+    C:  SW			RA, 28 (SP)
+   10:  SW			S3, 24 (SP)
+   14:  SW			S2, 20 (SP)
+   18:  SW			S0, 18 (SP)
+   1C:  LW			S0, C (S1)
+   20:  LW			A1, 0 (S0)
+   24:  JAL			~Func:get_variable
+   28:  ADDIU		S0, S0, 4
+   2C:  LW			A1, 0 (S0)
+   30:  ADDIU		S0, S0, 4
+   34:  COPY		A0, S1
+   38:  JAL			~Func:get_variable
+   3C:  COPY		S3, V0
+   40:  LW			A1, 0 (S0)
+   44:  ADDIU		S0, S0, 4
+   48:  COPY		A0, S1
+   4C:  JAL			~Func:get_variable
+   50:  COPY		S2, V0
+   54:  COPY		A0, S1
+   58:  LW			A1, 0 (S0)
+   5C:  JAL			~Func:get_variable
+   60:  COPY		S0, V0
+   64:  MTC1		S3, F0
+   68:  NOP
+   6C:  CVT.S.W		F0, F0
+   70:  MFC1		A1, F0
+   74:  MTC1		S2, F0
+   78:  NOP
+   7C:  CVT.S.W		F0, F0
+   80:  MFC1		A2, F0
+   84:  MTC1		S0, F0
+   88:  NOP
+   8C:  CVT.S.W		F0, F0
+   90:  MFC1		A3, F0
+   94:  CLEAR		A0
+   98:  JAL			80071090
+   9C:  SW			V0, 10 (SP)
+   A0:  LW			RA, 28 (SP)
+   A4:  LW			S3, 24 (SP)
+   A8:  LW			S2, 20 (SP)
+   AC:  LW			S1, 1C (SP)
+   B0:  LW			S0, 18 (SP)
+   B4:  ADDIU		V0, R0, 2
+   B8:  JR			RA
+   BC:  ADDIU		SP, SP, 30
+}
+
+@ $Script_UseItem %kooky cookie shares this script
+{
+		If *GB_FileCodeMode == 14`
+			Call	 $Function_SetArbitraryByte ( 00000002 $ItemCostReductionData[2] )
+			Call	 $Function_SetArbitraryByte ( 00000000 $ItemCostReductionData[3] )	
+		EndIf
+    0:  Call     GetMenuSelection 	( *Var[0] *Var[1] *Var[2] )
+   18:  If  *Var[1]  ==  000000D3 
+			Call	 $GetHP ( *Var[E] )
+			Call	 $GetFP ( *Var[F] )
+			Call	 $Function_GetArbitraryByte ( *VarD $ItemCostReductionData[2] )
+			Switch *VarD
+				Case == 2`
+					Add *VarE *VarE
+					Add *VarF *VarF
+				Case == 1`
+					Set *VarD *VarE
+					Div *VarD 2`
+					Add *VarE *VarD
+					Set *VarD *VarF
+					Div *VarD 2`
+					Add *VarF *VarD
+				Default
+			EndSwitch
+   28:  	SetConst  *Var[A]  000000D3 
+   38:  	Set  *Var[1]  00000000 
+   48:  	ExecWait $Script_802A1BB0 
+   54:  	ExecWait $Script_802A207C 
+   %60:  	Call     $Function_802A1A8C ( )
+   6C:  	Call     GetActorPos 	( .Actor:Player *Var[0] *Var[1] *Var[2] )
+   88:  	Add  *Var[0]  00000014 
+   98:  	Add  *Var[1]  00000019 
+   A8:  	Call     $Function_802A18D8 ( *Var[0] *Var[1] *Var[2] *Var[E] )
+   C4:  	Call     GetActorPos 	( .Actor:Player *Var[0] *Var[1] *Var[2] )
+			Add  *Var[0]  00000014 
+   E0:  	Add  *Var[1]  00000019 
+   %F0:  	Call     802D7520 ( *Var[0] *Var[1] *Var[2] *Var[E] )
+			Call	 $GetHP ( *Var[E] )
+			Call	 $GetFP ( *Var[F] )
+			Call	 $Function_GetArbitraryByte ( *VarD $ItemCostReductionData[2] )			
+			Switch *VarD
+				Case == 2`
+					Add *VarE *VarE
+					Add *VarF *VarF
+					If *VarE > 99`
+						Set *VarE 99`
+					EndIf
+					If *VarF > 99`
+						Set *VarF 99`
+					EndIf
+				Case == 1`
+					Set *VarD *VarE
+					Div *VarD 2`
+					Add *VarE *VarD
+					Set *VarD *VarF
+					Div *VarD 2`
+					Add *VarF *VarD
+					If *VarE > 99`
+						Set *VarE 99`
+					EndIf
+					If *VarF > 99`
+						Set *VarF 99`
+					EndIf
+				Default
+			EndSwitch			
+  10C:  	Call     $Function_802A19EC ( *Var[E] )
+			Call     GetActorPos 	( .Actor:Player *Var[0] *Var[1] *Var[2] )
+			Add  *Var[1]  00000023
+			%Call     802D7520 ( *Var[0] *Var[1] *Var[2] *Var[F] )						%THIS CRASHES
+			If *Var[F] != 0																
+				Call     $Function_802A1998 ( *Var[F] )									
+				Call	 $Function_802A1378 ( *Var[0] *Var[1] *Var[2] *Var[F] )			
+			EndIf
+  11C:  	Wait     0000000A 
+  128:  	Call     SetAnimation 	( .Actor:Player 00000000 00010032 )					
+  140:  	Wait     0000001E 
+  14C:  	Call     GetActorPos 	( .Actor:Player *Var[0] *Var[1] *Var[2] )
+  168:  	Call     802D75D8 ( *Var[0] *Var[1] *Var[2] *Var[E] )
+  184:  	Call     SetAnimation 	( .Actor:Player 00000000 00010002 )
+  19C:  	Wait     00000014 
+  1A8:  	Call     SetAnimation 	( .Actor:Player 00000000 00010002 )
+  1C0:  Else
+  1C8:  	SetConst  *Var[A]  000000D2 
+  1D8:  	Set  *Var[1]  00000000 
+  1E8:  	ExecWait $Script_802A1BB0 
+  1F4:  	ExecWait $Script_802A207C 
+			Call	 $Function_GetArbitraryByte ( *VarF $ItemCostReductionData[2] )
+			If *GB_FileCodeMode == 14`
+				Set *VarF 0`
+			EndIf
+			Switch *VarF
+				Case == 2`
+					%Swaps twice
+					%No effect*					
+					Call	$Function_SwapStats ( )
+					Call	$Function_SwapStats ( )
+				Case == 1`
+					%Equalize FP and HP
+					Call 	$Function_EqualizeStats ( )
+				Default
+					Call	$Function_SwapStats ( )
+			EndSwitch
+			Call     GetActorPos 	( .Actor:Player *Var5 *Var6 *Var7 )
+			Add *Var6 10`
+			Call	 $Function_DebuffEffectLightGreen ( )			
+  200:  	Call     SetAnimation 	( .Actor:Player 00000000 00010002 )
+  218:  EndIf
+  220:  Wait     0000000A 
+  2E4:  ExecWait $Script_802A1FE0 
+  2F0:  Return
+  2F8:  End
+}
+
+
+%set var5, var6, var7 to correct position
+%FF, DD, 2E
+#new:Function $Function_DebuffEffectLightGreen
+{
+    0:  ADDIU     SP, SP, FFE8
+    4:  COPY      V0, A0
+    8:  SW        RA, 10 (SP)
+    C:  LWC1      F0, 98 (V0)				%84 (var0) -> 98 (var5)
+   10:  CVT.S.W   F0, F0
+   14:  MFC1      A1, F0
+   18:  LWC1      F0, 9C (V0)
+   1C:  CVT.S.W   F0, F0
+   20:  MFC1      A2, F0
+   24:  LWC1      F0, A0 (V0)
+   28:  CVT.S.W   F0, F0
+   2C:  MFC1      A3, F0
+   30:  JAL       80070AF0
+   34:  ADDIU     A0, R0, 2   
+   38:  LW        A0, C (V0)
+		ADDIU     V1, R0, B1 
+   40:  SB        V1, 38 (A0)						%color byte 1?
+   44:  LW        A0, C (V0)
+		ADDIU     V1, R0, FF
+   4C:  SB        V1, 39 (A0)						%color byte 2?
+   50:  LW        V1, C (V0)
+		ADDIU     A0, R0, B1
+   54:  SB        A0, 3A (V1)						%color byte 3?
+   58:  LW        A0, C (V0)
+		ADDIU     V1, R0, 70
+   60:  SB        V1, 3B (A0)						%color byte 4? (unused?)
+   64:  LW        A0, C (V0)
+		ADDIU     V1, R0, FF 
+   6C:  SB        V1, 3C (A0)						%color byte 5?
+   70:  LW        V1, C (V0)
+		ADDIU     V0, R0, FF 
+   74:  SB        V0, 3D (V1)						%color byte 6?
+   78:  LW        RA, 10 (SP)
+   7C:  ADDIU     V0, R0, 2   						%return 2
+   80:  JR        RA
+   84:  ADDIU     SP, SP, 18
+}

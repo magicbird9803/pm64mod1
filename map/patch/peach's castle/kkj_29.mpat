@@ -1,0 +1,4 @@
+@ $Script_80243C40
+{
+	[12AC]  Call  ShowGotItem   ( .Item:SneakyParasolB .True 00000000 )
+}

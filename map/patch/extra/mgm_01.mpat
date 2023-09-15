@@ -1,0 +1,513 @@
+%minigame man gets a bit suspicious if you get 950 coins (perfect score!), which is a 1/1980 chance I think
+%I seriously doubt anyone has ever played so much that they get a 950 score legit
+%...though this guy only gets suspicious after a bunch of perfect games
+
+@ $Script_80241C4C
+{
+	0:  Label  0
+    C:  Set   *VarA  00000000
+   1C:  Set   *VarB  00000000
+   2C:  Call  GetNpcVar ( 00000000 00000004 *VarC )
+   44:  Loop  0000000B
+   50:  	Call  $Function_8024045C    ( *VarA )
+   60:  	Switch  *Var0
+   6C:  		Case  ==  00000000
+   78:  			Call  EnableModel   ( *Var1 .False )
+   8C:  			Call  $Function_8024050C    ( *VarA 00000001 )
+   A0:  		Case  ==  00000002
+   AC:  			Call  DisablePlayerInput    ( .True )
+   BC:  			Call  $Function_8024058C    ( *VarA )
+   CC:  			Call  EnableModel   ( *Var1 .True )
+   E0:  			Call  $Function_8024050C    ( *VarA 00000003 )
+   F4:  		Case  ==  00000004
+  100:  			If  *Var2  !=  00000003
+  110:  				If  *Var3  <  *VarC
+  120:  					Call  DisablePlayerInput    ( .False )
+  130:  				EndIf
+  138:  			EndIf
+  140:  			Call  $Function_802407E4    ( *VarA )
+  150:  			Call  $Function_8024050C    ( *VarA 00000005 )
+  164:  		Case  ==  00000006
+  170:  			Call  $Function_802408EC    ( *VarA )
+  180:  			Call  $Function_8024050C    ( *VarA 00000007 )
+  194:  		Case  ==  00000008
+  1A0:  			Call  $Function_80240BF4    ( *VarA )
+  1B0:  			Call  $Function_8024050C    ( *VarA 00000009 )
+  1C4:  	EndSwitch
+  1CC:  	Switch  *Var0
+  1D8:  		Case  ==  00000003
+  1E4:  			Call  $Function_802406C4    ( *VarA )
+  1F4:  			If  *Var3  ==  00000001
+  204:  				Call  $Function_8024050C    ( *VarA 00000004 )
+  218:  			EndIf
+  220:  		Case  ==  00000005
+  22C:  			Call  $Function_8024084C    ( *VarA )
+  23C:  			If  *Var3  ==  00000001
+  24C:  				Call  $Function_8024050C    ( *VarA 00000006 )
+  260:  			EndIf
+  268:  		Case  ==  00000007
+  274:  			Call  $Function_80240AAC    ( *VarA )
+  284:  			If  *Var3  ==  00000001
+  294:  				Call  $Function_8024050C    ( *VarA 00000008 )
+  2A8:  			EndIf
+  2B0:  		Case  ==  00000009
+  2BC:  			If  *Var2  ==  00000003
+  2CC:  				Set   *VarB  00000001
+  2DC:  			Else
+  2E4:  				If  *Var3  ==  *VarC
+  2F4:  					Set   *VarB  00000002
+  304:  				EndIf
+  30C:  			EndIf
+  314:  	EndSwitch
+  31C:  	If  *Var0  >=  00000002
+  32C:  		Call  $Function_80240ECC    ( *VarA )
+  33C:  		Call  TranslateModel    ( *Var1 *Var5 *Var6 *Var7 )
+  358:  		Call  RotateModel       ( *Var1 *Var8 *Fixed[0.0] *Fixed[1.0] *Fixed[0.0] )
+  378:  		Call  ScaleModel        ( *Var1 *Var9 *Var9 *Fixed[1.0] )
+  394:  	EndIf
+  39C:  	Add   *VarA  00000001
+  3AC:  EndLoop
+  3B4:  If  *VarB  !=  00000000
+  3C4:  	Goto  63
+  3D0:  EndIf
+  3D8:  Wait  1`
+  3E4:  Goto  0
+  3F0:  Label  63
+  3FC:  Call  $Function_80240438 ( )
+  408:  Thread
+  410:  	Wait  15`
+  41C:  	Call  PopSong ( )
+  428:  EndThread
+  430:  Switch  *VarB
+  43C:  	Case  ==  00000001
+  448:  		Call  PlaySoundWithVolume   ( 00002017 00000000 )
+  45C:  		Wait  10`
+  468:  		Call  PlaySoundWithVolume   ( 00002017 00000000 )
+  47C:  		Wait  10`
+  488:  		Call  $Function_80240DB8 ( )
+  494:  		Call  TranslateModel        ( *Var1 *Var5 *Var6 *Var7 )
+  4B0:  		Wait  15`
+  4BC:  		Call  SpeakToPlayer ( 00000000 00830004 00830001 00000000 00080034 ) % Oops... Bummer! Game over. Too bad. Better luck ne ...
+  4DC:  	Case  ==  00000002
+  4E8:  		Switch  *VarC
+  4F4:  			Case  ==  00000004
+  500:  				Call  $Function_CalculateScore ( )
+  50C:  				Call  SpeakToPlayer ( 00000000 00830004 00830001 00000000 00080035 ) % 5-Blocks Option cleared! You get coins!
+  52C:  			Case  ==  00000006
+  538:  				Call  $Function_CalculateScore ( )
+  544:  				Call  SpeakToPlayer ( 00000000 00830004 00830001 00000000 00080036 ) % 7-Blocks Option cleared! You get coins!
+  564:  			Case  ==  00000008
+  570:  				Call  SpeakToPlayer ( 00000000 00830004 00830001 00000000 00080037 ) % Wow! Yeah! 9-Blocks Option cleared! As a special b ...
+  590:  				Call  $Function_80240D84 ( )
+  59C:  				Call  PlaySoundWithVolume   ( 000003FC 00000000 )
+  5B0:  				Wait  30`
+						Call	 $Function_GetScore ( *Var[F] )
+						If *Var[F] == 950`
+							Add *GB_PerfectScoreCount 1
+							Set *VarE *GB_PerfectScoreCount
+							%Call $Function_GetTotalScore ( *Var[E] )
+							Switch *Var[E]
+								Case < 5` %Case < 3800` %5 perfect scores
+									Call     $Function_CalculateScore ( )
+									Call     SpeakToPlayer 	( 00000000 00830004 00830001 00000000 $PerfectScore ) % You get  coins!!
+								Case < 6` %Case < 4750` %6 perfect scores
+									Call     $Function_CalculateScore ( )
+									Call     SpeakToPlayer 	( 00000000 00830004 00830001 00000000 $TooMuchCheating ) % You get  coins!!
+								Case < 7` %Case < 5700` %7 perfect scores
+									Call     $Function_CalculateScore ( )
+									Call     SpeakToPlayer 	( 00000000 00830004 00830001 00000000 $MyCodeDoesntWorkWellEnough ) % You get  coins!!
+								Default
+									Call     $Function_CalculateScore ( )
+									Call     SpeakToPlayer 	( 00000000 00830004 00830001 00000000 $CheatQuote ) % You get  coins!!
+							EndSwitch
+						Else
+  5BC:  					Call  $Function_CalculateScore ( )
+  5C8:  					Call  SpeakToPlayer ( 00000000 00830004 00830001 00000000 00080038 ) % You get coins!!
+						EndIf  
+  5E8:  		EndSwitch
+  5F0:  		Call  ShowCoinCounter   ( .True )
+  600:  		Wait  10`
+  60C:  		Call  $Function_80240CD0 ( )
+  618:  		Wait  15`
+  624:  		Call  ShowCoinCounter   ( .False )
+  634:  		Wait  5`
+				If *GB_PerfectScoreCount <= 5`
+  640:  			Call  SpeakToPlayer     ( 00000000 00830004 00830001 00000000 0008003A ) % Come again sometime!
+				Else
+  640:  			Call  SpeakToPlayer     ( 00000000 00830004 00830001 00000000 $DontComeBack ) % Come again sometime!
+				EndIf
+  660:  EndSwitch
+  668:  Wait  10`
+  674:  Call  $Function_80240F90 ( )
+  680:  Exec  $Script_80242470
+  68C:  Wait  1`
+  698:  Call  DisablePlayerInput    ( .False )
+  6A8:  Goto  0
+  6B4:  Return
+  6BC:  End
+}
+
+
+#new:Function $Function_GetScore %Parameter is a variable
+{
+PUSH	RA
+PUSH	A0, V0
+JAL		~Func:get_enemy %~Func:get_foe %the game uses this to access minigame data (?) 
+CLEAR	A0
+LW		T2, 80 (V0)
+LW		V1, C (T2) %get the coin score
+ADDI	A2, V1, 0
+POP 	A0, V0
+LW		V0, C (A0)
+JAL		~Func:set_variable
+LW		A1, 0 (V0)
+POP		RA
+JR		RA
+ADDIU	V0, R0, 2
+}
+
+#new:Function $Function_GetTotalScore %Parameter is a variable
+{
+PUSH	RA
+LIO		A2, 8010F290
+LW		A2, 330 (A2) %I think this is a total score count?
+LW		V0, C (A0)
+JAL		~Func:set_variable
+LW		A1, 0 (V0)
+POP		RA
+JR		RA
+ADDIU	V0, R0, 2
+}
+  
+#string $DontComeBack
+{
+	[Style Right]
+	Don't come back.[Wait][End]
+}
+  
+#string $PerfectScore
+{
+[STYLE:Right]You get 950 coins!![BR]
+[Wait][NEXT]Wow! That's a perfect score![BR]
+[Wait][NEXT]Hang on a moment, you must've [BR]
+gotten extremely lucky or...[BR]
+[Wait][NEXT]Hey Mario, You know save-stating [BR]
+is against the rules, Right?[BR]
+[Wait][NEXT]...I'm not saying you cheated,[BR]
+I couldn't even tell if you did [BR]
+cheat, but...[BR]
+[Wait][NEXT]Just keep in mind that if we lose [BR]
+too many coins we'll go out of [BR]
+business, ok?
+[Wait][END]
+}
+
+#string $TooMuchCheating
+{
+[STYLE:Right]You get 950 coins!![BR]
+[Wait][NEXT]Wow. Another perfect score.[BR]
+[PAUSE:0A]AlRight, this is ridiculous.[BR]
+[Wait][NEXT]The chances of getting 5[BR]
+perfect scores in a row is[BR]
+1 in 30 quadrillion.[BR]
+[Wait][NEXT]That's not Dream luck, but[BR]
+there's pretty much no way you[BR]
+got that legitimately.[BR]
+[Wait][NEXT]I'm pretty sure you're cheating,[BR]
+but since you're Mario I can't do[BR]
+anything about it.[BR]
+[Wait][NEXT]Plus, I bet you'll just load[BR]
+another save state if I actually[BR]
+banned you.
+[Wait][END]
+}
+
+#string $MyCodeDoesntWorkWellEnough
+{
+[STYLE:Right]You get 950 coins!![BR]
+[Wait][NEXT]Wow. Another perfect score.[BR]
+[PAUSE:0A]You know, there's actually code[BR]
+in this mod that can detect[BR]
+savestates.[BR]
+[Wait][NEXT]Unfortunately, it has[BR]
+a lot of problems so it can't[BR]
+be used here.[BR]
+[Wait][END]
+}
+
+#string $CheatQuote
+{
+[STYLE:Right]You get 950 coins!![BR]
+[Wait][NEXT]Wow. You used cheats to get[BR]
+all those coins, and for what?[BR]
+[Wait][NEXT]You cheated not only the game,[BR]
+but yourself. You didn't grow.[BR]
+You didn't improve. You took a[BR]
+shortcut and gained nothing.[BR]
+[Wait][NEXT]You experienced a hollow victory.[BR]
+Nothing was risked and nothing[BR]
+was gained. It's sad that you[BR]
+don't know the difference.
+[Wait][END]
+}
+
+
+
+/%
+%Bonk a block
+%Input var is index of block
+@ $Function_80241090
+{
+    0:  ADDIU     SP, SP, FFC8
+    4:  SW        S0, 10 (SP)
+    8:  COPY      S0, A0
+    C:  CLEAR     A0
+   10:  SW        RA, 34 (SP)
+   14:  SW        S8, 30 (SP)
+   18:  SW        S7, 2C (SP)
+   1C:  SW        S6, 28 (SP)
+   20:  SW        S5, 24 (SP)
+   24:  SW        S4, 20 (SP)
+   28:  SW        S3, 1C (SP)
+   2C:  SW        S2, 18 (SP)
+   30:  JAL       ~Func:get_enemy
+   34:  SW        S1, 14 (SP)
+   38:  COPY      A0, S0
+   3C:  LW        V1, C (A0)
+   40:  COPY      S6, V0
+   44:  LW        A1, 0 (V1)
+   48:  LW        S2, 80 (S6)				%something
+   4C:  JAL       ~Func:get_variable
+   50:  CLEAR     S0
+   54:  COPY      S3, V0
+   58:  SLL       V1, S3, 2
+   5C:  ADDU      V1, S2, V1
+   60:  LW        S4, 74 (S6)				%increasing thing (each block hit increases this by 1) (ex: hitting 8th block makes this value 7)
+		LW		  V0, 7C (S6)				%index of the last block you hit in the game (9th block in 9 block option)
+		BNE		  S4, V0, .normal
+		NOP
+		BEQ		  R0, R0, .skipsee
+		LI		  S5, 3`					%oh no, you hit a bowser block, such bad luck ;)
+		.normal
+   64:  LW        S5, 1C (V1)				%what is in this block?
+		.skipsee
+   68:  LI        V1, FFFF
+   6C:  SLL       V0, S4, 2
+   70:  ADDU      V0, S2, V0
+   74:  SW        S5, 48 (V0)
+   78:  SLL       V0, S3, 1		%some complicated math
+   7C:  ADDU      V0, V0, S3
+   80:  SLL       V0, V0, 3
+   84:  SUBU      V0, V0, S3
+   88:  SLL       V0, V0, 2
+   8C:  ADDU      V0, S2, V0
+   90:  SW        V1, 88 (V0)	%store this in some heap structure
+   94:  ADDIU     V0, S4, 1
+   98:  BLEZ      V0, .o11C
+   9C:  COPY      A0, S0
+   A0:  LI        S8, 3
+   A4:  COPY      S7, V0
+   A8:  COPY      S1, S2
+        .oAC
+   AC:  LW        V1, 48 (S1)
+   B0:  LI        A2, 1
+   B4:  BEQ       V1, A2, .oEC
+   B8:  SLTI      V0, V1, 2
+   BC:  BEQL      V0, R0, .oD4
+   C0:  LI        A2, 2
+   C4:  BEQL      V1, R0, .o108
+   C8:  ADDIU     A0, A0, 1
+   CC:  BEQ       R0, R0, .o10C
+   D0:  ADDIU     S1, S1, 4
+        .oD4
+   D4:  BEQ       V1, A2, .oF4
+   D8:  SLL       V0, A0, 2
+   DC:  BEQ       V1, S8, .oFC
+   E0:  NOP
+   E4:  BEQ       R0, R0, .o10C
+   E8:  ADDIU     S1, S1, 4
+        .oEC
+   EC:  BEQ       R0, R0, .o108
+   F0:  ADDIU     A0, A0, 5
+        .oF4
+   F4:  BEQ       R0, R0, .o108
+   F8:  ADDU      A0, A0, V0
+        .oFC
+   FC:  JAL       ~Func:sfx_play_sound
+  100:  LI        A0, 21D
+  104:  CLEAR     A0
+        .o108
+  108:  ADDIU     S1, S1, 4
+        .o10C
+  10C:  ADDIU     S0, S0, 1
+  110:  SLT       V0, S0, S7
+  114:  BNE       V0, R0, .oAC
+  118:  NOP
+        .o11C
+  11C:  SW        A0, 10 (S2)
+  120:  CLEAR     S0
+  124:  LI        A0, 1
+  128:  LI        A1, 2
+  12C:  COPY      V1, S2
+        .o130
+  130:  LW        V0, 7C (V1)
+  134:  BNE       S5, V0, .o158
+  138:  ADDIU     S0, S0, 1
+  13C:  LW        V0, 74 (V1)
+  140:  BNE       V0, A0, .o15C
+  144:  SLTI      V0, S0, B
+  148:  SW        A1, 74 (V1)
+  14C:  SW        S3, 80 (V1)
+  150:  BEQ       R0, R0, .o164
+  154:  SW        S4, 84 (V1)
+        .o158
+  158:  SLTI      V0, S0, B
+        .o15C
+  15C:  BNE       V0, R0, .o130
+  160:  ADDIU     V1, V1, 5C
+        .o164
+  164:  LW        V1, 74 (S6)
+  168:  ADDIU     V1, V1, 1
+  16C:  SW        V1, 74 (S6)
+  170:  LW        RA, 34 (SP)
+  174:  LW        S8, 30 (SP)
+  178:  LW        S7, 2C (SP)
+  17C:  LW        S6, 28 (SP)
+  180:  LW        S5, 24 (SP)
+  184:  LW        S4, 20 (SP)
+  188:  LW        S3, 1C (SP)
+  18C:  LW        S2, 18 (SP)
+  190:  LW        S1, 14 (SP)
+  194:  LW        S0, 10 (SP)
+  198:  LI        V0, 2
+  19C:  JR        RA
+  1A0:  ADDIU     SP, SP, 38
+}
+%/
+
+/%
+%Bonk a block
+%Input var is index of block
+@ $Function_80241090
+{
+    0:  ADDIU     SP, SP, FFC8
+    4:  SW        S0, 10 (SP)
+    8:  COPY      S0, A0
+    C:  CLEAR     A0
+   10:  SW        RA, 34 (SP)
+   14:  SW        S8, 30 (SP)
+   18:  SW        S7, 2C (SP)
+   1C:  SW        S6, 28 (SP)
+   20:  SW        S5, 24 (SP)
+   24:  SW        S4, 20 (SP)
+   28:  SW        S3, 1C (SP)
+   2C:  SW        S2, 18 (SP)
+   30:  JAL       ~Func:get_enemy
+   34:  SW        S1, 14 (SP)
+   38:  COPY      A0, S0
+   3C:  LW        V1, C (A0)
+   40:  COPY      S6, V0
+   44:  LW        A1, 0 (V1)
+   48:  LW        S2, 80 (S6)				%something
+   4C:  JAL       ~Func:get_variable
+   50:  CLEAR     S0
+   54:  COPY      S3, V0
+   %58: SLL       V1, S3, 2					%get index from S3
+		LW		  V0, 74 (S6)				%increasing thing (each block hit increases this by 1) (ex: hitting 8th block makes this value 7)
+		SLL       V1, V0, 2					%replace with index of the block
+   5C:  ADDU      V1, S2, V1
+   60:  LW        S4, 74 (S6)				%increasing thing (each block hit increases this by 1) (ex: hitting 8th block makes this value 7)
+   64:  LW        S5, 1C (V1)				%what is in this block?
+   68:  LI        V1, FFFF
+   6C:  SLL       V0, S4, 2
+   70:  ADDU      V0, S2, V0
+   74:  SW        S5, 48 (V0)
+   78:  SLL       V0, S3, 1		%some complicated math
+   7C:  ADDU      V0, V0, S3
+   80:  SLL       V0, V0, 3
+   84:  SUBU      V0, V0, S3
+   88:  SLL       V0, V0, 2
+   8C:  ADDU      V0, S2, V0
+   90:  SW        V1, 88 (V0)	%store this in some heap structure
+   94:  ADDIU     V0, S4, 1
+   98:  BLEZ      V0, .o11C
+   9C:  COPY      A0, S0
+   A0:  LI        S8, 3
+   A4:  COPY      S7, V0
+   A8:  COPY      S1, S2
+        .oAC
+   AC:  LW        V1, 48 (S1)
+   B0:  LI        A2, 1
+   B4:  BEQ       V1, A2, .oEC
+   B8:  SLTI      V0, V1, 2
+   BC:  BEQL      V0, R0, .oD4
+   C0:  LI        A2, 2
+   C4:  BEQL      V1, R0, .o108
+   C8:  ADDIU     A0, A0, 1
+   CC:  BEQ       R0, R0, .o10C
+   D0:  ADDIU     S1, S1, 4
+        .oD4
+   D4:  BEQ       V1, A2, .oF4
+   D8:  SLL       V0, A0, 2
+   DC:  BEQ       V1, S8, .oFC
+   E0:  NOP
+   E4:  BEQ       R0, R0, .o10C
+   E8:  ADDIU     S1, S1, 4
+        .oEC
+   EC:  BEQ       R0, R0, .o108
+   F0:  ADDIU     A0, A0, 5
+        .oF4
+   F4:  BEQ       R0, R0, .o108
+   F8:  ADDU      A0, A0, V0
+        .oFC
+   FC:  JAL       ~Func:sfx_play_sound
+  100:  LI        A0, 21D
+  104:  CLEAR     A0
+        .o108
+  108:  ADDIU     S1, S1, 4
+        .o10C
+  10C:  ADDIU     S0, S0, 1
+  110:  SLT       V0, S0, S7
+  114:  BNE       V0, R0, .oAC
+  118:  NOP
+        .o11C
+  11C:  SW        A0, 10 (S2)
+  120:  CLEAR     S0
+  124:  LI        A0, 1
+  128:  LI        A1, 2
+  12C:  COPY      V1, S2
+        .o130
+  130:  LW        V0, 7C (V1)
+  134:  BNE       S5, V0, .o158
+  138:  ADDIU     S0, S0, 1
+  13C:  LW        V0, 74 (V1)
+  140:  BNE       V0, A0, .o15C
+  144:  SLTI      V0, S0, B
+  148:  SW        A1, 74 (V1)
+  14C:  SW        S3, 80 (V1)
+  150:  BEQ       R0, R0, .o164
+  154:  SW        S4, 84 (V1)
+        .o158
+  158:  SLTI      V0, S0, B
+        .o15C
+  15C:  BNE       V0, R0, .o130
+  160:  ADDIU     V1, V1, 5C
+        .o164
+  164:  LW        V1, 74 (S6)
+  168:  ADDIU     V1, V1, 1
+  16C:  SW        V1, 74 (S6)
+  170:  LW        RA, 34 (SP)
+  174:  LW        S8, 30 (SP)
+  178:  LW        S7, 2C (SP)
+  17C:  LW        S6, 28 (SP)
+  180:  LW        S5, 24 (SP)
+  184:  LW        S4, 20 (SP)
+  188:  LW        S3, 1C (SP)
+  18C:  LW        S2, 18 (SP)
+  190:  LW        S1, 14 (SP)
+  194:  LW        S0, 10 (SP)
+  198:  LI        V0, 2
+  19C:  JR        RA
+  1A0:  ADDIU     SP, SP, 38
+}
+%/

@@ -1,0 +1,23 @@
+@ $Script_MakeEntities
+{
+    0:  Thread
+    8:  	Call  $Function_80240138 ( )
+   14:  EndThread
+   1C:  Call  MakeEntity    ( .Entity:ScriptSpring ~Vec4d:Entity802410DC 80000000 )
+   40:  Call  AssignScript  ( $Script_80240EE0 )
+   50:  If  *GF_PRA04_BoardedFloor  ==  .False
+   60:  	Call  MakeEntity    ( .Entity:BoardedFloor ~Vec4d:Entity80241120 80000000 )
+   84:  	Call  AssignScript  ( $Script_80241074 )
+   94:  EndIf
+   9C:  Call  MakeEntity        ( .Entity:YellowBlock ~Vec4d:Entity8024115C .Item:SuperTrio 80000000 )
+   C4:  Call  AssignBlockFlag   ( *GF_PRA04_ItemBlock_SuperShroom )
+   D4:  Return
+   DC:  End
+}
+
+%too lazy to change the swoopula code for that one formation, so change it
+@ $NpcGroupList_80241498
+{
+	00000001 $NpcGroup_802412A8 1F030001
+	00000000 00000000 00000000
+}

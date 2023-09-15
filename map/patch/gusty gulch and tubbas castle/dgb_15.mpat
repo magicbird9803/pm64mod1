@@ -1,0 +1,15 @@
+@ $AISettings_8024271C
+{
+    5.0 % move speed
+    30` % move time
+    30` % Wait time
+  250.0 % alert radius
+   80.0
+    1`
+    6.5 % chase speed
+    180`
+    2`
+  260.0 % chase radius
+   80.0
+    1`
+}

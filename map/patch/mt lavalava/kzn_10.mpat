@@ -1,0 +1,19 @@
+% Increase the damage taken when crushed.
+@ $Function_80240330
+{
+    0:  ADDIU     SP, SP, FFE8
+    4:  SW        RA, 10 (SP)
+    8:  JAL       800EA334
+    C:  ADDIU     A0, R0, 5	% was 1
+   10:  LW        RA, 10 (SP)
+   14:  ADDIU     V0, R0, 2
+   18:  JR        RA
+   1C:  ADDIU     SP, SP, 18
+}
+
+@ $Script_80241464
+{
+	[E4]        If       *Var[0]  >  -350`	% was 400
+	[10C]       If       *Var[0]  <  -350`	% was 400
+	[494]  		Call     MakeLerp    	( FFFFFE2B 000001A2 100` 00000001 ) % was 180`
+}

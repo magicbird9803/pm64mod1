@@ -1,0 +1,637 @@
+%Dark sentinel
+%I took those enemies from tubba's castle, gave them a palette swap, and now we have a new enemy
+
+% Define your graphics here
+#define .SentinelAnimStop		00380900
+#define .SentinelAnimIdle		00380901
+#define .SentinelAnimPoison		00380901
+#define .SentinelAnimPain		00380906
+#define .SentinelAnimDizzy		0038090A
+#define .SentinelAnimDead		00380906
+#define .SentinelAnimRun		00380901
+#define .SentinelAnimGrab		00380908
+#define .SentinelAnimRelease	00380909
+#define .SentinelAnimSad		00380906
+%#define .SentinelAnimSleep  	00380901
+%#define .SentinelAnimBurn   	00380906
+%#define .SentinelAnimBurn2  	00380906
+
+#new:Actor $DarkSentinel
+{
+% stats
+[Index]         FEb % last in the enemy table
+[Level]        33`b 
+[MaxHP]        12`b		%pretty low, but they have weird armor
+[Coins]         1`b 
+[Flags]       00000200 
+[StatusTable] $StatusTable_DarkSentinel 
+% ai
+[PartsCount]   1`s 
+[PartsTable] $PartsTable_DarkSentinel 
+[Script]      $Script_Init_DarkSentinel 
+% move effectiveness
+[Escape]       10`b 
+[Item]         10`b 
+[AirLift]       0`b 
+[Hurricane]     0`b % Bow's "Spook" as well
+[UpAndAway]    95`b %higher 
+[PowerBounce] 100`b 
+[SpinSmash]     0`b % weight (0-4)
+% ui positions
+[Size]         50`b  40`b % width height
+[HealthBar]     0`b   0`b % dx dy
+[StatusTurn]  -18`b  30`b % dx dy
+[StatusIcon]   18`b  30`b % dx dy
+}
+
+#new:DefenseTable $DefenseTable_DarkSentinel
+{
+.Element:Normal 00000000
+.Element:Throw FFFFFFFF 
+.Element:Fire	00000063 %I'm too lazy to set up a fire palette so here you go
+.Element:Blast	00000063 %
+.Element:Cosmic FFFFFFFD %star storm does 10 agains them though
+.Element:End
+}
+
+#new:StatusTable $StatusTable_DarkSentinel %50% -1 to a lot of statuses
+{
+.Status:Normal      0`
+.Status:Default     0`
+.Status:Sleep       0`
+.Status:Poison      0`
+.Status:Frozen      0`
+.Status:Dizzy      50`
+.Status:Fear       50`
+.Status:Static     50`
+.Status:Paralyze   50`
+.Status:Shrink     20`
+.Status:Stop       50`
+.Status:DefaultTurnMod   -1`
+.Status:SleepTurnMod     -1`
+.Status:PoisonTurnMod    -1`
+.Status:FrozenTurnMod    -1`
+.Status:DizzyTurnMod     -1`
+.Status:FearTurnMod      -1`
+.Status:StaticTurnMod    -1`
+.Status:ParalyzeTurnMod  -1`
+.Status:ShrinkTurnMod    -1`
+.Status:StopTurnMod      -1`
+.Status:End
+}
+
+#new:PartsTable $PartsTable_DarkSentinel	%Add sprite event flag 01000000
+{
+00800200 01000000 001400FF $IdleAnimations_DarkSentinel $DefenseTable_DarkSentinel 01000000 00000000 00F60000 00000000 
+}
+
+#new:IdleAnimations $IdleAnimations_DarkSentinel
+{
+.Status:Normal    .SentinelAnimIdle
+.Status:Stone     .SentinelAnimStop
+.Status:Sleep     .SentinelAnimStop
+.Status:Poison    .SentinelAnimSad
+.Status:Stop      .SentinelAnimStop
+.Status:Static    .SentinelAnimIdle
+.Status:Paralyze  .SentinelAnimStop
+.Status:Dizzy     .SentinelAnimDizzy
+.Status:Fear      .SentinelAnimDizzy
+.Status:End
+}
+
+#new:Script $Script_Init_DarkSentinel
+{
+	Call     BindTakeTurn 	( .Actor:Self $Script_TakeTurn_DarkSentinel )
+	Call     BindIdle    	( .Actor:Self $Script_Idle_DarkSentinel )
+    Call     BindHandleEvent 	( .Actor:Self $Script_HandleEvent_DarkSentinel )
+	Call	 SetActorVar 	( .Actor:Self 00000000 00000000 ) %AI state
+	Call	 SetActorVar 	( .Actor:Self 00000001 00000001 ) %Can I summon anything?
+    Return
+    End
+}
+
+#new:Script $Script_Idle_DarkSentinel
+{
+  Return
+  End
+}
+
+#new:Script $Script_HandleEvent_DarkSentinel
+{
+    0:  Call     UseIdleAnimation 	( .Actor:Self .False )
+   14:  Call     EnableIdleScript 	( .Actor:Self 00000000 )
+   28:  Call     SetActorScale 	( .Actor:Self *Fixed[1.0] *Fixed[1.0] *Fixed[1.0] )
+   44:  Call     GetLastEvent 	( .Actor:Self *Var[0] )
+   58:  Switch  *Var[0] 
+   64:  	CaseOR  ==  .Event:HitCombo
+   70:  	CaseOR  ==  .Event:Hit
+   7C:  		SetConst  *Var[0]  00000001 
+   8C:  		SetConst  *Var[1]  .SentinelAnimPain 
+   9C:  		ExecWait DoNormalHit 
+   A8:  	EndCaseGroup
+   B0:  	Case  ==  .Event:BurnHit
+   BC:  		SetConst  *Var[0]  00000001 
+   CC:  		SetConst  *Var[1]  .SentinelAnimPain
+   DC:  		SetConst  *Var[2]  .SentinelAnimPain 
+   EC:  		ExecWait DoBurnHit 
+   F8:  	Case  ==  .Event:BurnDeath
+  104:  		SetConst  *Var[0]  00000001 
+  114:  		SetConst  *Var[1]  .SentinelAnimPain 
+  124:  		SetConst  *Var[2]  .SentinelAnimPain
+  134:  		ExecWait DoBurnHit 
+  140:  		SetConst  *Var[0]  00000001 
+  150:  		SetConst  *Var[1]  .SentinelAnimPain 
+  160:  		ExecWait DoDeath 
+  16C:  		Return
+  174:  	Case  ==  .Event:SpinSmashHit
+  180:  		SetConst  *Var[0]  00000001 
+  190:  		SetConst  *Var[1]  .SentinelAnimPain 
+  1A0:  		ExecWait 8029B998 
+  1AC:  	Case  ==  .Event:SpinSmashDeath
+  1B8:  		SetConst  *Var[0]  00000001 
+  1C8:  		SetConst  *Var[1]  .SentinelAnimPain 
+  1D8:  		ExecWait 8029B998 
+  1E4:  		SetConst  *Var[0]  00000001 
+  1F4:  		SetConst  *Var[1]  .SentinelAnimDead 
+  204:  		ExecWait DoDeath 
+  210:  		Return
+  218:  	Case  ==  .Event:ShockHit
+  224:  		SetConst  *Var[0]  00000001 
+  234:  		SetConst  *Var[1]  .SentinelAnimPain 
+  244:  		ExecWait DoShockHit 
+  250:  		SetConst  *Var[0]  00000001 
+  260:  		SetConst  *Var[1]  .SentinelAnimPain 
+  270:  		ExecWait 8029BD70 
+  27C:  		Call     JumpToGoal  	( .Actor:Self 00000005 00000000 00000001 00000000 )
+  29C:  		Call     SetAnimationRate 	( .Actor:Self 00000001 *Fixed[2.0] )
+				ExecWait $Script_GoHome
+  308:  		Call     SetAnimationRate 	( .Actor:Self 00000001 *Fixed[1.0] )
+  320:  		Wait     00000005 
+  32C:  		Call     SetAnimation 	( .Actor:Self 00000001 .SentinelAnimIdle )
+  344:  		Call     SetActorJumpGravity 	( .Actor:Self *Fixed[1.6005859] )
+  358:  		Call     JumpToGoal  	( .Actor:Self 00000005 00000000 00000001 00000000 )
+  378:  	Case  ==  .Event:ShockDeath
+  384:  		SetConst  *Var[0]  00000001 
+  394:  		SetConst  *Var[1]  .SentinelAnimPain 
+  3A4:  		ExecWait DoShockHit 
+  3B0:  		SetConst  *Var[0]  00000001 
+  3C0:  		SetConst  *Var[1]  .SentinelAnimDead 
+  3D0:  		ExecWait DoDeath 
+  3DC:  		Return
+  3E4:  	Case  ==  .Event:StarBeam
+  3F0:  	CaseOR  ==  00000017
+  3FC:  	CaseOR  ==  .Event:Immune
+  408:  	CaseOR  ==  .Event:AirLiftFailed
+  414:  		SetConst  *Var[0]  00000001 
+  424:  		SetConst  *Var[1]  .SentinelAnimIdle 
+  434:  		ExecWait DoImmune 
+  440:  	EndCaseGroup
+  448:  	Case  ==  .Event:Death
+  454:  		SetConst  *Var[0]  00000001 
+  464:  		SetConst  *Var[1]  .SentinelAnimPain 
+  474:  		ExecWait DoNormalHit 
+  480:  		Wait     0000000A 
+  48C:  		SetConst  *Var[0]  00000001 
+  49C:  		SetConst  *Var[1]  .SentinelAnimDead 
+  4AC:  		ExecWait DoDeath 
+  4B8:  		Return
+  4C0:  	Case  ==  .Event:EndFirstStrike
+  4CC:  		Call     SetAnimationRate 	( .Actor:Self 00000001 *Fixed[2.0] )
+  4E4:  		Call     SetAnimation 	( .Actor:Self 00000001 .SentinelAnimRun )
+				ExecWait $Script_GoHome
+  538:  		Call     SetAnimationRate 	( .Actor:Self 00000001 *Fixed[1.0] )
+  550:  		Call     HPBarToHome 	( .Actor:Self )
+  560:  	Case  ==  .Event:RecoverStatus
+  56C:  		SetConst  *Var[0]  00000001 
+  57C:  		SetConst  *Var[1]  .SentinelAnimIdle 
+  58C:  		ExecWait DoRecover 
+  598:  	Case  ==  .Event:ScareAway
+  5A4:  		SetConst  *Var[0]  00000001 
+  5B4:  		SetConst  *Var[1]  .SentinelAnimRun 
+  5C4:  		SetConst  *Var[2]  .SentinelAnimPain 
+  5D4:  		ExecWait DoScareAway 
+  5E0:  		Return
+  5E8:  	Case  ==  .Event:BeginAirLift
+  5F4:  		SetConst  *Var[0]  00000001 
+  604:  		SetConst  *Var[1]  .SentinelAnimRun 
+  614:  		ExecWait DoAirLift 
+  620:  	Case  ==  .Event:BlowAway
+  62C:  		SetConst  *Var[0]  00000001 
+  63C:  		SetConst  *Var[1]  .SentinelAnimPain 
+  64C:  		ExecWait DoBlowAway 
+  658:  		Return
+  660:  	Default
+  668:  EndSwitch
+  670:  Call     SetAnimation 	( .Actor:Self 00000001 .SentinelAnimIdle )
+  688:  Call     EnableIdleScript 	( .Actor:Self 00000001 )
+  69C:  Call     UseIdleAnimation 	( .Actor:Self .True )
+  6B0:  Return
+  6B8:  End
+}
+%Attacks:
+%Grab for 8 damage
+%Spin grab for 6 damage + 1 turn dizzy
+%Stop grab for 5 damage + 2 turn stop	
+%Summoning AI:
+%	If hp < 7 (and there's open space, and hasn't summoned before)
+%		if there's no open space, do stop grab instead
+%		Count other dark sentinels
+%			If count == 1
+%				summon something (dark goomba, dark clubba, or insanee dayzee)
+%			If count => 2
+%				summon something if it is time for stop grab
+
+#new:Script $Script_TakeTurn_DarkSentinel % here's the hard part - the attack itself (or AI if you have more than one)
+{
+	Call     UseIdleAnimation 	( .Actor:Self .False )
+	Call     EnableIdleScript 	( .Actor:Self 00000000 )
+	Call	 GetActorVar 	( .Actor:Self 00000001 *Var[0] )
+	If *Var[0] == 00000001
+		Call	GetActorHP ( .Actor:Self *Var[A] )
+		If *Var[A] < 7`
+			ExecWait $Script_GetFirstOpenColumn
+			If *Var[A] == FFFFFFFF
+				Call     SetTargetActor ( .Actor:Self .Actor:Player )
+				Call     SetAnimation 	( .Actor:Self 00000001 00380901 )
+				Call     SetGoalToTarget 	( .Actor:Self )
+				Call     AddGoalPos 	( .Actor:Self 00000000 00000032 00000000 ) %above player
+				Call     SetActorSpeed 	( .Actor:Self *Fixed[9.0] )
+				Call     FlyToGoal  	( .Actor:Self 00000000 FFFFFFFC .Easing:CosIn )
+				Call	 GetActorVar 	( .Actor:Self 00000000 *Var[0] )
+				ExecWait $Script_StopGrab
+				Return
+			EndIf
+			ExecWait $Script_CountActiveSummoners_DS
+			Switch *Var[9]
+				Case == 00000001
+					ExecWait $Script_RandomSummon
+					Return
+				Case == 00000002
+					Call	 SetActorVar 	( .Actor:Self 00000000 *Var[0] )
+					If *Var[0] == 2
+						ExecWait $Script_RandomSummon
+						Return
+					EndIf
+			EndSwitch
+		EndIf		
+	EndIf
+	Call     SetTargetActor ( .Actor:Self .Actor:Player )
+	Call     SetAnimation 	( .Actor:Self 00000001 00380901 )
+	Call     SetGoalToTarget 	( .Actor:Self )
+	Call     AddGoalPos 	( .Actor:Self 00000000 00000032 00000000 ) %above player
+	Call     SetActorSpeed 	( .Actor:Self *Fixed[9.0] )
+	Call     FlyToGoal  	( .Actor:Self 00000000 FFFFFFFC .Easing:CosIn )
+	Call	 GetActorVar 	( .Actor:Self 00000000 *Var[0] )
+	Add *Var[0] 1
+	Mod *Var[0] 3
+	Call	 SetActorVar 	( .Actor:Self 00000000 *Var[0] )
+	Switch *Var[0]
+		Case == 00000000
+			ExecWait	$Script_RegularGrab
+		Case == 00000001
+			ExecWait	$Script_SpinGrab
+		Case == 00000002
+			ExecWait	$Script_StopGrab
+	EndSwitch
+	ExecWait $Script_GoHome
+	Call     EnableIdleScript 	( .Actor:Self 00000001 )
+	Call     UseIdleAnimation 	( .Actor:Self .True )
+    Return
+    End
+}
+
+#new:Vector3D $Vector3D_Down
+{
+0` -1000` 0`
+}
+
+#new:SpecialFormation $SpecialFormation_Sentinel_DarkGoomba
+{
+$DarkGoomba $Vector3D_Down 00000064 00000001 00000000 00000000 00000000 
+}
+
+#new:SpecialFormation $SpecialFormation_Sentinel_InsaneeDayzee
+{
+$InsaneeDayzee $Vector3D_Down 00000064 00000001 00000000 00000000 00000000 
+}
+
+%unfortunately, the dark bubble glitches out, so we can't summon them
+%besides, one dark bubble ends up turning into a whole bunch of them
+%#new:SpecialFormation $SpecialFormation_Sentinel_DarkBubble
+%$DarkBubble $Vector3D_Down 00000064 00000001 00000000 00000000 00000000 
+
+#new:SpecialFormation $SpecialFormation_Sentinel_DarkClubba
+{
+$DarkClubba $Vector3D_Down 00000064 00000001 00000000 00000000 00000000 
+}
+
+#new:Script $Script_RandomSummon
+{
+	Call	 SetActorVar 	( .Actor:Self 00000001 00000000 )
+	%first go offscreen
+	Call     SetGoalToHome 	( .Actor:Self )
+	Call     GetGoalPos  	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+	Set *Var[0] 320` %offscreen
+	Call	 SetGoalPos	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+	Call     SetPartRotation 	( .Actor:Self 00000001 00000000 00000000 00000000 )
+	Call     SetActorYaw 	( .Actor:Self 000000B4 )
+	Call     SetAnimation 	( .Actor:Self 00000001 .SentinelAnimRun )
+	Call     SetActorSpeed 	( .Actor:Self *Fixed[12.0] )
+	Call     FlyToGoal  	( .Actor:Self 00000000 00000001 .Easing:Linear )
+	%now pull some enemy out
+	Call	 RandInt ( 00000002 *Var[F] )
+	Switch *Var[F]
+		Case == 00000000
+			Set *Var[0] $SpecialFormation_Sentinel_DarkGoomba
+		Case == 00000001
+			Set *Var[0] $SpecialFormation_Sentinel_InsaneeDayzee 
+		Case == 00000002
+			Set *Var[0] $SpecialFormation_Sentinel_DarkClubba
+	EndSwitch
+	Call	SummonEnemy      	( *Var[0] 00000000 )		
+	Set	*Var[D] *Var[0]
+	%now that we have our new enemy, let's play some animations and come back to the battle
+	Call     SetAnimation 	( .Actor:Self 00000001 .SentinelAnimGrab )
+	Call     SetActorYaw 	( .Actor:Self 00000000 )
+	Call     SetGoalToHome 	( .Actor:Self )
+	Call     SetActorYaw 	( .Actor:Self 00000000 )
+	Thread
+		Call     FlyToGoal  	( .Actor:Self 00000000 00000001 .Easing:Linear )
+	EndThread
+	Call	 GetActorPos	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+	Sub *Var[1] 15`
+	Call	 SetActorPos    ( *Var[D] *Var[0] *Var[1] *Var[2] )
+	Call     SetActorSpeed 	( *Var[D] *Fixed[12.0] )
+	Call     GetGoalPos  	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+	Sub *Var[1] 15`
+	Call	 SetGoalPos		( *Var[D] *Var[0] *Var[1] *Var[2] )
+	Call     FlyToGoal  	( *Var[D] 00000000 00000001 .Easing:Linear )
+	%we're in position, drop the enemy
+	Wait	 0000000A
+	Thread
+		Call	 GetActorPos	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+		Add *Var[1] 18`
+		Call	 SetActorPos    ( .Actor:Self *Var[0] *Var[1] *Var[2] )
+		Call     SetAnimation 		( .Actor:Self 00000001 .SentinelAnimRelease )
+		Wait	 62`
+		Call	 SetGoalToHome  ( .Actor:Self )
+		Call	 GetGoalPos 	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+		Call	 SetActorPos    ( .Actor:Self *Var[0] *Var[1] *Var[2] )
+		Call     SetAnimation 		( .Actor:Self 00000001 .SentinelAnimIdle )
+	EndThread
+	Call	 SetGoalToIndex  	( *Var[D] *Var[A] )
+	Call	 SetActorJumpGravity  ( *Var[D] *Fixed[1.0] )
+	Call     JumpToGoal  		( *Var[D] 0000000A 00000000 00000001 00000000 )
+	Call	 GetActorPos       	( *Var[D] *Var[0] *Var[1] *Var[2] )
+	Call	 ForceHomePos 		( *Var[D] *Var[0] *Var[1] *Var[2] )
+	Call	 HPBarToHome    	( *Var[D] )
+	Return
+	End
+}
+
+#new:Script $Script_GetFirstOpenColumn
+{
+    0:  Call     EnemyCreateTargetList 	( 00008002 )
+   10:  Call     InitTargetIterator 	( )
+   1C:  Label    00000000 
+   28:  Call     GetOwnerTarget ( *Var[0] *Var[5] )
+   3C:  Call     GetIndexFromHome 	( *Var[0] *Var[5] )
+   50:  Mod  *Var[5]  00000004 
+   60:  Switch  *Var[5] 
+   6C:  	Case  ==  00000000 
+   78:  		Set  *Flag[01]  00000001 
+   88:  	Case  ==  00000001 
+   94:  		Set  *Flag[02]  00000001 
+   A4:  	Case  ==  00000002 
+   B0:  		Set  *Flag[03]  00000001 
+   C0:  	Case  ==  00000003 
+   CC:  		Set  *Flag[04]  00000001 
+   DC:  EndSwitch
+   E4:  Call     ChooseNextTarget 	( .Iter:Next *Var[0] )
+   F8:  If  *Var[0]  !=  FFFFFFFF 
+  108:  	Goto     00000000 
+  114:  EndIf
+  11C:  If  *Flag[01]  ==  00000000 
+  12C:  	Set  *Var[A]  00000000 
+  13C:  	Return
+  144:  EndIf
+  14C:  If  *Flag[02]  ==  00000000 
+  15C:  	Set  *Var[A]  00000001 
+  16C:  	Return
+  174:  EndIf
+  17C:  If  *Flag[03]  ==  00000000 
+  18C:  	Set  *Var[A]  00000002 
+  19C:  	Return
+  1A4:  EndIf
+  1AC:  If  *Flag[04]  ==  00000000 
+  1BC:  	Set  *Var[A]  00000003 
+  1CC:  	Return
+  1D4:  EndIf
+  1DC:  Set  *Var[A]  FFFFFFFF 
+  1EC:  Return
+  1F4:  End
+}
+
+#new:Script $Script_CountActiveSummoners_DS
+{
+    0:  Set  *Var[9]  00000000 
+   10:  Call     EnemyCreateTargetList 	( 00008002 )
+   20:  Call     InitTargetIterator 	( )
+   2C:  Label    00000000 
+   38:  Call     GetOwnerTarget ( *Var[0] *Var[1] )
+   4C:  Call     GetOriginalActorType 	( *Var[0] *Var[2] )
+   60:  Switch  *Var[2] 
+   6C:  	Case  ==  000000FE
+   78:  		Call     GetStatusFlags ( *Var[0] *Var[3] )
+   8C:  		If  *Var[3]  !&  0035D000 
+   9C:  			Call     GetActorVar 	( *Var[0] 00000001 *Var[3] )
+   B4:  			If  *Var[3]  ==  00000001
+   C4:  				Add  *Var[9]  00000001 
+   D4:  			EndIf
+   DC:  		EndIf
+   E4:  EndSwitch
+   EC:  Call     ChooseNextTarget 	( .Iter:Next *Var[0] )
+  100:  If  *Var[0]  !=  FFFFFFFF 
+  110:  	Goto     00000000 
+  11C:  EndIf
+  124:  Return
+  12C:  End
+}
+
+#new:Script $Script_RegularGrab
+{
+Call     EnemyTestTarget ( .Actor:Self *Var[A] 10000000 00000000 00000001 00000010 )
+Switch *Var[A]
+	CaseOR == 00000005
+	CaseOR == 00000006
+		Wait 00000005
+		Call     SetActorSpeed 	( .Actor:Self *Fixed[12.0] )
+		Call     SetActorJumpGravity 	( .Actor:Self *Fixed[1.8007812] )
+		Call     SetGoalToTarget 	( .Actor:Self )
+		Call     GetGoalPos  	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+		Sub		 *Var[0] 8`
+		Sub		 *Var[1] 10`
+		Call	 SetGoalPos	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+		Call     PlaySoundAtActor 	( .Actor:Self 00002003 ) %there's probably a better sound for this
+		Call     FlyToGoal  	( .Actor:Self 00000000 FFFFFFF6 .Easing:QuadraticOut )
+		Call     SetAnimationRate 	( .Actor:Self 00000001 *Fixed[2.0] )
+		Call     SetAnimation 	( .Actor:Self 00000001 .SentinelAnimGrab )
+		Wait	 A
+		If  *Var[A]  ==  00000005 
+			Call     EnemyTestTarget ( .Actor:Self *Var[0] 80000000 00000000 00000000 00000000 )
+		EndIf
+		Call     SetAnimationRate 	( .Actor:Self 00000001 *Fixed[1.0] )
+		Call     SetAnimation 	( .Actor:Self 00000001 .SentinelAnimSad )		
+		Wait	 8
+		Call     AddActorDecoration 	( .Actor:Self 00000001 00000000 .Decoration:Sweat )
+		ExecWait $Script_GoHome
+		Call     RemoveActorDecoration 	( .Actor:Self 00000001 00000000 )
+		Return
+	EndCaseGroup	
+EndSwitch
+Wait 	 00000005
+Call     SetActorSpeed 	( .Actor:Self *Fixed[12.0] )
+Call     SetActorJumpGravity 	( .Actor:Self *Fixed[1.8007812] )
+Call     SetGoalToTarget 	( .Actor:Self )
+Call     GetGoalPos  	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+Sub		 *Var[0] 8`
+Sub		 *Var[1] 10`
+Call	 SetGoalPos	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+Call     PlaySoundAtActor 	( .Actor:Self 00002003 ) %there's probably a better sound for this
+Call     FlyToGoal  	( .Actor:Self 00000000 FFFFFFF6 .Easing:QuadraticOut )
+Call     SetAnimation 	( .Actor:Self 00000001 .SentinelAnimGrab )
+Wait	 E
+Call     EnemyDamageTarget 	( .Actor:Self *Var[0] 00000000 00000000 00000000 00000008 00000020 )
+Return
+End
+}
+
+#new:Script $Script_SpinGrab
+{
+Call     EnemyTestTarget ( .Actor:Self *Var[A] 10000000 00000000 00000001 00000010 )
+Switch *Var[A]
+	CaseOR == 00000005
+	CaseOR == 00000006
+		Wait 00000005
+		Call     SetActorSpeed 	( .Actor:Self *Fixed[12.0] )
+		Call     SetActorJumpGravity 	( .Actor:Self *Fixed[1.8007812] )
+		Call     SetGoalToTarget 	( .Actor:Self )
+		Call     GetGoalPos  	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+		Sub		 *Var[0] 8`
+		Sub		 *Var[1] 10`
+		Call	 SetGoalPos	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+		Thread
+			Set  *Var[F]  00000000 
+ 			Loop     24` %45 * 24 = 1080
+  				Add  *Var[F]  45`
+   				Call     SetActorYaw 	( .Actor:Self *Var[F] )
+				Wait     00000001 
+			EndLoop
+			Call     SetActorYaw 	( .Actor:Self 00000000 )
+		EndThread
+		Call     PlaySoundAtActor 	( .Actor:Self 00002003 ) %there's probably a better sound for this
+		Call     FlyToGoal  	( .Actor:Self 00000000 FFFFFFF6 .Easing:QuadraticOut )
+		Call     SetAnimationRate 	( .Actor:Self 00000001 *Fixed[2.0] )
+		Call     SetAnimation 	( .Actor:Self 00000001 .SentinelAnimGrab )
+		Wait	 A
+		If  *Var[A]  ==  00000005 
+			Call     EnemyTestTarget ( .Actor:Self *Var[0] 80000000 00000000 00000000 00000000 )
+		EndIf
+		Call     SetAnimationRate 	( .Actor:Self 00000001 *Fixed[1.0] )
+		Call     SetAnimation 	( .Actor:Self 00000001 .SentinelAnimSad )		
+		Wait	 8
+		Call     AddActorDecoration 	( .Actor:Self 00000001 00000000 .Decoration:Sweat )
+		ExecWait $Script_GoHome
+		Call     RemoveActorDecoration 	( .Actor:Self 00000001 00000000 )
+		Return
+	EndCaseGroup	
+EndSwitch
+Wait 	 00000005
+Call     SetActorSpeed 	( .Actor:Self *Fixed[12.0] )
+Call     SetActorJumpGravity 	( .Actor:Self *Fixed[1.8007812] )
+Call     SetGoalToTarget 	( .Actor:Self )
+Call     GetGoalPos  	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+Sub		 *Var[0] 8`
+Sub		 *Var[1] 10`
+Call	 SetGoalPos	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+Thread
+	Set  *Var[F]  00000000 
+ 	Loop     24` %45 * 24 = 1080
+  		Add  *Var[F]  45`
+   		Call     SetActorYaw 	( .Actor:Self *Var[F] )
+		Wait     00000001 
+	EndLoop
+	Call     SetActorYaw 	( .Actor:Self 00000000 )
+EndThread
+Call     PlaySoundAtActor 	( .Actor:Self 00002003 ) %there's probably a better sound for this
+Call     FlyToGoal  	( .Actor:Self 00000000 FFFFFFF6 .Easing:QuadraticOut )
+Call     SetAnimation 	( .Actor:Self 00000001 .SentinelAnimGrab )
+Wait	 E
+Call     EnemyDamageTarget 	( .Actor:Self *Var[0] 00000000 00000000 80040264 00000006 00000020 )
+Return
+End
+}
+
+#new:Script $Script_StopGrab
+{
+Call     EnemyTestTarget ( .Actor:Self *Var[A] 10000000 00000000 00000001 00000010 )
+Switch *Var[A]
+	CaseOR == 00000005
+	CaseOR == 00000006
+		Wait 00000005
+		Call     SetActorSpeed 	( .Actor:Self *Fixed[12.0] )
+		Call     SetActorJumpGravity 	( .Actor:Self *Fixed[1.8007812] )
+		Call     SetGoalToTarget 	( .Actor:Self )
+		Call     GetGoalPos  	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+		Sub		 *Var[0] 8`
+		Sub		 *Var[1] 10`
+		Call	 SetGoalPos	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+		%Call     FlyToGoal  	( .Actor:Self 00000000 FFFFFFF6 .Easing:QuadraticOut )
+		Call     PlaySoundAtActor 	( .Actor:Self 00002003 ) %there's probably a better sound for this
+		Call     JumpToGoal  	( .Actor:Self 0000000A 00000000 00000001 00000000 )
+		Call     SetAnimationRate 	( .Actor:Self 00000001 *Fixed[2.0] )
+		Call     SetAnimation 	( .Actor:Self 00000001 .SentinelAnimGrab )
+		Wait	 A
+		If  *Var[A]  ==  00000005 
+			Call     EnemyTestTarget ( .Actor:Self *Var[0] 80000000 00000000 00000000 00000000 )
+		EndIf
+		Call     SetAnimationRate 	( .Actor:Self 00000001 *Fixed[1.0] )
+		Call     SetAnimation 	( .Actor:Self 00000001 .SentinelAnimSad )
+		Wait	 8
+		Call     AddActorDecoration 	( .Actor:Self 00000001 00000000 .Decoration:Sweat )
+		ExecWait $Script_GoHome
+		Call     RemoveActorDecoration 	( .Actor:Self 00000001 00000000 )
+		Return
+	EndCaseGroup	
+EndSwitch
+Wait 	 00000005
+Call     SetActorSpeed 	( .Actor:Self *Fixed[12.0] )
+Call     SetActorJumpGravity 	( .Actor:Self *Fixed[1.8007812] )
+Call     SetGoalToTarget 	( .Actor:Self )
+Call     GetGoalPos  	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+Sub		 *Var[0] 8`
+Sub		 *Var[1] 10`
+Call	 SetGoalPos	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+%Call     FlyToGoal  	( .Actor:Self 00000000 FFFFFFF6 .Easing:QuadraticOut )
+Call     PlaySoundAtActor 	( .Actor:Self 00002003 ) %there's probably a better sound for this
+Call     JumpToGoal  	( .Actor:Self 0000000A 00000000 00000001 00000000 )
+Call     SetAnimation 	( .Actor:Self 00000001 .SentinelAnimGrab )
+Wait	 C
+Call     EnemyDamageTarget 	( .Actor:Self *Var[0] 00000000 00000000 8020023C 00000005 00000020 )
+Return
+End
+}
+
+#new:Script $Script_GoHome
+{
+   Call     SetPartRotation 	( .Actor:Self 00000001 00000000 00000000 00000000 )
+   Call     SetActorYaw 	( .Actor:Self 000000B4 )
+   Call     SetAnimation 	( .Actor:Self 00000001 .SentinelAnimRun )
+   Call     SetGoalToHome 	( .Actor:Self )
+   Call     SetActorSpeed 	( .Actor:Self *Fixed[12.0] )
+   Call     FlyToGoal  	( .Actor:Self 00000000 00000001 .Easing:Linear )
+   Call     SetAnimation 	( .Actor:Self 00000001 .SentinelAnimRun )
+   Call     SetActorYaw 	( .Actor:Self 00000000 )
+   Return
+   End
+}

@@ -1,0 +1,56 @@
+@ $NpcGroup_802440F4
+{
+	00000000 $NpcSettings_802440C8 ~Vec3f:NPC_802440F4 % 440 145 15
+	00000C00 00000000 00000000 00000000 0000005A
+	~İtems:10:ThunderRage:A ~HP:Standard:2 ~FP:Standard:2 ~CoinBonus:0:2
+	~Movement:NPC_802440F4
+	007D0300 007D0300 007D0305 007D0305 007D0300 007D0300 007D0306 007D0306
+	007D0305 007D0301 007D0301 007D0301 007D0301 007D0301 007D0301 007D0301
+	00000003 00000000 00000000 00000000 % no tattle string
+}
+
+@ $NpcGroup_802442E4
+{
+	00000001 $NpcSettings_802440C8 ~Vec3f:NPC_802442E4 % 600 145 15
+	00000C00 00000000 00000000 00000000 0000010E
+	~İtems:10:ThunderRage:A ~HP:Standard:2 ~FP:Standard:2 ~CoinBonus:0:2
+	~Movement:NPC_802442E4
+	007D0300 007D0300 007D0305 007D0305 007D0300 007D0300 007D0306 007D0306
+	007D0305 007D0301 007D0301 007D0301 007D0301 007D0301 007D0301 007D0301
+	00000003 00000000 00000000 00000000 % no tattle string
+}
+
+%Super block stuff
+@ $Function_802402AC
+{
+   [40]   LI        A0, 396					%330 -> 396
+   [14C]  SLTI      V0, S2, 9				%8 -> 9
+}
+
+@ $???_80243708
+{
+	00010002 00030004 00090006 00070008 000A0000
+}
+
+@ $???_80243718
+{
+	001D00E0 001D00E1 001D00E2 001D00E3 001D00E4 001D00E5 001D00E6 001D00E7
+	001D00E8 001D00E9 001D00EA 001D00EB 001D00EC 001D00ED 001D00EE 001D00EF
+	001D01AD 001D01AE
+}
+
+@ $Script_MakeEntities
+{
+    0:  Set   *AreaFlag[027]  .False
+   10:  Bind  $Script_80243E80 .Trigger:FloorTouch ~Collider:o214 00000001 00000000
+   2C:  Call  MakeEntity    ( .Entity:SuperBlock ~Vec4d:Entity80243F70 80000000 )
+   50:  Set   *MapVar[0]  *Var0
+   60:  Call  AssignBlockFlag   ( *GF_FLO16_SuperBlock )
+   70:  Call  AssignScript  ( $Script_802438C8 )
+   80:  Call  MakeEntity    ( .Entity:ScriptSpring ~Vec4d:Entity80243FC4 80000000 )
+   A4:  Call  AssignScript  ( $Script_80243DB0 )
+		Call     MakeEntity  	( .Entity:YellowBlock ~Vec4d:secretblock .Item:GoldenShroom 80000000 )
+		Call     AssignBlockFlag 	( *GF_FLO16_NewGoldenShroom )			
+   B4:  Return
+   BC:  End
+}

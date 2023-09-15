@@ -1,0 +1,150 @@
+%Change max stats when you have greed stone
+%Normal max: 50 / 50 / 30
+%GS max:      5 / 70 / 42
+
+%Level up checking
+%Starting stats: 10 / 5  / 3
+%Normal max:	 50 / 50 / 30
+%difference:	 40 / 45 / 27
+%# of level ups:  8 +  9 +  9 = 26 level ups
+
+%Modified:		  5 /  5 /  3
+%New max:		  5 / 70 / 42
+%difference:	  0 / 65 / 39
+%# of level ups:  0 + 13 + 13 = 26 level ups
+
+
+
+
+%Ram-rom offset value 800D1720 (i hope this is a constant)
+
+% Change HP/FP/BP limits depending on greed stone condition
+% old limits: 50/50/30
+% new limits:  5/70/42
+
+% HP is always a multiple of 5
+
+%Lines hooked over (8025EE58, 8025EE5C)
+%LB		V1, 0004 (S5)
+%ADDIU	V0, R0, 0032 % (limit = 50)
+%swapping the order shouldn't break anything
+
+@Hook 0018D738
+{
+LIO		V1, 8010F2A6
+LB 		V0, 0 (V1)	
+BNE		V0, R0, .yes %Flag isn't 0, so set max to 5, and then go to end
+ADDIU	V0, R0, 0005 %5
+ADDIU	V0, R0, 0032 %50 dec
+.yes
+LB		V1, 0004 (S5)	%Unchanged
+J	8025EE60
+NOP
+}
+
+% FP is always a multiple of 5
+
+%Lines hooked over (8025EA9C, 8025EAA0)
+%LB		V1, 0007 (S5)
+%ADDIU	V0, R0, 0032 % 50
+%swapping the order shouldn't break anything
+
+@Hook 0018D37C
+{
+LIO		V1, 8010F2A6
+LB 		V0, 0 (V1)	
+BNE		V0, R0, .yes %Flag isn't 0, so set max to 70, and then go to end
+ADDIU	V0, R0, 0046 %70 dec
+ADDIU	V0, R0, 0032 %50 dec
+.yes
+LB		V1, 0007 (S5) 	%Unchanged
+J 8025EAA4
+NOP
+}
+
+% BP is always a multiple of 3
+
+%Lines hooked over:
+%SRA	S1, S2, 24 	
+%ADDIU	V0, R0, 001E 
+@Hook 0018DB00
+{
+LIO		A1, 8010F2A6 %we can use S1 since it gets changed below
+LB 		V0, 0 (A1) 
+BNE		V0, R0, .yes %Flag isn't 0, so set max to 42, and then go to end
+ADDIU	V0, R0, 002A %42 dec
+ADDIU	V0, R0, 001E %30
+.yes
+J 8025F228
+SRA		A1, A2, 18 	%Unchanged
+}
+
+% Change BP text
+% The last value is 0050 + 4 * the tens digit
+
+%Lines hooked over:
+%LW	S4,	0048 (S3)
+%LW	A1, 005C (S2)
+@Hook 0018DD40
+{
+LIO		S4, 8010F2A6
+LB 		A1, 0 (S4)	
+BNE		A1, R0, .yes %yes (the flag is 0)
+LW		A1, 0060 (S2) %80 + 4 * 4 = 96 or 60 hex
+LW		A1, 005C (S2) %80 + 4 * 3 = 92 or 5C hex
+.yes
+J 8025F468
+LW		S4,	0048 (S3) %Unchanged
+}
+
+% The last value is 0050 + 4 * the ones digit
+
+%Lines hooked over:
+%LW		S4,	004C (S3) %Unchanged
+%LW		A1, 0050 (S2) % 0
+
+@Hook 0018DD8C
+{
+LIO		S4, 8010F2A6
+LB 		A1, 0 (S4)	
+BNE		A1, R0, .yes %yes (the flag is 0)
+LW		A1, 0058 (S2) %80 + 4 * 2 = 88 or 58 hex
+LW		A1, 0050 (S2) %80 + 4 * 0 = 80 or 50 hex
+.yes
+J 8025F4B4
+LW		S4,	004C (S3) %Unchanged
+%/
+%Hopefully levelling up doesn't break
+}
+
+% Remove the HP/FP 75 limits
+@Function 00080D58
+{
+NOP
+BEQ		R0, R0, 000C
+}
+
+@Function 00080DA8
+{
+NOP
+BEQ		R0, R0, 0008
+}
+
+% Remove the upgrade 75/75/30 limits
+@Function 0018E27C
+{
+NOP
+BEQ		R0, R0, 000C
+}
+
+@Function 0018E2E0
+{
+NOP
+BEQ		R0, R0, 000C
+}
+
+@Function 0018E328
+{
+NOP
+BEQ		R0, R0, 0010
+}

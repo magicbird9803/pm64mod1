@@ -1,0 +1,295 @@
+%Later maps
+%Dark beetles, lil sparkies too
+
+#import newenemy/LilSparky.bpat 
+%#import newenemy/DarkPuff.bpat
+%#import newenemy/SteelCleft.bpat
+#import newenemy/DarkBoo.bpat
+#import newenemy/Bobuke.bpat
+#import newenemy/DarkBeetle.bpat
+
+%this one has a ceiling, use it for cave maps with a low ceiling
+#new:Stage $Stage_Cave2
+{
+"kpa_tex"
+"cav_b02_shape"
+"cav_b02_hit"
+$Script_BeforeBattle_NormalCave
+$Script_AfterBattle_NormalCave
+00000000 
+00000000 
+00000000 
+00000000 
+00000000 
+}
+
+%stage next to river
+#new:Stage $Stage_Cave5
+{
+"kpa_tex"
+"cav_b05_shape"
+"cav_b05_hit"
+$Script_BeforeBattle_NormalCave
+$Script_AfterBattle_NormalCave
+00000000 
+00000000 
+00000000 
+00000000 
+00000000 
+}
+
+/%
+#new:Stage $Stage_Cave6
+"kpa_tex"
+"cav_b06_shape"
+"cav_b06_hit"
+$Script_BeforeBattle_NormalCave
+$Script_AfterBattle_NormalCave
+00000000 
+00000000 
+00000000 
+00000000 
+00000000 
+%/
+
+%stage in front of the dark temple
+#new:Stage $Stage_Cave7
+{
+"kpa_tex"
+"cav_b07_shape"
+"cav_b07_hit"
+$Script_BeforeBattle_NormalCave
+$Script_AfterBattle_NormalCave
+00000000 
+00000000 
+00000000 
+00000000 
+00000000 
+}
+
+%stage inside palace
+#new:Stage $Stage_Palace
+{
+"kpa_tex"
+"cav_b08_shape"
+"cav_b08_hit"
+$Script_BeforeBattle_NormalCave
+$Script_AfterBattle_NormalCave
+00000000 
+00000000 
+00000000 
+00000000 
+00000000 
+}
+
+#new:StageTable $StageTable
+{
+"cav_02" $Stage_Cave2
+"cav_02" $Stage_Cave5
+"cav_02" $Stage_Cave7
+"pit_09" $Stage_Pit1
+"cav_14" $Stage_Palace
+00000000 00000000 
+}
+
+#new:Stage $Stage_Pit1
+{
+"kpa_tex"
+"pit_b01_shape"
+"pit_b01_hit"
+$Script_BeforeBattle_Pit
+$Script_AfterBattle_Pit
+00000000 
+00000000 
+00000000 
+00000000 
+00000000 
+}
+
+%pit does not remove SE because that would make it worse
+#new:Script $Script_BeforeBattle_Pit
+{
+	Return
+	End
+}
+
+#new:Script $Script_AfterBattle_Pit
+{
+	Return
+	End
+}
+
+#new:Script $Script_BeforeBattle_NormalCave
+{
+	Set *EnviroEffectsAux 3
+	Return
+	End
+}
+
+#new:Script $Script_AfterBattle_NormalCave
+{
+	Set *EnviroEffectsAux 0
+	Return
+	End
+}
+	
+#new:Formation $Formation_00
+{
+$DarkBoo 00000004 0000000A 00000000 00000000 00000000 00000000
+$DarkBoo 00000001 00000009 00000000 00000000 00000000 00000000
+$LilSparky 00000006 00000008 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_01
+{
+$DarkBoo 00000000 0000000A 00000000 00000000 00000000 00000000
+$DarkBoo 00000001 00000009 00000000 00000000 00000000 00000000
+$LilSparky 00000002 00000008 00000001 00000000 00000000 00000000
+$LilSparky 00000007 00000007 00000001 00000000 00000000 00000000	%lol no power shell for you
+}
+	
+#new:Formation $Formation_02
+{
+$DarkBoo 00000000 0000000A 00000000 00000000 00000000 00000000
+$DarkBoo 00000005 00000009 00000000 00000000 00000000 00000000
+$DarkBoo 0000000A 00000008 00000000 00000000 00000000 00000000
+$DarkBeetle $Vector3D_Top4 00000007 00000001 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_03
+{
+$DarkBoo 00000000 0000000A 00000000 00000000 00000000 00000000
+$DarkBoo 00000001 00000009 00000000 00000000 00000000 00000000
+$DarkBoo 00000002 00000008 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_04
+{
+$DarkBoo 00000000 0000000A 00000000 00000000 00000000 00000000
+$DarkBoo 00000001 00000009 00000000 00000000 00000000 00000000
+$DarkBeetle 00000002 00000008 00000000 00000000 00000000 00000000
+$DarkBeetle 00000003 00000007 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_05
+{
+$DarkBeetle 00000000 0000000A 00000000 00000000 00000000 00000000
+$DarkBeetle 00000001 00000009 00000000 00000000 00000000 00000000
+$DarkBoo 00000002 00000008 00000000 00000000 00000000 00000000
+$Bobuke 00000003 00000007 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_06
+{
+$DarkBeetle 00000001 0000000A 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_07
+{
+$DarkBeetle 00000000 0000000A 00000000 00000000 00000000 00000000
+$DarkBeetle 00000001 00000009 00000000 00000000 00000000 00000000
+$LilSparky 00000006 00000008 00000000 00000000 00000000 00000000
+$DarkBoo 00000007 00000007 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_08
+{
+$DarkBeetle 00000001 0000000A 00000000 00000000 00000000 00000000
+$DarkBoo 00000002 00000009 00000000 00000000 00000000 00000000
+$Bobuke 00000003 00000008 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_09
+{
+$DarkBeetle 00000000 0000000A 00000000 00000000 00000000 00000000
+$DarkBeetle $Vector3D_Top2 00000009 00000001 00000000 00000000 00000000
+$DarkBoo 00000002 00000008 00000000 00000000 00000000 00000000
+$LilSparky 00000007 00000007 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_0A
+{
+$LilSparky 00000005 0000000A 00000000 00000000 00000000 00000000
+$LilSparky 00000006 00000009 00000001 00000000 00000000 00000000
+$LilSparky 00000007 00000008 00000000 00000000 00000000 00000000
+}
+
+#new:Vector3D $Vector3D_Top1
+{
+0` 133` -25`
+}
+
+#new:Vector3D $Vector3D_Top2
+{
+40` 133` -25`
+}
+
+#new:Vector3D $Vector3D_Top3
+{
+80` 133` -25`
+}
+
+#new:Vector3D $Vector3D_Top4
+{
+120` 133` -25`
+}
+	
+#new:FormationTable $FormationTable
+{
+00000000 00000003 $Formation_00 $Stage_Cave5 00000000
+00000000 00000004 $Formation_01 $Stage_Cave2 00000000
+00000000 00000004 $Formation_02 $Stage_Cave2 00000000
+00000000 00000003 $Formation_03 $Stage_Cave5 00000000
+00000000 00000004 $Formation_04 $Stage_Cave7 00000000
+00000000 00000004 $Formation_05 $Stage_Cave7 00000000
+00000000 00000001 $Formation_06 $Stage_Cave7 00000000
+00000000 00000004 $Formation_07 $Stage_Cave7 00000000
+00000000 00000003 $Formation_08 $Stage_Cave2 00000000
+00000000 00000004 $Formation_09 $Stage_Cave2 00000000
+00000000 00000003 $Formation_0A $Stage_Cave2 00000000
+00000000 00000004 $Formation_0B $Stage_Pit1 00000000 %floor 87
+00000000 00000004 $Formation_0C $Stage_Pit1 00000000 %floor 89
+00000000 00000006 $Formation_0D $Stage_Palace 00000000	%Palace scripted encounter (this one is pretty menacing)
+00000000 00000002 $Formation_0E $Stage_Palace 00000000	%Smaller palace formation
+00000000 00000003 $Formation_0F $Stage_Palace 00000000	%Bigger palace formation
+00000000 00000000 00000000 00000000 00000000 % unused
+}
+
+#new:Formation $Formation_0B
+{
+$DarkBoo 00000000 0000000A 00000000 00000000 00000000 00000000
+$DarkBoo 00000001 00000009 00000001 00000000 00000000 00000000
+$DarkBeetle 00000002 00000008 00000000 00000000 00000000 00000000
+$DarkBeetle 00000003 00000007 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_0C
+{
+$DarkBeetle 00000000 0000000A 00000000 00000000 00000000 00000000
+$DarkBeetle $Vector3D_Top2 00000009 00000001 00000000 00000000 00000000
+$DarkBeetle $Vector3D_Top3 00000008 00000001 00000000 00000000 00000000
+$DarkBeetle $Vector3D_Top4 00000007 00000001 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_0D
+{
+$DarkBeetle 00000000 0000000A 00000000 00000000 00000000 00000000
+$DarkBeetle 00000001 00000009 00000000 00000000 00000000 00000000
+$DarkBeetle 00000002 00000007 00000000 00000000 00000000 00000000
+$DarkBeetle 00000003 00000005 00000000 00000000 00000000 00000000
+$DarkBoo 00000005 00000008 00000000 00000000 00000000 00000000
+$DarkBoo 00000006 00000006 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_0E
+{
+$DarkBeetle 00000001 0000000A 00000000 00000000 00000000 00000000
+$DarkBeetle 00000002 00000009 00000000 00000000 00000000 00000000
+}
+
+#new:Formation $Formation_0F
+{
+$DarkBeetle 00000001 0000000A 00000000 00000000 00000000 00000000
+$DarkBeetle 00000002 00000009 00000000 00000000 00000000 00000000
+$DarkBoo 00000003 00000008 00000000 00000000 00000000 00000000
+}

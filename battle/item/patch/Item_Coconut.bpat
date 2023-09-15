@@ -1,0 +1,3 @@
+@ $Script_UseItem {
+	[280]  Call  ItemDamageEnemy       ( *Var9 ~Flags:DamageType:Throw|IgnoreDefense|NoContact 00000000 *Var3 00000020 )
+}

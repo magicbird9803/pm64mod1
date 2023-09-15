@@ -1,0 +1,113 @@
+@ $EntryList
+{
+	~Vec4f:Entry0 % -484,0    0,0    5,0   90,0
+	~Vec4f:Entry1 %  -200,0   2,0  400,0  0,0
+}
+
+#new:Function $Function_80241960
+{
+    0:  ADDIU		SP, SP, FFD8
+    4:  SW			S1, 14 (SP)
+    8:  COPY		S1, A0
+    C:  SW			RA, 20 (SP)
+   10:  SW			S3, 1C (SP)
+   14:  SW			S2, 18 (SP)
+   18:  SW			S0, 10 (SP)
+   1C:  LW			S0, C (S1)
+   20:  LW			A1, 0 (S0)
+   24:  JAL			~Func:get_variable
+   28:  ADDIU		S0, S0, 4
+   2C:  LW			A1, 0 (S0)
+   30:  ADDIU		S0, S0, 4
+   34:  COPY		A0, S1
+   38:  JAL			~Func:get_variable
+   3C:  COPY		S3, V0
+   40:  LW			A1, 0 (S0)
+   44:  ADDIU		S0, S0, 4
+   48:  COPY		A0, S1
+   4C:  JAL			~Func:get_variable
+   50:  COPY		S2, V0
+   54:  COPY		A0, S1
+   58:  LW			A1, 0 (S0)
+   5C:  JAL			~Func:get_variable
+   60:  COPY		S1, V0
+   64:  COPY		A0, S3
+   68:  JAL			~Func:get_entity_by_index
+   6C:  COPY		S0, V0
+   70:  COPY		V1, V0
+   74:  MTC1		S2, F0
+   78:  NOP
+   7C:  CVT.S.W		F0, F0
+   80:  SWC1		F0, 48 (V1)
+   84:  MTC1		S1, F0
+   88:  NOP
+   8C:  CVT.S.W		F0, F0
+   90:  SWC1		F0, 4C (V1)
+   94:  MTC1		S0, F0
+   98:  NOP
+   9C:  CVT.S.W		F0, F0
+   A0:  SWC1		F0, 50 (V1)
+   A4:  LW			RA, 20 (SP)
+   A8:  LW			S3, 1C (SP)
+   AC:  LW			S2, 18 (SP)
+   B0:  LW			S1, 14 (SP)
+   B4:  LW			S0, 10 (SP)
+   B8:  LI			V0, 2
+   BC:  JR			RA
+   C0:  ADDIU		SP, SP, 28
+}
+
+
+
+@ $Function_80240AD0
+{
+[5C]	LA		S8, $Global_ItemHudScripts
+}
+
+@ $Function_8024228C
+{
+[94]	LA		S8, $Global_ItemHudScripts
+}
+
+
+#new:Script $Script_8024793C
+{
+    0:  Wait  10`
+    C:  Call  PlaySound	( 0000208E )
+   1C:  Set   *GF_HOS06_WarpPipes  .True
+   2C:  Unbind
+   34:  Return
+   3C:  End
+}
+
+#new:Script $Script_8024792C
+{
+    0:  Call  GotoMap	( $ASCII_802732B0 00000001 ) % hos_13
+   14:  Wait  100`
+   20:  Return
+   28:  End
+}
+
+
+@ $Script_MakeEntities
+{
+   84:  If  *GF_HOS06_WarpPipes  ==  .False
+   94:  	Call  MakeEntity		( .Entity:BlueSwitch ~Vec4d:Entity80243B14 80000000 )
+   B8:  	Call  AssignAreaFlag	( 00000003 )
+   C8:  	Set   *MapVar[1]  *Var0
+   D8:  	Bind  $Script_8024793C .Trigger:AreaFlagSet *AreaFlag[003] 00000001 00000000
+  104:  If  *GF_HOS06_WarpPipes  ==  .True
+  120:  		Call  $Function_80241960	( *MapVar[1] 0000007D FFFFFFF6 00000019 )
+  128:  	EndIf
+  130:  EndIf
+  160:	Call  MakeEntity	( .Entity:BlueWarpPipe ~Vec4d:Entity80262B30 ~Entry:Entry1 $Script_8024792C ~İndex:*GF_HOS06_WarpPipes 80000000 )
+  190:  Return
+  1C0:  End
+}
+
+
+
+#new:ASCII $ASCII_802732B0
+{
+	"hos_13"
+}

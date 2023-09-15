@@ -1,0 +1,36 @@
+/%
+@ $ShopInventory_8024154C
+.Item:Mystery        00000001 0024002B % Who knows what it does... Take a chance to find ou ...
+.Item:StopWatch      00000019 00240028 % If it works, paralyzes all enemies for a short tim ...
+.Item:SnowmanDoll    0000000F 00240001 % A snowman that crushes all enemies. Attack Power:  ...
+.Item:MapleSyrup     00000019 00240017 % Delicious maple syrup. Restores 10 FP.
+.Item:LifeShroom     00000032 0024000C % A life-giving Mushroom. Restores 10 HP when Mario' ...
+.Item:SuperShroom    0000000D 0024000A % A truly super Mushroom. Restores 10 HP.
+00000000 00000000 00000000
+%/
+
+%Might consider putting life shrooms back here
+
+@ $ShopInventory_8024154C
+{
+.Item:Mystery        00000001 0024002B % Who knows what it does... Take a chance to find ou ...
+.Item:DizzyDial      0000000A 00240029 % dial description
+%.Item:FrightJar      0000000A 0024002A % Makes a scary spirit appear and chase some enemies ...
+.Item:SnowmanDoll    0000000F 00240001 % A snowman that crushes all enemies. Attack Power:  ...
+%.Item:TastyTonic     00000009 0024000E % tasty tonic description
+.Item:ShroomCake     00000019 0023003C % cake desc
+.Item:MapleSyrup     0000000D 00240017 % Delicious maple syrup. Restores 10 FP.
+.Item:SuperShroom    0000000D 0024000A % A truly super Mushroom. Restores 10 HP.
+00000000 00000000 00000000
+}
+
+@ $ShopPriceList_802415A0
+{
+	.Item:DustyHammer    00000004 00000000
+	.Item:DriedShroom    00000003 00000000
+	.Item:Mistake        00000005 00000000
+	.Item:JellyUltra     000000C8 00000000
+	.Item:StinkyHerb     00000005 00000000
+	.Item:BooLeaf     00000005 00000000
+	00000000 00000000 00000000
+}

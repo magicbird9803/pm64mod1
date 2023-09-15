@@ -1,0 +1,275 @@
+%evil shroom
+%only has 15 hp, but full heals every turn
+
+% Define your graphics here
+#define .AnimRun	00EE0000
+#define .AnimStop	00EE0000
+#define .AnimIdle	00EE0000
+#define .AnimPoison	00EE0000
+#define .AnimPain	00EE0001
+#define .AnimDizzy	00EE0001
+#define .AnimDead	00EE0001
+#define .AnimSleep  00EE0002
+#define .AnimBurn   00EE0003
+#define .AnimBurn2  00EE0003
+
+#new:Actor $EvilShroom
+{
+% stats
+[Index]         DBb % index from ActorTable.xml
+[Level]        20`b 
+[MaxHP]        18`b 
+[Coins]         1`b 
+[Flags]       00000000 
+[StatusTable] $StatusTable_Shroom
+% ai
+[PartsCount]   1`s 
+[PartsTable] $PartsTable_Shroom
+[Script]      $Script_Init_Shroom 
+% move effectiveness
+[Escape]       90`b 
+[Item]          0`b 
+[AirLift]       0`b 
+[Hurricane]     0`b % Bow's "Spook" as well
+[UpAndAway]    95`b 
+[PowerBounce]   4`b 
+[SpinSmash]     0`b % weight (0-4)
+% ui positions
+[Size]         24`b  24`b % width height
+[HealthBar]     0`b   0`b % dx dy
+[StatusTurn]  -10`b  20`b % dx dy
+[StatusIcon]   10`b  20`b % dx dy
+}
+
+#new:DefenseTable $DefenseTable_Shroom
+{
+.Element:Normal 00000000
+.Element:End
+}
+
+#new:StatusTable $StatusTable_Shroom %immune to most statuses, but it's not gonna matter much
+{
+.Status:Normal      0`
+.Status:Default     0`
+.Status:Sleep      40`
+.Status:Poison      0`
+.Status:Frozen      0`
+.Status:Dizzy       0`
+.Status:Fear        0`
+.Status:Static      0`
+.Status:Paralyze   50`
+.Status:Shrink      0`
+.Status:Stop       70`
+.Status:DefaultTurnMod    0`
+.Status:SleepTurnMod     -1`
+.Status:PoisonTurnMod     0`
+.Status:FrozenTurnMod     0`
+.Status:DizzyTurnMod      0`
+.Status:FearTurnMod       0`
+.Status:StaticTurnMod     0`
+.Status:ParalyzeTurnMod  -2`
+.Status:ShrinkTurnMod     0`
+.Status:StopTurnMod       0`
+.Status:End
+}
+
+#new:PartsTable $PartsTable_Shroom
+{
+00800000 01000000 001400FF $IdleAnimations_Shroom $DefenseTable_Shroom 00000000 00000000 00F60000 00000000 
+}
+
+#new:IdleAnimations $IdleAnimations_Shroom
+{
+.Status:Normal    .AnimIdle
+.Status:Stone     .AnimStop
+.Status:Sleep     .AnimSleep
+.Status:Poison    .AnimPoison
+.Status:Stop      .AnimStop
+.Status:Static    .AnimIdle
+.Status:Paralyze  .AnimStop
+.Status:Dizzy     .AnimDizzy
+.Status:Fear      .AnimDizzy
+.Status:End
+}
+
+#new:Script $Script_Init_Shroom
+{
+	Call     BindTakeTurn 	( .Actor:Self $Script_TakeTurn_Shroom )
+	Call     BindIdle    	( .Actor:Self $Script_Idle_Shroom )
+    Call     BindHandleEvent 	( .Actor:Self $Script_HandleEvent_Shroom )
+	Call 	 BindNextTurn ( .Actor:Self $Script_NextTurn_Shroom )
+    Return
+    End
+}
+
+#new:Script $Script_Idle_Shroom
+{
+  Return
+  End
+}
+
+#new:Script $Script_NextTurn_Shroom
+{
+	Call	GetBattlePhase ( *Var[0] )
+	If  *Var[0] ==  .Phase:EnemyEnd
+		Call     GetEnemyMaxHP 	( .Actor:Self *Var[F] )
+		If *Var[F] > 99`
+			Set *Var[F] 99`
+		EndIf
+		Thread %stuff spliced from mq tubba refight
+			Wait     00000005 
+			Call     PlaySoundAtActor    ( *Var[0] 0000206D )
+			Call     PlaySoundAtActor    ( *Var[0] 00000214 )
+			Wait     30` 
+			Call     PlaySoundAtActor    ( *Var[0] 0000025C )
+		EndThread		
+		Call	8026BF48	( 00000001 )
+		Call	HealActor	( .Actor:Self *Var[F] 00000001 ) %full heal
+		Call	8026BF48	( 00000000 )
+	EndIf
+	Return
+	End
+}
+
+#new:Script $Script_HandleEvent_Shroom
+{
+    0:  Call     UseIdleAnimation 	( .Actor:Self .False )
+   14:  Call     EnableIdleScript 	( .Actor:Self 00000000 )
+   28:  Call     SetActorScale 	( .Actor:Self *Fixed[1.0] *Fixed[1.0] *Fixed[1.0] )
+   44:  Call     GetLastEvent 	( .Actor:Self *Var[0] )
+   58:  Switch  *Var[0] 
+   64:  	CaseOR  ==  .Event:HitCombo
+   70:  	CaseOR  ==  .Event:Hit
+   7C:  		SetConst  *Var[0]  00000001 
+   8C:  		SetConst  *Var[1]  .AnimPain 
+   9C:  		ExecWait DoNormalHit 
+   A8:  	EndCaseGroup
+   B0:  	Case  ==  .Event:BurnHit
+   BC:  		SetConst  *Var[0]  00000001 
+   CC:  		SetConst  *Var[1]  .AnimBurn 
+   DC:  		SetConst  *Var[2]  .AnimBurn2 
+   EC:  		ExecWait DoBurnHit 
+   F8:  	Case  ==  .Event:BurnDeath
+  104:  		SetConst  *Var[0]  00000001 
+  114:  		SetConst  *Var[1]  .AnimBurn 
+  124:  		SetConst  *Var[2]  .AnimBurn2 
+  134:  		ExecWait DoBurnHit 
+  140:  		SetConst  *Var[0]  00000001 
+  150:  		SetConst  *Var[1]  .AnimBurn2 
+  160:  		ExecWait DoDeath 
+  16C:  		Return
+  174:  	Case  ==  .Event:SpinSmashHit
+  180:  		SetConst  *Var[0]  00000001 
+  190:  		SetConst  *Var[1]  .AnimPain 
+  1A0:  		ExecWait 8029B998 
+  1AC:  	Case  ==  .Event:SpinSmashDeath
+  1B8:  		SetConst  *Var[0]  00000001 
+  1C8:  		SetConst  *Var[1]  .AnimPain 
+  1D8:  		ExecWait 8029B998 
+  1E4:  		SetConst  *Var[0]  00000001 
+  1F4:  		SetConst  *Var[1]  .AnimDead 
+  204:  		ExecWait DoDeath 
+  210:  		Return
+  218:  	Case  ==  .Event:ShockHit
+  224:  		SetConst  *Var[0]  00000001 
+  234:  		SetConst  *Var[1]  .AnimPain 
+  244:  		ExecWait DoShockHit 
+  250:  		SetConst  *Var[0]  00000001 
+  260:  		SetConst  *Var[1]  .AnimPain 
+  270:  		ExecWait 8029BD70 
+  27C:  		Call     JumpToGoal  	( .Actor:Self 00000005 00000000 00000001 00000000 )
+  29C:  		Call     SetAnimationRate 	( .Actor:Self 00000001 *Fixed[2.0] )
+  2B4:  		Call     SetAnimation 	( .Actor:Self 00000001 .AnimDizzy )
+  2CC:  		Call     SetGoalToHome 	( .Actor:Self )
+  2DC:  		Call     SetActorSpeed 	( .Actor:Self *Fixed[8.0] )
+  2F0:  		Call     RunToGoal   	( .Actor:Self 00000000 .False )
+  308:  		Call     SetAnimationRate 	( .Actor:Self 00000001 *Fixed[1.0] )
+  320:  		Wait     00000005 
+  32C:  		Call     SetAnimation 	( .Actor:Self 00000001 .AnimIdle )
+  344:  		Call     SetActorJumpGravity 	( .Actor:Self *Fixed[1.6005859] )
+  358:  		Call     JumpToGoal  	( .Actor:Self 00000005 00000000 00000001 00000000 )
+  378:  	Case  ==  .Event:ShockDeath
+  384:  		SetConst  *Var[0]  00000001 
+  394:  		SetConst  *Var[1]  .AnimPain 
+  3A4:  		ExecWait DoShockHit 
+  3B0:  		SetConst  *Var[0]  00000001 
+  3C0:  		SetConst  *Var[1]  .AnimDead 
+  3D0:  		ExecWait DoDeath 
+  3DC:  		Return
+  3E4:  	Case  ==  .Event:StarBeam
+  3F0:  	CaseOR  ==  00000017
+  3FC:  	CaseOR  ==  .Event:Immune
+  408:  	CaseOR  ==  .Event:AirLiftFailed
+  414:  		SetConst  *Var[0]  00000001 
+  424:  		SetConst  *Var[1]  .AnimIdle 
+  434:  		ExecWait DoImmune 
+  440:  	EndCaseGroup
+  448:  	Case  ==  .Event:Death
+  454:  		SetConst  *Var[0]  00000001 
+  464:  		SetConst  *Var[1]  .AnimPain 
+  474:  		ExecWait DoNormalHit 
+  480:  		Wait     0000000A 
+  48C:  		SetConst  *Var[0]  00000001 
+  49C:  		SetConst  *Var[1]  .AnimDead 
+  4AC:  		ExecWait DoDeath 
+  4B8:  		Return
+  4C0:  	Case  ==  .Event:EndFirstStrike
+  4CC:  		Call     SetAnimationRate 	( .Actor:Self 00000001 *Fixed[2.0] )
+  4E4:  		Call     SetAnimation 	( .Actor:Self 00000001 .AnimRun )
+  4FC:  		Call     SetGoalToHome 	( .Actor:Self )
+  50C:  		Call     SetActorSpeed 	( .Actor:Self *Fixed[4.0] )
+  520:  		Call     RunToGoal   	( .Actor:Self 00000000 .False )
+  538:  		Call     SetAnimationRate 	( .Actor:Self 00000001 *Fixed[1.0] )
+  550:  		Call     HPBarToHome 	( .Actor:Self )
+  560:  	Case  ==  .Event:RecoverStatus
+  56C:  		SetConst  *Var[0]  00000001 
+  57C:  		SetConst  *Var[1]  .AnimIdle 
+  58C:  		ExecWait DoRecover 
+  598:  	Case  ==  .Event:ScareAway
+  5A4:  		SetConst  *Var[0]  00000001 
+  5B4:  		SetConst  *Var[1]  .AnimRun 
+  5C4:  		SetConst  *Var[2]  .AnimPain 
+  5D4:  		ExecWait DoScareAway 
+  5E0:  		Return
+  5E8:  	Case  ==  .Event:BeginAirLift
+  5F4:  		SetConst  *Var[0]  00000001 
+  604:  		SetConst  *Var[1]  .AnimRun 
+  614:  		ExecWait DoAirLift 
+  620:  	Case  ==  .Event:BlowAway
+  62C:  		SetConst  *Var[0]  00000001 
+  63C:  		SetConst  *Var[1]  .AnimPain 
+  64C:  		ExecWait DoBlowAway 
+  658:  		Return
+  660:  	Default
+  668:  EndSwitch
+  670:  Call     SetAnimation 	( .Actor:Self 00000001 .AnimIdle )
+  688:  Call     EnableIdleScript 	( .Actor:Self 00000001 )
+  69C:  Call     UseIdleAnimation 	( .Actor:Self .True )
+  6B0:  Return
+  6B8:  End
+}
+
+#new:Script $Script_TakeTurn_Shroom % spliced from tubba's heart (it uses the same effect)
+{
+	Call     GetActorPos 	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+	Call     SetActorJumpGravity 	( .Actor:Self *Fixed[0.8] )
+	Call     SetGoalPos 	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+	Call 	 JumpToGoal ( .Actor:Self 00000005 00000000 00000001 00000000 )
+	Call 	 PlaySound ( 000020F9 )
+	Call 	 SetGoalToTarget ( .Actor:Self )
+	Call     GetActorPos 	( .Actor:Player *Var[0] *Var[1] *Var[2] )
+	Add 	 *Var[1] 00000005
+	Call     PlayEffect  	( 00000066 00000001 *Var[0] *Var[1] *Var[2] *Fixed[1.0] 000000C8 00000000 00000000 00000000 00000000 00000000 00000000 00000000 )
+	Call 	 EnemyTestTarget ( .Actor:Self *Var[A] 10000000 00000000 00000001 00000010 )
+	Wait 	 00000050
+	Switch (*Var[A])
+		Case == 00000005
+			Call EnemyTestTarget ( .Actor:Self *Var[0] 80000000 00000000 00000000 00000000 ) %lucky
+			Return
+		Case == 00000006
+			Return
+	EndSwitch
+	Call 	 EnemyDamageTarget ( .Actor:Self *Var[0] 10000000 00000000 00000000 00000003 00000020 )
+    Return
+    End
+}

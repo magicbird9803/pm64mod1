@@ -1,0 +1,26 @@
+%Berserker exploration
+
+%Berserker is checked every frame in battle, but what does it actually do?
+
+%ID = 0x15
+
+%80258598 = line checked every frame for this
+
+%Calls 80266DAC with A0 = mario pointer, A1 = 8
+%		calls 	80266D6C against all the sprites?
+
+
+%802672F8 = secondary check (for the special crouch animation)
+
+%	^ actually 802587CC
+
+
+%calls 80265D44 with A0 = 0x10
+
+%calls a weird function that returns an animation (00040028 = berserker crouch)
+%Stores at 88 + ??? pointer (maybe a mario sprite pointer?)
+%Sprite + 88 is current anim
+
+
+
+%802A5CC4 = third check (for determining if mario should act autonomously)

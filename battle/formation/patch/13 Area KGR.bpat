@@ -1,0 +1,380 @@
+@ $Fuzzipede %big hp buff
+{
+[MaxHP]        40`b 
+}
+
+%Fuzzipede has a lot of extra animations for being underground (like monty moles)
+%Let's use them!
+
+%new AI: Fuzzipede can now dig "underground" and become intangible
+%After hiding, he will jump out and attack, ending his turn in a vulnerable state
+
+%00020000
+
+#new:IdleAnimations $IdleAnimations_Underground
+{
+.Status:Normal    00410007
+.Status:Stone     00410003
+.Status:Sleep     0041002B
+.Status:Poison    00410007
+.Status:Stop      00410003
+.Status:Static    00410003
+.Status:Paralyze  00410003
+.Status:Dizzy     00410028
+.Status:Fear      00410028
+.Status:End
+}
+
+#new:IdleAnimations $IdleAnimations_HoleOnly
+{
+.Status:Normal    00410014
+.Status:Stone     00410014
+.Status:Sleep     00410014
+.Status:Poison    00410014
+.Status:Stop      00410014
+.Status:Static    00410014
+.Status:Paralyze  00410014
+.Status:Dizzy     00410014
+.Status:Fear      00410014
+.Status:End
+}
+
+@ $StatusTable_80218A54 %reduce status weaknesses slightly
+{
+.Status:Normal      0`
+.Status:Default     0`
+.Status:Sleep      50`
+.Status:Poison      0`
+.Status:Frozen      0`
+.Status:Dizzy      70`
+.Status:Fear        0`
+.Status:Static      0`
+.Status:Paralyze   65`
+.Status:Shrink     50`
+.Status:Stop       65`
+.Status:DefaultTurnMod    0`
+.Status:SleepTurnMod     -1`
+.Status:PoisonTurnMod     0`
+.Status:FrozenTurnMod     0`
+.Status:DizzyTurnMod     -1`
+.Status:FearTurnMod       0`
+.Status:StaticTurnMod     0`
+.Status:ParalyzeTurnMod   0`
+.Status:ShrinkTurnMod     0`
+.Status:StopTurnMod      -2`
+.Status:End
+}
+
+@ $Script_Init_80218B70
+{
+    0:  Call     BindTakeTurn 	( .Actor:Self $Script_TakeTurn_8021C1A4 )
+   14:  Call     BindIdle    	( .Actor:Self $Script_Idle_80218D58 )
+   28:  Call     BindHandleEvent 	( .Actor:Self $Script_HandleEvent_802197FC )
+   3C:  Call     BindNextTurn 	( .Actor:Self $Script_NextTurn_80218C58 )
+   50:  Call     SetActorVar 	( .Actor:Self 00000000 00000000 )
+   68:  Call     SetActorVar 	( .Actor:Self 00000002 00000000 )
+   68:  Call     SetActorVar 	( .Actor:Self 00000003 00000000 ) %is grounded
+   80:  Call     SetActorPos 	( .Actor:Self 0000007D 00000021 FFFFFFF1 )
+   9C:  Call     SetHomePos  	( .Actor:Self 0000007D 00000021 FFFFFFF1 )
+   B8:  Call     HPBarToHome 	( .Actor:Self )
+   C8:  Call     80253734 ( 00000001 )
+		Set *EnviroEffectsAux 2 %whale value
+   D8:  Return
+   E0:  End
+}
+
+@ $Script_8021A6D8
+{
+[5F4] 	Call 	EnemyDamageTarget 	( .Actor:Self *Var[F] 00000000 00000000 00000000 00000005 00000020 ) %3 -> 5
+}
+
+@ $Script_8021B22C
+{
+[694]  Call     EnemyDamageTarget 	( .Actor:Self *Var[F] 00000000 00000000 00000000 00000005 00000020 ) %3 -> 5
+}
+
+%fuzzipede starts hiding underground below half health
+@ $Script_80219668 %handling the ceiling stuff
+{
+    0:  Call     8027D32C ( FFFFFF81 )
+   10:  Call     GetActorVar 	( .Actor:Self 00000000 *Var[0] )
+   28:  Switch  *Var[0] 
+   34:  	Case  ==  00000000 
+   40:  		Call     SetActorVar 	( .Actor:Self 00000000 00000001 )
+   58:  	Case  ==  00000001 
+   64:  		Call     SetActorVar 	( .Actor:Self 00000000 00000002 )
+   7C:  	Case  ==  00000002 
+   88:  		Call     SetActorVar 	( .Actor:Self 00000000 00000003 )
+   A0:  	Case  ==  00000003 
+   AC:  		Call     SetActorVar 	( .Actor:Self 00000000 00000004 )
+   C4:  	Case  ==  00000004 
+   D0:  		Call     SetActorVar 	( .Actor:Self 00000000 00000000 )
+   E8:  EndSwitch
+   F0:  Call     GetActorVar 	( .Actor:Self 00000000 *Var[0] )
+  108:  Switch  *Var[0] 
+  114:  	Case  ==  00000000 
+				Call     GetActorVar 	( .Actor:Self 00000003 *Var[B] )
+				If *Var[B] == 0
+  120:  			ExecWait $Script_80218D68 %fall off ceiling (or go home normally)
+				Else
+					Call     SetAnimation 	( .Actor:Self 00000001 00410017 ) %come out of ground
+					Wait	 10`
+					Call     SetAnimation 	( .Actor:Self 00000001 00410003 ) %idle
+					Call     SetIdleAnimations 	( .Actor:Self 00000001 $IdleAnimations_802189B0 )
+					Call     BindHandleEvent 	( .Actor:Self $Script_HandleEvent_802197FC )
+					Set *EnviroEffectsAux 2
+					ExecWait $Script_80218FC8 %fall off ceiling (or go home normally)
+				EndIf
+  12C:  	CaseOR  ==  00000001 
+  138:  	CaseOR  ==  00000002 
+  144:  	CaseOR  ==  00000004 
+				Call     GetActorHP  	( .Actor:Self *Var[E] )
+				Call     GetEnemyMaxHP 	( .Actor:Self *Var[F] )
+				Div *Var[F] 2
+				If *Var[E] > *Var[F]
+  150:  			ExecWait $Script_802191AC %go on ceiling?
+				Else
+					ExecWait $Script_80218FC8 %fall off ceiling (or go home normally)
+					ExecWait $Script_Hide
+					Call     SetActorVar 	( .Actor:Self 00000003 00000001 )
+					Set *EnviroEffectsAux 6
+				EndIf
+  15C:  	EndCaseGroup
+  164:  	Case  ==  00000003 
+				Call     GetActorVar 	( .Actor:Self 00000003 *Var[B] )
+				If *Var[B] == 0
+  170:  			ExecWait $Script_80218FC8 %fall off ceiling (or go home normally)
+				Else
+					Call     SetAnimation 	( .Actor:Self 00000001 00410017 ) %come out of ground
+					Wait	 10`
+					Call     SetAnimation 	( .Actor:Self 00000001 00410003 ) %idle
+					Call     SetIdleAnimations 	( .Actor:Self 00000001 $IdleAnimations_802189B0 )
+					Call     BindHandleEvent 	( .Actor:Self $Script_HandleEvent_802197FC )
+					Set *EnviroEffectsAux 2
+					ExecWait $Script_80218FC8 %fall off ceiling (or go home normally)
+				EndIf
+  17C:  EndSwitch
+  184:  Return
+  18C:  End
+}
+
+#new:Script $Script_DigAttack
+{
+	Call     EnableIdleScript 	( .Actor:Self .False )
+	Call     UseIdleAnimation 	( .Actor:Self .False )
+	Call     SetTargetActor ( .Actor:Self .Actor:Player )
+	Call     UseBattleCamPreset 	( 0000003F )
+	Call     BattleCamTargetActor ( .Actor:Self )
+	Call	 SetGoalToTarget ( .Actor:Self )
+	Call     EnemyTestTarget ( .Actor:Self *Var[E] 00000000 00000000 00000001 00000010 )
+	Wait	 10`
+	Call     SetAnimation 	( .Actor:Self 00000001 00410014 ) %hole
+	Wait	 15`
+	Call     GetGoalPos  	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+	Add  *Var[0]  00000010
+	Set *Var[1] 00000000
+	Call     SetGoalPos  	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+	Call     SetActorPos 	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+	Wait	 8`
+	Call     SetAnimation 	( .Actor:Self 00000001 00410017 ) %come out of ground
+	Wait	 8`
+	Call	 SetGoalToTarget ( .Actor:Self )
+	Switch *Var[E]
+		CaseOR == 6
+		CaseOR == 5
+			Goto 1
+		EndCaseGroup
+	EndSwitch
+	Call     EnemyDamageTarget 	( .Actor:Self *Var[F] 00000000 00000000 00000000 00000003 00000020 )
+	Label 1
+	Wait	 6`
+	Call     SetAnimation 	( .Actor:Self 00000001 00410018 ) %go into ground
+	Wait	 12`
+	Call     SetGoalToHome 		( .Actor:Self )
+	Call     GetGoalPos  		( .Actor:Self *Var[0] *Var[1] *Var[2] )
+	Call     SetActorPos 		( .Actor:Self *Var[0] *Var[1] *Var[2] )
+	Call     SetAnimation 	( .Actor:Self 00000001 00410015 ) %come out of ground
+	Wait	 14`
+	Call     SetIdleAnimations 	( .Actor:Self 00000001 $IdleAnimations_Underground )
+	Call     BindHandleEvent 	( .Actor:Self $Script_HandleEvent_Underground )
+	Call     SetPartFlagBits 	( .Actor:Self 00000001 00800000 .True )
+	Call     SetPartFlagBits 	( .Actor:Self 00000001 00020000 .False )
+	ExecWait $Script_80219668
+	Call     SetActorVar 	( .Actor:Self 00000003 00000002 )
+	Call     EnableIdleScript 	( .Actor:Self .True )
+	Call     UseIdleAnimation 	( .Actor:Self .True )
+	Return
+	End
+}
+
+#new:Script $Script_Hide
+{
+	Call     EnableIdleScript 	( .Actor:Self .False )
+	Call     UseIdleAnimation 	( .Actor:Self .False )
+	Call     GetActorVar 	( .Actor:Self 00000003 *Var7 )
+	If *Var7 == 1 %already underground
+		Goto End
+	EndIf
+	Call     SetAnimation 	( .Actor:Self 00000001 00410016 ) %go into ground
+	Call     ShakeCam    	( 00000001 00000000 20` *Fixed[0.75] ) %the whale doesn't like this 
+	Wait	 14`
+	Call     SetIdleAnimations 	( .Actor:Self 00000001 $IdleAnimations_HoleOnly )
+	Call     BindHandleEvent 	( .Actor:Self $Script_HandleEvent_Underground ) %this is wrong but you can't target the hole so it doesn't matter	
+	Call     SetPartFlagBits 	( .Actor:Self 00000001 00800000 .False )
+	Call     SetPartFlagBits 	( .Actor:Self 00000001 00020000 .True )
+	Wait	 8`
+	Call     SetActorVar 	( .Actor:Self 00000003 00000001 )
+	Label 	 End
+	Call     EnableIdleScript 	( .Actor:Self .True )
+	Call     UseIdleAnimation 	( .Actor:Self .True )
+	Return
+	End
+}
+
+@ $Script_TakeTurn_8021C1A4
+{
+		Call     GetActorVar 	( .Actor:Self 00000003 *Var[B] )
+		Switch *Var[B]
+			Case == 2` %close to surface
+				ExecWait $Script_Hide
+				%Call     SetActorVar 	( .Actor:Self 00000003 00000001 )
+				Set *EnviroEffectsAux 6
+				Return
+			Case == 1` %deep "underground"
+				ExecWait $Script_DigAttack
+				Set *EnviroEffectsAux 6
+				%Call     SetActorVar 	( .Actor:Self 00000003 00000002 )
+				Return
+			Case == 0`
+				Set *EnviroEffectsAux 2
+		EndSwitch
+    0:  Call     GetActorVar 	( .Actor:Self 00000000 *Var[0] )
+   18:  Switch  *Var[0] 
+   24:  	CaseOR  ==  00000000 
+   30:  	CaseOR  ==  00000003 
+   3C:  		Call     GetActorHP  	( .Actor:Self *Var[0] )
+   50:  		Call     GetEnemyMaxHP 	( .Actor:Self *Var[1] )
+   64:  		Mul  *Var[0]  00000064 
+   74:  		Div  *Var[0]  *Var[1] 
+   84:  		If  *Var[0]  <=  00000023 %35% hp
+   94:  			Call     RandInt     	( 000003E8 *Var[0] )
+   A8:  			If  *Var[0]  <  000001F4 
+   B8:  				ExecWait $Script_8021C004 %heal
+   C4:  				Return
+   CC:  			EndIf
+   D4:  		EndIf
+   DC:  	EndCaseGroup
+   E4:  EndSwitch
+   EC:  Call     RandInt     	( 000003E8 *Var[0] ) %0-1000
+  100:  If  *Var[0]  <  000001F4 %500
+  110:  	ExecWait $Script_8021A6D8 %high jump
+  11C:  Else
+  124:  	Call     $Function_802184F8 ( *Var[0] )
+  134:  	If  *Var[0]  ==  00000000 
+  144:  		ExecWait $Script_8021B22C %quick jump (removes battle commands)
+  150:  	Else
+  158:  		ExecWait $Script_8021A6D8 %high jump
+  164:  	EndIf
+  16C:  EndIf
+  174:  Return
+  17C:  End
+}
+
+#new:Script $Script_HandleEvent_Underground
+{
+    0:  Call     SetActorScale 	( .Actor:Self *Fixed[1.0] *Fixed[1.0] *Fixed[1.0] )
+   1C:  Call     UseIdleAnimation 	( .Actor:Self .False )
+   30:  Call     EnableIdleScript 	( .Actor:Self 00000000 )
+   44:  Call     GetLastEvent 	( .Actor:Self *Var[0] )
+   58:  Switch  *Var[0] 
+   64:  	CaseOR  ==  .Event:HitCombo % 9
+   70:  	CaseOR  ==  .Event:Hit % A
+   7C:  		SetConst  *Var[0]  00000001 
+   8C:  		SetConst  *Var[1]  0041001D 
+   9C:  		ExecWait DoNormalHit 
+   A8:  	EndCaseGroup
+   B0:  	Case  ==  .Event:BurnHit % E
+   BC:  		SetConst  *Var[0]  00000001 
+   CC:  		SetConst  *Var[1]  00410022 
+   DC:  		SetConst  *Var[2]  00410023 
+   EC:  		ExecWait DoBurnHit 
+   F8:  	Case  ==  .Event:BurnDeath % 24
+  104:  		SetConst  *Var[0]  00000001 
+  114:  		SetConst  *Var[1]  00410022 
+  124:  		SetConst  *Var[2]  00410023 
+  134:  		ExecWait DoBurnHit 
+  140:  		SetConst  *Var[0]  00000001 
+  150:  		SetConst  *Var[1]  00410023 
+  160:  		ExecWait DoDeath 
+  16C:  		Return
+  174:  	Case  ==  .Event:SpinSmashHit % B
+  180:  		SetConst  *Var[0]  00000001 
+  190:  		SetConst  *Var[1]  0041001D 
+  1A0:  		ExecWait DoSpinSmashHit 
+  1AC:  	Case  ==  .Event:SpinSmashDeath % 21
+  1B8:  		SetConst  *Var[0]  00000001 
+  1C8:  		SetConst  *Var[1]  0041001D 
+  1D8:  		ExecWait DoSpinSmashHit 
+  1E4:  		SetConst  *Var[0]  00000001 
+  1F4:  		SetConst  *Var[1]  0041001D 
+  204:  		ExecWait DoDeath 
+  210:  		Return
+  218:  	Case  ==  .Event:ShockHit % 2F
+  224:  		Call     SetActorRotationOffset 	( .Actor:Self 00000000 00000000 00000000 )
+  240:  		Call     SetActorRotation 	( .Actor:Self 00000000 00000000 00000000 )
+  25C:  		SetConst  *Var[0]  00000001 
+  26C:  		SetConst  *Var[1]  0041001D 
+  27C:  		ExecWait DoShockHit 
+				%teleport back
+				Call     SetGoalToHome 		( .Actor:Self )
+				Call     GetGoalPos  		( .Actor:Self *Var[0] *Var[1] *Var[2] )
+				Call     SetActorPos 		( .Actor:Self *Var[0] *Var[1] *Var[2] )
+%  288:  		SetConst  *Var[0]  00000001 
+%  298:  		SetConst  *Var[1]  00410008 
+%  2A8:  		ExecWait DoJumpBack 
+%  2B4:  		ExecWait $Script_80219668 
+  2C0:  	Case  ==  .Event:ShockDeath % 26
+  2CC:  		Call     SetActorRotationOffset 	( .Actor:Self 00000000 00000000 00000000 )
+  2E8:  		Call     SetActorRotation 	( .Actor:Self 00000000 00000000 00000000 )
+  304:  		SetConst  *Var[0]  00000001 
+  314:  		SetConst  *Var[1]  0041001D 
+  324:  		ExecWait DoShockHit 
+  330:  		SetConst  *Var[0]  00000001 
+  340:  		SetConst  *Var[1]  0041001D 
+  350:  		ExecWait DoDeath 
+  35C:  		Return
+  364:  	CaseOR  ==  00000017 % 17
+  370:  	CaseOR  ==  .Event:Immune % 19
+  37C:  		SetConst  *Var[0]  00000001 
+  38C:  		SetConst  *Var[1]  00410004 
+  39C:  		ExecWait DoImmune 
+  3A8:  	EndCaseGroup
+  3B0:  	Case  ==  .Event:Death % 20
+  3BC:  		SetConst  *Var[0]  00000001 
+  3CC:  		SetConst  *Var[1]  0041001D 
+  3DC:  		ExecWait DoNormalHit 
+  3E8:  		Wait     0000000A 
+  3F4:  		SetConst  *Var[0]  00000001 
+  404:  		SetConst  *Var[1]  0041001D 
+  414:  		ExecWait DoDeath 
+  420:  		Return
+  428:  	Case  ==  .Event:RecoverStatus % 31
+  434:  		Call     SetActorYaw 	( .Actor:Self 00000000 )
+  448:  		SetConst  *Var[0]  00000001 
+  458:  		SetConst  *Var[1]  00410004 
+  468:  		ExecWait DoRecover 
+  474:  	Case  ==  .Event:SwapPartner % 3F
+  480:  		Call     SetAnimation 	( .Actor:Self 00000001 00410019 )
+  498:  		Call     UseBattleCamPreset 	( 00000001 )
+  4A8:  		Call     SetActorJumpGravity 	( .Actor:Self *Fixed[1.0] )
+  4BC:  		Call     GetActorPos 	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+  4D8:  		Call     SetGoalPos 	( .Actor:Self *Var[0] *Var[1] *Var[2] )
+  4F4:  		Call     JumpToGoal  	( .Actor:Self 0000000A 00000000 00000001 00000000 )
+  514:  		Call     UseBattleCamPreset 	( 00000002 )
+  524:  	Default
+  52C:  EndSwitch
+  534:  Call     EnableIdleScript 	( .Actor:Self 00000001 )
+  548:  Call     UseIdleAnimation 	( .Actor:Self .True )
+  55C:  Return
+  564:  End
+}
