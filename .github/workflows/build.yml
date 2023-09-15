@@ -65,12 +65,12 @@ jobs:
       - name: Dump assets
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
-          cd $magicbird9803/star-rod/
+          cd $GITHUB_WORKSPACE/star-rod/
           java -jar StarRod.jar -DumpAssets
 
       - name: Compile mod
         run: |
-          cd $magicbird9803/star-rod/
+          cd $GITHUB_WORKSPACE/star-rod/
           java -Xmx2G -jar StarRod.jar -CompileMod
 
       - name: Upload compile.log
