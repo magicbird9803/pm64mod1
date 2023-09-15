@@ -21,7 +21,7 @@ jobs:
       - name: Download clean ROM
         run: curl -Lo $GITHUB_WORKSPACE/PaperMario.z64 $LEGAL_ROM_URL
         env:
-          LEGAL_ROM_URL: ${{ pm64mod1/PaperMario.z64 }}
+          LEGAL_ROM_URL: ${{ "pm64mod1/"PaperMario.z64 }}
         
       - name: Configure Star Rod
         run: |
