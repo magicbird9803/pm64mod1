@@ -27,7 +27,7 @@ jobs:
         run: |
           cp $GITHUB_WORKSPACE/mod.cfg.example $GITHUB_WORKSPACE/mod.cfg
           
-          cd $GITHUB_WORKSPACE/star-rod
+          cd $GITHUB_WORKSPACE/pm64mod1
           mkdir cfg
           echo "ModPath = $GITHUB_WORKSPACE" >> cfg/main.cfg
           echo "RomPath = $GITHUB_WORKSPACE/PaperMario.z64" >> cfg/main.cfg
