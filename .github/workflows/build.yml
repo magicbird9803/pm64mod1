@@ -81,7 +81,7 @@ jobs:
 
       - name: Package mod
         run: |
-          cd $GITHUB_WORKSPACE/star-rod
+          cd $GITHUB_WORKSPACE/star-rod-remake
           java -jar StarRod.jar -PackageMod
 
       - name: Upload mod file
